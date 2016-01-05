@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp", "RDFSharp\RDFSharp.csproj", "{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.RDFFirebirdStore", "RDFSharp\Store\Engines\Firebird\RDFSharp.RDFFirebirdStore.csproj", "{B7278DB3-AC3D-4086-9229-B94419CCE243}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC} = {1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.RDFMySQLStore", "RDFSharp\Store\Engines\MySQL\RDFSharp.RDFMySQLStore.csproj", "{6F7FE654-1B71-4433-B008-6DA0AB0FCBE1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC} = {1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.RDFPostgreSQLStore", "RDFSharp\Store\Engines\PostgreSQL\RDFSharp.RDFPostgreSQLStore.csproj", "{73D109AE-673D-4EB4-8BC9-0E6DDFB3DED3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC} = {1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.RDFSQLServerStore", "RDFSharp\Store\Engines\SQLServer\RDFSharp.RDFSQLServerStore.csproj", "{95EA8926-AFAF-43FE-94D2-A4E70BF6F419}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC} = {1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.RDFSQLiteStore", "RDFSharp\Store\Engines\SQLite\RDFSharp.RDFSQLiteStore.csproj", "{5C96900F-2B4B-446A-B02F-32BB289E21E0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC} = {1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU   = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7278DB3-AC3D-4086-9229-B94419CCE243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7278DB3-AC3D-4086-9229-B94419CCE243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7278DB3-AC3D-4086-9229-B94419CCE243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7278DB3-AC3D-4086-9229-B94419CCE243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F7FE654-1B71-4433-B008-6DA0AB0FCBE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F7FE654-1B71-4433-B008-6DA0AB0FCBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F7FE654-1B71-4433-B008-6DA0AB0FCBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F7FE654-1B71-4433-B008-6DA0AB0FCBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73D109AE-673D-4EB4-8BC9-0E6DDFB3DED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D109AE-673D-4EB4-8BC9-0E6DDFB3DED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D109AE-673D-4EB4-8BC9-0E6DDFB3DED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D109AE-673D-4EB4-8BC9-0E6DDFB3DED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95EA8926-AFAF-43FE-94D2-A4E70BF6F419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95EA8926-AFAF-43FE-94D2-A4E70BF6F419}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95EA8926-AFAF-43FE-94D2-A4E70BF6F419}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95EA8926-AFAF-43FE-94D2-A4E70BF6F419}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C96900F-2B4B-446A-B02F-32BB289E21E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C96900F-2B4B-446A-B02F-32BB289E21E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C96900F-2B4B-446A-B02F-32BB289E21E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C96900F-2B4B-446A-B02F-32BB289E21E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC} = {0F974859-F9BC-471F-BE83-AA3EEB1925E7}
+		{6F7FE654-1B71-4433-B008-6DA0AB0FCBE1} = {4DEC6BAC-A777-47CF-996A-354BCC93D2AA}
+		{73D109AE-673D-4EB4-8BC9-0E6DDFB3DED3} = {4DEC6BAC-A777-47CF-996A-354BCC93D2AA}
+		{95EA8926-AFAF-43FE-94D2-A4E70BF6F419} = {4DEC6BAC-A777-47CF-996A-354BCC93D2AA}
+		{5C96900F-2B4B-446A-B02F-32BB289E21E0} = {4DEC6BAC-A777-47CF-996A-354BCC93D2AA}
+		{B7278DB3-AC3D-4086-9229-B94419CCE243} = {4DEC6BAC-A777-47CF-996A-354BCC93D2AA}
+	EndGlobalSection
+EndGlobal

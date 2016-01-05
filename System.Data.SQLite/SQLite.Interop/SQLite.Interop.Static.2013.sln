@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite.Interop.Static.2013", "SQLite.Interop.Static.2013.vcxproj", "{490CBC51-A3B2-4397-89F9-16E858DCB4F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		DebugNativeOnly|Win32 = DebugNativeOnly|Win32
+		DebugNativeOnly|x64 = DebugNativeOnly|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		ReleaseNativeOnly|Win32 = ReleaseNativeOnly|Win32
+		ReleaseNativeOnly|x64 = ReleaseNativeOnly|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Debug|Win32.Build.0 = Debug|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Debug|x64.ActiveCfg = Debug|x64
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Debug|x64.Build.0 = Debug|x64
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.DebugNativeOnly|Win32.ActiveCfg = DebugNativeOnly|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.DebugNativeOnly|Win32.Build.0 = DebugNativeOnly|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.DebugNativeOnly|x64.ActiveCfg = DebugNativeOnly|x64
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.DebugNativeOnly|x64.Build.0 = DebugNativeOnly|x64
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Release|Win32.ActiveCfg = Release|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Release|Win32.Build.0 = Release|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Release|x64.ActiveCfg = Release|x64
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.Release|x64.Build.0 = Release|x64
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.ReleaseNativeOnly|Win32.ActiveCfg = ReleaseNativeOnly|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.ReleaseNativeOnly|Win32.Build.0 = ReleaseNativeOnly|Win32
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.ReleaseNativeOnly|x64.ActiveCfg = ReleaseNativeOnly|x64
+		{490CBC51-A3B2-4397-89F9-16E858DCB4F8}.ReleaseNativeOnly|x64.Build.0 = ReleaseNativeOnly|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

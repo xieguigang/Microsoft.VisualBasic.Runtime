@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AkshithaPapers.3DGeometry", "AkshithaPapers.3DGeometry.vbproj", "{5B1A5325-02DB-4589-8C19-C09649969806}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Architecture.Framework", "..\..\Shoal\Microsoft.VisualBasic.Architecture.Framework\Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Test.Project", "bin\Test.Project\Test.Project.vbproj", "{0D48B315-9667-4E9A-8830-AE24D80299B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B1A5325-02DB-4589-8C19-C09649969806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B1A5325-02DB-4589-8C19-C09649969806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B1A5325-02DB-4589-8C19-C09649969806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B1A5325-02DB-4589-8C19-C09649969806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D48B315-9667-4E9A-8830-AE24D80299B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D48B315-9667-4E9A-8830-AE24D80299B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D48B315-9667-4E9A-8830-AE24D80299B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D48B315-9667-4E9A-8830-AE24D80299B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

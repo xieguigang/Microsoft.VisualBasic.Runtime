@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ConsoleForm Name="Main Menu" Width="80" Height="30">
+  <Lines />
+  <Labels>
+    <Label Name="lblTitle" Text="Log Viewer" Length="10" ForeColour="Green">
+      <Location X="1" Y="2" />
+    </Label>
+	  <Label Name="lblNew" Text="1. Browse" Length="10">
+		  <Location X="4" Y="4"/>
+	  </Label>
+	  <Label Name="lblLookup" Text="2. Search" Length="10">
+		  <Location X="4" Y="5"/>
+	  </Label>
+	  <Label Name="lblRefresh" Text="3. Refresh array" Length="16">
+		  <Location X="4" Y="6"/>
+	  </Label>
+	  <Label Name="lblExit" Text="9. Exit" Length="10">
+		  <Location X="4" Y="12"/>
+	  </Label>
+	  <Label Name="lblChoice" Text=">>" Length="2" ForeColour="Yellow">
+		  <Location X="4" Y="14"/>
+	  </Label>
+	  <Label Name="lblError" Text="" Length="40" ForeColour="Red">
+		  <Location X="4" Y="16"/>
+	  </Label>
+  </Labels>
+  <Textboxes>
+	  <Textbox Name="txtInput" Text="" Length="1">
+		  <Location X="6" Y="14"/>
+	  </Textbox>
+  </Textboxes>
+</ConsoleForm>

@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{79B718B2-EA6A-4CB8-97ED-B992B7CA773E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Data.SQLite</RootNamespace>
+    <AssemblyName>System.Data.SQLite</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Data.Entity.Design.Extensibility, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Data.Services, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\SQLite.Designer\ChangePasswordDialog.cs" />
+    <Compile Include="src\SQLite.Designer\ChangePasswordDialog.Designer.cs" />
+    <Compile Include="src\SQLite.Designer\ChangeScriptDialog.cs" />
+    <Compile Include="src\SQLite.Designer\ChangeScriptDialog.Designer.cs" />
+    <Compile Include="src\SQLite.Designer\Design\Check.cs" />
+    <Compile Include="src\SQLite.Designer\Design\Column.cs" />
+    <Compile Include="src\SQLite.Designer\Design\ForeignKey.cs" />
+    <Compile Include="src\SQLite.Designer\Design\Index.cs" />
+    <Compile Include="src\SQLite.Designer\Design\PrimaryKey.cs" />
+    <Compile Include="src\SQLite.Designer\Design\SimpleTokenizer.cs" />
+    <Compile Include="src\SQLite.Designer\Design\Table.cs" />
+    <Compile Include="src\SQLite.Designer\Design\Trigger.cs" />
+    <Compile Include="src\SQLite.Designer\Design\Unique.cs" />
+    <Compile Include="src\SQLite.Designer\Design\View.cs" />
+    <Compile Include="src\SQLite.Designer\Editors\AutoCompleteColumn.cs" />
+    <Compile Include="src\SQLite.Designer\Editors\TableDesignerDoc.cs" />
+    <Compile Include="src\SQLite.Designer\Editors\TableDesignerDoc.Designer.cs" />
+    <Compile Include="src\SQLite.Designer\Editors\ViewDesignerDoc.cs" />
+    <Compile Include="src\SQLite.Designer\Editors\ViewDesignerDoc.Designer.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteAdapterDesigner.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteCommandDesigner.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteCommandHandler.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteConnectionProperties.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteConnectionStringEditor.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteConnectionUIControl.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteConnectionUIControl.Designer.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteDataAdapterToolboxItem.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteDataConnectionSupport.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteDataObjectIdentifierResolver.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteDataObjectSupport.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteDataSourceInformation.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteDataViewSupport.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteOptions.cs" />
+    <Compile Include="src\SQLite.Designer\SQLitePackage.cs" />
+    <Compile Include="src\SQLite.Designer\SQLiteProviderObjectFactory.cs" />
+    <Compile Include="src\SQLite.Designer\TableNameDialog.cs" />
+    <Compile Include="src\SQLite.Designer\TableNameDialog.Designer.cs" />
+    <Compile Include="src\SQLite.Designer\VSPackage.Designer.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Properties\Resources.Designer.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\DmlSqlGenerator.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\InternalBase.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\ISqlFragment.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\JoinSymbol.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\KeyToListMap.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\MetadataHelpers.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SkipClause.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SqlBuilder.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SqlChecker.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SqlGenerator.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SqlSelectStatement.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SqlWriter.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\StringUtil.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\Symbol.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SymbolPair.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\SymbolTable.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\TopClause.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQLiteProviderFactory.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQLiteProviderManifest.cs" />
+    <Compile Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQLiteProviderServices.cs" />
+    <Compile Include="src\System.Data.SQLite\AssemblySourceIdAttribute.cs" />
+    <Compile Include="src\System.Data.SQLite\AssemblySourceTimeStampAttribute.cs" />
+    <Compile Include="src\System.Data.SQLite\LINQ\SQLiteConnection_Linq.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\System.Data.SQLite\LINQ\SQLiteFactory_Linq.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLite3.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLite3_UTF16.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteBackup.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteBase.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\System.Data.SQLite\SQLiteCommandBuilder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\System.Data.SQLite\SQLiteConnection.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\System.Data.SQLite\SQLiteConnectionPool.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteConnectionStringBuilder.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteConvert.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteDataAdapter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\System.Data.SQLite\SQLiteDataReader.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteDefineConstants.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteEnlistment.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteException.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteFactory.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteFunction.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteFunctionAttribute.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteKeyReader.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteLog.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteMetaDataCollectionNames.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteModule.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteModuleCommon.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteModuleEnumerable.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteModuleNoop.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteParameter.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteParameterCollection.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLitePatchLevel.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteStatement.cs" />
+    <Compile Include="src\System.Data.SQLite\SQLiteTransaction.cs" />
+    <Compile Include="src\System.Data.SQLite\UnsafeNativeMethods.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="src\SQLite.Designer\CtcComponents\Guids.h" />
+    <None Include="src\SQLite.Designer\CtcComponents\PkgCmd.ctc" />
+    <None Include="src\SQLite.Designer\CtcComponents\PkgCmdID.h" />
+    <None Include="src\SQLite.Designer\Pkgcmd.h" />
+    <None Include="src\SQLite.Designer\PkgCmd.vsct" />
+    <None Include="src\SQLite.Designer\plk.txt" />
+    <None Include="src\SQLite.Designer\Resources\info.png" />
+    <None Include="src\SQLite.Designer\Resources\ToolboxItems.txt" />
+    <None Include="src\SQLite.Designer\source.extension.vsixmanifest" />
+    <None Include="src\SQLite.Designer\SQLite.Designer.2005.csproj" />
+    <None Include="src\SQLite.Designer\SQLite.Designer.2008.csproj" />
+    <None Include="src\SQLite.Designer\SQLite.Designer.2010.csproj" />
+    <None Include="src\SQLite.Designer\SQLite.Designer.2012.csproj" />
+    <None Include="src\SQLite.Designer\SQLite.Designer.2013.csproj" />
+    <None Include="src\SQLite.Designer\SQLiteDataObjectSupport2005.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataObjectSupport2008.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataObjectSupport2010.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataObjectSupport2012.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataObjectSupport2013.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataViewSupport2005.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataViewSupport2008.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataViewSupport2010.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataViewSupport2012.xml" />
+    <None Include="src\SQLite.Designer\SQLiteDataViewSupport2013.xml" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\Common.ConceptualSchemaDefinition.csdl" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\Common.ProviderManifest.xsd" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\SQLiteProviderServices.ProviderManifest.xml" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\SQLiteProviderServices.StoreSchemaDefinition.EF6.ssdl" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\SQLiteProviderServices.StoreSchemaDefinition.Linq.ssdl" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\SQLiteProviderServices.StoreSchemaMapping.msl" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\System.Data.Resources.CodeGenerationSchema.xsd" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\System.Data.Resources.CSDLSchema.xsd" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\System.Data.Resources.CSMSL.xsd" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\System.Data.Resources.EntityStoreSchemaGenerator.xsd" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Resources\System.Data.Resources.SSDLSchema.xsd" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\SQL Generation\License.txt" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.Core.2010.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.Core.2012.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.Core.2013.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.EF6.2010.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.EF6.2012.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.EF6.2013.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.Linq.2008.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.Linq.2010.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.Linq.2012.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Linq\System.Data.SQLite.Linq.2013.csproj" />
+    <None Include="src\System.Data.SQLite\Configurations\System.Data.SQLite.dll.config" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.2005.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.2008.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.2010.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.2012.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.2013.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.2013.sln" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.2013.v12.suo" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Compact.2005.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Compact.2008.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Compact.2012.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Module.2005.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Module.2008.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Module.2010.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Module.2012.csproj" />
+    <None Include="src\System.Data.SQLite\System.Data.SQLite.Module.2013.csproj" />
+    <None Include="src\System.Data.SQLite\Targets\System.Data.SQLite.Files.targets" />
+    <None Include="src\System.Data.SQLite\Targets\System.Data.SQLite.Properties.targets" />
+    <None Include="src\System.Data.SQLite\Targets\System.Data.SQLite.References.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="src\SQLite.Designer\ChangePasswordDialog.resx" />
+    <EmbeddedResource Include="src\SQLite.Designer\ChangeScriptDialog.resx" />
+    <EmbeddedResource Include="src\SQLite.Designer\Editors\TableDesignerDoc.resx" />
+    <EmbeddedResource Include="src\SQLite.Designer\Editors\ViewDesignerDoc.resx" />
+    <EmbeddedResource Include="src\SQLite.Designer\SQLiteConnectionUIControl.resx" />
+    <EmbeddedResource Include="src\SQLite.Designer\TableNameDialog.resx" />
+    <EmbeddedResource Include="src\SQLite.Designer\VSPackage.resx" />
+    <EmbeddedResource Include="src\System.Data.SQLite\System.Data.SQLite.Linq\Properties\Resources.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

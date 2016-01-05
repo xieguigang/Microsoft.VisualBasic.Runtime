@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConsoleForm Name="Splash" Width="80" Height="30">
+  <Lines>
+    <Line Orientation="Horizontal" Length="40" Colour="Blue">
+      <Location X="5" Y="5" />
+    </Line>
+    <Line Orientation="Vertical" Length="10" Colour="Blue">
+      <Location X="44" Y="6" />
+    </Line>
+    <Line Orientation="Horizontal" Length="40" Colour="Blue">
+      <Location X="5" Y="15" />
+    </Line>
+    <Line Orientation="Vertical" Length="10" Colour="Blue">
+      <Location X="5" Y="6" />
+    </Line>
+    <Line Orientation="Horizontal" Length="40" Colour="DarkBlue">
+      <Location X="6" Y="4" />
+    </Line>
+    <Line Orientation="Vertical" Length="10" Colour="DarkBlue">
+      <Location X="45" Y="5" />
+    </Line>
+  </Lines>
+  <Labels>
+    <Label Name="lblMinimize" Text="_" Length="1" ForeColour="DarkBlue" BackColour="Blue">
+      <Location X="40" Y="5" />
+    </Label>
+    <Label Name="lblMaximize" Text="-" Length="1" ForeColour="DarkBlue" BackColour="Blue">
+      <Location X="42" Y="5" />
+    </Label>
+    <Label Name="lblClose" Text="X" Length="1" ForeColour="Red" BackColour="Blue">
+      <Location X="44" Y="5" />
+    </Label>
+    <Label Name="lblTitle" Text="Console Log Reader" Length="18" ForeColour="White" BackColour="Black">
+      <Location X="15" Y="7" />
+    </Label>
+    <Label Name="lblCopyright" Text="(C) Sean Michael Murphy 2006" Length="28" ForeColour="White" BackColour="Black">
+      <Location X="10" Y="8" />
+    </Label>
+    <Label Name="lblMessage" Text="Back to the future..." Length="29" ForeColour="Green" BackColour="Black">
+      <Location X="14" Y="12" />
+    </Label>
+  </Labels>
+  <Textboxes/>
+</ConsoleForm>

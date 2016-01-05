@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2B793A9A-8B34-4D81-9907-C18707ACA440}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Luminous</RootNamespace>
+    <AssemblyName>Luminous</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\DictionaryList.cs" />
+    <Compile Include="Collections\Matrix.cs" />
+    <Compile Include="ComponentModel\NotificationDispatcher.cs" />
+    <Compile Include="ComponentModel\NotifyingObject.cs" />
+    <Compile Include="ComponentModel\PropertyChangedHandlerAttribute.cs" />
+    <Compile Include="ComponentModel\PropertyChangingHandlerAttribute.cs" />
+    <Compile Include="Either.cs" />
+    <Compile Include="EventArgs.cs" />
+    <Compile Include="ExpressionParser\AstNode.cs" />
+    <Compile Include="ExpressionParser\BinaryOperator.cs" />
+    <Compile Include="ExpressionParser\Constant.cs" />
+    <Compile Include="ExpressionParser\EvaluateUndefinedFunction.cs" />
+    <Compile Include="ExpressionParser\EvaluateUndefinedVariable.cs" />
+    <Compile Include="ExpressionParser\ExpressionElements.cs" />
+    <Compile Include="ExpressionParser\ExpressionValidator.cs" />
+    <Compile Include="ExpressionParser\Function.cs" />
+    <Compile Include="ExpressionParser\FunctionBase.cs" />
+    <Compile Include="ExpressionParser\Functions.cs" />
+    <Compile Include="ExpressionParser\IAstTreeNode.cs" />
+    <Compile Include="ExpressionParser\IBinaryOperator.cs" />
+    <Compile Include="ExpressionParser\IConstant.cs" />
+    <Compile Include="ExpressionParser\IEvaluableElement.cs" />
+    <Compile Include="ExpressionParser\IExpressionElement.cs" />
+    <Compile Include="ExpressionParser\IFunction.cs" />
+    <Compile Include="ExpressionParser\ILiteral.cs" />
+    <Compile Include="ExpressionParser\IOperator.cs" />
+    <Compile Include="ExpressionParser\IStatement.cs" />
+    <Compile Include="ExpressionParser\IUnaryOperator.cs" />
+    <Compile Include="ExpressionParser\IVariable.cs" />
+    <Compile Include="ExpressionParser\Literal.cs" />
+    <Compile Include="ExpressionParser\MultipleElements.cs" />
+    <Compile Include="ExpressionParser\NumericExpression.cs" />
+    <Compile Include="ExpressionParser\OperatorAssociativity.cs" />
+    <Compile Include="ExpressionParser\Operators.cs" />
+    <Compile Include="ExpressionParser\ParsedExpression.cs" />
+    <Compile Include="ExpressionParser\StatementBase.cs" />
+    <Compile Include="ExpressionParser\Statements.cs" />
+    <Compile Include="ExpressionParser\Symbol.cs" />
+    <Compile Include="ExpressionParser\UnaryOperator.cs" />
+    <Compile Include="ExpressionParser\UndefinedFunctionFoundEventArgs.cs" />
+    <Compile Include="ExpressionParser\UndefinedVariableFoundEventArgs.cs" />
+    <Compile Include="ExpressionParser\UnknownFunction.cs" />
+    <Compile Include="ExpressionParser\UnknownVariable.cs" />
+    <Compile Include="ExpressionParser\Variable.cs" />
+    <Compile Include="ExpressionParser\VariableChecking.cs" />
+    <Compile Include="ExpressionParser\VariableReference.cs" />
+    <Compile Include="Extensions\ConsoleColorExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\FileInfoExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Media\SoundScheme.cs" />
+    <Compile Include="Media\SystemSound.cs" />
+    <Compile Include="Serializer.cs" />
+    <Compile Include="Text.RegularExpressions\TimeoutRegex.cs" />
+    <Compile Include="Threading\TimeoutTask.cs" />
+    <Compile Include="Traversing\ITraverser.cs" />
+    <Compile Include="Traversing\TraverseNode.cs" />
+    <Compile Include="Traversing\Traverser.cs" />
+    <Compile Include="Traversing\TraverserNotImplementedException.cs" />
+    <Compile Include="TypeInfo.cs" />
+    <Compile Include="Xml.Linq\XClassAttribute.cs" />
+    <Compile Include="Xml.Linq\XCssDeclaration.cs" />
+    <Compile Include="Xml.Linq\XCssRule.cs" />
+    <Compile Include="Xml.Linq\XCssRules.cs" />
+    <Compile Include="Xml.Linq\XInlineStyle.cs" />
+    <Compile Include="Xml.Serialization\XmlSerializer2.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

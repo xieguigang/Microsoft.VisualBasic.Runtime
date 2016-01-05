@@ -1,0 +1,936 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ConsoleUIObjects</name>
+    </assembly>
+    <members>
+        <member name="T:ConsoleBrowserObjects.ConsoleForm">
+            <summary>
+            The root object of the hierarchy.  Contains enough information to render
+            labels (read-only) and textboxes (read/write) to a console screen.  It manages
+            interaction with the keyboard to solicit input to fields, navigation through
+            the fields, and completion of the form.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.ConsoleForm.onKeyPress">
+            <summary>
+            A delegate to a method that handles the event raised when a key is pressed
+            on a <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see>.
+            </summary>
+            <param name="sender">The <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see> in which the
+            key was pressed.</param>
+            <param name="e">A <see cref="T:ConsoleBrowserObjects.KeyPressEventArgs">KeyPressEventArgs</see> object
+            that contains the key being pressed, the field in which it was pressed, and a 
+            property settable by the subscriber to cancel the processing of the key.</param>
+        </member>
+        <member name="T:ConsoleBrowserObjects.ConsoleForm.onFormComplete">
+            <summary>
+            Represents the method that will be invoked when a form is submitted.
+            </summary>
+            <remarks>Usually, the type of the sender variable is an object, 
+            but this delegate will only be called from a 
+            <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see>, so we can afford to use
+            the more specific type.  The <see cref="T:System.EventArgs">System.EventArgs e</see>
+            is not used.</remarks>
+        </member>
+        <member name="T:ConsoleBrowserObjects.ConsoleForm.onFormCancelled">
+            <summary>
+            Represents the method that will be invoked when a form is cancelled.
+            </summary>
+            <remarks>Usually, the type of the sender variable is an 
+            <see cref="T:System.Object">object</see>, but this delegate will only be called
+            from a <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see>, so we can afford to use
+            the more specific type.  The <see cref="T:System.EventArgs">System.EventArgs e</see>
+            is not used.</remarks>
+        </member>
+        <member name="E:ConsoleBrowserObjects.ConsoleForm.KeyPressed">
+            <summary>
+            Event raised when any key is pressed in a field. It allows a subscriber to cancel
+            the keypress before it is processed.  Only 1 event handler can be wired to this
+            event.
+            </summary>
+        </member>
+        <member name="E:ConsoleBrowserObjects.ConsoleForm.FormComplete">
+            <summary>
+            An event that is raised when the Enter key is pressed on the form.
+            </summary>
+        </member>
+        <member name="E:ConsoleBrowserObjects.ConsoleForm.FormCancelled">
+            <summary>
+            An event that is raised when the Esc key is pressed on the form.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.#ctor">
+            <summary>
+            Initializes an instance of a ConsoleForm.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new ConsoleForm of a specified height and width.  The only
+            constructor available to external clients.
+            </summary>
+            <param name="width">Width in characters of the new screen.</param>
+            <param name="height">Height in characters of the new screen.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.GetFormInstance(System.String)">
+            <summary>
+            Method to be called when a new <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see> is 
+            needed to be deserialized from disk.
+            </summary>
+            <param name="path">A string with the fully qualified path to the 
+            form definition file on disk.  If the path starts with ".\", the function
+            will replace the "." with the path of the executing assembly.</param>
+            <returns>A new instance of a console form.</returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.GetFormInstance(System.String,ConsoleBrowserObjects.ConsoleForm.onFormComplete,ConsoleBrowserObjects.ConsoleForm.onFormCancelled)">
+            <summary>
+            Method to be called when a new console form is needed to be 
+            deserialized from disk, and the functions to be called on
+            completion and on cancellation are known.
+            </summary>
+            <param name="path">A string with the fully qualified path to the 
+            form definition file on disk.</param>
+            <param name="formComplete">Delegate to a function to be
+            called when the form is completed.</param>
+            <param name="formCancelled">Delegate to a function to be called
+            when the form is cancelled.  Can be null.</param>
+            <returns>A new instance of a console form with properties set and
+            appropriate events wired up.  Can be null.</returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.Refresh(ConsoleBrowserObjects.StdConsoleObject)">
+            <summary>
+            Method called to update the interface when the data in a textbox or 
+            a label is modified.
+            </summary>
+            <param name="sco"></param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.Render">
+            <summary>
+            Draws the current form onto the console.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.Render(System.Boolean)">
+            <summary>
+            Draws the current form onto the console.
+            </summary>
+            <param name="clear">A <see cref="T:System.Boolean">bool</see> indicating whether or
+            not the screen should be cleared before it is redrawn.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.LoopForKeypress">
+            <summary>
+            A method that loops and processes keystrokes until the form is complete, 
+            either by <see cref="E:ConsoleBrowserObjects.ConsoleForm.FormComplete">FormComplete</see> or 
+            <see cref="E:ConsoleBrowserObjects.ConsoleForm.FormCancelled">FormCancelled</see> events.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.ConsoleForm.Width">
+            <summary>
+            Property used to determine the current width of the screen. The value is 
+            immutable once set by the constructor.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.ConsoleForm.Height">
+            <summary>
+            Property used to determine the current height of the screen. The value is
+            immutable once set by the constructor.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.ConsoleForm.Name">
+            <summary>
+            A <see cref="T:System.String">string</see> property holding the name of 
+            the console screen.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.ConsoleForm.Lines">
+            <summary>
+            A collection of <see cref="T:ConsoleBrowserObjects.Line">Line</see> objects on the form.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.ConsoleForm.Labels">
+            <summary>
+            A collection of <see cref="T:ConsoleBrowserObjects.Label">Label</see> objects on the form.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.ConsoleForm.Textboxes">
+            <summary>
+            The collection of <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> objects on the form.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the 
+            <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see> object.</summary>
+            <param name="writer">The stream to which this object will be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.System#Xml#Serialization#IXmlSerializable#GetSchema">
+            <summary>
+            Method that returns schema information.  Not yet implemented.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.ConsoleForm.System#IDisposable#Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:ConsoleBrowserObjects.ConsoleForm">ConsoleForm</see>
+            object.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.FormCompleteEventArgs">
+            <summary>
+            A class used to communicate the results of a FormComplete event to 
+            subscribed clients.  More importantly, it allows the subscribed client
+            to communicate back to the ConsoleForm whether or not the old form should
+            be disposed or not.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.FormCompleteEventArgs.Cancel">
+            <summary>
+            Property to set to prevent the ending of the keypress loop, and the disposal
+            of form resources.  If true, the form will not be disposed and the keypress loop
+            thread will continue to wait for keypresses.  If false (default), the form
+            will be disposed at the end of the FormComplete event handler.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.KeyPressEventArgs">
+            <summary>
+            Class to provide parameters to subscribers to KeyPressed events.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.KeyPressEventArgs.#ctor(ConsoleBrowserObjects.Textbox,System.Char)">
+            <summary>
+            Constructor called to initialize the event args with the key pressed by the user.
+            </summary>
+            <param name="c"></param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.KeyPressEventArgs.Char">
+            <summary>
+            Property that exposes the key pressed by the user to event subscribers, so the
+            decision can be made about whether to cancel it or not.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.KeyPressEventArgs.Cancel">
+            <summary>
+            Property settable by event subscribers to cancel processing of the keypress.
+            True means cancel the keypress.  False (default) means don't cancel the 
+            keypress.  Process it.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Label">
+            <summary>
+            A class used to store the data necessary for a write-only
+            object rendered on the console screen.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Label.#ctor">
+            <summary>
+            Constructor available only to other ConsoleBrowserObjects so parameterless
+            objects can be created, and XmlSerialized into.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Label.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32)">
+            <summary>
+            Constructor called when the Name, Location and Length of the label are known
+            at instantiation-time. These are the minimal parameters required for instantiation
+            by a client, since they are immutable once created. This method just invokes the base
+            constructor with the supplied parameters.
+            </summary>
+            <param name="name">The name of the label for accessing it in the Labels collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the label should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Label.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32,System.String)">
+            <summary>Constructor called when the Name, Location, Length and Text of the label are known
+            at instantiation-time. The first 3 parameters are required for instantiation
+            by a client, since they are immutable once created. This method just invokes the base
+            constructor with the supplied parameters.
+            </summary>
+            <param name="name">The name of the label for accessing it in the Labels collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the label should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+            <param name="text">A string specifying the text the <see cref="T:ConsoleBrowserObjects.Label">Label</see>
+            will display.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Label.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32,System.String,System.ConsoleColor,System.ConsoleColor)">
+            <summary>Constructor called when the Name, Location, Length, Text and colours of the label are known
+            at instantiation-time. The first 3 parameters are required for instantiation
+            by a client, since they are immutable once created. This method just invokes the base
+            constructor with the supplied parameters.  It does not call InitializeColours() since
+            the colours are being explicitly set, and we won't care about the defaults.
+            </summary>
+            <param name="name">The name of the label for accessing it in the Labels collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the label should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+            <param name="text">A string specifying the text the <see cref="T:ConsoleBrowserObjects.Label">Label</see>
+            will display.</param>
+            <param name="foreground">A <see cref="T:System.ConsoleColor">ConsoleColor</see> enumeration
+            describing the foreground colour of the text of the <see cref="T:ConsoleBrowserObjects.Label">Label</see>.</param>
+            <param name="background">A <see cref="T:System.ConsoleColor">ConsoleColor</see> enumeration
+            describing the background colour of the of the <see cref="T:ConsoleBrowserObjects.Label">Label</see>.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Label.InitializeColours">
+            <summary>
+            A method to set the default foreground colour properties.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Label.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.Label">Label</see>
+            object.</summary>
+            <param name="writer">The stream to which this object will be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Label.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.Label">Label</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Labels">
+            <summary>
+            A collection class of <see cref="T:ConsoleBrowserObjects.Label">Label</see> objects.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ConsoleBrowserObjects.Labels">Labels</see> collection object.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Labels.Count">
+            <summary>
+            Property to return the number of <see cref="T:ConsoleBrowserObjects.Label">Label</see> objects currently
+            in the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.Add(ConsoleBrowserObjects.Label)">
+            <summary>
+            Adds a <see cref="T:ConsoleBrowserObjects.Label">Label</see> object to the 
+            <see cref="T:ConsoleBrowserObjects.Labels">Labels</see> collection.</summary>
+            <param name="l"><see cref="T:ConsoleBrowserObjects.Label">Label</see> object to add to the collection.</param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Labels.Item(System.String)">
+            <summary>
+            Get a <see cref="T:ConsoleBrowserObjects.Label">Label</see> in the collection based on it's name.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Labels.Item(System.Int32)">
+            <summary>
+            Get a <see cref="T:ConsoleBrowserObjects.Label">Label</see> in the collection based on it's index.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.Labels">Labels</see>
+            object.</summary>
+            <param name="writer">The stream to which this object will be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.System#Xml#Serialization#IXmlSerializable#GetSchema">
+            <summary>
+            Method that returns schema information.  Not yet implemented.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.Labels">Labels</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:ConsoleBrowserObjects.Labels">Labels</see>
+            object.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.GetEnumerator">
+            <summary>
+            Returns an enumerator that can iterate through the collection of
+            <see cref="T:ConsoleBrowserObjects.Label">Label</see> objects.
+            </summary>
+            <returns>An <see cref="T:System.Collections.IEnumerator">IEnumerator</see> that can be used 
+            to iterate through the collection.</returns>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Labels.LabelEnumerator">
+            <summary>
+            Class used to provide an <see cref="T:System.Collections.IEnumerator">IEnumerator</see> object to
+            whoever wants to iterate over the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.LabelEnumerator.#ctor(System.Collections.Generic.List{ConsoleBrowserObjects.Label})">
+            <summary>
+            Constructor used to initialize a new enumerator for the collection
+            of <see cref="T:ConsoleBrowserObjects.Label">Label</see> objects.
+            </summary>
+            <param name="labels"></param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Labels.LabelEnumerator.Current">
+            <summary>
+            Gets the current element in the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.LabelEnumerator.MoveNext">
+            <summary>
+            Advances the enumerator to the next element of the collection.
+            </summary>
+            <returns>true if the enumerator was successfully advanced to the next element; 
+            false if the enumerator has passed the end of the collection.</returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Labels.LabelEnumerator.Reset">
+            <summary>
+            Sets the enumerator to its initial position, which is before the first 
+            element in the collection.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Line">
+            <summary>
+            Representation of a vertical or horizontal line on the console.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Line.LineOrientation">
+            <summary>
+            An enumeration to describe the direction of the line to be drawn, from
+            the origin.
+            </summary>
+        </member>
+        <member name="F:ConsoleBrowserObjects.Line.LineOrientation.Vertical">
+            <summary>
+            Draw the line down from the origin.
+            </summary>
+        </member>
+        <member name="F:ConsoleBrowserObjects.Line.LineOrientation.Horizontal">
+            <summary>
+            Draw the line to the right of the origin.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Line.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Line.#ctor(ConsoleBrowserObjects.Line.LineOrientation,System.ConsoleColor,ConsoleBrowserObjects.Point,System.Int32)">
+            <summary>
+            Constructor used to initialize the <see cref="T:ConsoleBrowserObjects.Line">Line</see> object with
+            initial values for orientation, colour and location.
+            </summary>
+            <param name="orientation">Whether the line runs vertically or horizontally.</param>
+            <param name="colour">The colour of the line.</param>
+            <param name="location">The starting x and y coordinates of the line origin.</param>
+            <param name="length">The length of the line, either horizontally or 
+            vertically, from the location.</param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Line.Orientation">
+            <summary>
+            A property indicating whether the line runs horizontally or vertically.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Line.Colour">
+            <summary>
+            The colour attributes of the line to draw.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Line.Location">
+            <summary>
+            A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object representing the X and
+            Y coordinates of the start of the line.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Line.Length">
+            <summary>
+            An <see cref="T:System.Int32">Int32</see> describing the length of the line.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Line.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.Line">Line</see>
+            object.</summary>
+            <param name="writer">The stream to which this object will
+            be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Line.System#Xml#Serialization#IXmlSerializable#GetSchema">
+            <summary>
+            Method that returns schema information.  Not yet implemented.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Line.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.Line">Line</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Line.System#IDisposable#Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:ConsoleBrowserObjects.Line">Line</see>
+            object.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Lines">
+            <summary>
+            Collection class of <see cref="T:ConsoleBrowserObjects.Line">Line</see> objects.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ConsoleBrowserObjects.Lines">Lines</see> collection object.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Lines.Count">
+            <summary>
+            Property to return the number of <see cref="T:ConsoleBrowserObjects.Line">Line</see> objects currently
+            in the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.Add(ConsoleBrowserObjects.Line)">
+            <summary>
+            Adds a <see cref="T:ConsoleBrowserObjects.Line">Line</see> object to the 
+            <see cref="T:ConsoleBrowserObjects.Lines">Lines</see> collection.</summary>
+            <param name="line"><see cref="T:ConsoleBrowserObjects.Line">Line</see> object to add to the collection.</param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Lines.Item(System.Int32)">
+            <summary>
+            Get a <see cref="T:ConsoleBrowserObjects.Line">Line</see> in the collection based on it's index.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.Lines">Lines</see>
+            object.</summary>
+            <param name="writer">The stream to which this object will
+            be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.System#Xml#Serialization#IXmlSerializable#GetSchema">
+            <summary>
+            Method that returns schema information.  Not yet implemented.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.Lines">Lines</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.System#IDisposable#Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:ConsoleBrowserObjects.Lines">Lines</see>
+            object.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.GetEnumerator">
+            <summary>
+            Returns an enumerator that can iterate through the collection of
+            <see cref="T:ConsoleBrowserObjects.Line">Line</see> objects..
+            </summary>
+            <returns>An <see cref="T:System.Collections.IEnumerator">IEnumerator</see> that can be used 
+            to iterate through the collection.</returns>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Lines.LineEnumerator">
+            <summary>
+            Class used to provide an <see cref="T:System.Collections.IEnumerator">IEnumerator</see> object to
+            whoever wants to iterated over the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.LineEnumerator.#ctor(System.Collections.Generic.List{ConsoleBrowserObjects.Line})">
+            <summary>
+            Constructor used to initialize a new enumerator for the collection
+            of <see cref="T:ConsoleBrowserObjects.Line">Line</see> objects.
+            </summary>
+            <param name="lines"></param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Lines.LineEnumerator.Current">
+            <summary>
+            Gets the current element in the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.LineEnumerator.MoveNext">
+            <summary>
+            Advances the enumerator to the next element of the collection.
+            </summary>
+            <returns>true if the enumerator was successfully advanced to the next element; 
+            false if the enumerator has passed the end of the collection.</returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Lines.LineEnumerator.Reset">
+            <summary>
+            Sets the enumerator to its initial position, which is before the first 
+            element in the collection.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Point">
+            <summary>
+            An object to use to specify the X and Y coordinates of an object on the console
+            screen.  A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object already exists in the framework, 
+            but it's hidden in System.Windows.Forms.Drawing, which I didn't want to include 
+            here. 
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.#ctor">
+            <summary>
+            Initializes a new instance of a <see cref="T:ConsoleBrowserObjects.Point">Point</see> object.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of a <see cref="T:ConsoleBrowserObjects.Point">Point</see> object when
+            the values for the coordinates are known at construction time.
+            </summary>
+            <param name="x">A 32-bit integer storing the X position of the console object 
+            on the screen.</param>
+            <param name="y">A 32-bit integer storing the Y position of the console object 
+            on the screen.</param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Point.X">
+            <summary>
+            The X position of the object on the screen.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Point.Y">
+            <summary>
+            The Y position of the object on the screen.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.ToString">
+            <summary>
+            Gets the string representation of the Point object.
+            </summary>
+            <returns>A representation of the state of the Point object.</returns>
+            <remarks>This method is useful during debugging to get an easy-to-read representation of the object.</remarks>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.GetHashCode">
+            <summary>
+            Gets the hash code of the current object.
+            </summary>
+            <returns>The hash code of the current Point.</returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.Point">Point</see>
+            object.</summary>
+            <param name="writer">The stream to which this object will be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.System#Xml#Serialization#IXmlSerializable#GetSchema">
+            <summary>
+            Method that returns schema information.  Not yet implemented.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.Point">Point</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Point.System#IDisposable#Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:ConsoleBrowserObjects.Point">Point</see>
+            object.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.StdConsoleObject">
+            <summary>
+            The base class for textual information displayed by the console.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.StdConsoleObject.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32)">
+            <summary>
+            Constructor called when the Name, Location and Length of the StdConsoleObject are known
+            at instantiation-time. These are the minimal parameters required for instantiation
+            by a client, since they are immutable once created. 
+            </summary>
+            <param name="name">The name of the StdConsoleObject for accessing it in its collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see>
+            should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.StdConsoleObject.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32,System.String)">
+            <summary>Constructor called when the Name, Location, Length and Text of the label are known
+            at instantiation-time. The first 3 parameters are required for instantiation
+            by a client, since they are immutable once created. 
+            </summary>
+            <param name="name">The name of the StdConsoleObject for accessing it in its collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the StdConsoleObject should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+            <param name="text">A string specifying the text the <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see>.
+            will display.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.StdConsoleObject.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32,System.String,System.ConsoleColor,System.ConsoleColor)">
+            <summary>Constructor called when the Name, Location, Length, Text and colours of the 
+            <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see> are known
+            at instantiation-time. The first 3 parameters are required for instantiation
+            by a client, since they are immutable once created. 
+            </summary>
+            <param name="name">The name of the <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see> for 
+            accessing it in its collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the label should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+            <param name="text">A string specifying the text the <see cref="T:ConsoleBrowserObjects.Label">Label</see>
+            will display.</param>
+            <param name="foreground">A <see cref="T:System.ConsoleColor">ConsoleColor</see> enumeration
+            describing the foreground colour of the text of the 
+            <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see>.</param>
+            <param name="background">A <see cref="T:System.ConsoleColor">ConsoleColor</see> enumeration
+            describing the background colour of the of the 
+            <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see>.</param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.StdConsoleObject.Foreground">
+            <summary>
+            The colour data used to render the foreground of the text.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.StdConsoleObject.Background">
+            <summary>
+            The colour data used to display the background of the text.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.StdConsoleObject.Location">
+            <summary>
+            A location for the field on the console.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.StdConsoleObject.Name">
+            <summary>
+            The name of the console object, used to access it programmatically
+            in a collection.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.StdConsoleObject.Text">
+            <summary>
+            The text to be displayed.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.StdConsoleObject.Length">
+            <summary>
+            The maximum length of the field to be shown.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.StdConsoleObject.WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see>.</summary>
+            <param name="writer">The stream to which this object will
+            be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.StdConsoleObject.GetSchema">
+            <summary>
+            Method that returns schema information.  Not yet implemented.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.StdConsoleObject.ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.StdConsoleObject.Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:ConsoleBrowserObjects.StdConsoleObject">StdConsoleObject</see>
+            object.
+            </summary>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Textbox">
+            <summary>
+            An object used to manage the data necessary to render read-write
+            objects to the screen.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textbox.#ctor">
+            <summary>
+            Constructor callable by other members of the namespace when a new object is
+            going to be deserialized into it.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textbox.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32)">
+            <summary>
+            Constructor called when the Name, Location and Length of the textbox are known
+            at instantiation-time. These are the minimal parameters required for instantiation
+            by a client, since they are immutable once created. This method just invokes the base
+            constructor with the supplied parameters.
+            </summary>
+            <param name="name">The name of the Textbox for accessing it in the Textboxes collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the Textbox should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textbox.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32,System.String)">
+            <summary>Constructor called when the Name, Location, Length and Text of the textbox are known
+            at instantiation-time. The first 3 parameters are required for instantiation
+            by a client, since they are immutable once created. This method just invokes the base
+            constructor with the supplied parameters.
+            </summary>
+            <param name="name">The name of the textbox for accessing it in the collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the label should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+            <param name="text">A string specifying the text the <see cref="T:ConsoleBrowserObjects.Label">Label</see>
+            will display.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textbox.#ctor(System.String,ConsoleBrowserObjects.Point,System.Int32,System.String,System.ConsoleColor,System.ConsoleColor)">
+            <summary>Constructor called when the Name, Location, Length, Text and colours of the Textbox are known
+            at instantiation-time. The first 3 parameters are required for instantiation
+            by a client, since they are immutable once created. This method just invokes the base
+            constructor with the supplied parameters.  It does not call InitializeColours() since
+            the colours are being explicitly set, and we won't care about the defaults.
+            </summary>
+            <param name="name">The name of the Textbox for accessing it in the Textboxes collection.</param>
+            <param name="location">A <see cref="T:ConsoleBrowserObjects.Point">Point</see> object that describes
+            where on the console screen the Textbox should be rendered.</param>
+            <param name="length">The length of the field as an <see cref="T:System.Int32">Int32</see>.</param>
+            <param name="text">A string specifying the text the <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see>
+            will display.</param>
+            <param name="foreground">A <see cref="T:System.ConsoleColor">ConsoleColor</see> enumeration
+            describing the foreground colour of the text of the <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see>.</param>
+            <param name="background">A <see cref="T:System.ConsoleColor">ConsoleColor</see> enumeration
+            describing the background colour of the of the <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see>.</param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Textbox.PasswordChar">
+            <summary>
+            A <see cref="T:System.Boolean">char</see> that defines the masking
+            character for a password field.  If undefined, the field
+            is a regular textbox.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textbox.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textbox.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> object.
+            </summary>
+            <param name="writer">The stream to which this object will be serialized.</param>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Textboxes">
+            <summary>
+            A collection class of <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> objects.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ConsoleBrowserObjects.Textboxes">Textboxes</see>
+            class.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Textboxes.Count">
+            <summary>
+            Property to return the number of Textbox objects contained in
+            the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.Add(ConsoleBrowserObjects.Textbox)">
+            <summary>
+            Appends a <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> to the list.
+            </summary>
+            <param name="t">The <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> to add.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.ClearValues">
+            <summary>
+            Resets the string value of the text property of the textboxes in the
+            collection to zero length strings.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Textboxes.Item(System.String)">
+            <summary>
+            Accessor to return a <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> based on
+            the name of the Textbox.
+            </summary>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Textboxes.Item(System.Int32)">
+            <summary>
+            Accessor to return a <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> based on
+            its index in the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.System#Xml#Serialization#IXmlSerializable#WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes Xml articulating the current state of the <see cref="T:ConsoleBrowserObjects.Textboxes">Textboxes</see>
+            object.</summary>
+            <param name="writer">The stream to which this object will be serialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.System#Xml#Serialization#IXmlSerializable#GetSchema">
+            <summary>
+            Method that returns schema information.  Not yet implemented.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.System#Xml#Serialization#IXmlSerializable#ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads Xml when the <see cref="T:ConsoleBrowserObjects.Textboxes">Textboxes</see> is to be deserialized 
+            from a stream.</summary>
+            <param name="reader">The stream from which the object will be deserialized.</param>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.System#IDisposable#Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:ConsoleBrowserObjects.Textboxes">Textboxes</see>
+            object.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.GetEnumerator">
+            <summary>
+            Interface implementaion method to allow foreach iteration over
+            the textboxes contained within this object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ConsoleBrowserObjects.Textboxes.TextboxEnumerator">
+            <summary>
+            Class used to provide an <see cref="T:System.Collections.IEnumerator">IEnumerator</see> object to
+            whoever wants to iterate over the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.TextboxEnumerator.#ctor(System.Collections.Generic.List{ConsoleBrowserObjects.Textbox})">
+            <summary>
+            Constructor used to initialize a new enumerator for the collection
+            of <see cref="T:ConsoleBrowserObjects.Textbox">Textbox</see> objects.
+            </summary>
+            <param name="textboxes"></param>
+        </member>
+        <member name="P:ConsoleBrowserObjects.Textboxes.TextboxEnumerator.Current">
+            <summary>
+            Gets the current element in the collection.
+            </summary>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.TextboxEnumerator.MoveNext">
+            <summary>
+            Advances the enumerator to the next element of the collection.
+            </summary>
+            <returns>true if the enumerator was successfully advanced to the next element; 
+            false if the enumerator has passed the end of the collection.</returns>
+        </member>
+        <member name="M:ConsoleBrowserObjects.Textboxes.TextboxEnumerator.Reset">
+            <summary>
+            Sets the enumerator to its initial position, which is before the first 
+            element in the collection.
+            </summary>
+        </member>
+        <member name="T:Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

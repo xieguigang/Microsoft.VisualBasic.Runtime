@@ -1,0 +1,17 @@
+Open source projects are used for building ShoalShell IDE
+
+
+luminous-d9bf4f66690f467a044d5502d2bd3e75d890dfd9
+http://luminous.codeplex.com/
+
+Ribbon
+http://officeribbon.codeplex.com/
+
+NeoTabControlLibrary
+http://www.codeproject.com/Articles/456580/NeoTabControl-Library
+
+Pavel.CodeEditor
+http://www.codeproject.com/Articles/161871/Fast-Colored-TextBox-for-syntax-highlighting
+
+SlidingNotifcation
+http://www.codeproject.com/Reference/836101/Sliding-Up-Popup-Notification-Like-Skype

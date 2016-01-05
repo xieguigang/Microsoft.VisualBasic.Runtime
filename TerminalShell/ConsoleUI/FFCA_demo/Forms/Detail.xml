@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<ConsoleForm Name="Detail" Width="80" Height="30">
+  <Lines />
+  <Labels>
+    <Label Name="lblTitle" Text="Details:" Length="8" ForeColour="Green">
+      <Location X="1" Y="2" />
+    </Label>
+    <Label Name="lblIndex" Text="" Length="6" ForeColour="Green">
+      <Location X="10" Y="2" />
+    </Label>
+  </Labels>
+  <Textboxes />
+</ConsoleForm>
