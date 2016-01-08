@@ -103,6 +103,7 @@
     <Compile Include="AppEngine\ExternalCall.vb" />
     <Compile Include="AppEngine\WebApp.vb" />
     <Compile Include="CLI.vb" />
+    <Compile Include="Content.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -120,6 +121,7 @@
     </Compile>
     <Compile Include="PlatformEngine.vb" />
     <Compile Include="Program.vb" />
+    <Compile Include="Task.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
