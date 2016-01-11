@@ -103,7 +103,8 @@
     <Compile Include="AppEngine\ExternalCall.vb" />
     <Compile Include="AppEngine\WebApp.vb" />
     <Compile Include="CLI.vb" />
-    <Compile Include="Content.vb" />
+    <Compile Include="POSTReader\ArgsMgr.vb" />
+    <Compile Include="POSTReader\Content.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
