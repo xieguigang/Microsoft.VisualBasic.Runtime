@@ -101,6 +101,7 @@
     <Compile Include="AppEngine\APPEngine.vb" />
     <Compile Include="AppEngine\APPManager.vb" />
     <Compile Include="AppEngine\ExternalCall.vb" />
+    <Compile Include="AppEngine\APIName.vb" />
     <Compile Include="AppEngine\WebApp.vb" />
     <Compile Include="CLI.vb" />
     <Compile Include="POSTReader\ArgsMgr.vb" />
