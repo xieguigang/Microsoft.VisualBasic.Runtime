@@ -97,15 +97,20 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppEngine\APIMethod.vb" />
+    <Compile Include="AppEngine\API\APIMethod.vb" />
+    <Compile Include="AppEngine\API\Methods.vb" />
     <Compile Include="AppEngine\APPEngine.vb" />
     <Compile Include="AppEngine\APPManager.vb" />
+    <Compile Include="AppEngine\__API_Invoker.vb" />
     <Compile Include="AppEngine\ExternalCall.vb" />
     <Compile Include="AppEngine\APIName.vb" />
     <Compile Include="AppEngine\WebApp.vb" />
     <Compile Include="CLI.vb" />
-    <Compile Include="POSTReader\ArgsMgr.vb" />
-    <Compile Include="POSTReader\Content.vb" />
+    <Compile Include="Platform\PlatformSub.vb" />
+    <Compile Include="Platform\Plugin\PluginBase.vb" />
+    <Compile Include="Platform\Plugin\ExternalCall.vb" />
+    <Compile Include="AppEngine\POSTReader\ArgsMgr.vb" />
+    <Compile Include="AppEngine\POSTReader\Content.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -121,9 +126,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PlatformEngine.vb" />
+    <Compile Include="Platform\PlatformEngine.vb" />
+    <Compile Include="Platform\Task\TaskPool.vb" />
     <Compile Include="Program.vb" />
-    <Compile Include="Task.vb" />
+    <Compile Include="Platform\Task\Task.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -134,6 +140,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="httpd.Designer.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
