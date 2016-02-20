@@ -96,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="QueryBuilder.vb" />
-    <Compile Include="Extensions.vb" />
     <Compile Include="Reflector\InternalTableSchema.vb" />
     <Compile Include="Reflector\InternalSchemaCache.vb" />
     <Compile Include="SQLProcedure.vb" />
