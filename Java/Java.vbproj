@@ -102,6 +102,7 @@
     <Compile Include="IO\File.vb" />
     <Compile Include="IO\FileFilter.vb" />
     <Compile Include="IO\FilenameFilter.vb" />
+    <Compile Include="IO\Property\attrs.vb" />
     <Compile Include="util\GZip\GZIPInputStream.vb" />
     <Compile Include="util\GZip\GZIPOutputStream.vb" />
     <Compile Include="IO\InputStreamReader.vb" />
