@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs/Microsoft.VisualBasic.Core/v15/Server/sqlite3
+*.suo
+bin/
+Debug/
+Release/
+obj/
