@@ -6,6 +6,11 @@ Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a
 </name>
 </assembly>
 <members>
+<member name="T:Microsoft.VisualBasic.My.Log4VB">
+ <summary>
+ VB.NET <see cref="T:System.Console"/> log framework.
+ </summary>
+</member>
 <member name="T:Microsoft.VisualBasic.My.Resources.Resources">
 <summary>
   一个强类型的资源类，用于查找本地化的字符串等。
@@ -1965,7 +1970,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:Microsoft.VisualBasic.CommandLine.CLITools.GetLogicalArguments(System.Collections.Generic.IEnumerable{System.String},System.String@)">
+<member name="M:Microsoft.VisualBasic.CommandLine.CLITools.GetLogicalFlags(System.Collections.Generic.IEnumerable{System.String},System.String@)">
  <summary>
  Get all of the logical parameters from the input tokens.
  (这个函数所生成的逻辑参数的名称全部都是小写形式的)
@@ -1973,7 +1978,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="args">要求第一个对象不能够是命令的名称</param>
  <returns></returns>
 </member>
-<member name="M:Microsoft.VisualBasic.CommandLine.CLITools.TryParse(System.Collections.Generic.IEnumerable{System.String},System.Boolean)">
+<member name="M:Microsoft.VisualBasic.CommandLine.CLITools.TryParse(System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.String)">
  <summary>
  Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
  </summary>
@@ -2033,6 +2038,13 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <returns></returns>
  <remarks></remarks>
  
+</member>
+<member name="M:Microsoft.VisualBasic.CommandLine.CLITools.tupleParser(System.String,Microsoft.VisualBasic.Language.List{System.String}@)">
+ <summary>
+ 只取第一个=符号出现的位置，结果会被添加进入<paramref name="argv"/>列表之中
+ </summary>
+ <param name="s$"></param>
+ <param name="argv"></param>
 </member>
 <member name="F:Microsoft.VisualBasic.CommandLine.CLITools.TokenSplitRegex">
  <summary>
@@ -2958,7 +2970,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <remarks></remarks>
 
 </member>
-<member name="F:Microsoft.VisualBasic.CommandLine.CommandLine._CLICommandArgvs">
+<member name="F:Microsoft.VisualBasic.CommandLine.CommandLine.cliCommandArgvs">
  <summary>
  原始的命令行字符串
  </summary>
@@ -3015,7 +3027,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  </summary>
  <returns></returns>
 </member>
-<member name="P:Microsoft.VisualBasic.CommandLine.CommandLine.CLICommandArgvs">
+<member name="P:Microsoft.VisualBasic.CommandLine.CommandLine.cli">
  <summary>
  Get the original command line string.(获取所输入的命令行对象的原始的字符串)
  </summary>
@@ -3773,6 +3785,25 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  Property default value
  </summary>
 </member>
+<member name="T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Property`1">
+ <summary>
+ Dictionary for [<see cref="T:System.String"/>, <typeparamref name="T"/>]
+ </summary>
+ <typeparam name="T"></typeparam>
+</member>
+<member name="M:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Property`1.#ctor(System.String,`0)">
+ <summary>
+ New with a init property value
+ </summary>
+ <param name="initKey"></param>
+ <param name="initValue"></param>
+</member>
+<member name="P:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Property`1.src">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataIgnoredAttribute">
  <summary>
  在数据框数据映射操作之中是否忽略掉这个属性或者方法？
@@ -4193,6 +4224,18 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="target"></param>
  <param name="value"></param>
 </member>
+<member name="T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.IDynamicMeta`1">
+ <summary>
+ Abstracts for the dynamics property.
+ </summary>
+ <typeparam name="T"></typeparam>
+</member>
+<member name="P:Microsoft.VisualBasic.ComponentModel.DataSourceModel.IDynamicMeta`1.Properties">
+ <summary>
+ Properties
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue`1">
  <summary>
  The value object have a name string.(一个具有自己的名称的变量值)
@@ -4542,21 +4585,10 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.IDynamicMeta`1">
- <summary>
- Abstracts for the dynamics property.
- </summary>
- <typeparam name="T"></typeparam>
-</member>
-<member name="P:Microsoft.VisualBasic.ComponentModel.DataSourceModel.IDynamicMeta`1.Properties">
- <summary>
- Properties
- </summary>
- <returns></returns>
-</member>
 <member name="T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DynamicPropertyBase`1">
  <summary>
- This abstract object has a <see cref="F:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DynamicPropertyBase`1.propertyTable"/> dictionary keeps as a dynamics property source.
+ This abstract object has a <see cref="F:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DynamicPropertyBase`1.propertyTable"/> dictionary keeps as 
+ a dynamics property source.
  </summary>
  <typeparam name="T"></typeparam>
 </member>
@@ -4611,25 +4643,6 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <summary>
  Using for debugger view, this property is usually usefull for the dictionary view 
  to see if any duplicated was existed? 
- </summary>
- <returns></returns>
-</member>
-<member name="T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Property`1">
- <summary>
- Dictionary for [<see cref="T:System.String"/>, <typeparamref name="T"/>]
- </summary>
- <typeparam name="T"></typeparam>
-</member>
-<member name="M:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Property`1.#ctor(System.String,`0)">
- <summary>
- New with a init property value
- </summary>
- <param name="initKey"></param>
- <param name="initValue"></param>
-</member>
-<member name="P:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Property`1.src">
- <summary>
- 
  </summary>
  <returns></returns>
 </member>
@@ -4736,7 +4749,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="nonIndex"><see cref="M:System.Reflection.PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
  <returns></returns>
 </member>
-<member name="M:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework.DictionaryTable``1(``0,Microsoft.VisualBasic.Language.Default.Assert{System.Object})">
+<member name="M:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework.DictionaryTable``1(``0,System.Boolean,Microsoft.VisualBasic.Language.Default.Assert{System.Object})">
  <summary>
  将对象之中的所有属性值都取出来以字符串的形式生成一个字典对象
  </summary>
@@ -4747,7 +4760,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
 </member>
 <member name="M:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework.getOrCache(System.Type)">
  <summary>
- Helper for <see cref="M:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework.DictionaryTable``1(``0,Microsoft.VisualBasic.Language.Default.Assert{System.Object})"/>
+ Helper for <see cref="M:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework.DictionaryTable``1(``0,System.Boolean,Microsoft.VisualBasic.Language.Default.Assert{System.Object})"/>
  </summary>
  <param name="type"></param>
  <returns></returns>
@@ -4815,6 +4828,21 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <returns></returns>
 
 </member>
+<member name="T:Microsoft.VisualBasic.ComponentModel.Ranges.Convertor.Convertor`1">
+ <summary>
+ 
+ </summary>
+ <typeparam name="TUnit">枚举类型？</typeparam>
+ <param name="value"></param>
+ <param name="toUnit"></param>
+ <returns></returns>
+</member>
+<member name="T:Microsoft.VisualBasic.ComponentModel.Ranges.UnitValue`1">
+ <summary>
+ 
+ </summary>
+ <typeparam name="TUnit">枚举类型，基础类型必须是值等于1</typeparam>
+</member>
 <member name="F:Microsoft.VisualBasic.ComponentModel.Ranges.UnitValue`1.d">
  <summary>
  分（d） ``10^-1``
@@ -4854,6 +4882,21 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <summary>
  阿（a） ``10^-18``
  </summary>
+</member>
+<member name="M:Microsoft.VisualBasic.ComponentModel.Ranges.UnitValue`1.Scale(`0)">
+ <summary>
+ Unit convert
+ </summary>
+ <param name="convert"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.ComponentModel.Ranges.UnitValue`1.op_Equality(Microsoft.VisualBasic.ComponentModel.Ranges.UnitValue{`0},`0)">
+ <summary>
+ 将当前的单位值转换为目标<paramref name="unit"/>单位制
+ </summary>
+ <param name="value"></param>
+ <param name="unit"></param>
+ <returns></returns>
 </member>
 <member name="P:Microsoft.VisualBasic.ComponentModel.Ranges.OrderSelector`1.Desc">
  <summary>
@@ -4936,6 +4979,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="from"></param>
  <param name="[to]"></param>
  <returns></returns>
+ 
 </member>
 <member name="P:Microsoft.VisualBasic.ComponentModel.Ranges.Model.IRange`1.Min">
  <summary>
@@ -5126,6 +5170,12 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
 
  <param name="min">Minimum value of the range</param>
  <param name="max">Maximum value of the range</param>
+</member>
+<member name="M:Microsoft.VisualBasic.ComponentModel.Ranges.Model.IntRange.#ctor(System.Collections.Generic.IEnumerable{System.Int32})">
+ <summary>
+ 这个构造函数之中会自动求出最大值和最小值
+ </summary>
+ <param name="source"></param>
 </member>
 <member name="M:Microsoft.VisualBasic.ComponentModel.Ranges.Model.IntRange.ToString">
  <summary>
@@ -5510,11 +5560,17 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  </summary>
  <returns></returns>
 </member>
-<member name="M:Microsoft.VisualBasic.ComponentModel.Collection.Index`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+<member name="M:Microsoft.VisualBasic.ComponentModel.Collection.Index`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Int32)">
  <summary>
  请注意，这里的数据源请尽量使用Distinct的，否则对于重复的数据，只会记录下第一个位置
  </summary>
  <param name="source"></param>
+</member>
+<member name="M:Microsoft.VisualBasic.ComponentModel.Collection.Index`1.#ctor(System.Int32)">
+ <summary>
+ 默认是从0开始的
+ </summary>
+ <param name="base"></param>
 </member>
 <member name="P:Microsoft.VisualBasic.ComponentModel.Collection.Index`1.IndexOf(`0)">
  <summary>
@@ -5544,6 +5600,9 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  这个函数是线程不安全的
  </summary>
  <param name="x"></param>
+ <returns>
+ 这个函数所返回来的值是所添加的<paramref name="x"/>的index值
+ </returns>
 </member>
 <member name="M:Microsoft.VisualBasic.ComponentModel.Collection.Index`1.ToString">
  <summary>
@@ -5704,6 +5763,28 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <summary>
  If the user enters bad data, just eat it quietly.
  </summary>
+</member>
+<member name="T:Microsoft.VisualBasic.ComponentModel.DataStructures.StringSet">
+ <summary>
+ A string set collection object.
+ </summary>
+</member>
+<member name="M:Microsoft.VisualBasic.ComponentModel.DataStructures.StringSet.#ctor(System.Collections.Generic.IEnumerable{System.String},Microsoft.VisualBasic.CompareMethod)">
+ <summary>
+ 
+ </summary>
+ <param name="strings"></param>
+ <param name="caseSensitive">
+ String comparision should be in case sensitive mode? By default is yes.
+ </param>
+</member>
+<member name="M:Microsoft.VisualBasic.ComponentModel.DataStructures.StringSet.op_Subtraction(Microsoft.VisualBasic.ComponentModel.DataStructures.StringSet,System.Collections.Generic.IEnumerable{System.String})">
+ <summary>
+ Removes all of the <paramref name="s2"/> from <see cref="T:Microsoft.VisualBasic.ComponentModel.DataStructures.StringSet"/> <paramref name="s1"/>
+ </summary>
+ <param name="s1"></param>
+ <param name="s2"></param>
+ <returns></returns>
 </member>
 <member name="M:Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree.Extensions.NameCompare(System.String,System.String)">
  <summary>
@@ -8312,6 +8393,26 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
  <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
 </member>
+<member name="M:Microsoft.VisualBasic.Imaging.IGraphics.DrawLine(System.Drawing.Pen,System.Int32,System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Draws a line connecting the two points specified by the coordinate pairs.
+ </summary>
+ <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+ <param name="x1">The x-coordinate of the first point.</param>
+ <param name="y1">The y-coordinate of the first point.</param>
+ <param name="x2">The x-coordinate of the second point.</param>
+ <param name="y2">The y-coordinate of the second point.</param>
+</member>
+<member name="M:Microsoft.VisualBasic.Imaging.IGraphics.DrawLine(System.Drawing.Pen,System.Single,System.Single,System.Single,System.Single)">
+ <summary>
+ Draws a line connecting the two points specified by the coordinate pairs.
+ </summary>
+ <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+ <param name="x1">The x-coordinate of the first point.</param>
+ <param name="y1">The y-coordinate of the first point.</param>
+ <param name="x2">The x-coordinate of the second point.</param>
+ <param name="y2">The y-coordinate of the second point.</param>
+</member>
 <member name="M:Microsoft.VisualBasic.Imaging.IGraphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Drawing.PointF)">
  <summary>
  Draws the specified text string at the specified location with the specified
@@ -8322,6 +8423,17 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
  <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
  text.</param>
+</member>
+<member name="M:Microsoft.VisualBasic.Imaging.IGraphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Single,System.Single)">
+ <summary>
+ Draws the specified text string at the specified location with the specified
+ System.Drawing.Brush and System.Drawing.Font objects.
+ </summary>
+ <param name="s">String to draw.</param>
+ <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+ <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+ <param name="x">The x-coordinate of the upper-left corner of the drawn text.</param>
+ <param name="y">The y-coordinate of the upper-left corner of the drawn text.</param>
 </member>
 <member name="M:Microsoft.VisualBasic.Imaging.IGraphics.FillEllipse(System.Drawing.Brush,System.Drawing.RectangleF)">
  <summary>
@@ -9043,7 +9155,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <returns></returns>
  
 </member>
-<member name="M:Microsoft.VisualBasic.Imaging.GraphicsExtensions.LoadImage(System.String,System.Boolean)">
+<member name="M:Microsoft.VisualBasic.Imaging.GraphicsExtensions.LoadImage(System.String,System.Boolean,System.Boolean)">
  <summary>
  Load image from a file and then close the file handle.
  (使用<see cref="M:System.Drawing.Image.FromFile(System.String)"/>函数在加载完成图像到Dispose这段之间内都不会释放文件句柄，
@@ -9392,6 +9504,12 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <remarks>
  checked by Excel
  </remarks>
+</member>
+<member name="P:Microsoft.VisualBasic.Math.Correlations.Correlations.PearsonDefault">
+ <summary>
+ 默认使用Pearson相似度
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:Microsoft.VisualBasic.Math.Correlations.Correlations.GetPearson(System.Double[],System.Double[])">
  <summary>
@@ -13696,149 +13814,25 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="byteData"></param>
  <remarks></remarks>
 </member>
-<member name="T:Microsoft.VisualBasic.Language.Values.Clones">
+<member name="T:Microsoft.VisualBasic.Language.Vectorization.Strings">
  <summary>
- Some extension for copy a collection object.
+ The <see cref="T:System.String"/> module contains procedures used to perform string operations.
  </summary>
 </member>
-<member name="M:Microsoft.VisualBasic.Language.Values.Clones.Clone``2(System.Collections.Generic.IDictionary{``0,``1})">
+<member name="M:Microsoft.VisualBasic.Language.Vectorization.Strings.Len(System.Collections.Generic.IEnumerable{System.String})">
  <summary>
- Creates a new dictionary
+ Returns an integer containing either the number of characters in a string or 
+ the nominal number of bytes required to store a variable.
  </summary>
- <typeparam name="T"></typeparam>
- <typeparam name="V"></typeparam>
- <param name="table"></param>
- <returns></returns>
-</member>
-<member name="T:Microsoft.VisualBasic.Language.Default.DefaultString">
- <summary>
- <see cref="T:Microsoft.VisualBasic.CommandLine.CommandLine"/> optional value helper data model
- </summary>
-</member>
-<member name="P:Microsoft.VisualBasic.Language.Default.DefaultString.DefaultValue">
- <summary>
- The optional argument value that read from <see cref="T:Microsoft.VisualBasic.CommandLine.CommandLine"/> 
- </summary>
- <returns></returns>
-</member>
-<member name="P:Microsoft.VisualBasic.Language.Default.DefaultString.IsEmpty">
- <summary>
- <see cref="P:Microsoft.VisualBasic.Language.Default.DefaultString.DefaultValue"/> is empty?
- </summary>
- <returns></returns>
-</member>
-<member name="M:Microsoft.VisualBasic.Language.Default.DefaultString.LoadJson``1">
- <summary>
- 如果文件不存在或者文本内容为空，则函数返回空值
- </summary>
- <typeparam name="T"></typeparam>
- <returns></returns>
-</member>
-<member name="M:Microsoft.VisualBasic.Language.Default.DefaultString.op_BitwiseOr(Microsoft.VisualBasic.Language.Default.DefaultString,System.String)">
- <summary>
- If <paramref name="value"/> is empty then returns <paramref name="default"/>, else returns <paramref name="value"/> itself.
- </summary>
- <param name="value"></param>
- <param name="default$"></param>
- <returns></returns>
-</member>
-<member name="T:Microsoft.VisualBasic.Language.Default.BinaryAssert`1">
- <summary>
- + Test of A eqauls to B?
- </summary>
- <typeparam name="T"></typeparam>
- <param name="x"></param>
- <param name="y"></param>
- <returns></returns>
-</member>
-<member name="T:Microsoft.VisualBasic.Language.Default.IsEmpty">
- <summary>
- Apply on the structure type that assert the object is null or not.
- </summary>
-</member>
-<member name="T:Microsoft.VisualBasic.Language.Default.DefaultValue`1">
- <summary>
- The default value
- </summary>
- <typeparam name="T"></typeparam>
-</member>
-<member name="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.Value">
- <summary>
- The default value for <see cref="P:Microsoft.VisualBasic.Language.Default.DefaultValue`1.DefaultValue"/>
- </summary>
-</member>
-<member name="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.LazyValue">
- <summary>
- 假若生成目标值的时间比较久，可以将其申明为Lambda表达式，这样子可以进行惰性加载
- </summary>
-</member>
-<member name="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.assert">
- <summary>
- asset that if target value is null?
- </summary>
-</member>
-<member name="M:Microsoft.VisualBasic.Language.Default.DefaultValue`1.op_Addition(Microsoft.VisualBasic.Language.Default.DefaultValue{`0},Microsoft.VisualBasic.Language.Default.Assert{System.Object})">
- <summary>
- Add handler
- </summary>
- <param name="[default]"></param>
- <param name="assert"></param>
- <returns></returns>
- 
-</member>
-<member name="M:Microsoft.VisualBasic.Language.Default.DefaultValue`1.op_BitwiseOr(`0,Microsoft.VisualBasic.Language.Default.DefaultValue{`0})">
- <summary>
- if <see cref="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.assert"/> is true, then will using default <see cref="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.Value"/>, 
- otherwise, return the source <paramref name="obj"/>.
- </summary>
- <param name="obj"></param>
- <param name="[default]"></param>
- <returns></returns>
- 
-</member>
-<member name="M:Microsoft.VisualBasic.Language.Default.DefaultValue`1.op_BitwiseOr(Microsoft.VisualBasic.Language.Default.DefaultValue{`0},Microsoft.VisualBasic.Language.Default.DefaultValue{`0})">
- <summary>
- 这个操作符允许链式计算默认值：
- 
- A OR B OR C OR x OR y OR z
- </summary>
- <param name="x"></param>
- <param name="y"></param>
- <returns></returns>
-</member>
-<member name="M:Microsoft.VisualBasic.Language.AssertEqualsExtensions.All``1(Microsoft.VisualBasic.Language.Vectorization.Vector{``0})">
- <summary>
- Assert that all of the elements in target vector match the test conditions
- </summary>
- <typeparam name="T"></typeparam>
- <param name="vector"></param>
- <returns></returns>
-</member>
-<member name="M:Microsoft.VisualBasic.Language.AssertEqualsExtensions.Any``1(Microsoft.VisualBasic.Language.Vectorization.Vector{``0})">
- <summary>
- Assert that any of the elements in target vector match the test conditions
- </summary>
- <typeparam name="T"></typeparam>
- <param name="vector"></param>
- <returns></returns>
-</member>
-<member name="M:Microsoft.VisualBasic.Language.AssertAll`1.op_Equality(Microsoft.VisualBasic.Language.AssertAll{`0},`0)">
- <summary>
- Does the elements in this vector all equals to a specific value <paramref name="x"/>?
- </summary>
- <param name="assert"></param>
- <param name="x"></param>
- <returns></returns>
- 
-</member>
-<member name="M:Microsoft.VisualBasic.Language.AssertAny`1.op_Equality(Microsoft.VisualBasic.Language.AssertAny{`0},`0)">
- <summary>
- Does the elements in this vector all equals to a specific value <paramref name="x"/>?
- </summary>
- <param name="assert"></param>
- <param name="x"></param>
- <returns></returns>
- 
+ <param name="strings">
+ Any valid String expression or variable name. If Expression is of type Object, 
+ the Len function returns the size as it will be written to the file by the 
+ FilePut function.
+ </param>
+ <returns>
+ Returns an integer containing either the number of characters in a string or 
+ the nominal number of bytes required to store a variable.
+ </returns>
 </member>
 <member name="T:Microsoft.VisualBasic.Language.Vectorization.BooleanVector">
  <summary>
@@ -13914,6 +13908,20 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <see cref="M:Microsoft.VisualBasic.RegexExtensions.ToArray(System.Text.RegularExpressions.MatchCollection)"/>
  </summary>
  <param name="x"></param>
+ <returns></returns>
+ 
+</member>
+<member name="P:Microsoft.VisualBasic.Language.Vectorization.StringVector.Len">
+ <summary>
+ Returns the length of each strings
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.Vectorization.StringVector.op_Implicit(System.String)~Microsoft.VisualBasic.Language.Vectorization.StringVector">
+ <summary>
+ 
+ </summary>
+ <param name="expression">a,b,c,d,e</param>
  <returns></returns>
  
 </member>
@@ -14180,6 +14188,150 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="vector"></param>
  <param name="obj"></param>
  <returns></returns>
+</member>
+<member name="T:Microsoft.VisualBasic.Language.Values.Clones">
+ <summary>
+ Some extension for copy a collection object.
+ </summary>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.Values.Clones.Clone``2(System.Collections.Generic.IDictionary{``0,``1})">
+ <summary>
+ Creates a new dictionary
+ </summary>
+ <typeparam name="T"></typeparam>
+ <typeparam name="V"></typeparam>
+ <param name="table"></param>
+ <returns></returns>
+</member>
+<member name="T:Microsoft.VisualBasic.Language.Default.DefaultString">
+ <summary>
+ <see cref="T:Microsoft.VisualBasic.CommandLine.CommandLine"/> optional value helper data model
+ </summary>
+</member>
+<member name="P:Microsoft.VisualBasic.Language.Default.DefaultString.DefaultValue">
+ <summary>
+ The optional argument value that read from <see cref="T:Microsoft.VisualBasic.CommandLine.CommandLine"/> 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:Microsoft.VisualBasic.Language.Default.DefaultString.IsEmpty">
+ <summary>
+ <see cref="P:Microsoft.VisualBasic.Language.Default.DefaultString.DefaultValue"/> is empty?
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.Default.DefaultString.LoadJson``1">
+ <summary>
+ 如果文件不存在或者文本内容为空，则函数返回空值
+ </summary>
+ <typeparam name="T"></typeparam>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.Default.DefaultString.op_BitwiseOr(Microsoft.VisualBasic.Language.Default.DefaultString,System.String)">
+ <summary>
+ If <paramref name="value"/> is empty then returns <paramref name="default"/>, else returns <paramref name="value"/> itself.
+ </summary>
+ <param name="value"></param>
+ <param name="default$"></param>
+ <returns></returns>
+</member>
+<member name="T:Microsoft.VisualBasic.Language.Default.BinaryAssert`1">
+ <summary>
+ + Test of A eqauls to B?
+ </summary>
+ <typeparam name="T"></typeparam>
+ <param name="x"></param>
+ <param name="y"></param>
+ <returns></returns>
+</member>
+<member name="T:Microsoft.VisualBasic.Language.Default.IsEmpty">
+ <summary>
+ Apply on the structure type that assert the object is null or not.
+ </summary>
+</member>
+<member name="T:Microsoft.VisualBasic.Language.Default.DefaultValue`1">
+ <summary>
+ The default value
+ </summary>
+ <typeparam name="T"></typeparam>
+</member>
+<member name="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.Value">
+ <summary>
+ The default value for <see cref="P:Microsoft.VisualBasic.Language.Default.DefaultValue`1.DefaultValue"/>
+ </summary>
+</member>
+<member name="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.LazyValue">
+ <summary>
+ 假若生成目标值的时间比较久，可以将其申明为Lambda表达式，这样子可以进行惰性加载
+ </summary>
+</member>
+<member name="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.assert">
+ <summary>
+ asset that if target value is null?
+ </summary>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.Default.DefaultValue`1.op_Addition(Microsoft.VisualBasic.Language.Default.DefaultValue{`0},Microsoft.VisualBasic.Language.Default.Assert{System.Object})">
+ <summary>
+ Add handler
+ </summary>
+ <param name="[default]"></param>
+ <param name="assert"></param>
+ <returns></returns>
+ 
+</member>
+<member name="M:Microsoft.VisualBasic.Language.Default.DefaultValue`1.op_BitwiseOr(`0,Microsoft.VisualBasic.Language.Default.DefaultValue{`0})">
+ <summary>
+ if <see cref="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.assert"/> is true, then will using default <see cref="F:Microsoft.VisualBasic.Language.Default.DefaultValue`1.Value"/>, 
+ otherwise, return the source <paramref name="obj"/>.
+ </summary>
+ <param name="obj"></param>
+ <param name="[default]"></param>
+ <returns></returns>
+ 
+</member>
+<member name="M:Microsoft.VisualBasic.Language.Default.DefaultValue`1.op_BitwiseOr(Microsoft.VisualBasic.Language.Default.DefaultValue{`0},Microsoft.VisualBasic.Language.Default.DefaultValue{`0})">
+ <summary>
+ 这个操作符允许链式计算默认值：
+ 
+ A OR B OR C OR x OR y OR z
+ </summary>
+ <param name="x"></param>
+ <param name="y"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.AssertEqualsExtensions.All``1(Microsoft.VisualBasic.Language.Vectorization.Vector{``0})">
+ <summary>
+ Assert that all of the elements in target vector match the test conditions
+ </summary>
+ <typeparam name="T"></typeparam>
+ <param name="vector"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.AssertEqualsExtensions.Any``1(Microsoft.VisualBasic.Language.Vectorization.Vector{``0})">
+ <summary>
+ Assert that any of the elements in target vector match the test conditions
+ </summary>
+ <typeparam name="T"></typeparam>
+ <param name="vector"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Language.AssertAll`1.op_Equality(Microsoft.VisualBasic.Language.AssertAll{`0},`0)">
+ <summary>
+ Does the elements in this vector all equals to a specific value <paramref name="x"/>?
+ </summary>
+ <param name="assert"></param>
+ <param name="x"></param>
+ <returns></returns>
+ 
+</member>
+<member name="M:Microsoft.VisualBasic.Language.AssertAny`1.op_Equality(Microsoft.VisualBasic.Language.AssertAny{`0},`0)">
+ <summary>
+ Does the elements in this vector all equals to a specific value <paramref name="x"/>?
+ </summary>
+ <param name="assert"></param>
+ <param name="x"></param>
+ <returns></returns>
+ 
 </member>
 <member name="M:Microsoft.VisualBasic.Language.ArgumentReference.op_Equality(Microsoft.VisualBasic.Language.ArgumentReference,System.Object)">
  <summary>
@@ -16465,6 +16617,13 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <param name="value"></param>
  <returns></returns>
 </member>
+<member name="M:Microsoft.VisualBasic.Language.LanguageAPI.Self``1">
+ <summary>
+ My self: <see cref="M:Microsoft.VisualBasic.Language.LanguageAPI.ByRef``1(``0)"/>
+ </summary>
+ <typeparam name="T"></typeparam>
+ <returns></returns>
+</member>
 <member name="M:Microsoft.VisualBasic.Language.LanguageAPI.ByRef``1(``0)">
  <summary>
  Extension method for VisualBasic ``With`` anonymous variable syntax source reference helper
@@ -17698,6 +17857,13 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  将任意序列转换为集合类型
  </summary>
  <param name="source"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.SetsExtension.AsSet(System.Collections.Generic.IEnumerable{System.String})">
+ <summary>
+ Create a string set
+ </summary>
+ <param name="strings"></param>
  <returns></returns>
 </member>
 <member name="M:Microsoft.VisualBasic.SetAPI.Intersection``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},Microsoft.VisualBasic.GenericLambda{``0}.GetUid)">
@@ -19060,7 +19226,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
 </member>
 <member name="M:Microsoft.VisualBasic.Linq.Extensions.Sequence(System.Int32)">
  <summary>
- 产生指定数目的一个递增序列(所生成序列的数值就是生成的数组的元素的个数)
+ 产生指定数目的一个递增序列(用于生成序列的输入参数<paramref name="n"/>数值就是生成的数组的元素的个数)
  </summary>
  <param name="n">大于或者等于0的一个数，当小于0的时候会出错</param>
  <returns></returns>
@@ -19360,7 +19526,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  <summary>
  从Csv文件之中所读取出来的字符串之中解析出目标对象
  </summary>
- <param name="cell$"></param>
+ <param name="content"></param>
  <returns></returns>
 </member>
 <member name="F:Microsoft.VisualBasic.Scripting.Runtime.NarrowingReflection.NarrowingOperator">
@@ -19529,6 +19695,41 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  Methods for convert the <see cref="T:System.String"/> to some .NET data types.
  </summary>
 </member>
+<member name="M:Microsoft.VisualBasic.Scripting.Runtime.Casting.ScriptValue(System.Drawing.Size)">
+ <summary>
+ <see cref="T:System.Drawing.Size"/> object to string expression
+ </summary>
+ <param name="size"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Scripting.Runtime.Casting.PointParser(System.String)">
+ <summary>
+ Parse <see cref="T:System.Drawing.Point"/> from a given string expression
+ </summary>
+ <param name="pt$"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Scripting.Runtime.Casting.FloatPointParser(System.String)">
+ <summary>
+ Parse <see cref="T:System.Drawing.PointF"/> from a given string expression
+ </summary>
+ <param name="pt$"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Scripting.Runtime.Casting.SizeParser(System.String)">
+ <summary>
+ Parse <see cref="T:System.Drawing.Size"/> from a given string expression
+ </summary>
+ <param name="pt$"></param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Scripting.Runtime.Casting.FloatSizeParser(System.String)">
+ <summary>
+ Parse <see cref="T:System.Drawing.SizeF"/> from a given string expression
+ </summary>
+ <param name="pt$"></param>
+ <returns></returns>
+</member>
 <member name="M:Microsoft.VisualBasic.Scripting.Runtime.Casting.AsBaseType``2(``0)">
  <summary>
  ``DirectCast(obj, T)``. 这个函数主要是为了解决Class类型之间的继承类型的转换，例如子类型向基础类型转换
@@ -19595,7 +19796,7 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
 </member>
 <member name="M:Microsoft.VisualBasic.Scripting.Runtime.Casting.CastCommandLine(System.String)">
  <summary>
- <see cref="M:Microsoft.VisualBasic.CommandLine.CLITools.TryParse(System.Collections.Generic.IEnumerable{System.String},System.Boolean)"/>
+ <see cref="M:Microsoft.VisualBasic.CommandLine.CLITools.TryParse(System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.String)"/>
  </summary>
  <param name="obj"></param>
  <returns></returns>
@@ -21137,6 +21338,16 @@ You should have received a copy of the GNU  [字符串的其余部分被截断]&
  </summary>
  <param name="s$"></param>
  <returns></returns>
+</member>
+<member name="M:Microsoft.VisualBasic.Text.GreekAlphabets.AlphabetUnescape(System.String,System.Boolean,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="s$"></param>
+ <param name="removesContacts"></param>
+ <param name="upperCase"></param>
+ <returns></returns>
+ 
 </member>
 <member name="T:Microsoft.VisualBasic.Text.Levenshtein.LevenshteinString">
  <summary>
@@ -30216,7 +30427,12 @@ to take away yo [rest of string was truncated]&quot;;.
  <returns></returns>
  
 </member>
-<member name="M:Microsoft.VisualBasic.App.__CLI">
+<member name="F:Microsoft.VisualBasic.App.gitBash">
+ <summary>
+ Enable .NET application running from git bash terminal
+ </summary>
+</member>
+<member name="M:Microsoft.VisualBasic.App.__cli">
  <summary>
  Makes compatibility with git bash: <see cref="F:Microsoft.VisualBasic.App.gitBash"/> = ``C:/Program Files/Git``
  </summary>
@@ -30794,6 +31010,15 @@ to take away yo [rest of string was truncated]&quot;;.
  to accommodate the number of elements copied.
  </summary>
 </member>
+<member name="M:Microsoft.VisualBasic.ListExtensions.AppendAfter``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+ <summary>
+ 将<paramref name="join"/>加入到<paramref name="list"/>序列后面
+ </summary>
+ <typeparam name="T"></typeparam>
+ <param name="join"></param>
+ <param name="list"></param>
+ <returns></returns>
+</member>
 <member name="M:Microsoft.VisualBasic.ListExtensions.TopMostFrequent``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
  <summary>
  查找出序列之中最频繁出现的对象(这个函数会自动跳过空值)
@@ -30863,11 +31088,13 @@ to take away yo [rest of string was truncated]&quot;;.
 </member>
 <member name="M:Microsoft.VisualBasic.ListExtensions.AsList``1(System.Collections.Generic.IEnumerable{``0})">
  <summary>
- Initializes a new instance of the <see cref="M:Microsoft.VisualBasic.Language.LanguageAPI.list(Microsoft.VisualBasic.Language.ArgumentReference[])"/>`1 class that
+ Initializes a new instance of the <see cref="T:Microsoft.VisualBasic.Language.List`1"/> class that
  contains elements copied from the specified collection and has sufficient capacity
  to accommodate the number of elements copied.
  </summary>
- <param name="source">The collection whose elements are copied to the new list.</param>
+ <param name="source">
+ The collection whose elements are copied to the new list.
+ </param>
 </member>
 <member name="M:Microsoft.VisualBasic.ListExtensions.HasKey(System.Collections.Hashtable,System.Object)">
  <summary>
@@ -31166,7 +31393,7 @@ to take away yo [rest of string was truncated]&quot;;.
 </member>
 <member name="M:Microsoft.VisualBasic.KeyValuePairExtensions.ReverseMaps``2(System.Collections.Generic.Dictionary{``0,``1},System.Boolean)">
  <summary>
- 使用这个函数应该要确保value是没有重复的
+ 使用这个函数应该要确保value是没有重复的，假若<paramref name="removeDuplicated"/>是默认值的话.
  </summary>
  <typeparam name="T"></typeparam>
  <typeparam name="V"></typeparam>
@@ -31897,7 +32124,7 @@ to take away yo [rest of string was truncated]&quot;;.
  Load class object from the exists Xml document.(从文件之中加载XML之中的数据至一个对象类型之中)
  </summary>
  <typeparam name="T"></typeparam>
- <param name="XmlFile">The path of the xml document.(XML文件的文件路径)</param>
+ <param name="xmlFile">The path of the xml document.(XML文件的文件路径)</param>
  <param name="throwEx">
  If the deserialization operation have throw a exception, then this function should process this error automatically or just throw it?
  (当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值)
@@ -31913,7 +32140,7 @@ to take away yo [rest of string was truncated]&quot;;.
  <summary>
  从文件之中加载XML之中的数据至一个对象类型之中
  </summary>
- <param name="XmlFile">XML文件的文件路径</param>
+ <param name="xmlFile">XML文件的文件路径</param>
  <param name="ThrowEx">当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值</param>
  <param name="preprocess">Xml文件的预处理操作</param>
  <returns></returns>
@@ -31969,7 +32196,7 @@ to take away yo [rest of string was truncated]&quot;;.
  使用一个XML文本内容的一个片段创建一个XML映射对象
  </summary>
  <typeparam name="T"></typeparam>
- <param name="Xml">是Xml文件的文件内容而非文件路径</param>
+ <param name="xml">是Xml文件的文件内容而非文件路径</param>
  <returns></returns>
  <remarks></remarks>
  
@@ -33095,6 +33322,14 @@ to take away yo [rest of string was truncated]&quot;;.
  <param name="s">The input test string</param>
  <returns></returns>
 </member>
+<member name="M:Microsoft.VisualBasic.StringHelpers.NotEmpty(System.String,System.Boolean)">
+ <summary>
+ Not <see cref="M:Microsoft.VisualBasic.StringHelpers.StringEmpty(System.String,System.Boolean)"/>
+ </summary>
+ <param name="s$"></param>
+ <param name="whitespaceAsEmpty"></param>
+ <returns></returns>
+</member>
 <member name="M:Microsoft.VisualBasic.StringHelpers.RemoveLast(System.Text.StringBuilder)">
  <summary>
  Call <see cref="M:System.Text.StringBuilder.Remove(System.Int32,System.Int32)"/>(<see cref="P:System.Text.StringBuilder.Length"/> - 1, 1) for removes the last character in the string sequence.
@@ -33206,7 +33441,7 @@ to take away yo [rest of string was truncated]&quot;;.
  <summary>
  在字符串前面填充指定长度的00序列，假若输入的字符串长度大于fill的长度，则不再进行填充
  </summary>
- <typeparam name="T"></typeparam>
+ <typeparam name="T">限定类型为字符串或者数值基础类型</typeparam>
  <param name="n"></param>
  <param name="fill"></param>
  <returns></returns>
@@ -33646,12 +33881,14 @@ to take away yo [rest of string was truncated]&quot;;.
 </member>
 <member name="M:Microsoft.VisualBasic.ProgramPathSearchTool.BaseName(System.String,System.Boolean)">
  <summary>
- Gets the name of the target file or directory, if the target is a file, then the name without the extension name.
+ Gets the name of the target file or directory, if the target is a file, then the name without 
+ the extension suffix name.
  (获取目标文件夹的名称或者文件的不包含拓展名的名称)
  </summary>
  <returns></returns>
  <remarks>
  ###### 2017-2-14 
+ 
  原先的函数是依靠系统的API来工作的，故而只能够工作于已经存在的文件之上，
  所以在这里为了更加方便的兼容文件夹或者文件路径，在这使用字符串的方法来
  进行截取
@@ -33861,6 +34098,7 @@ to take away yo [rest of string was truncated]&quot;;.
  </summary>
  <param name="url"></param>
  <returns></returns>
+ 
 </member>
 <member name="M:Microsoft.VisualBasic.WebServiceUtils.BuildReqparm(System.Collections.Generic.Dictionary{System.String,System.String})">
  <summary>
@@ -33979,7 +34217,7 @@ to take away yo [rest of string was truncated]&quot;;.
  </param>
  <returns></returns>
 </member>
-<member name="M:Microsoft.VisualBasic.WebServiceUtils.POST(System.String,System.Collections.Specialized.NameValueCollection,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.String)">
+<member name="M:Microsoft.VisualBasic.WebServiceUtils.POST(System.String,System.Collections.Specialized.NameValueCollection,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.String,Microsoft.VisualBasic.Text.Encodings)">
  <summary>
  POST http request for get html.
  (请注意，假若<paramref name="params"/>之中含有字符串数组的话，则会出错，这个时候需要使用
@@ -34693,6 +34931,13 @@ to take away yo [rest of string was truncated]&quot;;.
  <returns>A integer array of subscript index of the target generic collection.</returns>
  <remarks></remarks>
 
+</member>
+<member name="M:Microsoft.VisualBasic.Extensions.Sequence(Microsoft.VisualBasic.ComponentModel.Ranges.Model.IntRange,System.Int32)">
+ <summary>
+ Alias of the linq function <see cref="M:System.Linq.Enumerable.Range(System.Int32,System.Int32)"/>
+ </summary>
+ <param name="range"></param>
+ <returns></returns>
 </member>
 <member name="M:Microsoft.VisualBasic.Extensions.ToDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Boolean)">
  <summary>
