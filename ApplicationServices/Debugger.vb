@@ -95,7 +95,6 @@ Public Module VBDebugger
     End Function
 
     Dim __mute As Boolean = False
-    Dim logs As New List(Of LoggingDriver)
 
     Friend __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
 
@@ -151,7 +150,7 @@ Public Module VBDebugger
 
             Call My.InnerQueue.AddToQueue(
                 Sub()
-                    Call __print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
+                    Call My.Log4VB.Print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
                 End Sub)
         End If
 
@@ -172,7 +171,7 @@ Public Module VBDebugger
 
             Call My.InnerQueue.AddToQueue(
                 Sub()
-                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
+                    Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
                 End Sub)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
@@ -189,7 +188,7 @@ Public Module VBDebugger
 
             Call My.InnerQueue.AddToQueue(
                 Sub()
-                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+                    Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
                 End Sub)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
@@ -197,50 +196,10 @@ Public Module VBDebugger
         End If
     End Sub
 
-    ''' <summary>
-    ''' 头部和消息字符串都是放在一个task之中进行输出的，<see cref="xConsole"/>的输出也是和内部的debugger输出使用的同一个消息线程
-    ''' </summary>
-    ''' <param name="head"></param>
-    ''' <param name="str"></param>
-    ''' <param name="msgColor"></param>
-    ''' <param name="level"><see cref="ConsoleColor"/> or <see cref="MSG_TYPES"/></param>
-    Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As Integer)
-        If ForceSTDError Then
-            Call Console.Error.WriteLine($"[{head}]{str}")
-        Else
-            Dim cl As ConsoleColor = Console.ForegroundColor
-            Dim headColor As ConsoleColor = getColor(level)
-
-            If msgColor = headColor Then
-                Console.ForegroundColor = headColor
-                Console.WriteLine($"[{head}]{str}")
-                Console.ForegroundColor = cl
-            Else
-                Call Console.Write("[")
-                Console.ForegroundColor = headColor
-                Call Console.Write(head)
-                Console.ForegroundColor = cl
-                Call Console.Write("]")
-
-                Call WriteLine(str, msgColor)
-            End If
-        End If
-
-        For Each driver As LoggingDriver In VBDebugger.logs
-            Call driver(head, str, level)
-        Next
-    End Sub
-
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AttachLoggingDriver(driver As LoggingDriver)
-        logs += driver
+        My.Log4VB.logs.Add(driver)
     End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getColor(level As Integer) As ConsoleColor
-        Return If(DebuggerTagColors.ContainsKey(level), DebuggerTagColors(level), CType(level, ConsoleColor))
-    End Function
 
     ''' <summary>
     ''' The function will print the exception details information on the standard <see cref="console"/>, <see cref="debug"/> console, and system <see cref="trace"/> console.
@@ -313,16 +272,6 @@ Public Module VBDebugger
     End Sub
 
     ''' <summary>
-    ''' ``<see cref="MSG_TYPES"/> -> <see cref="ConsoleColor"/>``
-    ''' </summary>
-    ReadOnly DebuggerTagColors As New Dictionary(Of Integer, ConsoleColor) From {
-        {MSG_TYPES.DEBUG, ConsoleColor.DarkGreen},
-        {MSG_TYPES.ERR, ConsoleColor.Red},
-        {MSG_TYPES.INF, ConsoleColor.Blue},
-        {MSG_TYPES.WRN, ConsoleColor.Yellow}
-    }
-
-    ''' <summary>
     ''' Display the wraning level(YELLOW color) message on the console.
     ''' </summary>
     ''' <param name="msg"></param>
@@ -335,7 +284,7 @@ Public Module VBDebugger
 
             Call My.InnerQueue.AddToQueue(
                 Sub()
-                    Call __print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
+                    Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
                 End Sub)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{msg}")
