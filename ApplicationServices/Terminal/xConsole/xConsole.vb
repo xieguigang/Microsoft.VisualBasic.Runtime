@@ -159,12 +159,12 @@ Namespace Terminal
         ''' <param name="format">The input string</param>
         ''' <param name="args"></param>
         Public Sub CoolWrite(format As String, ParamArray args As Object())
-            My.InnerQueue.AddToQueue(Sub()
-                                         Dim old As Boolean = CoolWriteSettings.CoolWriting
-                                         CoolWriteSettings.CoolWriting = True
-                                         Call Print(String.Format(format, args))
-                                         CoolWriteSettings.CoolWriting = old
-                                     End Sub)
+            My.AddToQueue(Sub()
+                              Dim old As Boolean = CoolWriteSettings.CoolWriting
+                              CoolWriteSettings.CoolWriting = True
+                              Call Print(String.Format(format, args))
+                              CoolWriteSettings.CoolWriting = old
+                          End Sub)
         End Sub
 
         ''' <summary>

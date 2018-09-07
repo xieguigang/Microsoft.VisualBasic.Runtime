@@ -52,7 +52,7 @@ Namespace My
     ''' </summary>
     Module InnerQueue
 
-        ReadOnly InnerThread As New ThreadQueue
+        Public ReadOnly Property InnerThread As New ThreadQueue
 
         ''' <summary>
         ''' 添加终端输出的任务到任务队列之中
