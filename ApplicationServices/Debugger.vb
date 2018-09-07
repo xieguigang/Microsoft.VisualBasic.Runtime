@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::051219c7858b016ac1936b62bc6eb520, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module VBDebugger
-    ' 
-    '     Function: die, LinqProc
-    '     Delegate Sub
-    ' 
-    '         Properties: ForceSTDError, Mute, UsingxConsole
-    ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, getColor, (+2 Overloads) PrintException
-    '                   this, Warning
-    ' 
-    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, __print, (+3 Overloads) Assertion, AttachLoggingDriver
-    '              cat, (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module VBDebugger
+' 
+'     Function: die, LinqProc
+'     Delegate Sub
+' 
+'         Properties: ForceSTDError, Mute, UsingxConsole
+' 
+'         Function: __DEBUG_ECHO, Assert, BENCHMARK, getColor, (+2 Overloads) PrintException
+'                   this, Warning
+' 
+'         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, __print, (+3 Overloads) Assertion, AttachLoggingDriver
+'              cat, (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -125,13 +125,6 @@ Public Module VBDebugger
     ''' <returns></returns>
     Public Property ForceSTDError As Boolean = False
 
-    ReadOnly _Indent As String() = {
-        "",
-        New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
-        New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
-        New String(" ", 9), New String(" ", 10)
-    }
-
     ''' <summary>
     ''' Test how long this <paramref name="test"/> will takes.
     ''' </summary>
@@ -148,10 +141,7 @@ Public Module VBDebugger
             Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
             Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call My.Log4VB.Print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
         End If
 
         Return ms
@@ -165,14 +155,18 @@ Public Module VBDebugger
     ''' <param name="indent"></param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
     <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0) As String
+        Static indents$() = {"",
+            New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
+            New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
+            New String(" ", 9), New String(" ", 10)
+        }
+
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Dim head As String = $"DEBUG {Now.ToString}"
-            Dim str As String = $"{_Indent(indent)} {msg}"
+            Dim str As String = $"{indents(indent)} {msg}"
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
+
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
@@ -186,10 +180,8 @@ Public Module VBDebugger
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
@@ -207,9 +199,10 @@ Public Module VBDebugger
     ''' </summary>
     ''' <typeparam name="ex"></typeparam>
     ''' <param name="exception"></param>
-    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = New Exception(memberName, exception).ToString
-        Return PrintException(exMsg, memberName)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Return New Exception(memberName, exception).ToString.PrintException(memberName)
     End Function
 
     ''' <summary>
@@ -218,11 +211,11 @@ Public Module VBDebugger
     ''' <param name="msg"></param>
     ''' <param name="memberName"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = $"[ERROR {Now.ToString}] <{memberName}>::{msg}"
-        Call My.InnerQueue.AddToQueue(Sub() Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red))
-        Return False
+    Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Return My.Log4VB.Print($"[ERROR {Now.ToString}]", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
     End Function
 
     ''' <summary>
@@ -263,10 +256,7 @@ Public Module VBDebugger
         If Not Mute Then
             Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
-                End Sub)
+            Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{msg}")
 #End If

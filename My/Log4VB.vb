@@ -76,32 +76,37 @@ Namespace My
         ''' <param name="msg"></param>
         ''' <param name="msgColor"></param>
         ''' <param name="level"><see cref="ConsoleColor"/> or <see cref="MSG_TYPES"/></param>
-        Public Sub Print(header$, msg$, msgColor As ConsoleColor, level As Integer)
-            If ForceSTDError Then
-                Call Console.Error.WriteLine($"[{header}]{msg}")
-            Else
-                Dim cl As ConsoleColor = Console.ForegroundColor
-                Dim headColor As ConsoleColor = getColor(level)
+        Public Function Print(header$, msg$, msgColor As ConsoleColor, level As Integer) As Boolean
+            My.InnerQueue.AddToQueue(
+                Sub()
+                    If ForceSTDError Then
+                        Call Console.Error.WriteLine($"[{header}]{msg}")
+                    Else
+                        Dim cl As ConsoleColor = Console.ForegroundColor
+                        Dim headColor As ConsoleColor = getColor(level)
 
-                If msgColor = headColor Then
-                    Console.ForegroundColor = headColor
-                    Console.WriteLine($"[{header}]{msg}")
-                    Console.ForegroundColor = cl
-                Else
-                    Call Console.Write("[")
-                    Console.ForegroundColor = headColor
-                    Call Console.Write(header)
-                    Console.ForegroundColor = cl
-                    Call Console.Write("]")
+                        If msgColor = headColor Then
+                            Console.ForegroundColor = headColor
+                            Console.WriteLine($"[{header}]{msg}")
+                            Console.ForegroundColor = cl
+                        Else
+                            Call Console.Write("[")
+                            Console.ForegroundColor = headColor
+                            Call Console.Write(header)
+                            Console.ForegroundColor = cl
+                            Call Console.Write("]")
 
-                    Call WriteLine(msg, msgColor)
-                End If
-            End If
+                            Call WriteLine(msg, msgColor)
+                        End If
+                    End If
+                End Sub)
 
             For Each driver As LoggingDriver In logs
                 Call driver(header, msg, level)
             Next
-        End Sub
+
+            Return False
+        End Function
 
         ''' <summary>
         ''' 输出的终端消息带有指定的终端颜色色彩，当<see cref="UsingxConsole"/>为True的时候，
