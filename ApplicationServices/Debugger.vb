@@ -245,30 +245,11 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
     ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub WriteLine(msg As String, color As ConsoleColor)
-        If Mute Then
-            Return
-        End If
-
-        If ForceSTDError Then
-            Console.Error.WriteLine(msg)
-        Else
-            If UsingxConsole AndAlso App.IsMicrosoftPlatform Then
-                Call xConsole.CoolWrite(msg)
-            Else
-                ' 使用传统的输出输出方法
-                Dim cl As ConsoleColor = Console.ForegroundColor
-
-                Console.ForegroundColor = color
-                Console.WriteLine(msg)
-                Console.ForegroundColor = cl
-            End If
-        End If
-
-#If DEBUG Then
-        Call Debug.WriteLine(msg)
-#End If
+    Public Sub WriteLine(msg$, color As ConsoleColor)
+        My.Log4VB.WriteLine(msg, color)
     End Sub
 
     ''' <summary>

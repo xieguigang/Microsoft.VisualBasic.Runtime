@@ -98,9 +98,42 @@ Namespace My
                 End If
             End If
 
-            For Each driver As LoggingDriver In VBDebugger.logs
+            For Each driver As LoggingDriver In logs
                 Call driver(header, msg, level)
             Next
+        End Sub
+
+        ''' <summary>
+        ''' 输出的终端消息带有指定的终端颜色色彩，当<see cref="UsingxConsole"/>为True的时候，
+        ''' <paramref name="msg"/>参数之中的文本字符串兼容<see cref="xConsole"/>语法，
+        ''' 而<paramref name="color"/>将会被<see cref="xConsole"/>覆盖而不会起作用
+        ''' </summary>
+        ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
+        ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
+        <Extension>
+        Public Sub WriteLine(msg As String, color As ConsoleColor)
+            If Mute Then
+                Return
+            End If
+
+            If ForceSTDError Then
+                Console.Error.WriteLine(msg)
+            Else
+                If UsingxConsole AndAlso App.IsMicrosoftPlatform Then
+                    Call xConsole.CoolWrite(msg)
+                Else
+                    ' 使用传统的输出输出方法
+                    Dim cl As ConsoleColor = Console.ForegroundColor
+
+                    Console.ForegroundColor = color
+                    Console.WriteLine(msg)
+                    Console.ForegroundColor = cl
+                End If
+            End If
+
+#If DEBUG Then
+        Call Debug.WriteLine(msg)
+#End If
         End Sub
     End Module
 End Namespace
