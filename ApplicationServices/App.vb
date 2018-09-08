@@ -814,6 +814,11 @@ Public Module App
         Return Nothing
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function TemporaryEnvironment(newLocation As String) As FileIO.TemporaryEnvironment
+        Return New FileIO.TemporaryEnvironment(newLocation)
+    End Function
+
     ''' <summary>
     ''' Function returns the file path of the application log file.
     ''' (函数返回的是日志文件的文件路径)
