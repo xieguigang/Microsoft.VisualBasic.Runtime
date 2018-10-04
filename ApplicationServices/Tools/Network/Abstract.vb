@@ -86,11 +86,10 @@ Namespace Net.Abstract
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="CA"><see cref="SSL.Certificate.uid"/></param>
     ''' <param name="request"></param>
     ''' <param name="RemoteAddress"></param>
     ''' <returns></returns>
-    Public Delegate Function DataRequestHandler(CA As Long, request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
+    Public Delegate Function DataRequestHandler(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
 
     ''' <summary>
     ''' 处理错误的工作逻辑的抽象接口
