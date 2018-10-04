@@ -189,5 +189,9 @@ Namespace Net.Protocols.Reflection
 
             Return Nothing
         End Function
+
+        Public Shared Narrowing Operator CType(handler As ProtocolHandler) As DataRequestHandler
+            Return AddressOf handler.HandleRequest
+        End Operator
     End Class
 End Namespace
