@@ -105,7 +105,7 @@ Namespace Net
         ''' <param name="LocalPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
         ''' <remarks></remarks>
         Sub New(Optional LocalPort As Integer = 11000,
-                Optional exHandler As Abstract.ExceptionHandler = Nothing)
+                Optional exHandler As ExceptionHandler = Nothing)
 
             Me._LocalPort = LocalPort
             Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
