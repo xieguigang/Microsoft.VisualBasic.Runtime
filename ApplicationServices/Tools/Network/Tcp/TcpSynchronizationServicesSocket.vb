@@ -332,7 +332,7 @@ Namespace Net
                 If requestData.IsPing Then
                     requestData = NetResponse.RFC_OK
                 Else
-                    requestData = Me.Responsehandler()(requestData.uid, requestData, remoteEP)
+                    requestData = Me.Responsehandler()(requestData, remoteEP)
                 End If
                 Call Send(handler, requestData)
             Catch ex As Exception

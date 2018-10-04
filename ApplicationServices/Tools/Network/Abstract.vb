@@ -76,7 +76,7 @@ Namespace Net.Abstract
     Public MustInherit Class IProtocolHandler
 
         MustOverride ReadOnly Property ProtocolEntry As Long
-        MustOverride Function HandleRequest(CA As Long, request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
+        MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
     End Class
 
 #Region "Delegate Abstract Interface"

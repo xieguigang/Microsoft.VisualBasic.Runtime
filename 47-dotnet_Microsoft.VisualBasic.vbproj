@@ -1343,7 +1343,6 @@
     <Compile Include="ApplicationServices\Tools\MMFProtocol\MapStream\MSReader.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\AsyncHandle.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\UpdateThread.vb" />
-    <Compile Include="ApplicationServices\Parallel\Threads\ParallelLoading.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\ParallelExtension.vb" />
     <Compile Include="Scripting\Runtime\CType\Casting.vb" />
     <Compile Include="Scripting\InputHandler.vb" />
