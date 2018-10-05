@@ -1,64 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::41cebfeb7eeda56b58e9c563d951777a, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ServicesSocket
-    ' 
-    '         Properties: Connections, IsShutdown, LocalPort, Running
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: Run
-    ' 
-    '         Sub: __acceptSocket, __initSocket, __initSocketThread, __runHost, AcceptCallback
-    '              Run, WaitForRunning
-    '         Delegate Sub
-    ' 
-    '             Properties: AcceptCallbackHandleInvoke
-    ' 
-    '             Sub: __socketCleanup, (+2 Overloads) Dispose, ForceCloseHandle
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ServicesSocket
+' 
+'         Properties: Connections, IsShutdown, LocalPort, Running
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: Run
+' 
+'         Sub: __acceptSocket, __initSocket, __initSocketThread, __runHost, AcceptCallback
+'              Run, WaitForRunning
+'         Delegate Sub
+' 
+'             Properties: AcceptCallbackHandleInvoke
+' 
+'             Sub: __socketCleanup, (+2 Overloads) Dispose, ForceCloseHandle
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
 Imports System.Net
 Imports System.Net.Sockets
-Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
 
 Namespace Net.Persistent.Socket
@@ -84,7 +81,7 @@ Namespace Net.Persistent.Socket
     ''' 
     ''' 导致TCP连接异常中断的因素有： 物理连接被中断、操作系统down机、程序崩溃等等。
     ''' </remarks>
-    Public Class ServicesSocket : Implements System.IDisposable
+    Public Class ServicesSocket : Implements IDisposable
 
 #Region "INTERNAL FIELDS"
 
