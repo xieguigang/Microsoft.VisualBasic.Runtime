@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports TcpEndPoint = System.Net.IPEndPoint
 
-Namespace Net
+Namespace Net.Tcp
 
     ''' <summary>
     ''' The server socket should returns some data string to this client or this client will stuck at the <see cref="SendMessage"></see> function.

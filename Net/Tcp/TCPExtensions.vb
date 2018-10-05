@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 
-Namespace Net
+Namespace Net.Tcp
 
     Public Module TCPExtensions
 
@@ -72,7 +72,7 @@ Namespace Net
         Public Function Ping(invoke As TcpRequest, Optional timeout As Integer = 3 * 1000) As Double
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim request As RequestStream = RequestStream.SystemProtocol(RequestStream.Protocols.Ping, PING_REQUEST)
-            Dim response As RequestStream = invoke.SendMessage(request, timeOut:=timeout)
+            Dim response As RequestStream = invoke.SendMessage(request, timeout:=timeout)
 
             If HTTP_RFC.RFC_REQUEST_TIMEOUT = response.Protocol Then
                 Return -1

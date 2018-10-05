@@ -48,6 +48,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Net.Tcp
+
 Namespace Net.Protocols
 
     ''' <summary>

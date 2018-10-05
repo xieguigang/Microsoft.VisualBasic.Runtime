@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports TcpEndPoint = System.Net.IPEndPoint
 
-Namespace Net
+Namespace Net.Tcp
 
     ''' <summary>
     ''' Socket listening object which is running at the server side asynchronous able multiple threading.

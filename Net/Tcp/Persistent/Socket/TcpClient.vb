@@ -58,11 +58,11 @@ Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Net.Abstract
-Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
 Imports Microsoft.VisualBasic.Parallel
 
-Namespace Net.Persistent.Socket
+Namespace Net.Tcp.Persistent.Socket
 
     ''' <summary>
     ''' 请注意，这个对象是应用于客户端与服务器保持长连接所使用，并不会主动发送消息给服务器，而是被动的接受服务器的数据请求
@@ -391,7 +391,7 @@ Namespace Net.Persistent.Socket
             Loop
         End Sub
 
-        Public Class StateObject : Inherits Net.StateObject
+        Public Class StateObject : Inherits Tcp.StateObject
             Public Stack As Integer
         End Class
 #End Region

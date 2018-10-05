@@ -1423,7 +1423,7 @@
     <Compile Include="Net\Tcp\Persistent\Protocols\Protocol.vb" />
     <Compile Include="Net\Tcp\Persistent\Socket\TcpClient.vb" />
     <Compile Include="Net\Tcp\Persistent\Socket\ServicesSocket.vb" />
-    <Compile Include="Net\Tcp\PingUtility.vb" />
+    <Compile Include="Net\PingUtility.vb" />
     <Compile Include="Net\Tcp\TcpServicesSocket.vb" />
     <Compile Include="ApplicationServices\Tools\OSVersionInfo.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />

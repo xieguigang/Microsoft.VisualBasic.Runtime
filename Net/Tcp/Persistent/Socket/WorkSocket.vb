@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 
-Namespace Net.Persistent.Socket
+Namespace Net.Tcp.Persistent.Socket
 
     ''' <summary>
     ''' 长连接之中只是进行消息的发送处理，并不保证数据能够被接收到

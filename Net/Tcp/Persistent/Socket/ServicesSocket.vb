@@ -58,11 +58,11 @@ Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
 Imports TcpEndPoint = System.Net.IPEndPoint
 Imports TcpSocket = System.Net.Sockets.Socket
 
-Namespace Net.Persistent.Socket
+Namespace Net.Tcp.Persistent.Socket
 
     ''' <summary>
     ''' 
