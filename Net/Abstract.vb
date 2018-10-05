@@ -90,13 +90,6 @@ Namespace Net.Abstract
     ''' <param name="RemoteAddress"></param>
     ''' <returns></returns>
     Public Delegate Function DataRequestHandler(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
-
-    ''' <summary>
-    ''' 处理错误的工作逻辑的抽象接口
-    ''' </summary>
-    ''' <param name="ex">Socket的内部错误信息</param>
-    ''' <remarks></remarks>
-    Public Delegate Sub ExceptionHandler(ex As Exception)
 #End Region
 
     ''' <summary>
@@ -142,6 +135,6 @@ Namespace Net.Abstract
         ''' (这个函数指针用于处理来自于客户端的请求)
         ''' </summary>
         ''' <remarks></remarks>
-        Property Responsehandler As Net.Abstract.DataRequestHandler
+        Property Responsehandler As DataRequestHandler
     End Interface
 End Namespace
