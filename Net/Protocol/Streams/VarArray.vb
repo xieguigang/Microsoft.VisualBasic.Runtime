@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::640de3ff0a8a3e7fdce5001c46593c75, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Streams\VarArray.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class VarArray
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Serialize
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class VarArray
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Serialize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace Net.Protocols.Streams.Array
 
@@ -53,13 +53,11 @@ Namespace Net.Protocols.Streams.Array
     ''' </summary>
     Public Class VarArray(Of T) : Inherits ArrayAbstract(Of T)
 
-        Sub New(TSerialize As Func(Of T, Byte()), load As Func(Of Byte(), T))
+        Sub New(TSerialize As IGetBuffer(Of T), load As IGetObject(Of T))
             Call MyBase.New(TSerialize, load)
         End Sub
 
-        Sub New(raw As Byte(),
-                serilize As Func(Of T, Byte()),
-                load As Func(Of Byte(), T))
+        Sub New(raw As Byte(), serilize As IGetBuffer(Of T), load As IGetObject(Of T))
             Call Me.New(serilize, load)
 
             Dim lb As Byte() = New Byte(INT64 - 1) {}
@@ -95,7 +93,7 @@ Namespace Net.Protocols.Streams.Array
             Dim LQuery = (From ind As SeqValue(Of T)
                           In Values.SeqIterator.AsParallel
                           Select ind.i,
-                              byts = __serialization(ind.value)
+                              byts = serialization(ind.value)
                           Order By i Ascending)
 
             For Each x In LQuery
