@@ -183,7 +183,7 @@ Namespace Net.Protocols
                 Return
             End If
 
-            Call Array.ConstrainedCopy(rawStream, p = (p + BufferLength), Me.ChunkBuffer, Scan0, Me.BufferLength)
+            Call Array.ConstrainedCopy(rawStream, p, Me.ChunkBuffer, Scan0, Me.BufferLength)
         End Sub
 
         ''' <summary>
