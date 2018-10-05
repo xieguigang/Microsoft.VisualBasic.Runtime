@@ -335,6 +335,8 @@ Namespace Net.Protocols
         ''' 最基本的Socket数据串流协议
         ''' </summary>
         Public Enum Protocols As Long
+            OK = HTTP_RFC.RFC_OK
+
             Ping = 10L
             ''' <summary>
             ''' 私有密匙加密
