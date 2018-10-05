@@ -53,6 +53,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net.Abstract
@@ -75,7 +76,7 @@ Namespace Net
 #Region "INTERNAL FIELDS"
 
         Dim _threadEndAccept As Boolean = True
-        Dim _exceptionHandle As Abstract.ExceptionHandler
+        Dim _exceptionHandle As ExceptionHandler
         Dim _servicesSocket As Socket
 
 #End Region

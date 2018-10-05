@@ -54,8 +54,8 @@ Imports System.Net
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports TcpEndPoint = System.Net.IPEndPoint
@@ -91,14 +91,14 @@ Namespace Net
         Dim connectDone As ManualResetEvent
         Dim sendDone As ManualResetEvent
         Dim receiveDone As ManualResetEvent
-        Dim __exceptionHandler As Abstract.ExceptionHandler
+        Dim __exceptionHandler As ExceptionHandler
         Dim remoteHost As String
 
         ''' <summary>
         ''' Remote End Point
         ''' </summary>
         ''' <remarks></remarks>
-        Protected ReadOnly remoteEP As System.Net.IPEndPoint
+        Protected ReadOnly remoteEP As TcpEndPoint
 #End Region
 
         ''' <summary>
