@@ -96,7 +96,7 @@ Namespace Net.Protocols
             Return DirectCast(value, TRawStream)
         End Function
 
-        Protected Shared ReadOnly Property _rawStreamType As Type = GetType(Byte())
+        Protected Shared ReadOnly _rawStreamType As Type = GetType(Byte())
 
         Public Const INT64 As Integer = 8
         ''' <summary>

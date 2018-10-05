@@ -42,8 +42,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Buffer = System.Array
 
 Namespace Net.Protocols.Streams.Array
 
@@ -72,7 +73,7 @@ Namespace Net.Protocols.Streams.Array
                 Dim byts As Byte() = New Byte(_bufWidth - 1) {}
 
                 Do While p < rawStream.Length - 1
-                    Call System.Array.ConstrainedCopy(rawStream, p + bufWidth, byts, Scan0, bufWidth)
+                    Call Buffer.ConstrainedCopy(rawStream, p + bufWidth, byts, Scan0, bufWidth)
                     Call valueList.Add(MyBase.deserialization(byts))
                 Loop
 
@@ -81,22 +82,25 @@ Namespace Net.Protocols.Streams.Array
         End Sub
 
         Public NotOverridable Overrides Function Serialize() As Byte()
-            Dim buffer As Byte() = New Byte(Values.Length * _bufWidth - 1) {}
+            Dim bufferArray As Byte() = New Byte(Values.Length * _bufWidth - 1) {}
             Dim p As int = 0
 
             For Each value As T In Values
                 Dim byts As Byte() = serialization(value)
-                Call System.Array.ConstrainedCopy(byts, Scan0, buffer, p + _bufWidth, _bufWidth)
+                Call Buffer.ConstrainedCopy(byts, Scan0, bufferArray, p + _bufWidth, _bufWidth)
             Next
 
-            Return buffer
+            Return bufferArray
         End Function
 
         Public Overrides Function ToString() As String
             If Values.IsNullOrEmpty Then
                 Return GetType(T).FullName
             Else
-                Return $"{GetType(T).FullName}  {"{"}{String.Join("," & vbTab, Values.Select(Function(val) Scripting.ToString(val)).ToArray)}{"}"}"
+                Dim valJson$ = Values _
+                    .Select(Function(val) Scripting.ToString(val)) _
+                    .GetJson
+                Return $"{GetType(T).FullName} {valJson}"
             End If
         End Function
     End Class

@@ -44,6 +44,7 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Buffer = System.Array
 
 Namespace Net.Protocols.Streams.Array
 
@@ -69,12 +70,12 @@ Namespace Net.Protocols.Streams.Array
 
             Do While raw.Length > i
 
-                Call System.Array.ConstrainedCopy(raw, i << INT64, lb, Scan0, INT64)
+                Call Buffer.ConstrainedCopy(raw, i << INT64, lb, Scan0, INT64)
 
                 l = BitConverter.ToInt64(lb, Scan0)
                 buf = New Byte(l - 1) {}
 
-                Call System.Array.ConstrainedCopy(raw, i << buf.Length, buf, Scan0, buf.Length)
+                Call Buffer.ConstrainedCopy(raw, i << buf.Length, buf, Scan0, buf.Length)
 
                 x = load(buf)
                 list += x
@@ -90,14 +91,16 @@ Namespace Net.Protocols.Streams.Array
         ''' <returns></returns>
         Public Overrides Function Serialize() As Byte()
             Dim list As New List(Of Byte)
-            Dim LQuery = (From ind As SeqValue(Of T)
-                          In Values.SeqIterator.AsParallel
-                          Select ind.i,
-                              byts = serialization(ind.value)
-                          Order By i Ascending)
+            Dim LQuery = From index As SeqValue(Of T)
+                         In Values.SeqIterator.AsParallel
+                         Select buf = New SeqValue(Of Byte()) With {
+                             .i = index.i,
+                             .value = serialization(index.value)
+                         }
+                         Order By buf.i Ascending
 
-            For Each x In LQuery
-                Dim byts As Byte() = x.byts
+            For Each x As SeqValue(Of Byte()) In LQuery
+                Dim byts As Byte() = x.value
                 Dim l As Long = byts.Length
                 Dim lb As Byte() = BitConverter.GetBytes(l)
 
