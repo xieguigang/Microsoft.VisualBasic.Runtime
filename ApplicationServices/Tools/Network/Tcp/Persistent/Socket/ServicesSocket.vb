@@ -53,12 +53,12 @@
 
 #End Region
 
-Imports System.Net
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
+Imports TcpEndPoint = System.Net.IPEndPoint
 Imports TcpSocket = System.Net.Sockets.Socket
 
 Namespace Net.Persistent.Socket
@@ -144,8 +144,7 @@ Namespace Net.Persistent.Socket
         ''' <remarks></remarks>
         Public Overridable Function Run() As Integer
             ' Establish the local endpoint for the socket.
-            Dim localEndPoint As System.Net.IPEndPoint = New System.Net.IPEndPoint(System.Net.IPAddress.Any, _LocalPort)
-            Call Run(localEndPoint)
+            Call Run(New TcpEndPoint(System.Net.IPAddress.Any, _LocalPort))
             Return 0
         End Function
 
@@ -156,14 +155,15 @@ Namespace Net.Persistent.Socket
         ''' It then disconnects from the client and waits for another client.(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Overridable Sub Run(localEndPoint As System.Net.IPEndPoint)
+        Public Overridable Sub Run(localEndPoint As TcpEndPoint)
             _LocalPort = localEndPoint.Port
 
             Try
                 Call __initSocket(localEndPoint)
             Catch ex As Exception
-                ex = New Exception("Exception on try initialize the socket connection local_EndPoint=" & localEndPoint.ToString, ex)
-                Call Me._exceptionHandle(ex)
+                Dim msg$ = "Error on initialize socket connection: local_EndPoint=" & localEndPoint.ToString
+                ex = New Exception(msg, ex)
+                Call _exceptionHandle(ex)
                 Throw ex
             End Try
 
@@ -176,6 +176,7 @@ Namespace Net.Persistent.Socket
 
             While Not Me.disposedValue
                 Call Thread.Sleep(1)
+
                 If _threadEndAccept Then
                     Call __acceptSocket()
                 End If
@@ -185,7 +186,7 @@ Namespace Net.Persistent.Socket
         Private Sub __acceptSocket()
             _threadEndAccept = False
 
-            Dim Callback As AsyncCallback = New AsyncCallback(AddressOf AcceptCallback)
+            Dim Callback As New AsyncCallback(AddressOf AcceptCallback)
             Call _socketListener.BeginAccept(Callback, _socketListener)
         End Sub
 
@@ -193,9 +194,9 @@ Namespace Net.Persistent.Socket
         ''' Bind the socket to the local endpoint and listen for incoming connections.
         ''' </summary>
         ''' <param name="localEndPoint"></param>
-        Private Sub __initSocket(localEndPoint As System.Net.IPEndPoint)
+        Private Sub __initSocket(localEndPoint As TcpEndPoint)
             ' Create a TCP/IP socket.
-            _socketListener = New Sockets.Socket(
+            _socketListener = New TcpSocket(
                 AddressFamily.InterNetwork,
                 SocketType.Stream,
                 ProtocolType.Tcp
@@ -253,7 +254,7 @@ Namespace Net.Persistent.Socket
                 Call AcceptCallbackHandleInvoke()(socket)
                 Call _connections.Add(socket.GetHashCode, socket)
                 Call Thread.Sleep(500)
-                Call socket.PushMessage(ServicesProtocol.SendServerHash(socket.GetHashCode))
+                Call socket.PushMessage(ServicesProtocol.SendChannelHashCode(socket.GetHashCode))
             Catch ex As Exception
                 ' 远程强制关闭主机连接，则放弃这一条数据请求的线程
                 Call ForceCloseHandle(socket)
