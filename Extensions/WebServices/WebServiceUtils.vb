@@ -739,7 +739,7 @@ RE0:
         If hasInternet Then
             Return __getMyIPAddress()   'IPAddress on Internet
         Else
-            Return Net.AsynInvoke.LocalIPAddress  'IPAddress in LAN
+            Return Net.TcpRequest.LocalIPAddress  'IPAddress in LAN
         End If
     End Function
 

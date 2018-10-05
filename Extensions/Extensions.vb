@@ -429,7 +429,7 @@ Public Module Extensions
 
     <ExportAPI("SendMessage")>
     <Extension> Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Dim client As New Net.AsynInvoke(host)
+        Dim client As New Net.TcpRequest(host)
         Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
     End Sub
 

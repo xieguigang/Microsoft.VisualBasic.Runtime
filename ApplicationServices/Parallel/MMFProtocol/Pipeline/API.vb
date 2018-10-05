@@ -70,7 +70,7 @@ Namespace Parallel.MMFProtocol.Pipeline
             New Protocol(GetType(API.Protocols)).EntryPoint
 
         Public Function Delete(var As String, Optional port As Integer = API.PeplinePort) As Boolean
-            Dim invoke As New Net.AsynInvoke("127.0.0.1", port)
+            Dim invoke As New Net.TcpRequest("127.0.0.1", port)
             Dim action As New RequestStream(API.Protocol, Protocols.Destroy, var)
             Dim resp As RequestStream = invoke.SendMessage(action)
             Return resp.Protocol = HTTP_RFC.RFC_OK
@@ -86,7 +86,7 @@ Namespace Parallel.MMFProtocol.Pipeline
             Dim buf As Byte() = value.Serialize
             Dim chunkSize As Long = buf.Length
             Dim ref As String = $"{var}:{chunkSize}"
-            Dim invoke As New Net.AsynInvoke("127.0.0.1", port)
+            Dim invoke As New Net.TcpRequest("127.0.0.1", port)
             Dim action As New RequestStream(API.Protocol, Protocols.Allocation, ref)
             Dim resp As RequestStream = invoke.SendMessage(action)
             Dim writer As New MapStream.MSWriter(var, chunkSize)

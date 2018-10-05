@@ -68,7 +68,7 @@ Namespace Net
     ''' "></see>函数位置一直处于等待的状态)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class AsynInvoke : Implements IDisposable
+    Public Class TcpRequest : Implements IDisposable
 
 #Region "Internal Fields"
 
@@ -141,7 +141,7 @@ Namespace Net
         ''' </param>
         ''' <param name="exceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(client As AsynInvoke, Optional exceptionHandler As ExceptionHandler = Nothing)
+        Sub New(client As TcpRequest, Optional exceptionHandler As ExceptionHandler = Nothing)
             remoteHost = client.remoteHost
             port = client.port
             __exceptionHandler = exceptionHandler Or defaultHandler
@@ -177,8 +177,8 @@ Namespace Net
         ''' <remarks></remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function LocalConnection(localPort%, Optional exceptionHandler As ExceptionHandler = Nothing) As AsynInvoke
-            Return New AsynInvoke(LocalIPAddress, localPort, exceptionHandler)
+        Public Shared Function LocalConnection(localPort%, Optional exceptionHandler As ExceptionHandler = Nothing) As TcpRequest
+            Return New TcpRequest(LocalIPAddress, localPort, exceptionHandler)
         End Function
 
         ''' <summary>
@@ -245,7 +245,7 @@ Namespace Net
         Public Delegate Function SendMessageInvoke(Message As String) As String
 
         Public Function SendMessage(Message As String, Callback As Action(Of String)) As IAsyncResult
-            Dim SendMessageClient As New AsynInvoke(Me, exceptionHandler:=Me.__exceptionHandler)
+            Dim SendMessageClient As New TcpRequest(Me, exceptionHandler:=Me.__exceptionHandler)
             Return (Sub() Call Callback(SendMessageClient.SendMessage(Message))).BeginInvoke(Nothing, Nothing)
         End Function
 

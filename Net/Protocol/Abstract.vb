@@ -126,7 +126,7 @@ Namespace Net.Protocols
         ''' ]]>
         Public Shared Operator <=(addr As String, raw As RawStream) As RequestStream
             Dim ep As New IPEndPoint(addr)
-            Dim invoke As New AsynInvoke(ep)
+            Dim invoke As New TcpRequest(ep)
             Dim rep As RequestStream = New RequestStream(invoke.SendMessage(raw.Serialize))
             Return rep
         End Operator

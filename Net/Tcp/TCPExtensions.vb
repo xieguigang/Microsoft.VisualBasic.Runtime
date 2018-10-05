@@ -59,7 +59,7 @@ Namespace Net
         ''' <param name="operationTimeOut">ms</param>
         ''' <returns></returns>
         Public Function Ping(ep As System.Net.IPEndPoint, Optional operationTimeOut As Integer = 3 * 1000) As Double
-            Return New AsynInvoke(ep).Ping(operationTimeOut)
+            Return New TcpRequest(ep).Ping(operationTimeOut)
         End Function
 
         ''' <summary>
@@ -69,7 +69,7 @@ Namespace Net
         ''' <param name="timeout"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Ping(invoke As AsynInvoke, Optional timeout As Integer = 3 * 1000) As Double
+        Public Function Ping(invoke As TcpRequest, Optional timeout As Integer = 3 * 1000) As Double
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim request As RequestStream = RequestStream.SystemProtocol(RequestStream.Protocols.Ping, PING_REQUEST)
             Dim response As RequestStream = invoke.SendMessage(request, timeOut:=timeout)
