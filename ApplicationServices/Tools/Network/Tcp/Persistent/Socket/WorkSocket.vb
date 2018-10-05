@@ -72,7 +72,11 @@ Namespace Net.Persistent.Socket
             ' DO_NOTHING
         End Sub 'ReadCallback
 
-        Public Sub SendMessage(request As RequestStream)
+        ''' <summary>
+        ''' Server send message to user client.
+        ''' </summary>
+        ''' <param name="request"></param>
+        Public Sub PushMessage(request As RequestStream)
             Dim byteData As Byte() = request.Serialize
             Try
                 Call Me.workSocket.Send(byteData, byteData.Length, SocketFlags.None)

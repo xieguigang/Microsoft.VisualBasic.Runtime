@@ -253,7 +253,7 @@ Namespace Net.Persistent.Socket
                 Call AcceptCallbackHandleInvoke()(socket)
                 Call _connections.Add(socket.GetHashCode, socket)
                 Call Thread.Sleep(500)
-                Call socket.SendMessage(ServicesProtocol.SendServerHash(socket.GetHashCode))
+                Call socket.PushMessage(ServicesProtocol.SendServerHash(socket.GetHashCode))
             Catch ex As Exception
                 ' 远程强制关闭主机连接，则放弃这一条数据请求的线程
                 Call ForceCloseHandle(socket)
