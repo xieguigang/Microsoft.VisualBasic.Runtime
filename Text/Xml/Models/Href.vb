@@ -45,7 +45,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-Namespace ComponentModel
+Namespace Text.Xml.Models
 
     ''' <summary>
     ''' Resource link data.
