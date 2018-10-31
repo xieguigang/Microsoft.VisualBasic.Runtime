@@ -31,7 +31,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Me.views = views
         End Sub
 
-        Public Function ToArray() As BinaryTree(Of K, V)()
+        Public Function GetAllNodes() As BinaryTree(Of K, V)()
             Return stack.ToArray
         End Function
     End Class

@@ -73,7 +73,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V), valueReplace As Boolean) As BinaryTree(Of K, V)
             If tree Is Nothing Then
                 ' 追加新的叶子节点
-                tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
+                tree = New BinaryTree(Of K, V)(key, value, toString:=views)
                 stack.Add(tree)
             End If
 
