@@ -1451,7 +1451,6 @@
     <Compile Include="Net\Tcp\TCPExtensions.vb" />
     <Compile Include="Net\Tcp\TcpRequest.vb" />
     <Compile Include="ApplicationServices\Parallel\Threading.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GraphicsExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
