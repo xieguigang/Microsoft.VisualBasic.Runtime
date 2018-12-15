@@ -1098,6 +1098,7 @@
     <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Serialization\JSON\AnonymousJSON.vb" />
+    <Compile Include="Text\Parser\CharEnumerator.vb" />
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
@@ -1127,7 +1128,9 @@
     <Compile Include="Scripting\VBLanguage.vb" />
     <Compile Include="Text\GreekAlphabets.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
+    <Compile Include="Text\Xml\Linq\DeserializeHandler.vb" />
     <Compile Include="Text\Xml\Linq\NodeIterator.vb" />
+    <Compile Include="Text\Xml\Models\ListOf.vb" />
     <Compile Include="Text\Xml\Models\StringValue.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
