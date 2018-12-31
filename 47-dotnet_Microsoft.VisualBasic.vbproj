@@ -918,6 +918,7 @@
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeBase.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
@@ -936,6 +937,7 @@
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
     <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
