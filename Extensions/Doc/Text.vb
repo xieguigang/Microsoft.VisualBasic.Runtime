@@ -236,7 +236,13 @@ Public Module TextDoc
         ElseIf handle.IndexOf(ASCII.CR) > -1 OrElse handle.IndexOf(ASCII.LF) > -1 Then
             ' is text content, not path
             Return handle
-        ElseIf ILLEGAL_PATH_CHARACTERS.Any(Function(i) handle.IndexOf(i) > -1) Then
+        ElseIf ILLEGAL_PATH_CHARACTERS _
+            .Any(Function(i)
+                     ' handle可能是绝对路径，在windows之中，绝对路径会含有盘符
+                     ' 例如E:\，冒号会导致这里的判断出现BUG
+                     ' 所以需要添加一个额外的判断条件
+                     Return i <> ":"c AndAlso handle.IndexOf(i) > -1
+                 End Function) Then
             ' is text content, not path
             Return handle
         End If
