@@ -48,6 +48,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Scripting.SymbolBuilder.VBLanguage
 
@@ -70,6 +71,8 @@ Namespace Scripting.SymbolBuilder.VBLanguage
         Public Const CloseType$ = "^\s*End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
         Public Const Indents$ = "^\s+"
         Public Const Attribute$ = "<.+?>\s*"
+
+        Public Shared ReadOnly Property TypeChar As Index(Of Char) = {"!"c, "@"c, "#"c, "$"c, "%"c, "&"c, "?"c}
 
         Public Shared Function TypeCharName(c As Char) As String
             Select Case c
