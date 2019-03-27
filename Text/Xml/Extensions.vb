@@ -43,6 +43,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Xml
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.Xml
 
@@ -69,6 +70,18 @@ Namespace Text.Xml
                 .Trim("?"c)  ' 很奇怪，生成的字符串的开始的位置有一个问号
 
             Return out
+        End Function
+
+        ''' <summary>
+        ''' 这个函数可以将Xml/Html文本之中的注释数据进行删除
+        ''' </summary>
+        ''' <param name="xhtml"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemoveXmlComments(xhtml As String) As String
+            Return r.Replace(xhtml, "<![-][-].*[-][-]>", "")
         End Function
     End Module
 End Namespace
