@@ -53,6 +53,11 @@ Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
 <Extension>
 Public Module IEnumerations
 
+    <Extension>
+    Public Function OfType(Of A, B, T)(source As IEnumerable(Of [Variant](Of A, B))) As IEnumerable(Of T)
+        Return source.Where(Function(element) element Like GetType(T))
+    End Function
+
     ''' <summary>
     ''' Get a random element
     ''' </summary>
