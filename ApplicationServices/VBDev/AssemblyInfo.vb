@@ -40,5 +40,7 @@
         Public Property AssemblyVersion As String
         Public Property AssemblyFileVersion As String
 
+        Public Const ProjectFile As String = "My Project\AssemblyInfo.vb"
+
     End Class
 End Namespace
