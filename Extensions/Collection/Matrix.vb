@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::499e821dafbf8883a7ac615c1f85bd7f, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::85535aa28678e76ae6415cfda4084efb, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -145,6 +145,17 @@ Public Module MatrixExtensions
         Next
 
         Return newMAT
+    End Function
+
+    <Extension>
+    Public Function Rectangle(type As Type, m%, n%) As Array
+        Dim newMatrix As Array = Array.CreateInstance(type.MakeArrayType, m)
+
+        For i As Integer = 0 To m - 1
+            Call newMatrix.SetValue(Array.CreateInstance(type, n), i)
+        Next
+
+        Return newMatrix
     End Function
 
     ''' <summary>

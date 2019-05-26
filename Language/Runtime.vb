@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04444434320a033268d79385ce850726, Microsoft.VisualBasic.Core\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::07b523fb539260b7cd01bff7c4c2311e, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -85,7 +85,7 @@ Namespace Language
             Get
                 Dim val$
 
-                Static [isNot] As New DefaultValue(Of Assert(Of String))(Function(var) False)
+                Static [isNot] As New [Default](Of Assert(Of String))(Function(var) False)
 
                 If value Is Nothing Then
                     val = null

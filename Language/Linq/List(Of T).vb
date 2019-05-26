@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5794e5d83b04109e2826738d095a8e6c, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::acb8407a1bbb0de61d0ac95bc959f5b6, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -635,7 +635,7 @@ Namespace Language
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function [Default]() As DefaultValue(Of List(Of T))
+        Public Shared Function [Default]() As [Default](Of List(Of T))
             Return New List(Of T)
         End Function
 

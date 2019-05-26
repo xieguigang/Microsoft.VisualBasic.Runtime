@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90320efa25aa910fc6a68c36a8232b62, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::e972515e0546576ec9cabfa059af1f29, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
     ' Module KeyValuePairExtensions
     ' 
     '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
-    '               AsNamedVector, AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples
-    '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData
-    '               IGrouping, IterateNameCollections, IterateNameValues, IteratesAll, Join
-    '               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
-    '               RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs, (+2 Overloads) Subset
-    '               tableInternal, Takes, (+3 Overloads) ToDictionary, Tsv, Tuple
-    '               (+2 Overloads) Values, XMLModel
+    '               AsNamedVector, AsTable, ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData
+    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault
+    '               GroupByKey, HaveData, IGrouping, IterateNameCollections, IterateNameValues
+    '               IteratesAll, Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues
+    '               (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects
+    '               SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary
+    '               Tsv, Tuple, (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 
@@ -66,6 +66,30 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' KeyValue pair data related extensions API.
 ''' </summary>
 Public Module KeyValuePairExtensions
+
+    ''' <summary>
+    ''' 这个拓展函数主要是针对值得构建比较耗时的操作，主要应用于数据缓存场景
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <param name="lazyValue"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ComputeIfAbsent(Of K, V)(table As Dictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
+        If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
+            table(key) = lazyValue(key)
+        End If
+
+        Return table(key)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetValueOrDefault(Of K, V)(key As K, table As Dictionary(Of K, V), Optional [default] As V = Nothing) As V
+        Return table.TryGetValue(key, [default]:=[default])
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

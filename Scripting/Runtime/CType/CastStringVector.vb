@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb8beac19d7d95ce23104c8e5b978a72, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::cbfc9d45158f9faf061600d8c2b85dc1, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module CastStringVector
     ' 
-    '         Function: AsBoolean, (+3 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
-    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
+    '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
+    '                   AsInteger, AsNumeric, AsSingle, AsType
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,6 +58,17 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsCharacter(values As Dictionary(Of String, Double)) As Dictionary(Of String, String)
             Return values.ToDictionary(Function(x) x.Key, Function(x) CStr(x.Value))
+        End Function
+
+        ''' <summary>
+        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString(Object, String)"/>.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(values As Dictionary(Of String, Object), Optional null$ = Nothing) As Dictionary(Of String, String)
+            Return values.ToDictionary(Function(x) x.Key, Function(x) Scripting.ToString(x.Value, null))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

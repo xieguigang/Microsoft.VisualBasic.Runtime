@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c235fea163942d63dbdeaf30933152b3, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8ba3175e197f6226ab472b4c6c497bba, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Text.Xml
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
 
-    Public ReadOnly Property XmlParser As New DefaultValue(Of IObjectBuilder)(AddressOf LoadFromXml)
+    Public ReadOnly Property XmlParser As New [Default](Of IObjectBuilder)(AddressOf LoadFromXml)
 
     ''' <summary>
     ''' 这个函数主要是用作于Linq里面的Select语句拓展的，这个函数永远也不会报错，只会返回空值

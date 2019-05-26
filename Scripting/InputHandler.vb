@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b824ef51ccc07a3840d5ea58a1c5a75, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::977e2800b5b5a1a01e74f93e04fd092e, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -106,7 +106,7 @@ Namespace Scripting
         }
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function StringParser(type As Type) As DefaultValue(Of Func(Of String, Object))
+        Public Function StringParser(type As Type) As [Default](Of Func(Of String, Object))
             Return New Func(Of String, Object)(Function(s$) s.CTypeDynamic(type))
         End Function
 
@@ -174,7 +174,7 @@ Namespace Scripting
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function DefaultTextParser(Of T)() As DefaultValue(Of IStringParser(Of T))
+        Public Function DefaultTextParser(Of T)() As [Default](Of IStringParser(Of T))
             Return New IStringParser(Of T)(AddressOf CTypeDynamic(Of T)).AsDefault
         End Function
 
@@ -279,6 +279,8 @@ Namespace Scripting
         ''' <param name="name">Case insensitive.(类型的名称简写)</param>
         ''' <param name="ObjectGeneric">是否出错的时候返回<see cref="Object"/>类型，默认返回Nothing</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [GetType](name As Value(Of String), Optional objectGeneric As Boolean = False) As Type
             Return Scripting.GetType(name.Value, objectGeneric)
         End Function
@@ -301,7 +303,8 @@ Namespace Scripting
         ''' <returns></returns>
         Public ReadOnly Property [String] As Type = GetType(String)
 
-        Public Function ToString(Of T)() As DefaultValue(Of IToString(Of T))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ToString(Of T)() As [Default](Of IToString(Of T))
             Return New IToString(Of T)(AddressOf ToString)
         End Function
 
@@ -319,7 +322,12 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的
+        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的，
+        ''' 
+        ''' 注意：
+        ''' 
+        ''' 1. 对于一些基础的数据类型例如<see cref="Integer"/>,<see cref="Long"/>等则是以json序列化来构建字符串值，
+        ''' 2. 对于<see cref="Byte"/>数组则是被编码为base64字符串
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>

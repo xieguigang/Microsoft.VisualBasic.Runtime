@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba71fbe8017442a6d9a1015338e4534b, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::528eed652d339072eaa8b031847ee48e, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -72,6 +71,11 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine
+
+    ' file path: C://path/to/file
+    ' standard input: std_in://
+    ' standard output: std_out://
+    ' memory mapping file: memory://file/uri
 
     ''' <summary>
     ''' A command line object that parse from the user input commandline string.

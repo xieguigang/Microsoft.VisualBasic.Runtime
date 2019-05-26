@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95f8bbe2e7743f9bee73fe44f1fe8aac, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::ff0ebaeaf4c489ac88a8afa9bebe5cea, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -127,7 +127,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
-        ReadOnly defaultView As New DefaultValue(Of Func(Of K, String))(Function(key) Scripting.ToString(key))
+        ReadOnly defaultView As New [Default](Of Func(Of K, String))(Function(key) Scripting.ToString(key))
 
         ''' <summary>
         ''' 

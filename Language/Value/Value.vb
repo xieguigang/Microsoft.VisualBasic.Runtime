@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5847bf95cca9e00c89e57c58c5035b7, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::c19698bb126068d327d4f42dd57d4008, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -89,10 +89,18 @@ Namespace Language
             End Get
         End Property
 
-        Default Public ReadOnly Property Index(key As Object) As Object
+        ''' <summary>
+        ''' Get data from <see cref="Value"/> through its index method
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Default Public Overridable Property Index(key As Object) As Object
             Get
                 Return CObj(Value)(key)
             End Get
+            Set(value As Object)
+                CObj(Me.Value)(key) = value
+            End Set
         End Property
 
         ''' <summary>

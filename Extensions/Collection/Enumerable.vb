@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6acdab2b93c03a59fb2b9b961994a6f9, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::1dd37d36153684f17defa3b71c50f41e, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -138,7 +138,7 @@ Public Module IEnumerations
     ''' <summary>
     ''' Text compare in case sensitive mode
     ''' </summary>
-    ReadOnly TextCompareStrict As DefaultValue(Of StringComparison) = StringComparison.Ordinal
+    ReadOnly TextCompareStrict As [Default](Of StringComparison) = StringComparison.Ordinal
 
     <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional strict As Boolean = True) As KeyValuePair()
         Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1b34ed1a11c02d265960b333f6521ba, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::306f4c6f3b898e1191899e495f025810, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -191,7 +191,7 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
-    ReadOnly newRandom As New DefaultValue(Of Random)(Math.Seeds)
+    ReadOnly newRandom As New [Default](Of Random)(Math.Seeds)
 
     ''' <summary>
     ''' 32-126

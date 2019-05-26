@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97d8f6740248fdd39cfc660216d883fc, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::d947146bbc7d375f7b9bce335f5ade86, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -145,7 +145,7 @@ Namespace ComponentModel.Collection
         ''' <param name="maps">如果是json加载，可能会出现空值的字典</param>
         ''' <param name="base%"></param>
         Sub New(maps As IDictionary(Of T, Integer), Optional base% = 0)
-            Static emptyIndex As DefaultValue(Of IDictionary(Of String, Integer)) =
+            Static emptyIndex As [Default](Of IDictionary(Of String, Integer)) =
                 New Dictionary(Of String, Integer)
 
             Me.base = base
