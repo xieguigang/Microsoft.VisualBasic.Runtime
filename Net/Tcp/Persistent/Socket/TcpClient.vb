@@ -59,7 +59,7 @@ Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Net.Abstract
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
 Imports Microsoft.VisualBasic.Parallel

@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 Public Delegate Function PartitioningMethod(block As String, ByRef Left As String) As String()
 
