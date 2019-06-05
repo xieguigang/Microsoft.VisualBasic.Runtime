@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90da2731cbd9e11485b5b79565945580, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a6fb2d298d08cceb26ab0e800269e11a, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -39,16 +39,15 @@
     '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
     '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
     '               DriverRun, ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime
-    '               FuzzyMatching, GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, GetValueOrNull
-    '               IndexOf, InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle
-    '               (+2 Overloads) IsNaNImaginary, IsNullorEmpty, (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy
-    '               Keys, KeysJson, Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector
-    '               MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue, NormalizeXMLString
-    '               NotNull, (+2 Overloads) Offset, ParseDateTime, Range, Remove
-    '               RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping
-    '               Second, SelectFile, SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue
-    '               (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice, Split
-    '               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
+    '               FuzzyMatching, GetHexInteger, (+2 Overloads) GetItem, GetValueOrNull, IndexOf
+    '               InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary
+    '               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
+    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+    '               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
+    '               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
+    '               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
+    '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice
+    '               (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes, ToArray
     '               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
     '               (+3 Overloads) TrimNull, (+3 Overloads) TryGetValue, Unlist, WriteAddress
     ' 
@@ -61,7 +60,6 @@
 
 #End Region
 
-Imports System.Collections.ObjectModel
 Imports System.Drawing
 Imports System.Globalization
 Imports System.Reflection
@@ -72,12 +70,10 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Tcp
@@ -134,6 +130,12 @@ Public Module Extensions
         Return New DoubleRange(data) * scale
     End Function
 
+    ''' <summary>
+    ''' 将目标值域切割为等长递增的<paramref name="n"/>个值域
+    ''' </summary>
+    ''' <param name="range"></param>
+    ''' <param name="n%"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Slice(range As DoubleRange, n%) As IEnumerable(Of DoubleRange)
         Dim l = range.Length
@@ -600,80 +602,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Data partitioning function.
-    ''' (将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，
-    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
-    ''' 每一个子集和之中的元素数量为<paramref name="parTokens"/>)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="parTokens">每一个子集合之中的元素的数目</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As T()()
-        Return source.SplitIterator(parTokens, echo).ToArray
-    End Function
-
-    ''' <summary>
-    ''' Performance the partitioning operation on the input sequence.
-    ''' (请注意，这个函数只适用于数量较少的序列。对所输入的序列进行分区操作，<paramref name="parTokens"/>函数参数是每一个分区里面的元素的数量)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="parTokens"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
-        Dim buf As T() = source.SafeQuery.ToArray
-        Dim n As Integer = buf.Length
-        Dim count As Integer
-
-        If echo AndAlso n >= 50000 Then
-            Call $"Start large data set(size:={n}) partitioning...".__DEBUG_ECHO
-        End If
-
-        For i As Integer = 0 To n - 1 Step parTokens
-            Dim buffer As T()
-
-            If n - i >= parTokens Then
-                buffer = New T(parTokens - 1) {}
-            Else
-                buffer = New T(n - i - 1) {}
-            End If
-
-            Call Array.ConstrainedCopy(buf, i, buffer, Scan0, buffer.Length)
-            Yield buffer
-
-            count += 1
-        Next
-
-        If echo AndAlso n >= 50000 Then
-            Call $"Large data set data partitioning(partitions:={count}) jobs done!".__DEBUG_ECHO
-        End If
-    End Function
-
-    ''' <summary>
-    ''' Merge two type specific collection.(函数会忽略掉空的集合，函数会构建一个新的集合，原有的集合不受影响)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="target"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
-        Dim srcList As List(Of T) = If(source Is Nothing, New List(Of T), source.AsList)
-        If Not target Is Nothing Then
-            Call srcList.AddRange(target)
-        End If
-        Return srcList
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), ParamArray data As T()) As List(Of T)
-        Return source.Join(target:=data)
-    End Function
-
-    ''' <summary>
     ''' This is a safe function: if the source string collection is nothing, then whistle function will returns a empty string instead of throw exception. 
     ''' (<see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串)
     ''' </summary>
@@ -698,37 +626,6 @@ Public Module Extensions
             Return ""
         End If
         Return String.Join(delimiter, values.Select(Function(n) CStr(n)).ToArray)
-    End Function
-
-    ''' <summary>
-    ''' Source list join a new <paramref name="data"/> element.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="data"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), data As T) As List(Of T)
-        Return source.Join({data})
-    End Function
-
-    ''' <summary>
-    ''' ``X, ....``
-    ''' 
-    ''' (这个函数是一个安全的函数，当<paramref name="collection"/>为空值的时候回忽略掉<paramref name="collection"/>，
-    ''' 只返回包含有一个<paramref name="obj"/>元素的列表)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="obj"></param>
-    ''' <param name="collection"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
-        With New List(Of T) From {obj}
-            If Not collection Is Nothing Then
-                Call .AddRange(collection)
-            End If
-
-            Return .ByRef
-        End With
     End Function
 
 #If FRAMEWORD_CORE Then
@@ -1123,16 +1020,6 @@ Public Module Extensions
         Return dict
     End Function
 #End If
-
-    ''' <summary>
-    ''' The <see cref="StringBuilder"/> object its content is nothing?
-    ''' </summary>
-    ''' <param name="sBuilder"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function IsNullOrEmpty(sBuilder As StringBuilder) As Boolean
-        Return sBuilder Is Nothing OrElse sBuilder.Length = 0
-    End Function
 
     ''' <summary>
     ''' Merge the target array collection into one collection.(将目标数组的集合合并为一个数组)
@@ -1673,12 +1560,6 @@ Public Module Extensions
         Return array
     End Function
 
-    <Extension> Public Function Takes(Of T)(source As T(), count As Integer) As T()
-        Dim bufs As T() = New T(count - 1) {}
-        Call Array.ConstrainedCopy(source, Scan0, bufs, Scan0, count)
-        Return bufs
-    End Function
-
     ''' <summary>
     ''' 将目标键值对对象的集合转换为一个字典对象
     ''' </summary>
@@ -1712,213 +1593,20 @@ Public Module Extensions
         End If
     End Function
 
-    ' 2018-6-11
-    '
-    ' 因为迭代器在访问linq序列的时候，对于非空序列，下面的IsNullOrEmpty函数总是会产生一次迭代
-    ' 这个迭代可能会导致元素丢失的bug产生
-    ' 所以在这里将这个linq函数注释掉
-    ' 以后只需要判断迭代器是否是空值即可
-
-    '''' <summary>
-    '''' This object collection is a null object or contains zero count items.
-    '''' </summary>
-    '''' <typeparam name="T"></typeparam>
-    '''' <param name="source"></param>
-    '''' <returns></returns>
-    '''' <remarks></remarks>
-    '<Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
-    '    If source Is Nothing Then
-    '        Return True
-    '    End If
-
-    '    Dim i% = -1
-
-    '    Using [try] = source.GetEnumerator
-    '        Do While [try].MoveNext
-
-    '            ' debug view
-    '            Dim null = [try].Current
-
-    '            ' 假若是存在元素的，则i的值会为零
-    '            ' Some type of linq sequence not support this method.
-    '            ' [try].Reset()
-    '            i += 1
-
-    '            ' If is not empty, then this For loop will be used.
-    '            Return False
-    '        Loop
-    '    End Using
-
-    '    ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
-    '    ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，
-    '    ' 主需要查看第一个元素而不是便利整个Linq查询枚举， 从而提高了效率
-    '    ' Due to the reason of source is empty, no elements, 
-    '    ' so that i value Is Not changed as the For loop 
-    '    ' didn 't used.
-    '    Return i = -1
-    'End Function
-
     ''' <summary>
-    ''' 字典之中是否是没有任何数据的？
+    ''' [height, width] or [rows, columns]
     ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="dict"></param>
+    ''' <param name="size"></param>
+    ''' <param name="reverse">
+    ''' [width, height] or [columns, rows]
+    ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As IDictionary(Of TKey, TValue)) As Boolean
-        If dict Is Nothing Then
-            Return True
-        End If
-        Return dict.Count = 0
-    End Function
-
     <Extension>
-    Public Function IsNullOrEmpty(Of T As INamedValue)(table As Dictionary(Of T)) As Boolean
-        If table Is Nothing Then
-            Return True
+    Public Function ToArray(size As Size, Optional reverse As Boolean = False) As Integer()
+        If reverse Then
+            Return {size.Width, size.Height}
         Else
-            Return table.Count = 0
-        End If
-    End Function
-
-    ''' <summary>
-    ''' 字典之中是否是没有任何数据的？
-    ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="dict"></param>
-    ''' <returns></returns>
-    <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As IReadOnlyDictionary(Of TKey, TValue)) As Boolean
-        If dict Is Nothing Then
-            Return True
-        End If
-        Return dict.Count = 0
-    End Function
-
-    <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As ReadOnlyDictionary(Of TKey, TValue)) As Boolean
-        If dict Is Nothing Then
-            Return True
-        End If
-        Return dict.Count = 0
-    End Function
-
-    ''' <summary>
-    ''' 字典之中是否是没有任何数据的？
-    ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="dict"></param>
-    ''' <returns></returns>
-    <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean
-        If dict Is Nothing Then
-            Return True
-        End If
-        Return dict.Count = 0
-    End Function
-
-    ''' <summary>
-    ''' 这个队列之中是否是没有任何数据的?
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="queue"></param>
-    ''' <returns></returns>
-    <Extension> Public Function IsNullOrEmpty(Of T)(queue As Queue(Of T)) As Boolean
-        If queue Is Nothing Then
-            Return True
-        End If
-        Return queue.Count = 0
-    End Function
-
-    <Extension>
-    Public Function IsNullorEmpty(Of T)(vector As Vector(Of T)) As Boolean
-        If vector Is Nothing Then
-            Return True
-        End If
-        Return vector.Length = 0
-    End Function
-
-    <Extension>
-    Public Function IsNullOrEmpty(args As ArgumentCollection) As Boolean
-        If args Is Nothing Then
-            Return True
-        End If
-        Return args.Count = 0
-    End Function
-
-    ''' <summary>
-    ''' 这个动态列表之中是否是没有任何数据的？
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="list"></param>
-    ''' <returns></returns>
-    <Extension> Public Function IsNullOrEmpty(Of T)(list As ICollection(Of T)) As Boolean
-        If list Is Nothing Then
-            Return True
-        End If
-        Return list.Count = 0
-    End Function
-
-    <Extension> Public Function IsNullOrEmpty(Of T)(list As IList(Of T)) As Boolean
-        If list Is Nothing Then
-            Return True
-        End If
-        Return list.Count = 0
-    End Function
-
-    <Extension> Public Function IsNullOrEmpty(Of T)(list As System.Collections.Generic.List(Of T)) As Boolean
-        If list Is Nothing Then
-            Return True
-        End If
-        Return list.Count = 0
-    End Function
-
-    <Extension>
-    Public Function IsNullOrEmpty(Of T)(collection As IReadOnlyCollection(Of T)) As Boolean
-        If collection Is Nothing Then
-            Return True
-        Else
-            Return collection.Count = 0
-        End If
-    End Function
-
-    <Extension>
-    Public Function IsNullOrEmpty(Of T)(collection As ReadOnlyCollection(Of T)) As Boolean
-        If collection Is Nothing Then
-            Return True
-        Else
-            Return collection.Count = 0
-        End If
-    End Function
-
-    ''' <summary>
-    ''' This object array is a null object or contains zero count items.(判断某一个对象数组是否为空)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function IsNullOrEmpty(Of T)(array As T()) As Boolean
-        Return array Is Nothing OrElse array.Length = 0
-    End Function
-
-    ''' <summary>
-    ''' 0 for null object
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="array"></param>
-    ''' <returns></returns>
-    <Extension> Public Function GetLength(Of T)(array As T()) As Integer
-        If array Is Nothing Then
-            Return 0
-        Else
-            Return array.Length
-        End If
-    End Function
-
-    <Extension> Public Function GetLength(Of T)(collect As IEnumerable(Of T)) As Integer
-        If collect Is Nothing Then
-            Return 0
-        Else
-            Return collect.Count
+            Return {size.Height, size.Width}
         End If
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bc4dea7eaec7d8bdc9118b593afa400, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::62911fb29da7d1bdb416d84f3f84045c, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,8 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: IsBeginningOfNewLineAndIndentionLevel
     ' 
     '         Sub: Execute
@@ -45,8 +47,16 @@
 #End Region
 
 Namespace Serialization.JSON.Formatter.Internals.Strategies
+
     Friend NotInheritable Class OpenBracketStrategy
         Implements ICharacterStrategy
+
+        ''' <summary>
+        ''' {
+        ''' </summary>
+        Sub New()
+        End Sub
+
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             If context.IsProcessingString Then
                 context.AppendCurrentChar()
