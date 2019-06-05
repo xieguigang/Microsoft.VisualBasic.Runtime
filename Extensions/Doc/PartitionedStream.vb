@@ -65,7 +65,7 @@ Namespace Text
         ReadOnly _readerStream As IO.FileStream
         ReadOnly _blockSize As Integer
         ReadOnly _partitions As PartitioningMethod
-        ReadOnly _encoding As System.Text.Encoding
+        ReadOnly _encoding As Encoding
 
         Sub New(path As String, blockSize As Integer, partitioning As PartitioningMethod, Optional encoding As Encoding = Nothing)
             _readerStream = New IO.FileStream(path, IO.FileMode.Open)
@@ -158,11 +158,11 @@ Namespace Text
 #End Region
 
         Public Shared Function PartitionByLines(block As String, ByRef Left As String) As String()
-            Dim Tokens As String() = block.LineTokens
+            Dim tokens As String() = block.LineTokens
 
-            Left = Tokens.LastOrDefault
-            Tokens = Tokens.Takes(Tokens.Length - 1).ToArray
-            Return Tokens
+            Left = tokens.LastOrDefault
+            tokens = tokens.Takes(tokens.Length - 1).ToArray
+            Return tokens
         End Function
     End Class
 End Namespace
