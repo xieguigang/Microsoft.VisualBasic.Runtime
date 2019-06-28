@@ -273,55 +273,60 @@ Namespace ApplicationServices.Zip
                         Call zipFile.CreateEntryFromFile(path, entryName, compression)
                     Next
                 Else
-                    For Each path As String In files
-                        Dim fileInZip = (From f In zipFile.Entries Where f.Name = IO.Path.GetFileName(path)).FirstOrDefault()
+                    Call zipFile.AppendZip(files, fileOverwrite, compression)
+                End If
+            End Using
+        End Sub
 
-                        Select Case fileOverwrite
-                            Case Overwrite.Always
+        <Extension>
+        Private Sub AppendZip(zipFile As ZipArchive, files As IEnumerable(Of String), fileOverwrite As Overwrite, compression As CompressionLevel)
+            For Each path As String In files
+                Dim fileInZip = (From f In zipFile.Entries Where f.Name = IO.Path.GetFileName(path)).FirstOrDefault()
 
-                                'Deletes the file if it is found
-                                If fileInZip IsNot Nothing Then
-                                    fileInZip.Delete()
-                                End If
+                Select Case fileOverwrite
+                    Case Overwrite.Always
+
+                        'Deletes the file if it is found
+                        If fileInZip IsNot Nothing Then
+                            fileInZip.Delete()
+                        End If
+
+                        'Adds the file to the archive
+                        zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
+
+                    Case Overwrite.IfNewer
+
+                        'This is a bit trickier - we only delete the file if it is
+                        'newer, but if it is newer or if the file isn't already in
+                        'the zip file, we will write it to the zip file
+
+                        If fileInZip IsNot Nothing Then
+
+                            'Deletes the file only if it is older than our file.
+                            'Note that the file will be ignored if the existing file
+                            'in the archive is newer.
+                            If fileInZip.LastWriteTime < IO.File.GetLastWriteTime(path) Then
+                                fileInZip.Delete()
 
                                 'Adds the file to the archive
                                 zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
+                            End If
+                        Else
+                            'The file wasn't already in the zip file so add it to the archive
+                            zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
+                        End If
 
-                            Case Overwrite.IfNewer
+                    Case Overwrite.Never
 
-                                'This is a bit trickier - we only delete the file if it is
-                                'newer, but if it is newer or if the file isn't already in
-                                'the zip file, we will write it to the zip file
+                        'Don't do anything - this is a decision that you need to
+                        'consider, however, since this will mean that no file will
+                        'be writte.  You could write a second copy to the zip with
+                        'the same name (not sure that is wise, however).
 
-                                If fileInZip IsNot Nothing Then
+                    Case Else
 
-                                    'Deletes the file only if it is older than our file.
-                                    'Note that the file will be ignored if the existing file
-                                    'in the archive is newer.
-                                    If fileInZip.LastWriteTime < IO.File.GetLastWriteTime(path) Then
-                                        fileInZip.Delete()
-
-                                        'Adds the file to the archive
-                                        zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
-                                    End If
-                                Else
-                                    'The file wasn't already in the zip file so add it to the archive
-                                    zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
-                                End If
-
-                            Case Overwrite.Never
-
-                                'Don't do anything - this is a decision that you need to
-                                'consider, however, since this will mean that no file will
-                                'be writte.  You could write a second copy to the zip with
-                                'the same name (not sure that is wise, however).
-
-                            Case Else
-
-                        End Select
-                    Next
-                End If
-            End Using
+                End Select
+            Next
         End Sub
     End Module
 #End If

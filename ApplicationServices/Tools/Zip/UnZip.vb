@@ -1,10 +1,8 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace ApplicationServices.Zip
