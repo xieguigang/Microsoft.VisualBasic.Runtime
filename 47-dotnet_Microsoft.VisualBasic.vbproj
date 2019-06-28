@@ -1551,7 +1551,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
-    <Compile Include="ApplicationServices\ZipLib.vb" />
+    <Compile Include="ApplicationServices\Tools\ZipLib.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
