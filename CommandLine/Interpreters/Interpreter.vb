@@ -264,7 +264,7 @@ Namespace CommandLine
                 Return doc.SaveTo($"{output}/{App.AssemblyName}.md", Encoding.UTF8).CLICode
 
             ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
-                Return BashShell()
+                Return My.BashShell()
 
             ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
                 Dim namespace$ = CLI("/namespace") Or "CLI"
