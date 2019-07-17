@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 
 # Get the source directory of a Bash script from within the script itself
 #

@@ -114,6 +114,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property help() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("help", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to This program is free software: you can redistribute it and/or modify
         '''it under the terms of the GNU General Public License as published by
         '''the Free Software Foundation, either version 3 of the License, or

@@ -44,6 +44,7 @@ Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.Text
 
 Namespace My
 
@@ -57,16 +58,15 @@ Namespace My
         ''' </summary>
         ''' <returns></returns>
         Public Function BashRun() As String
-            Dim cmd As String = Assembly.GetEntryAssembly.Location
-            Dim bash As String =
-$"#!/bin/sh
+            Dim appName = App.AssemblyName
+            Dim bash As String = Encodings.UTF8WithoutBOM _
+                .CodePage _
+                .GetString(My.Resources.bashRunner) _
+                .Replace("{appName}", appName) _
+                .LineTokens _
+                .JoinBy(ASCII.LF)
 
-cli=""$@"";
-
-echo ""{App.AssemblyName} <<< $@"";
-mono ""{cmd}"" $cli
-"
-            Return bash.Replace(vbCr, "")
+            Return bash
         End Function
 
         ''' <summary>
