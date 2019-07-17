@@ -71,12 +71,23 @@ Namespace My
 
         ''' <summary>
         ''' 这里比perl脚本掉调用有一个缺点，在运行前还需要使用命令修改为可执行权限
+        ''' 
+        ''' ```
         ''' 'sudo chmod 777 cmd.sh'
+        ''' ```
         ''' </summary>
         ''' <returns></returns>
         Public Function BashShell() As Integer
-            Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix
-            Return BashRun.SaveTo(path, Encoding.ASCII)
+            Dim path As String = App.ExecutablePath.TrimSuffix
+            Dim bash As String = BashRun()
+
+            ' 在这里写入的bash脚本都是没有文件拓展名的
+            '
+            ' 同时写入man命令帮助脚本
+            Call My.Resources.help.FlushStream(path.ParentPath & "/help")
+            Call BashRun.SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
+
+            Return 0
         End Function
 
         Public Function MonoRun(app As String, CLI As String) As ProcessEx
