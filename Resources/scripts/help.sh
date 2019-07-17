@@ -52,7 +52,7 @@ done
 RDIR="$( dirname "$SOURCE" )"
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
-appName="$@"
+appName="$DIR/$@"
 
 # Run man command from the target vb app
 $appName "man"
