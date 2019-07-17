@@ -150,6 +150,9 @@ Namespace CommandLine
                     Call Console.WriteLine()
                     Call Console.WriteLine()
 
+                Case "pwd"
+                    Call Console.WriteLine(App.CurrentDirectory)
+
                 Case "/@set"
 
                     ' /@set var value
