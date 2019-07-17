@@ -1,5 +1,15 @@
 ﻿#!/bin/bash
 
+# Get the source directory of a Bash script from within the script itself
+#
+# https://stackoverflow.com/questions/59895/get-the-source-directory-of-a-bash-script-from-within-the-script-itself
+#
+#
+#
+#
+#
+#
+
 # target script may be a symlink
 # so the vb application may not exists in the 
 # same directory with current script's symlink
@@ -22,6 +32,15 @@ while [ -h "$SOURCE" ]; do
 done
 
 echo "SOURCE is '$SOURCE'"
+
+# This last one will work with any combination of 
+# aliases, source, bash -c, symlinks, etc.
+
+# Watch out for $CDPATH gotchas, and stderr output side effects if the user has 
+# smartly overridden cd to redirect output to stderr instead (including escape 
+# sequences, such as when calling  update_terminal_cwd >&2 on Mac). 
+# Adding >/dev/null 2>&1 at the end of your cd command will take care of both 
+# possibilities.
 RDIR="$( dirname "$SOURCE" )"
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
