@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09103db9f3b42def3f59569a98d7d368, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::8559057cd6a428b07ae9ae6e650b6295, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: [New], GetValue, (+2 Overloads) Read, SetValue, ToString
+    '         Function: [New], GetValue, (+3 Overloads) Read, SetValue, ToString
     ' 
     '         Sub: SetValue
     ' 
@@ -169,6 +169,16 @@ Namespace ComponentModel.DataSourceModel
                 prop = PropertyValue(Of T).[New](Of Cls)(x, name)
             End If
             Return DirectCast(prop, PropertyValue(Of T))
+        End Function
+
+        Public Shared Function Read(Of Cls As DynamicPropertyBase(Of T), V)(x As Cls, name As String) As PropertyValue(Of V)
+            Dim prop As Object = x(name)
+            If prop Is Nothing Then
+                prop = New [PropertyValue](Of V)
+                x(name) = prop
+                prop.obj = x
+            End If
+            Return DirectCast(prop, PropertyValue(Of V))
         End Function
 
         Public Shared Function Read(Of Cls As DynamicPropertyBase(Of T))(x As Cls, pm As MethodBase) As PropertyValue(Of T)

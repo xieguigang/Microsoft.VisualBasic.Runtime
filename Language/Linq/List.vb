@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450b660eb44b1164bc931b037f515d36, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::37bad5ffc0bc7a6f5ab3e6ee6f903a3b, Microsoft.VisualBasic.Core\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -47,8 +47,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
@@ -64,7 +64,7 @@ Namespace Language
     ''' (加强版的<see cref="System.Collections.Generic.List(Of T)"/>)
     ''' </summary>
     ''' <typeparam name="T">The type of elements in the list.</typeparam>
-    Public Class List(Of T) : Inherits Generic.List(Of T)
+    Public Class List(Of T) : Inherits System.Collections.Generic.List(Of T)
 
 #Region "Improvements Index"
 
@@ -74,17 +74,17 @@ Namespace Language
         ''' <returns></returns>
         Public Property Last As T
             Get
-                If Count = 0 Then
+                If Count() = 0 Then
                     Return Nothing
                 Else
-                    Return MyBase.Item(Count - 1)
+                    Return MyBase.Item(Count() - 1)
                 End If
             End Get
             Set(value As T)
-                If Count = 0 Then
+                If Count() = 0 Then
                     Call Add(value)
                 Else
-                    MyBase.Item(Count - 1) = value
+                    MyBase.Item(Count() - 1) = value
                 End If
             End Set
         End Property
@@ -95,14 +95,14 @@ Namespace Language
         ''' <returns></returns>
         Public Property First As T
             Get
-                If Count = 0 Then
+                If Count() = 0 Then
                     Return Nothing
                 Else
                     Return MyBase.Item(0)
                 End If
             End Get
             Set(value As T)
-                If Count = 0 Then
+                If Count() = 0 Then
                     Call Add(value)
                 Else
                     MyBase.Item(Scan0) = value
@@ -151,13 +151,13 @@ Namespace Language
         Default Public Overloads Property Item(index%) As T
             Get
                 If index < 0 Then
-                    index = Count + index  ' -1 -> count -1
+                    index = Count() + index  ' -1 -> count -1
                 End If
                 Return MyBase.Item(index)
             End Get
             Set(value As T)
                 If index < 0 Then
-                    index = Count + index  ' -1 -> count -1
+                    index = Count() + index  ' -1 -> count -1
                 End If
                 MyBase.Item(index) = value
             End Set
@@ -426,6 +426,13 @@ Namespace Language
             Return list + iterator()
         End Operator
 
+        ' 下面的操作符会导致重载失败
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Public Overloads Shared Operator +(list As List(Of T), index As Index(Of T)) As List(Of T)
+        '    Call list.AddRange(index.Objects)
+        '    Return list
+        'End Operator
+
         ''' <summary>
         ''' Append <paramref name="list2"/> to the end of <paramref name="list1"/>
         ''' </summary>
@@ -526,6 +533,11 @@ Namespace Language
             Else
                 Return list.ToArray
             End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType([single] As T) As List(Of T)
+            Return New List(Of T) From {[single]}
         End Operator
 
         ' 因为这个隐式会使得数组被默认转换为本List对象，会导致 + 运算符重载失败，所以在这里将这个隐式转换取消掉

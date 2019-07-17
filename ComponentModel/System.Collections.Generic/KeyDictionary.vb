@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9599c84d706bc7b4030599d0e38f80c8, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::236e26fa514031145c6e91dcd119e08b, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,8 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: Find, GetValueList, Remove, SafeGetValue, (+2 Overloads) TryGetValue
+    '         Function: Find, GetValueList, Have, Remove, SafeGetValue
+    '                   (+2 Overloads) TryGetValue
     ' 
     '         Sub: Add, AddRange, InsertOrUpdate
     ' 
@@ -154,12 +155,18 @@ Namespace ComponentModel.Collection
             Call MyBase.New(source)
         End Sub
 
-        Sub New(source As IEnumerable(Of V))
+        Sub New(source As IEnumerable(Of V), Optional overridesDuplicateds As Boolean = False)
             Call Me.New
 
-            For Each x As V In source
-                Call Add(x)
-            Next
+            If overridesDuplicateds Then
+                For Each x As V In source
+                    Me(x.Key) = x
+                Next
+            Else
+                For Each x As V In source
+                    Call Add(x)
+                Next
+            End If
         End Sub
 
         Public Function GetValueList() As List(Of V)
@@ -207,6 +214,16 @@ Namespace ComponentModel.Collection
                     Return Nothing
                 End If
             End If
+        End Function
+
+        ''' <summary>
+        ''' Inline method alias of function <see cref="ContainsKey(String)"/> in parent class
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Have(item As V) As Boolean
+            Return MyBase.ContainsKey(item.Key)
         End Function
 
         ''' <summary>

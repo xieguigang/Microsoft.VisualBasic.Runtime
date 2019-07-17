@@ -1,41 +1,41 @@
-﻿#Region "Microsoft.VisualBasic::7a765edf1bb9fdcc491562405755fbd8, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\SerializationIO.vb"
+﻿#Region "Microsoft.VisualBasic::f289b2fab36ed193256bcd8c3ed7652c, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\SerializationIO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module SerializationIO
-' 
-'     Function: DumpSerial, SolveListStream
-' 
-' /********************************************************************************/
+    ' Module SerializationIO
+    ' 
+    '     Function: DumpSerial, SaveAsTabularMapping, SolveListStream
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -85,6 +85,12 @@ Public Module SerializationIO
         End If
     End Function
 
+    ''' <summary>
+    ''' Get string collection from input file 
+    ''' </summary>
+    ''' <param name="path">allows plain text/string array json/xml</param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SolveListStream(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of String)
         Select Case path.ExtensionSuffix.ToLower
@@ -99,6 +105,13 @@ Public Module SerializationIO
         End Select
     End Function
 
+    ''' <summary>
+    ''' Save a given list of <see cref="PointF"/> data into a csv file.
+    ''' </summary>
+    ''' <param name="points"></param>
+    ''' <param name="csv"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DumpSerial(points As IEnumerable(Of PointF), csv$, Optional encoding As Encodings = Encodings.UTF8WithoutBOM) As Boolean
         Using writer As StreamWriter = csv.OpenWriter(encoding)

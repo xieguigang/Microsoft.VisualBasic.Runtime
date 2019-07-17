@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca016eecc9816504bde7a267d869738f, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9c9a2293b2c702a4e4cdb112f0ff993c, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -96,22 +96,16 @@ Namespace Math
             Return Math.Abs(CInt(Math.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
-        Const RandfMultiply# = 10000
-
         ''' <summary>
         ''' 返回<paramref name="min"/>到<paramref name="max"/>区间之内的一个和实数
         ''' </summary>
         ''' <param name="min"></param>
         ''' <param name="max"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function randf(min As Double, max As Double) As Double
-            Dim minInteger& = CLng(sys.Truncate(min * RandfMultiply))
-            Dim maxInteger& = CLng(sys.Truncate(max * RandfMultiply))
-            Dim randInteger& = CLng(RandomNumbers.rand()) * CLng(RandomNumbers.rand())
-            Dim diffInteger& = maxInteger - minInteger
-            Dim resultInteger& = randInteger Mod diffInteger + minInteger
-
-            Return resultInteger / RandfMultiply
+            Return seeds.NextDouble(min, max)
         End Function
 
         ''' <summary>
@@ -257,7 +251,9 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Shuffle(Of T)(ByRef list As List(Of T))
-            Call seeds.Shuffle(list)
+            SyncLock seeds
+                Call seeds.Shuffle(list)
+            End SyncLock
         End Sub
 
         ''' <summary>
@@ -281,7 +277,9 @@ Namespace Math
 
         ''' <summary>
         ''' Returns n unique random numbers in the range [1, n], inclusive. 
-        ''' This is equivalent to getting the first n numbers of some random permutation of the sequential numbers from 1 to max. 
+        ''' This is equivalent to getting the first n numbers of some random permutation of the sequential 
+        ''' numbers from 1 to max. 
+        ''' 
         ''' Runs in O(k^2) time.
         ''' </summary>
         ''' <param name="rand"></param>

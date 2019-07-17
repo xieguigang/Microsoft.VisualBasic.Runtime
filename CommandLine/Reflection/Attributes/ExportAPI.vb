@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcddda213dbd177fcd8ec8f45baa77da, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::fb69fc76f81f00cb04dcaaab9410eb37, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class LastUpdatedAttribute
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Class ExportAPIAttribute
@@ -41,7 +41,7 @@
     '         Properties: Example, Info, Name, Type, Usage
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __printView, __printViewHTML, GenerateHtmlDoc, PrintView, ToString
+    '         Function: GenerateHtmlDoc, printView, PrintView, printViewHTML, ToString
     ' 
     '     Interface IExportAPI
     ' 
@@ -57,10 +57,17 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace CommandLine.Reflection
 
+    ''' <summary>
+    ''' 主要是用于帮助标记命令行命令的更新时间,了解哪些命令可能是已经过时了的
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public Class LastUpdatedAttribute : Inherits Attribute
 
         Public ReadOnly [Date] As Date
+
+        Sub New([date] As Date)
+            Me.Date = [date]
+        End Sub
 
         Sub New([date] As String)
             Me.Date = Date.Parse([date])
@@ -130,23 +137,24 @@ Namespace CommandLine.Reflection
 
         Public Function PrintView(HTML As Boolean) As String
             If HTML Then
-                Return __printViewHTML()
+                Return printViewHTML()
             Else
-                Return __printView()
+                Return printView()
             End If
         End Function
 
-        Private Function __printView()
-            Dim sbr As StringBuilder = New StringBuilder(1024)
-            Call sbr.AppendLine($"{NameOf(Name)}    = ""{Name}""")
-            Call sbr.AppendLine($"{NameOf(Info)}    = ""{Info}""")
-            Call sbr.AppendLine($"{NameOf(Usage)}   = ""{Usage}""")
-            Call sbr.AppendLine($"{NameOf(Example)} = ""{Example}""")
+        Private Function printView()
+            Dim sb As New StringBuilder(1024)
 
-            Return sbr.ToString
+            Call sb.AppendLine($"{NameOf(Name)}    = ""{Name}""")
+            Call sb.AppendLine($"{NameOf(Info)}    = ""{Info}""")
+            Call sb.AppendLine($"{NameOf(Usage)}   = ""{Usage}""")
+            Call sb.AppendLine($"{NameOf(Example)} = ""{Example}""")
+
+            Return sb.ToString
         End Function
 
-        Private Function __printViewHTML() As String
+        Private Function printViewHTML() As String
             Return ExportAPIAttribute.GenerateHtmlDoc(Me, "", "")
         End Function
 

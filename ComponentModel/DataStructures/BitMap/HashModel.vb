@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6865bc93e0c1e1c2ed06c0102388141a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
+﻿#Region "Microsoft.VisualBasic::6454ef3a138ca347bcd3778898de75ea, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
 
     ' Author:
     ' 
@@ -113,7 +113,7 @@ Namespace ComponentModel
         End Property
 
         Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            _Address = address
+            Me.Address = address
         End Sub
     End Class
 

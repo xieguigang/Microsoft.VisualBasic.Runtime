@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c00386b5524a060262c9de78e1dc2dfb, Microsoft.VisualBasic.Core\Scripting\VisualBasic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::831cd1364b87f86a7f5eeb3b6068327e, Microsoft.VisualBasic.Core\Scripting\VisualBasic\Extensions.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,11 @@ Namespace Scripting.SymbolBuilder.VBLanguage
             Return table.ToDictionary(Function(map) AsVBIdentifier(map.Key), Function(map) map.Value)
         End Function
 
+        ''' <summary>
+        ''' Normalize the input text token as a valid VisualBasic identifier
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AsVBIdentifier(key As String) As String
             Return key.NormalizePathString(alphabetOnly:=True).Replace(" ", "_")

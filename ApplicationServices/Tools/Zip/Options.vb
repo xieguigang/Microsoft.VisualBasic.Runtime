@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06f7567a419911201c422bd50b0f261a, Microsoft.VisualBasic.Core\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ebdf46fff322a8fbaf22989b286305b2, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\Options.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,20 @@
 
     ' Summaries:
 
-    ' Class NamespaceDoc
+    '     Enum Overwrite
+    ' 
+    '         Always, IfNewer, Never
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ArchiveAction
+    ' 
+    '         [Error], Ignore, Merge, Replace
+    ' 
+    '  
+    ' 
     ' 
     ' 
     ' 
@@ -39,8 +52,27 @@
 
 #End Region
 
-''' <summary>
-''' The ``sciBASIC#`` framework library core runtime.
-''' </summary>
-Friend Class NamespaceDoc
-End Class
+Namespace ApplicationServices.Zip
+
+    ''' <summary>
+    ''' Used to specify what our overwrite policy
+    ''' is for files we are extracting.
+    ''' </summary>
+    Public Enum Overwrite
+        Always
+        IfNewer
+        Never
+    End Enum
+
+    ''' <summary>
+    ''' Used to identify what we will do if we are
+    ''' trying to create a zip file and it already
+    ''' exists.
+    ''' </summary>
+    Public Enum ArchiveAction
+        Merge
+        Replace
+        [Error]
+        Ignore
+    End Enum
+End Namespace

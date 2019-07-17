@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e100823622f774acbd1bd5233f9a410, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\CodeThread.vb"
+﻿#Region "Microsoft.VisualBasic::d9677feaaf50ab1429a4c83031821160, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Pipeline.vb"
 
     ' Author:
     ' 
@@ -31,51 +31,47 @@
 
     ' Summaries:
 
-    '     Class CodeThread
+    '     Module PipelineExtensions
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Function: DoCall
     ' 
-    '         Function: GetThread
-    ' 
-    '         Sub: [Resume], Pause, Run
+    '         Sub: DoCall
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Threading
+Imports System.Runtime.CompilerServices
 
-Namespace Parallel.Threads
+Namespace Linq
 
-    Public MustInherit Class CodeThread
+    Public Module PipelineExtensions
 
-        Protected ReadOnly thread As Thread
-
-        Sub New()
-            thread = New Thread(AddressOf __run)
-        End Sub
-
-        Protected MustOverride Sub __run()
-
-        Public Shared Function GetThread(x As CodeThread) As Thread
-            Return x.thread
+        ''' <summary>
+        ''' Delegate pipeline function
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="Tout"></typeparam>
+        ''' <param name="input"></param>
+        ''' <param name="apply"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function DoCall(Of T, Tout)(input As T, apply As Func(Of T, Tout)) As Tout
+            Return apply(input)
         End Function
 
-        Public Shared Sub Run(x As CodeThread)
-            Call x.thread.Start()
+        ''' <summary>
+        ''' Delegate pipeline function
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="input"></param>
+        ''' <param name="apply"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub DoCall(Of T)(input As T, apply As Action(Of T))
+            Call apply(input)
         End Sub
-
-        Public Shared Sub Pause(x As CodeThread)
-#Disable Warning
-            Call x.thread.Suspend()
-#Enable Warning
-        End Sub
-
-        Public Shared Sub [Resume](x As CodeThread)
-#Disable Warning
-            Call x.thread.Resume()
-#Enable Warning
-        End Sub
-    End Class
+    End Module
 End Namespace

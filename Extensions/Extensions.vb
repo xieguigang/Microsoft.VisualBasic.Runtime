@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6fb2d298d08cceb26ab0e800269e11a, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6433d6d8b6a514a8f1ff9c7a7624890b, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,18 @@
     ' Module Extensions
     ' 
     '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
-    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
-    '               DriverRun, ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime
-    '               FuzzyMatching, GetHexInteger, (+2 Overloads) GetItem, GetValueOrNull, IndexOf
-    '               InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary
-    '               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
-    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
-    '               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
-    '               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
-    '               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
+    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DateToString, DriverRun
+    '               ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime, FuzzyMatching
+    '               GetHexInteger, (+2 Overloads) GetItem, GetValueOrNull, IndexOf, InsertOrUpdate
+    '               Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy
+    '               Keys, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement
+    '               MD5, ModifyValue, NotNull, (+2 Overloads) Offset, ParseDateTime
+    '               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
+    '               RunDriver, Second, SelectFile, SeqRandom, (+3 Overloads) Sequence
     '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice
-    '               (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes, ToArray
-    '               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
-    '               (+3 Overloads) TrimNull, (+3 Overloads) TryGetValue, Unlist, WriteAddress
+    '               (+2 Overloads) SplitMV, StdError, ToArray, ToBoolean, ToDictionary
+    '               ToNormalizedPathString, ToString, ToStringArray, ToVector, (+3 Overloads) TrimNull
+    '               TryCount, (+3 Overloads) TryGetValue, Unlist, WriteAddress
     ' 
     '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
     '          SwapItem, SwapWith
@@ -62,6 +61,7 @@
 
 Imports System.Drawing
 Imports System.Globalization
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -71,7 +71,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -82,10 +81,8 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
-Imports sys = System.Math
 
 #Const FRAMEWORD_CORE = 1
 #Const Yes = 1
@@ -112,6 +109,12 @@ Imports sys = System.Math
 ''' <remarks></remarks>
 Public Module Extensions
 #End If
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToString(ms As MemoryStream, encoding As Encoding) As String
+        Return encoding.GetString(ms.ToArray, Scan0, ms.Length)
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -490,7 +493,7 @@ Public Module Extensions
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
-    ''' <param name="index"></param>
+    ''' <param name="index">这个函数会自动处理空键名的情况</param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
     <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
@@ -1094,11 +1097,14 @@ Public Module Extensions
     ''' <param name="MAT">为了方便理解和使用，矩阵使用数组的数组来表示的</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixTranspose(Of T)(MAT As IEnumerable(Of T())) As T()()
-        Dim LQuery As T()() = (From i As Integer
-                               In MAT.First.Sequence
-                               Select (From Line As T() In MAT Select Line(i)).ToArray).ToArray
-        Return LQuery
+    <Extension>
+    Public Iterator Function MatrixTranspose(Of T)(MAT As IEnumerable(Of T())) As IEnumerable(Of T())
+        Dim data = MAT.ToArray
+        Dim index = data(Scan0).Sequence.ToArray
+
+        For Each i As Integer In index
+            Yield (From line As T() In data Select line(i)).ToArray
+        Next
     End Function
 
     ''' <summary>
@@ -1108,14 +1114,24 @@ Public Module Extensions
     ''' <param name="MAT"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixTransposeIgnoredDimensionAgreement(Of T)(MAT As IEnumerable(Of T())) As T()()
-        Dim LQuery = (From i As Integer
-                      In (From n As T()
-                          In MAT
-                          Select n.Length
-                          Order By Length Ascending).First.Sequence
-                      Select (From Line In MAT Select Line(i)).ToArray).ToArray
-        Return LQuery
+    <Extension>
+    Public Iterator Function MatrixTransposeIgnoredDimensionAgreement(Of T)(MAT As IEnumerable(Of T()), Optional sizeByMax As Boolean = False) As IEnumerable(Of T())
+        Dim data = MAT.ToArray
+        Dim index As Integer
+
+        If sizeByMax Then
+            index = Aggregate row In data Into Max(row.Length)
+        Else
+            index = Aggregate row In data Into Min(row.Length)
+        End If
+
+        For Each i As Integer In index.Sequence
+            If sizeByMax Then
+                Yield (From line As T() In data Select line.ElementAtOrNull(i)).ToArray
+            Else
+                Yield (From line As T() In data Select line(i)).ToArray
+            End If
+        Next
     End Function
 
     ''' <summary>
@@ -1365,34 +1381,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 随机的在目标集合中选取指定数目的子集合
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function TakeRandomly(Of T)(source As IEnumerable(Of T), counts%) As T()
-        Dim array As T() = source.ToArray
-
-        If counts >= array.Length Then
-            Return source
-        Else
-            Dim out As T() = New T(counts - 1) {}
-            Dim input As New List(Of T)(array)
-            Dim random As New Random
-
-            For i As Integer = 0 To counts - 1
-                Dim ind As Integer = random.Next(input.Count)
-                out(i) = input(ind)
-                Call input.RemoveAt(ind)
-            Next
-
-            Return out
-        End If
-    End Function
-
-    ''' <summary>
     ''' Convert target object type collection into a string array using the Object.ToString() interface function.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -1520,7 +1508,7 @@ Public Module Extensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Iterator Public Function Sequence(range As IntRange, Optional stepOffset% = 1) As IEnumerable(Of Integer)
+    Public Iterator Function Sequence(range As IntRange, Optional stepOffset% = 1) As IEnumerable(Of Integer)
         If stepOffset = 0 Then
             stepOffset = 1
 #If DEBUG Then

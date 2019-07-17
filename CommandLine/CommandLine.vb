@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1bceefdb435566b3a7a0d9793bc900c, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::d60e9df563cbc7d7961cac24ae628634, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -389,7 +389,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="parameterName"></param>
         ''' <returns></returns>
-        Public Function ContainsParameter(parameterName As String, trim As Boolean) As Boolean
+        Public Function ContainsParameter(parameterName As String, Optional trim As Boolean = False) As Boolean
             Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
             Dim LQuery = LinqAPI.DefaultFirst(Of Integer) _
  _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5be772c3e5df01d25aea9957012aad2c, Microsoft.VisualBasic.Core\Scripting\VisualBasic\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::4a6c949f8bd03b2b1555e857dfed4bca, Microsoft.VisualBasic.Core\Scripting\VisualBasic\VBLanguage.vb"
 
     ' Author:
     ' 
@@ -43,11 +43,14 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Scripting.SymbolBuilder.VBLanguage
 
+    ''' <summary>
+    ''' <see cref="Regex"/> pattern of VisualBasic language tokens
+    ''' </summary>
     Public NotInheritable Class Patterns
 
         Private Sub New()

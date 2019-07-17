@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e972515e0546576ec9cabfa059af1f29, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::be6da859a70b35c56d45b6240422e30a, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -207,6 +207,7 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
+    ''' 根据所给定的一个主键列表批量化取出目标字典之中的一部分数据构成一个新的字典子集对象
     ''' 函数会根据<see cref="keys"/>参数来做排序
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

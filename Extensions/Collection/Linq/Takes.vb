@@ -1,7 +1,50 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::5bb371dabfa029b99aea6eec5d9d3744, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Takes.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module TakesExtension
+    ' 
+    '         Function: doReversedTake, (+2 Overloads) TakeRandomly, (+3 Overloads) Takes
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 
 Namespace Linq
 
@@ -59,7 +102,7 @@ Namespace Linq
                                     Optional offSet% = 0,
                                     Optional reversed As Boolean = False) As T()
             If reversed Then
-                Return source.__reversedTake(index).ToArray
+                Return source.doReversedTake(index).ToArray
             End If
 
             Dim result As T() = New T(index.Length - 1) {}
@@ -91,7 +134,7 @@ Namespace Linq
         ''' <remarks></remarks>
         ''' 
         <Extension>
-        Private Iterator Function __reversedTake(Of T)(collection As IEnumerable(Of T), index As Integer()) As IEnumerable(Of T)
+        Private Iterator Function doReversedTake(Of T)(collection As IEnumerable(Of T), index As Integer()) As IEnumerable(Of T)
             Dim indices As New Index(Of Integer)(index)
 
             For Each x As SeqValue(Of T) In collection.SeqIterator
@@ -100,6 +143,53 @@ Namespace Linq
                     Yield x.value
                 End If
             Next
+        End Function
+
+        ''' <summary>
+        ''' 随机的在目标集合中选取指定数目的子集合
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function TakeRandomly(Of T)(source As IEnumerable(Of T), counts%) As T()
+            Return source.SafeQuery _
+                .ToArray _
+                .TakeRandomly(counts) _
+                .ToArray
+        End Function
+
+        ''' <summary>
+        ''' 随机的在目标集合中选取指定数目的子集合
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="array"></param>
+        ''' <param name="counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension>
+        Public Function TakeRandomly(Of T)(array As T(), counts%) As IEnumerable(Of T)
+            If counts >= array.Length Then
+                Dim out As T() = New T(array.Length - 1) {}
+                Call System.Array.ConstrainedCopy(array, Scan0, out, Scan0, array.Length)
+                Return out
+            Else
+                Dim out As T() = New T(counts - 1) {}
+                Dim input As New List(Of T)(array)
+                Dim ind As Integer
+
+                For i As Integer = 0 To counts - 1
+                    ind = seeds.Next(input.Count)
+                    out(i) = input(ind)
+                    input.RemoveAt(ind)
+                Next
+
+                Return out
+            End If
         End Function
     End Module
 End Namespace

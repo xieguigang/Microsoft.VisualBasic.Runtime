@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06f7567a419911201c422bd50b0f261a, Microsoft.VisualBasic.Core\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::273da05431d41f4560295a7f7996af28, Microsoft.VisualBasic.Core\Serialization\ICloneable.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,19 @@
 
     ' Summaries:
 
-    ' Class NamespaceDoc
+    '     Interface ICloneable
     ' 
+    '         Function: Clone
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-''' <summary>
-''' The ``sciBASIC#`` framework library core runtime.
-''' </summary>
-Friend Class NamespaceDoc
-End Class
+Namespace Serialization
+
+    Public Interface ICloneable(Of T)
+
+        Function Clone() As T
+    End Interface
+End Namespace
