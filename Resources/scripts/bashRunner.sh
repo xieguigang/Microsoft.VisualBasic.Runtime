@@ -4,10 +4,16 @@
 #
 # https://stackoverflow.com/questions/59895/get-the-source-directory-of-a-bash-script-from-within-the-script-itself
 #
+# #!/bin/bash
 #
+# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 #
+# is a useful one-liner which will give you the full directory name of the script 
+# no matter where it is being called from.
 #
-#
+# It will work as long as the last component of the path used to find the script 
+# is not a symlink (directory links are OK). If you also want to resolve any links 
+# to the script itself, you need a multi-line solution:
 #
 
 # target script may be a symlink
@@ -51,3 +57,10 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 # fi
 
 # echo "DIR is '$DIR'"
+
+# assemble the app path
+# and then run mono cli
+app="$DIR/{appName}"
+cli="$@"
+
+mono "$app" $cli
