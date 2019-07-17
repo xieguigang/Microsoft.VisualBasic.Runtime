@@ -1648,6 +1648,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
+    <None Include="Resources\scripts\bashRunner.sh" />
     <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>
