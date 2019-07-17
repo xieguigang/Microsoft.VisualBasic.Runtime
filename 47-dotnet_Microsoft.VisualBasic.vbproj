@@ -1345,7 +1345,7 @@
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\PathMapper.vb" />
-    <Compile Include="Language\Language\UnixBash\LinuxRunHelper.vb" />
+    <Compile Include="My\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />

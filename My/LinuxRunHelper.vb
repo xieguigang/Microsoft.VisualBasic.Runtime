@@ -45,34 +45,12 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 
-Namespace Language.UnixBash
+Namespace My
 
     ''' <summary>
     ''' mono shortcuts
     ''' </summary>
     Public Module LinuxRunHelper
-
-        ''' <summary>
-        ''' perl ./<see cref="Assembly"/> @ARGV
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function ScriptMe() As String
-            Dim cmd As String = Assembly.GetEntryAssembly.Location
-            Dim perl As String =
-$"#!/usr/bin/perl
-
-use strict;
-use warnings;
-use File::Basename;
-use File::Spec;
-
-my $cli = join "" "", @ARGV;
-
-print ""{App.AssemblyName} << $cli\n"";
-system(""mono {cmd.CLIPath} $cli"");
-"
-            Return perl
-        End Function
 
         ''' <summary>
         ''' Run from bash shell
@@ -99,15 +77,6 @@ mono ""{cmd}"" $cli
         Public Function BashShell() As Integer
             Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix
             Return BashRun.SaveTo(path, Encoding.ASCII)
-        End Function
-
-        ''' <summary>
-        ''' Execute command using perl script
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function PerlShell() As Integer
-            Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix & ".pl"
-            Return ScriptMe.SaveTo(path)
         End Function
 
         Public Function MonoRun(app As String, CLI As String) As ProcessEx
