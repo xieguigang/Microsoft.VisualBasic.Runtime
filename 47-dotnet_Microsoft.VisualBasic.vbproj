@@ -942,10 +942,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
+    <Compile Include="ApplicationServices\Tools\Plugin\Loader.vb" />
+    <Compile Include="ApplicationServices\Tools\Plugin\PluginAttribute.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\StreamReader.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\UnZip.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\Options.vb" />
@@ -1129,7 +1132,7 @@
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
     <Compile Include="Extensions\Collection\Linq\Which.vb" />
-    <Compile Include="ApplicationServices\Debugger\VisualBasicAppException.vb" />
+    <Compile Include="ApplicationServices\Debugger\Exception\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Collection\AnonymousTypeHelper.vb" />
     <Compile Include="Extensions\Image\Bitmap\Effects.vb" />
