@@ -172,6 +172,14 @@ Namespace CommandLine.InteropService.SharedORM
 
             Call vb.AppendLine(xmlComments)
 
+            Dim deli$
+
+            If params.Length > 4 Then
+                deli = ", " & vbCrLf & New String(" "c, 20 + func.Length)
+            Else
+                deli = ", "
+            End If
+
             Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
             Call vb.AppendLine($"    Dim CLI As New StringBuilder(""{API.Value.Name}"")")
             Call vb.AppendLine("    Call CLI.Append("" "")") ' 插入命令名称和参数值之间的一个必须的空格
