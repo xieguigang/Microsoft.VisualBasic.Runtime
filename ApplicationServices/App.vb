@@ -1285,6 +1285,10 @@ Public Module App
         Return tmp
     End Function
 
+    ''' <summary>
+    ''' Get temp data directory path of current app process instance
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property CurrentProcessTemp As String
 
     ''' <summary>
