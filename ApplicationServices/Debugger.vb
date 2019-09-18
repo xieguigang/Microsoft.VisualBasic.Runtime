@@ -204,6 +204,10 @@ Public Module VBDebugger
         End If
     End Sub
 
+    ''' <summary>
+    ''' Add additional user logging driver
+    ''' </summary>
+    ''' <param name="driver"></param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AttachLoggingDriver(driver As LoggingDriver)
         My.Log4VB.logs.Add(driver)
