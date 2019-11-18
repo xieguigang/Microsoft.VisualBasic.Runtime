@@ -1104,10 +1104,10 @@
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Average.vb" />
     <Compile Include="Extensions\StringHelpers\StringBuilders.vb" />
-    <Compile Include="Extensions\Trinity\Extensions.vb" />
-    <Compile Include="Extensions\Trinity\Expression.vb" />
-    <Compile Include="Extensions\Trinity\Word.vb" />
-    <Compile Include="Extensions\Trinity\WordClass.vb" />
+    <Compile Include="Data\Trinity\Extensions.vb" />
+    <Compile Include="Data\Trinity\Expression.vb" />
+    <Compile Include="Data\Trinity\Word.vb" />
+    <Compile Include="Data\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="My\JavaScript\ES6\Map.vb" />
     <Compile Include="My\JavaScript\Linq.vb" />
@@ -1357,7 +1357,7 @@
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Extensions\Math\Random\RandomRange.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
-    <Compile Include="Extensions\Trinity\NLP\TextTokens.vb" />
+    <Compile Include="Data\Trinity\NLP\TextTokens.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric2.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
