@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::157301c28eb348f8edfe58d6477fadcb, Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::4d437d0440fa9495dffb10e273c2b53b, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@ Namespace Linq
     ''' </summary>
     <Package("LINQ", Category:=APICategories.UtilityTools)>
     <Extension>
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>
@@ -87,6 +88,12 @@ Namespace Linq
             Return New DataValue(Of T)(src)
         End Function
 
+        ''' <summary>
+        ''' DirectCast of the <paramref name="source"/> sequence into T() array.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ToArray(Of T)(source As IEnumerable(Of Object)) As T()
             If source Is Nothing Then
@@ -112,6 +119,15 @@ Namespace Linq
                 Call $"Target source sequence is nothing...[{trace}]".Warning
 #End If
                 Return {}
+            End If
+        End Function
+
+        <Extension>
+        Public Function SafeQuery(Of T)(source As Enumeration(Of T)) As IEnumerable(Of T)
+            If source Is Nothing Then
+                Return {}
+            Else
+                Return source.AsEnumerable
             End If
         End Function
 

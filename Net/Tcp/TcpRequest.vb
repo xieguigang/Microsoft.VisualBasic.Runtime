@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1be3e946ad55ffa176526dc9a2f4699f, Net\Tcp\TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::38749fdbdebc5b0e862ece93217f6f74, Microsoft.VisualBasic.Core\Net\Tcp\TcpRequest.vb"
 
     ' Author:
     ' 
@@ -36,14 +36,11 @@
     '         Properties: LocalIPAddress
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: LocalConnection, OperationTimeOut, (+2 Overloads) SendMessage, ToString
-    '         Delegate Function
     ' 
-    '             Function: (+4 Overloads) SendMessage
+    '         Function: LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
     ' 
-    '             Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
-    '                  SendCallback
-    ' 
+    '         Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
+    '              SendCallback
     ' 
     ' 
     ' /********************************************************************************/
@@ -64,9 +61,10 @@ Imports TcpEndPoint = System.Net.IPEndPoint
 Namespace Net.Tcp
 
     ''' <summary>
-    ''' The server socket should returns some data string to this client or this client will stuck at the <see cref="SendMessage"></see> function.
-    ''' (服务器端<see cref="TcpServicesSocket"></see>必须要返回数据，否则本客户端会在<see cref="SendMessage
-    ''' "></see>函数位置一直处于等待的状态)
+    ''' The server socket should returns some data string to this client or this client 
+    ''' will stuck at the <see cref="SendMessage"></see> function.
+    ''' (服务器端<see cref="TcpServicesSocket"></see>必须要返回数据， 
+    ''' 否则本客户端会在<see cref="SendMessage"></see>函数位置一直处于等待的状态)
     ''' </summary>
     ''' <remarks></remarks>
     Public Class TcpRequest : Implements IDisposable
@@ -92,7 +90,7 @@ Namespace Net.Tcp
         Dim connectDone As ManualResetEvent
         Dim sendDone As ManualResetEvent
         Dim receiveDone As ManualResetEvent
-        Dim __exceptionHandler As ExceptionHandler
+        Dim exceptionHandler As ExceptionHandler
         Dim remoteHost As String
 
         ''' <summary>
@@ -104,7 +102,8 @@ Namespace Net.Tcp
 
         ''' <summary>
         ''' Gets the IP address of this local machine.
-        ''' (获取本机对象的IP地址，请注意这个属性获取得到的仅仅是本机在局域网内的ip地址，假若需要获取得到公网IP地址，还需要外部服务器的帮助才行)
+        ''' (获取本机对象的IP地址，请注意这个属性获取得到的仅仅是本机在局域网内的ip地址，
+        ''' 假若需要获取得到公网IP地址，还需要外部服务器的帮助才行)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -128,7 +127,7 @@ Namespace Net.Tcp
         End Sub
 
         Sub New(remoteDevice As IPEndPoint, Optional exceptionHandler As ExceptionHandler = Nothing)
-            Call Me.New(remoteDevice.IPAddress, remoteDevice.Port, exceptionHandler)
+            Call Me.New(remoteDevice.ipAddress, remoteDevice.port, exceptionHandler)
         End Sub
 
         Shared ReadOnly defaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
@@ -145,7 +144,7 @@ Namespace Net.Tcp
         Sub New(client As TcpRequest, Optional exceptionHandler As ExceptionHandler = Nothing)
             remoteHost = client.remoteHost
             port = client.port
-            __exceptionHandler = exceptionHandler Or defaultHandler
+            Me.exceptionHandler = exceptionHandler Or defaultHandler
             remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub
 
@@ -165,7 +164,7 @@ Namespace Net.Tcp
             End If
 
             port = remotePort
-            __exceptionHandler = exceptionHandler Or defaultHandler
+            Me.exceptionHandler = exceptionHandler Or defaultHandler
             remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub
 
@@ -229,24 +228,23 @@ Namespace Net.Tcp
 
             If bResult Then
                 If Not timeoutHandler Is Nothing Then Call timeoutHandler() '操作超时了
-
                 If Not connectDone Is Nothing Then Call connectDone.Set()  ' ManualResetEvent instances signal completion.
                 If Not sendDone Is Nothing Then Call sendDone.Set()
                 If Not receiveDone Is Nothing Then Call receiveDone.Set() '中断服务器的连接
 
                 Dim ex As Exception = New Exception("[OPERATION_TIME_OUT] " & Message.GetUTF8String)
                 Dim ret As New RequestStream(0, HTTP_RFC.RFC_REQUEST_TIMEOUT, "HTTP/408  " & Me.ToString)
-                Call __exceptionHandler(New Exception(ret.GetUTF8String, ex))
+
+                Call exceptionHandler(New Exception(ret.GetUTF8String, ex))
+
                 Return ret
             Else
                 Return response
             End If
         End Function
 
-        Public Delegate Function SendMessageInvoke(Message As String) As String
-
         Public Function SendMessage(Message As String, Callback As Action(Of String)) As IAsyncResult
-            Dim SendMessageClient As New TcpRequest(Me, exceptionHandler:=Me.__exceptionHandler)
+            Dim SendMessageClient As New TcpRequest(Me, exceptionHandler:=Me.exceptionHandler)
             Return (Sub() Call Callback(SendMessageClient.SendMessage(Message))).BeginInvoke(Nothing, Nothing)
         End Function
 
@@ -330,7 +328,7 @@ Namespace Net.Tcp
                 ' Signal that the connection has been made.
                 connectDone.Set()
             Catch ex As Exception
-                Call __exceptionHandler(ex)
+                Call exceptionHandler(ex)
             End Try
         End Sub 'ConnectCallback
 
@@ -350,7 +348,7 @@ Namespace Net.Tcp
             Try
                 Call client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
             Catch ex As Exception
-                Call Me.__exceptionHandler(ex)
+                Call Me.exceptionHandler(ex)
             End Try
         End Sub 'Receive
 
@@ -367,19 +365,19 @@ Namespace Net.Tcp
                 ' Read data from the remote device.
                 bytesRead = client.EndReceive(ar)
             Catch ex As Exception
-                Call __exceptionHandler(ex)
+                Call exceptionHandler(ex)
                 GoTo EX_EXIT
             End Try
 
             If bytesRead > 0 Then
                 ' There might be more data, so store the data received so far.
-                state.ChunkBuffer.AddRange(state.readBuffer.Takes(bytesRead))
+                state.received.AddRange(state.readBuffer.Takes(bytesRead))
                 ' Get the rest of the data.
                 client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
             Else
                 ' All the data has arrived; put it in response.
-                If state.ChunkBuffer.Count > 1 Then
-                    response = state.ChunkBuffer.ToArray
+                If state.received.Count > 1 Then
+                    response = state.received.ToArray
                 Else
 EX_EXIT:            response = Nothing
                 End If
@@ -403,9 +401,9 @@ EX_EXIT:            response = Nothing
             Try
                 Call client.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), client)
             Catch ex As Exception
-                Call Me.__exceptionHandler(ex)
+                Call Me.exceptionHandler(ex)
             End Try
-        End Sub 'Send
+        End Sub
 
         Private Sub SendCallback(ar As IAsyncResult)
 
@@ -416,7 +414,7 @@ EX_EXIT:            response = Nothing
             'Console.WriteLine("Sent {0} bytes to server.", bytesSent)
             ' Signal that all bytes have been sent.
             sendDone.Set()
-        End Sub 'SendCallback
+        End Sub
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
@@ -452,5 +450,5 @@ EX_EXIT:            response = Nothing
         End Sub
 #End Region
 
-    End Class 'AsynchronousClient
+    End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec414b409ccfae2670da0d33969d8b8b, Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::0d97c15df631518b75bb0b2755879fe0, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -68,6 +68,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
+    ''' <summary>
+    ''' 这个对象是<see cref="Graphics2D"/>以及<see cref="Wmf"/>公用的基础类型
+    ''' </summary>
     Public MustInherit Class GDICanvas : Inherits IGraphics
         Implements IDisposable
 
@@ -3909,49 +3912,27 @@ Namespace Imaging
         Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
             Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of an ellipse defined by a bounding rectangle specified by
-        '     a pair of coordinates, a width, and a height.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of an ellipse defined by a bounding rectangle specified by
+        ''' a pair of coordinates, a width, and a height.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse.</param>
         Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
             Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-path is null.
+
+        ''' <summary>
+        ''' Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="path">System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.</param>
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
             Call Graphics.FillPath(brush, path)
         End Sub
@@ -5150,10 +5131,11 @@ Namespace Imaging
 #End Region
 
         ''' <summary>
-        ''' Releases all resources used by this <see cref="System.Drawing.Graphics"/>.
+        ''' Releases all resources used by this <see cref="Graphics"/>.
         ''' </summary>
         Public Overrides Sub Dispose() Implements IDisposable.Dispose
-            Call Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+            ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+            Call Graphics.Dispose()
         End Sub
     End Class
 End Namespace

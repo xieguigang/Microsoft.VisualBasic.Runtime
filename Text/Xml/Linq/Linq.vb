@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::980ad65c68f3d1fc423a63e0fcefe3de, Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::5802be14e8c699167da9e7871d12bcec, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -147,11 +147,12 @@ Namespace Text.Xml.Linq
             Return type.Name
         End Function
 
-        Private Iterator Function InternalIterates(XML$, nodeName$) As IEnumerable(Of String)
+        Private Iterator Function InternalIterates(XML$, nodeName$, filter As Func(Of String, Boolean)) As IEnumerable(Of String)
             Dim XmlNodeList As XmlNodeList = XML _
                 .LoadXmlDocument _
                 .GetElementsByTagName(nodeName)
             Dim sb As New StringBuilder
+            Dim xmlText$
 
             For Each xmlNode As XmlNode In XmlNodeList
                 Call sb.Clear()
@@ -167,7 +168,13 @@ Namespace Text.Xml.Linq
                 Call sb.AppendLine(xmlNode.InnerXml)
                 Call sb.AppendLine($"</{nodeName}>")
 
-                Yield sb.ToString
+                xmlText = sb.ToString
+
+                If Not filter Is Nothing AndAlso filter(xmlText) Then
+                    Continue For
+                End If
+
+                Yield xmlText
             Next
         End Function
 
@@ -184,18 +191,26 @@ Namespace Text.Xml.Linq
         ''' Using for the namespace replacement.
         ''' (当这个参数存在的时候，目标命名空间申明将会被替换为空字符串，数据对象才会被正确的加载)
         ''' </param>
+        ''' <param name="elementFilter">
+        ''' 如果这个函数指针返回true, 则表示当前的数据元素节点需要被抛弃
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing, Optional forceLargeMode As Boolean = False) As IEnumerable(Of T)
+        Public Function LoadXmlDataSet(Of T As Class)(XML$,
+                                                      Optional typeName$ = Nothing,
+                                                      Optional xmlns$ = Nothing,
+                                                      Optional forceLargeMode As Boolean = False,
+                                                      Optional elementFilter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of T)
+
             Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
             Dim source As IEnumerable(Of String)
 
             If forceLargeMode OrElse XML.FileLength > 1024 * 1024 * 128 Then
                 ' 这是一个超大的XML文档
-                source = NodeIterator.IterateArrayNodes(XML, nodeName)
+                source = NodeIterator.IterateArrayNodes(XML, nodeName, elementFilter)
                 xmlns = Nothing
             Else
-                source = InternalIterates(XML, nodeName)
+                source = InternalIterates(XML, nodeName, elementFilter)
             End If
 
             Return source.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
@@ -237,10 +252,17 @@ Namespace Text.Xml.Linq
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$,
                                                                 Optional typeName$ = Nothing,
                                                                 Optional xmlns$ = Nothing,
-                                                                Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of T)
+                                                                Optional selector As Func(Of XElement, Boolean) = Nothing,
+                                                                Optional preprocess As Func(Of String, String) = Nothing) As IEnumerable(Of T)
             With GetType(T).GetTypeName([default]:=typeName)
                 Return .UltraLargeXmlNodesIterator(path, selector) _
-                    .Select(Function(node) node.ToString) _
+                    .Select(Function(node)
+                                If Not preprocess Is Nothing Then
+                                    Return preprocess(node.ToString)
+                                Else
+                                    Return node.ToString
+                                End If
+                            End Function) _
                     .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
             End With
         End Function
@@ -291,7 +313,8 @@ Namespace Text.Xml.Linq
                 .ValidationFlags = XmlSchemaValidationFlags.None,
                 .CheckCharacters = False,
                 .ConformanceLevel = ConformanceLevel.Document,
-                .ValidationType = ValidationType.None
+                .ValidationType = ValidationType.None,
+                .DtdProcessing = DtdProcessing.Ignore
             }
 
             Using reader As XmlReader = XmlReader.Create(documentText, settings)

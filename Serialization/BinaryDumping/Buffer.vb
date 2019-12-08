@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edd83d4783e00dc7011b4047766dd73f, Serialization\BinaryDumping\Buffer.vb"
+﻿#Region "Microsoft.VisualBasic::b810442024d29c996e35ab3b00996009, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\Buffer.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,13 @@ Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Serialization.BinaryDumping
 
+    ''' <summary>
+    ''' A biffer object with byte length prefix
+    ''' </summary>
+    ''' <remarks>
+    ''' 如果是类似于Memory map file的数据流,由于Memory map file的预分配大小可能会大于实际的数据大小
+    ''' 所以会需要使用一个长度的prefix来保证数据可以被正确读取,反序列化
+    ''' </remarks>
     Public Structure Buffer : Implements ISerializable
 
         Dim Length As Long
@@ -114,7 +121,7 @@ Namespace Serialization.BinaryDumping
         Public Iterator Function GetBuffer(Of T)(raw As Byte(), getObj As IGetObject(Of T)) As IEnumerable(Of T)
             Dim length As Byte() = New Byte(RawStream.INT64 - 1) {}
             Dim l As Long
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
             Dim temp As Byte()
             Dim x As T
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37bad5ffc0bc7a6f5ab3e6ee6f903a3b, Language\Linq\List.vb"
+﻿#Region "Microsoft.VisualBasic::c9ed3680d43f9e470c9020d607fd9229, Microsoft.VisualBasic.Core\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -178,7 +178,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="index"></param>
         ''' <returns></returns>
-        Default Public Overloads Property Item(index As VBInteger) As T
+        Default Public Overloads Property Item(index As i32) As T
             Get
                 Return Item(index.Value)
             End Get
@@ -478,6 +478,11 @@ Namespace Language
         '    Call list.AddRange(vals.MatrixAsIterator)
         '    Return list
         'End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(vals As T(), list As List(Of T)) As List(Of T)
+            Return New List(Of T)(vals) + list.AsEnumerable
+        End Operator
 
         ''' <summary>
         ''' 批量的从目标列表之中移除<paramref name="removes"/>集合之中的对象

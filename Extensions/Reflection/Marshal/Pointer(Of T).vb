@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dd5c1d2fee57d6554f72f09efdc32fe, Extensions\Reflection\Marshal\Pointer(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::42fba770825092fe619b346e47f20092, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     RawBuffer, UBound
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: MoveNext, PeekNext, stackalloc, ToString
+    '         Function: GetLeftsAll, MoveNext, PeekNext, stackalloc, ToString
     '         Operators: (+2 Overloads) -, (+2 Overloads) +, <<, (+2 Overloads) <=, <>
     '                    =, (+2 Overloads) >=, >>
     ' 
@@ -68,10 +68,13 @@ Namespace Emit.Marshal
         ''' <see cref="Position"/> -> its current value
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
+        ''' </remarks>
         Public Property Current As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value(Scan0)  ' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
+                Return Value(Scan0)
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Protected Friend Set(value As T)
@@ -209,11 +212,19 @@ Namespace Emit.Marshal
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function PeekNext() As T
-            Return Me(index + 1)
+            Return buffer(index + 1)
         End Function
 
         Public Overrides Function ToString() As String
             Return $"*{GetType(T).Name}: ({index}) {Current}"
+        End Function
+
+        ''' <summary>
+        ''' 获取当前指针位置后面的所有元素
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetLeftsAll() As T()
+            Return buffer.Skip(index).ToArray
         End Function
 
         '''' <summary>

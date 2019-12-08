@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f12490536f283a929877085408362f, ApplicationServices\Parallel\MMFProtocol\Pipeline\Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::d0d32908bf3f727a46036d0f6bfe8033, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\Pipeline\Pipeline.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Namespace Parallel.MMFProtocol.Pipeline
         Sub New(Optional port As Integer = API.PeplinePort)
             _protocols = New ProtocolHandler(Me)
             _netSocket = New TcpServicesSocket(port)
-            _netSocket.Responsehandler = AddressOf _protocols.HandleRequest
+            _netSocket.ResponseHandler = AddressOf _protocols.HandleRequest
 
             Call Parallel.RunTask(AddressOf _netSocket.Run)
         End Sub

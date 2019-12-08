@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9fc2b90e6ed847e0a43175fe081b3d1, Net\Protocol\Reflection\ProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::d883b5e7df0927d02a228167bb2da654, Microsoft.VisualBasic.Core\Net\Protocol\Reflection\ProtocolHandler.vb"
 
     ' Author:
     ' 
@@ -135,7 +135,7 @@ Namespace Net.Protocols.Reflection
         End Function
 
         ''' <summary>
-        ''' Handle the data request from the client for socket events: <see cref="TcpServicesSocket.Responsehandler"/>.
+        ''' Handle the data request from the client for socket events: <see cref="TcpServicesSocket.ResponseHandler"/>.
         ''' </summary>
         ''' <param name="request">The request stream object which contains the commands from the client</param>
         ''' <param name="remoteDevcie">The IPAddress of the target incoming client data request.</param>

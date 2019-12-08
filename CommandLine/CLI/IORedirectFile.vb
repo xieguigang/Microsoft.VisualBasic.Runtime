@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::c2622e56797782ff7ecee40e1c895766, CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::c2622e56797782ff7ecee40e1c895766, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IORedirectFile
-    ' 
-    '         Properties: Bin, CLIArguments, StandardOutput
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CopyRedirect, Run, (+2 Overloads) Start, ToString, writeScript
-    ' 
-    '         Sub: __processExitHandle, (+2 Overloads) Dispose, Start
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IORedirectFile
+' 
+'         Properties: Bin, CLIArguments, StandardOutput
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CopyRedirect, Run, (+2 Overloads) Start, ToString, writeScript
+' 
+'         Sub: __processExitHandle, (+2 Overloads) Dispose, Start
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Text
 Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
 
 Namespace CommandLine
@@ -141,7 +142,8 @@ Namespace CommandLine
                 Optional FolkNew As Boolean = False,
                 Optional stdRedirect$ = "",
                 Optional stdin$ = Nothing,
-                Optional debug As Boolean = True)
+                Optional debug As Boolean = True,
+                Optional isShellCommand As Boolean = False)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -150,7 +152,7 @@ Namespace CommandLine
             ' 没有小数点，说明可能只是一个命令，而不是具体的可执行程序文件名
             If InStr(file, ".") = 0 Then
                 ' do nothing
-            Else
+            ElseIf Not isShellCommand Then
                 ' 对于具体的程序文件的调用，在这里获取其完整路径
                 Try
                     file = FileIO.FileSystem.GetFileInfo(file).FullName
@@ -171,13 +173,17 @@ Namespace CommandLine
             Call "".SaveTo(_TempRedirect)
 
             If App.IsMicrosoftPlatform Then
-                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin)
+                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin, isShellCommand)
             Else
-                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin)
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin, isShellCommand)
             End If
 
             If debug Then
-                Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+                If isShellCommand Then
+                    Call $"""{file}"" {argv}".__DEBUG_ECHO
+                Else
+                    Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+                End If
             End If
         End Sub
 
@@ -234,7 +240,7 @@ Namespace CommandLine
         Private Function writeScript() As String
             Dim ext$ = If(App.IsMicrosoftPlatform, ".bat", ".sh")
             Dim path$ = App.GetAppSysTempFile(ext, App.PID)
-            Call shellScript.SaveTo(path)
+            Call shellScript.SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
             Return path
         End Function
 

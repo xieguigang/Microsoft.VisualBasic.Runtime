@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca3d0e340bd2f56ece58e491d6b679e9, Text\SearchEngine\TextIndexing\TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::be3802916c68edfc974b51d8ac60f8ee, Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextIndexing.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: cache
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __cache, __indexing, __workParts, (+2 Overloads) Found, (+2 Overloads) FuzzyIndex
+    '         Function: __indexing, __workParts, doCache, (+2 Overloads) Found, (+2 Overloads) FuzzyIndex
     '                   IsMatch, ToString
     ' 
     ' 
@@ -74,7 +74,7 @@ Namespace Text.Search
         ''' <param name="max"></param>
         Sub New(text As String, min As Integer, max As Integer)
             If min = max Then
-                cache = __cache(text, max)
+                cache = doCache(text, max)
             Else
                 cache = LinqAPI.Exec(Of TextSegment) _
  _
@@ -83,7 +83,7 @@ Namespace Text.Search
                               .Sequence _
                               .AsParallel
                           Let len As Integer = min + d
-                          Select __cache(text, len)
+                          Select doCache(text, len)
             End If
 
             _text = text
@@ -100,7 +100,7 @@ Namespace Text.Search
             Return Mid(_text, 1, 120) & "..."
         End Function
 
-        Private Shared Function __cache(text As String, len As Integer) As TextSegment()
+        Private Shared Function doCache(text As String, len As Integer) As TextSegment()
             Dim out As New List(Of TextSegment)
 
             For i As Integer = 1 To text.Length - len

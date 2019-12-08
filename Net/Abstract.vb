@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a491bd98f891310b14cf4957ddae8936, Net\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::287d2bd71c6f3b8c3d072d4d519edb8f, Microsoft.VisualBasic.Core\Net\Abstract.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,9 @@
     ' 
     ' 
     ' 
+    '     Delegate Function
+    ' 
+    ' 
     '     Delegate Sub
     ' 
     ' 
@@ -49,7 +52,9 @@
     ' 
     '     Interface IDataRequestHandler
     ' 
-    '         Properties: Responsehandler
+    '         Properties: ResponseHandler
+    ' 
+    ' 
     ' 
     ' 
     ' 
@@ -76,6 +81,8 @@ Namespace Net.Abstract
     End Class
 
 #Region "Delegate Abstract Interface"
+
+    Public Delegate Function SendMessageInvoke(Message As String) As String
 
     Public Delegate Sub ForceCloseHandle(socket As StateObject)
 
@@ -131,6 +138,6 @@ Namespace Net.Abstract
         ''' (这个函数指针用于处理来自于客户端的请求)
         ''' </summary>
         ''' <remarks></remarks>
-        Property Responsehandler As DataRequestHandler
+        Property ResponseHandler As DataRequestHandler
     End Interface
 End Namespace

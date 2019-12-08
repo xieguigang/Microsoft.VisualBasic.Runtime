@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f904cc12c9573031dc19c48f2dbceff8, Net\Tcp\StateObject.vb"
+﻿#Region "Microsoft.VisualBasic::e9f030b2f16f184bddf132eb9efd5724, Microsoft.VisualBasic.Core\Net\Tcp\StateObject.vb"
 
     ' Author:
     ' 
@@ -54,15 +54,16 @@ Namespace Net.Tcp
     Public Class StateObject : Implements IDisposable
 
         ''' <summary>
-        ''' Client  socket.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public workSocket As Socket
-        ''' <summary>
         ''' Size of receive buffer.
         ''' </summary>
         ''' <remarks></remarks>
         Public Const BufferSize As Integer = 1024 * 1024
+
+        ''' <summary>
+        ''' Client  socket.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public workSocket As Socket
         ''' <summary>
         ''' Receive buffer.
         ''' </summary>
@@ -72,14 +73,14 @@ Namespace Net.Tcp
         ''' Received data.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ChunkBuffer As New List(Of Byte)
+        Public received As New List(Of Byte)
 
         Public Overrides Function ToString() As String
-            Return workSocket.RemoteEndPoint.ToString & " <=====> " & workSocket.LocalEndPoint.ToString
+            Return workSocket.RemoteEndPoint.ToString & " <==> " & workSocket.LocalEndPoint.ToString
         End Function
 
         Public Function GetRequest() As RequestStream
-            Return New RequestStream(ChunkBuffer.ToArray)
+            Return New RequestStream(received.ToArray)
         End Function
 
 #Region "IDisposable Support"
@@ -95,8 +96,8 @@ Namespace Net.Tcp
                     Dim ep As String = workSocket.RemoteEndPoint.ToString
 
                     ' TODO: dispose managed state (managed objects).
-                    Call ChunkBuffer.Clear()
-                    Call ChunkBuffer.Free
+                    Call received.Clear()
+                    Call received.Free
                     Call readBuffer.Free
                     Call workSocket.Shutdown(SocketShutdown.Both)
                     Call workSocket.Free

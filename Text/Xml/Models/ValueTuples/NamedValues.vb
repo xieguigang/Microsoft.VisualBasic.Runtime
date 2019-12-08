@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47511b485a69bd473a64458aede8c0ce, Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::95a7885518dd8f37520a3b952bd6e8a9, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 
@@ -92,6 +92,11 @@ Namespace Text.Xml.Models
             Me.text = value
         End Sub
 
+        Sub New(namedValue As NamedValue(Of String))
+            Me.name = namedValue.Name
+            Me.text = namedValue.Value
+        End Sub
+
         Sub New()
         End Sub
 
@@ -112,8 +117,22 @@ Namespace Text.Xml.Models
     ''' </summary>
     <XmlType("property")> Public Structure [Property] : Implements INamedValue
 
+        ''' <summary>
+        ''' The property name
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property name As String Implements INamedValue.Key
+
+        ''' <summary>
+        ''' The property value in text string type 
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property value As String
+
+        ''' <summary>
+        ''' Data annotation comment.
+        ''' </summary>
+        ''' <returns></returns>
         <XmlText>
         Public Property comment As String
 

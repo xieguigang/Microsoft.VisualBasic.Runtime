@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54e85494a04f696bb8540d6846ed52dc, ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::a6498fbe4fe1e79159f3793ea7e5ddf9, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,13 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, indexing, (+2 Overloads) Intersect
-    '                   NotExists, ToString
+    '         Function: Add, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator, indexing
+    '                   (+2 Overloads) Intersect, NotExists, ToString
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: (+2 Overloads) +, (+2 Overloads) Like
+    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
+    '                    (+2 Overloads) IsTrue, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -183,6 +184,10 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        Public Function GetOrdinal(items As IEnumerable(Of T)) As Integer()
+            Return items.Select(Function(element) Me(element)).ToArray
+        End Function
+
         Public Sub Delete(index As T)
             Dim i = Me.IndexOf(index)
 
@@ -298,6 +303,24 @@ Namespace ComponentModel.Collection
         End Operator
 
         ''' <summary>
+        ''' Delete items from source <paramref name="index"/> and then returns the new modify index collection
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(index As Index(Of T), list As List(Of T)) As Index(Of T)
+            Dim table = index.maps
+
+            For Each item As T In list
+                If table.ContainsKey(item) Then
+                    Call table.Remove(item)
+                End If
+            Next
+
+            Return New Index(Of T)(table.Keys)
+        End Operator
+
+        ''' <summary>
         ''' <paramref name="item"/> is one of the element in <paramref name="indexr"/>
         ''' </summary>
         ''' <param name="item"></param>
@@ -322,5 +345,38 @@ Namespace ComponentModel.Collection
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        ''' <summary>
+        ''' The element numbers in current index object is equals to given count number value?
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator =(index As Index(Of T), count%) As Boolean
+            Return index.Count = count
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator <>(index As Index(Of T), count%) As Boolean
+            Return Not index = count
+        End Operator
+
+        Public Shared Operator IsTrue(index As Index(Of T)) As Boolean
+            If index Is Nothing Then
+                Return False
+            ElseIf index.Count = 0 Then
+                Return False
+            ElseIf index.Count = 1 AndAlso Len(CObj(index.Objects(Scan0))) = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator IsFalse(index As Index(Of T)) As Boolean
+            Return Not op_True(index)
+        End Operator
     End Class
 End Namespace

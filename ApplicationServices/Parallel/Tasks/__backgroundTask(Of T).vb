@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::869b09ad14c8f2c6c6f514616cbc3e82, ApplicationServices\Parallel\Tasks\__backgroundTask(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::c60deb7b2b37593b3ba785850c01201e, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\__backgroundTask(Of T).vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Delegate Function
     ' 
     ' 
-    '     Class __backgroundTask
+    '     Class backgroundTask
     ' 
     '         Properties: ExecuteException, TaskHandle, Value
     ' 
@@ -61,7 +61,7 @@ Namespace Parallel.Tasks
     ''' <returns></returns>
     Public Delegate Function IBackgroundTask(Of T)() As T
 
-    Friend Class __backgroundTask(Of T) : Inherits IParallelTask
+    Friend Class backgroundTask(Of T) : Inherits IParallelTask
 
         ''' <summary>
         ''' 获取得到任务线程执行的输出结果
@@ -103,7 +103,7 @@ Namespace Parallel.Tasks
             _RunningTask = False
         End Sub
 
-        Public Function Start() As __backgroundTask(Of T)
+        Public Function Start() As backgroundTask(Of T)
             If Not TaskRunning Then
                 _taskThread.Start()
                 _TaskComplete = False

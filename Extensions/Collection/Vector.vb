@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30a099d1490b4b86e4a02b1e6d2f963d, Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::ce2df7a59972d694106c33828b71d099, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
-    '               Midv, RepeatCalls, Replicate, (+2 Overloads) Sort, Split
+    '               Midv, RepeatCalls, Replicate, (+3 Overloads) Sort, Split
     '               VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
@@ -64,11 +64,36 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
+Imports Microsoft.VisualBasic.My.JavaScript.Linq
 
 ''' <summary>
 ''' Extension methods for the .NET object sequence
 ''' </summary>
+''' 
+<HideModuleName>
 Public Module VectorExtensions
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="compares"></param>
+    ''' <param name="modification">是否修改原始输入的<paramref name="a"/>序列? 否则会创建一个新的数组序列返回</param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Sort(Of T)(ByRef a As T(), compares As Comparison(Of T), Optional modification As Boolean = True) As T()
+        If modification Then
+            Call Array.Sort(a, compares)
+        Else
+            Return a.AsEnumerable _
+                .Sort(compares) _
+                .ToArray
+        End If
+
+        Return a
+    End Function
 
     ''' <summary>
     ''' 使用<paramref name="template"/>产生一个<paramref name="n"/>长度元素的目标序列
@@ -100,12 +125,13 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Dynamics add a element into the target array.
+    ''' Dynamics add a element into the target array.(注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
-    <Extension> Public Sub Add(Of T)(ByRef vector As T(), value As T)
+    <Extension>
+    Public Sub Add(Of T)(ByRef vector As T(), value As T)
         If vector.IsNullOrEmpty Then
             vector = {value}
         Else
@@ -224,7 +250,7 @@ Public Module VectorExtensions
     <Extension>
     Public Function Fill(Of T)(ByRef vector As T(),
                                data As IEnumerable(Of T),
-                               start As VBInteger,
+                               start As i32,
                                Optional reverse As Boolean = False) As T()
         If start < 0 Then
             start = vector.Length + start.Value

@@ -1,50 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::be6da859a70b35c56d45b6240422e30a, Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::4c34fe7ef695119d13070eda59ef9163, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module KeyValuePairExtensions
-    ' 
-    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
-    '               AsNamedVector, AsTable, ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData
-    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault
-    '               GroupByKey, HaveData, IGrouping, IterateNameCollections, IterateNameValues
-    '               IteratesAll, Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues
-    '               (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects
-    '               SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary
-    '               Tsv, Tuple, (+2 Overloads) Values, XMLModel
-    ' 
-    '     Sub: SortByKey, SortByValue
-    ' 
-    ' /********************************************************************************/
+' Module KeyValuePairExtensions
+' 
+'     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
+'               ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser
+'               FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey, HaveData
+'               IterateNameCollections, IterateNameValues, IteratesAll, Join, KeyItem
+'               (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet
+'               ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal
+'               Takes, (+3 Overloads) ToDictionary, ToLower, ToUpper, Tsv
+'               Tuple, (+2 Overloads) Values, XMLModel
+' 
+'     Sub: SortByKey, SortByValue
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,7 +65,51 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' <summary>
 ''' KeyValue pair data related extensions API.
 ''' </summary>
+''' 
+<HideModuleName>
 Public Module KeyValuePairExtensions
+
+    ''' <summary>
+    ''' 从目标字典中按照给定的键名称获取值然后删除给定的键名称对应的数据
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Popout(Of K, V)(table As Dictionary(Of K, V), key As K) As V
+        If table.ContainsKey(key) Then
+            Dim value As V = table(key)
+            table.Remove(key)
+            Return value
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    <Extension>
+    Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
+        Dim table As New Dictionary(Of String, String)
+
+        For i As Integer = 0 To tuple.Item1.Length - 1
+            Call table.Add(tuple.Item1(i), tuple.Item2(i))
+        Next
+
+        Return table
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToLower(Of T)(table As Dictionary(Of String, T)) As Dictionary(Of String, T)
+        Return table.ToDictionary(Function(k) k.Key.ToLower, Function(k) k.Value)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToUpper(Of T)(table As Dictionary(Of String, T)) As Dictionary(Of String, T)
+        Return table.ToDictionary(Function(k) k.Key.ToUpper, Function(k) k.Value)
+    End Function
 
     ''' <summary>
     ''' 这个拓展函数主要是针对值得构建比较耗时的操作，主要应用于数据缓存场景
@@ -93,7 +137,7 @@ Public Module KeyValuePairExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable
+    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable(Of V)
         Return From key As K In keys Select table(key)
     End Function
 
@@ -217,13 +261,20 @@ Public Module KeyValuePairExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Subset(Of T)(table As Dictionary(Of String, T), keys$()) As Dictionary(Of String, T)
-        Return keys _
-            .Select(Function(key)
-                        Return (key:=key, val:=table(key))
-                    End Function) _
-            .ToDictionary(Function(o) o.key,
-                          Function(o) o.val)
+    Public Function Subset(Of T)(table As Dictionary(Of String, T), keys$(), Optional ignoreMissing As Boolean = False) As Dictionary(Of String, T)
+        If ignoreMissing Then
+            Return keys _
+                .Where(AddressOf table.ContainsKey) _
+                .ToDictionary(Function(key) key,
+                              Function(key)
+                                  Return table(key)
+                              End Function)
+        Else
+            Return keys.ToDictionary(Function(key) key,
+                                     Function(key)
+                                         Return table(key)
+                                     End Function)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -283,35 +334,10 @@ Public Module KeyValuePairExtensions
         Next
     End Function
 
-    <Extension> Public Function AsNamedVector(Of T)(groups As IEnumerable(Of IGrouping(Of String, T))) As IEnumerable(Of NamedCollection(Of T))
-        Return groups.Select(Function(group)
-                                 Return New NamedCollection(Of T) With {
-                                    .Name = group.Key,
-                                    .Value = group.ToArray
-                                 }
-                             End Function)
-    End Function
-
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsNamedValueTuples(Of T)(tuples As IEnumerable(Of KeyValuePair(Of String, T))) As IEnumerable(Of NamedValue(Of T))
         Return tuples.Select(Function(p) New NamedValue(Of T)(p.Key, p.Value))
-    End Function
-
-    <Extension>
-    Public Function AsGroups(Of T)(table As Dictionary(Of String, T())) As IEnumerable(Of NamedCollection(Of T))
-        Return table.Select(Function(item)
-                                Return New NamedCollection(Of T) With {
-                                    .Name = item.Key,
-                                    .Value = item.Value
-                                }
-                            End Function)
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function IGrouping(Of T)(source As IEnumerable(Of NamedCollection(Of T))) As IEnumerable(Of IGrouping(Of String, T))
-        Return source.Select(Function(x) DirectCast(x, IGrouping(Of String, T)))
     End Function
 
     ''' <summary>
@@ -338,7 +364,7 @@ Public Module KeyValuePairExtensions
     ''' <returns></returns>
     <Extension>
     Public Function IteratesAll(Of T As INamedValue)(source As IEnumerable(Of NamedCollection(Of T))) As T()
-        Return source.Select(Function(c) c.Value).IteratesALL.ToArray
+        Return source.Select(Function(c) c.value).IteratesALL.ToArray
     End Function
 
     ''' <summary>
@@ -353,8 +379,8 @@ Public Module KeyValuePairExtensions
             .GroupBy(Function(o) o.Key) _
             .Select(Function(g)
                         Return New NamedCollection(Of T) With {
-                             .Name = g.Key,
-                             .Value = g.ToArray
+                             .name = g.Key,
+                             .value = g.ToArray
                          }
                     End Function) _
             .ToArray

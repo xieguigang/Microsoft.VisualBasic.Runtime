@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2c9a815a23622c9e4141f970511d85b, Net\Tcp\Persistent\Socket\WorkSocket.vb"
+﻿#Region "Microsoft.VisualBasic::10cce9d76897118ee60637cf9e3747da, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\WorkSocket.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Namespace Net.Tcp.Persistent.Socket
         Public ReadOnly ConnectTime As Date = Now
 
         Sub New(Socket As StateObject)
-            Me.ChunkBuffer = Socket.ChunkBuffer
+            Me.received = Socket.received
             Me.readBuffer = Socket.readBuffer
             Me.workSocket = Socket.workSocket
         End Sub

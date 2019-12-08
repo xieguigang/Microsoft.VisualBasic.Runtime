@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8692c0dfaacf8f0e842aa47da86c0416, ApplicationServices\Parallel\OperationTimeOut.vb"
+﻿#Region "Microsoft.VisualBasic::0207a3cffa83d75a0e5040b759daa6c3, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\OperationTimeOut.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Namespace Parallel
         ''' 
         <Extension>
         Public Function OperationTimeOut(Of T, TOut)(handle As Func(Of T, TOut), [In] As T, ByRef Out As TOut, TimeOut As Double) As Boolean
-            Dim invoke As New __backgroundTask(Of TOut)(Function() handle([In]))
+            Dim invoke As New backgroundTask(Of TOut)(Function() handle([In]))
             Dim i As Integer
 
             TimeOut = TimeOut * 1000

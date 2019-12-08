@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9677feaaf50ab1429a4c83031821160, Extensions\Collection\Linq\Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::abed2ce454022b1fc8bd07931ab2dc5c, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Pipeline.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module PipelineExtensions
     ' 
-    '         Function: DoCall
+    '         Function: DoCall, PipeOf
     ' 
     '         Sub: DoCall
     ' 
@@ -46,7 +46,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Linq
 
-    Public Module PipelineExtensions
+    <HideModuleName> Public Module PipelineExtensions
 
         ''' <summary>
         ''' Delegate pipeline function
@@ -73,5 +73,10 @@ Namespace Linq
         Public Sub DoCall(Of T)(input As T, apply As Action(Of T))
             Call apply(input)
         End Sub
+
+        <Extension>
+        Public Function PipeOf(Of T, Rest)(input As T, task As Action(Of T, Rest)) As Action(Of Rest)
+            Return Sub(a) task(input, a)
+        End Function
     End Module
 End Namespace

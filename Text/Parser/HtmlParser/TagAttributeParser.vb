@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77ba6865a0d027987d269c889094aaa4, Text\Parser\HtmlParser\TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::182a146ac882c4d58c0f95e982e1b4ce, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TagAttributeParser
     ' 
-    '         Function: [class], classList, GetAttrValue, GetImageLinks, href
+    '         Function: [class], attr, classList, GetImageLinks, href
     '                   img, (+2 Overloads) src, TagAttributes
     ' 
     ' 
@@ -78,13 +78,19 @@ Namespace Text.Parser.HtmlParser
 
         Const attributePattern$ = "%s\s*=\s*([""].+?[""])|(['].+?['])"
 
+        ''' <summary>
+        ''' Get element attribute value
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <param name="attrName$"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function GetAttrValue(html$, attr$) As String
+        Public Function attr(html$, attrName$) As String
             If String.IsNullOrEmpty(html) Then
                 Return ""
             Else
-                attr = attributePattern.Replace("%s", attr)
-                html = html.Match(attr, RegexICSng)
+                attrName = attributePattern.Replace("%s", attrName)
+                html = html.Match(attrName, RegexICSng)
             End If
 
             If String.IsNullOrEmpty(html) Then
@@ -106,19 +112,19 @@ Namespace Text.Parser.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Html.Href")>
         <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")> html$) As String
-            Return html.GetAttrValue("href")
+            Return html.attr("href")
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function [class](tag As String) As String
-            Return tag.GetAttrValue("class")
+            Return tag.attr("class")
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function classList(tag As String) As String()
-            Return tag.GetAttrValue("class").StringSplit("\s+")
+            Return tag.attr("class").StringSplit("\s+")
         End Function
 
 #Region "Parsing image source url from the img html tag."
@@ -144,7 +150,7 @@ Namespace Text.Parser.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function src(img As String) As String
-            Return img.GetAttrValue("src")
+            Return img.attr("src")
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

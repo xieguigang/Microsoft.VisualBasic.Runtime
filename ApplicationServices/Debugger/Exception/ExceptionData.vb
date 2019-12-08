@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::679f37232d839b0731209665afe32b3b, ApplicationServices\Debugger\Exception\ExceptionData.vb"
+﻿#Region "Microsoft.VisualBasic::626d2b64093e22f3527641427fdc424e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\ExceptionData.vb"
 
     ' Author:
     ' 
@@ -35,25 +35,15 @@
     ' 
     '         Properties: Message, StackTrace, TypeFullName
     ' 
-    '         Function: CreateInstance, GetCurrentStackTrace, ToString
-    ' 
-    '     Class StackFrame
-    ' 
-    '         Properties: File, Line, Method
-    ' 
-    '         Function: Parser, ToString
-    ' 
-    '     Class Method
-    ' 
-    '         Properties: [Module], [Namespace], Method
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: CreateFromObject, CreateInstance, Exception, GetCurrentStackTrace, getMessages
+    '                   ParseStackTrace, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Diagnostics
 
@@ -63,8 +53,38 @@ Namespace ApplicationServices.Debugging.Diagnostics
         Public Property Message As String()
         Public Property StackTrace As StackFrame()
 
+        ''' <summary>
+        ''' Create exception object for throw exception expression
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Exception() As Exception
+            Return New Exception(Message.Select(Function(msg, i) $"{i}. {msg}").JoinBy(ASCII.LF)) With {
+                .Source = StackTrace.JoinBy(ASCII.LF)
+            }
+        End Function
+
         Public Overrides Function ToString() As String
             Return TypeFullName
+        End Function
+
+        Private Shared Iterator Function getMessages(ex As Exception) As IEnumerable(Of String)
+            Do While True
+                Yield ex.Message
+
+                If Not ex.InnerException Is Nothing Then
+                    ex = ex.InnerException
+                Else
+                    Exit Do
+                End If
+            Loop
+        End Function
+
+        Public Shared Function CreateFromObject(ex As Exception) As ExceptionData
+            Return New ExceptionData With {
+                .Message = getMessages(ex).ToArray,
+                .TypeFullName = ex.GetType.FullName,
+                .StackTrace = ParseStackTrace(ex.StackTrace)
+            }
         End Function
 
         Public Shared Function CreateInstance(messages$(), stackTrace$(), type$) As ExceptionData
@@ -77,12 +97,8 @@ Namespace ApplicationServices.Debugging.Diagnostics
             }
         End Function
 
-        ''' <summary>
-        ''' Parsing <see cref="Environment.StackTrace"/>, gets current stack trace information.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Shared Function GetCurrentStackTrace() As StackFrame()
-            Return Environment.StackTrace _
+        Public Shared Function ParseStackTrace(stackTrace As String) As StackFrame()
+            Return stackTrace _
                 .LineTokens _
                 .Where(Function(s) Not s.StringEmpty) _
                 .Skip(3) _
@@ -92,71 +108,13 @@ Namespace ApplicationServices.Debugging.Diagnostics
                         End Function) _
                 .ToArray
         End Function
-    End Class
-
-    Public Class StackFrame
 
         ''' <summary>
-        ''' Method call
+        ''' Parsing <see cref="Environment.StackTrace"/>, gets current stack trace information.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Method As Method
-        ''' <summary>
-        ''' The file path of the source file
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property File As String
-        ''' <summary>
-        ''' The line number in current source <see cref="File"/>.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Line As String
-
-        Public Overrides Function ToString() As String
-            Return $"{Method} at {File}:line {Line}"
-        End Function
-
-        Public Shared Function Parser(line As String) As StackFrame
-            With line.Replace("位置", "at").Replace("行号", "line")
-                Dim t = .StringSplit(" at ")
-                Dim method = t(0)
-                Dim location = t.ElementAtOrDefault(1)
-                Dim file$, lineNumber$
-
-                If Not location.StringEmpty Then
-                    t = location.StringSplit("[:]line ")
-                    file = t(0)
-                    lineNumber = t(1)
-                Else
-                    file = "Unknown"
-                    lineNumber = 0
-                End If
-
-                Return New StackFrame With {
-                    .Method = New Method(method),
-                    .File = file,
-                    .Line = lineNumber
-                }
-            End With
-        End Function
-    End Class
-
-    Public Class Method
-
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
-
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
-
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
+        Public Shared Function GetCurrentStackTrace() As StackFrame()
+            Return ParseStackTrace(Environment.StackTrace)
         End Function
     End Class
 End Namespace

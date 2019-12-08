@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb551ec303f9cd2f31b64681ea0a05db, ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::9988a01fe3a072b391b86080ef2b2388, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '         Properties: Length, Max, Min
     ' 
-    '         Constructor: (+6 Overloads) Sub New
-    '         Function: Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
+    '         Constructor: (+7 Overloads) Sub New
+    '         Function: (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
     '                   ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like
     ' 
@@ -119,6 +119,10 @@ Namespace ComponentModel.Ranges.Model
 
         Sub New(range As IntRange)
             Call Me.New(range.Min, range.Max)
+        End Sub
+
+        Sub New(vec As Vector(Of Double))
+            Call Me.New(vec.AsEnumerable)
         End Sub
 
         ''' <summary>
@@ -225,6 +229,10 @@ Namespace ComponentModel.Ranges.Model
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
+        Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
+            Return New DoubleRange(vector.Min, vector.Max)
+        End Operator
+
         Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange
             Return data _
                 .Select(Function(s) CDbl(s)) _
@@ -271,15 +279,14 @@ Namespace ComponentModel.Ranges.Model
             If Length = 0 Then
                 Return {}
             Else
-                Dim delta# = Length / n
-                Dim out As New List(Of Double)
-
-                For x As Double = Min To Max Step delta
-                    out += x
-                Next
-
-                Return out
+                Return Enumerate(Length / n).ToArray
             End If
+        End Function
+
+        Public Iterator Function Enumerate(resolution#) As IEnumerable(Of Double)
+            For x As Double = Min To Max Step resolution
+                Yield x
+            Next
         End Function
 
         ''' <summary>

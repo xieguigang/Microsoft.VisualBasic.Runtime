@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa49e490c8c60fa3ba033227e6dda9df, Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::09bd4a4a62b3cfc73d60a7e328520acf, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: (+2 Overloads) EachValue, EndsWith, IsPattern, Locates, PythonRawRegexp
-    '               (+2 Overloads) ToArray
+    '               StartsWith, (+2 Overloads) ToArray
     '     Structure [NameOf]
     ' 
     ' 
@@ -54,6 +54,25 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 
 Public Module RegexExtensions
+
+    ''' <summary>
+    ''' Determines whether the beginning of this string instance matches the specified
+    ''' string.
+    ''' </summary>
+    ''' <param name="str">The string to compare.</param>
+    ''' <param name="pattern"></param>
+    ''' <param name="opt"></param>
+    ''' <returns>true if value matches the beginning of this string; otherwise, false.</returns>
+    <Extension>
+    Public Function StartsWith(str$, pattern$, opt As RegexOptions) As Boolean
+        Dim match$ = str.Match(pattern, opt)
+
+        If match.StringEmpty Then
+            Return False
+        Else
+            Return str.StartsWith(match)
+        End If
+    End Function
 
     ''' <summary>
     ''' Determines whether the end of this string instance matches the specified string pattern.
@@ -251,7 +270,17 @@ Public Module RegexExtensions
         ' 2018-6-1 因为空字符串肯定无法匹配上目标模式
         ' 所以match函数总回返回空字符串
         ' 由于s参数本身就是空字符串，所以会造成空字符串可以被任意模式完全匹配的bug
-        Return Not s.StringEmpty AndAlso Regex.Match(s, pattern, opt).Value = s
+        If s.StringEmpty Then
+            Return False
+        End If
+
+        Dim match$ = Regex.Match(s, pattern, opt).Value
+
+        If match = s Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
 
     ''' <summary>

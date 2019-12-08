@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb69fc76f81f00cb04dcaaab9410eb37, CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::624394559d1f26443f64cf6789fd5ebb, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -103,14 +103,14 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Info As String Implements IExportAPI.Info
+        <Obsolete> Public Property Info As String Implements IExportAPI.Info
         ''' <summary>
         ''' The usage of this command.(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Usage As String Implements IExportAPI.Usage
+        <Obsolete> Public Property Usage As String Implements IExportAPI.Usage
         ''' <summary>
         ''' A example that to useing this command.
         ''' (对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值，
@@ -119,7 +119,7 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Example As String Implements IExportAPI.Example
+        <Obsolete> Public Property Example As String Implements IExportAPI.Example
 
         ''' <summary>
         ''' You are going to define a available export api for you application to another language or scripting program environment.

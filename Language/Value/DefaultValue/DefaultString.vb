@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0c300c7751c675905ed4b93e9c9d6f8, Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::d98a076bb727a0d7586af915108b5fd5, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
     '         Properties: DefaultValue, IsEmpty, IsTrue
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: assertIsNothing, LoadJson, LoadXml, ReadAllLines, ToString
-    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+8 Overloads) Or
+    '         Function: assertIsNothing, Base64Decode, LoadJson, LoadXml, ReadAllLines
+    '                   ToString
+    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+8 Overloads) Or
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +46,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
@@ -85,8 +87,8 @@ Namespace Language.Default
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function LoadXml(Of T)() As T
-            Return DefaultValue.LoadXml(Of T)
+        Public Function LoadXml(Of T)(Optional throwEx As Boolean = True) As T
+            Return DefaultValue.LoadXml(Of T)(throwEx:=throwEx)
         End Function
 
         ''' <summary>
@@ -103,6 +105,11 @@ Namespace Language.Default
             Else
                 Return DefaultValue.LoadJSON(Of T)
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Base64Decode() As String
+            Return Base64Codec.DecodeBase64(DefaultValue)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -162,6 +169,11 @@ Namespace Language.Default
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator IsFalse(str As DefaultString) As Boolean
             Return False = CType(str, Boolean)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Not(str As DefaultString) As Boolean
+            Return Not CType(str, Boolean)
         End Operator
 
         ''' <summary>

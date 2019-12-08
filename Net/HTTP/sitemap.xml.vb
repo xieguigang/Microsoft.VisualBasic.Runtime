@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a099b4ca8a8b710b5c0b912588cd2dc, Net\HTTP\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::4bc7d87b1c2b8387d9a23a207a33af6b, Microsoft.VisualBasic.Core\Net\HTTP\sitemap.xml.vb"
 
     ' Author:
     ' 
@@ -63,6 +63,7 @@ Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -125,7 +126,9 @@ Namespace Net.Http
             Return Save(path, encoding.CodePage)
         End Function
 
-        Public Shared Function ScanAllFiles(wwwroot$, host$, Optional changefreq As changefreqs = changefreqs.monthly) As sitemap
+        Shared ReadOnly htmlFiles As [Default](Of String()) = {"*.html", "*.htm"}
+
+        Public Shared Function ScanAllFiles(wwwroot$, host$, Optional fileTypes$() = Nothing, Optional changefreq As changefreqs = changefreqs.monthly) As sitemap
             Dim url As New List(Of url)
             Dim freq$ = changefreq.ToString
             Dim lastmod$ = $"{Now.Year}-{FillDateZero(Now.Month)}-{FillDateZero(Now.Day)}"
@@ -133,7 +136,7 @@ Namespace Net.Http
             wwwroot = wwwroot.GetDirectoryFullPath
             host = host.TrimDIR
 
-            For Each file$ In ls - l - r - "*.*" <= wwwroot
+            For Each file$ In ls - l - r - (fileTypes Or htmlFiles) <= wwwroot
                 file = file.Replace("\", "/").Replace(wwwroot, "")
                 file = host & file
                 url += New url With {

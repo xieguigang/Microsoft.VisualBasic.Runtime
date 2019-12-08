@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f967b32a35764690c19ec884768c35f, Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::bb00189b6576ae1fa45c9498bd125215, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Linq
 
+    <HideModuleName>
     Public Module IteratorExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

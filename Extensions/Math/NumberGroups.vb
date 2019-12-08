@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::216ff4ffa99cd78ad8f9ef7b6d573ef7, Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::1b7414a43a1cbb03f1c9676d2ccd56eb, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module NumberGroups
     ' 
-    '         Function: BinarySearch, (+2 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
+    '         Function: BinarySearch, (+3 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
     '                   Match, Min
     '         Interface IVector
     ' 
@@ -225,7 +225,7 @@ Namespace Math
                                                                    equals As GenericLambda(Of Double).IEquals,
                                                                    Optional chunkSize% = 20000) As IEnumerable(Of NamedCollection(Of T))
             Dim partitions = source _
-                .SplitIterator(parTokens:=chunkSize) _
+                .SplitIterator(partitionSize:=chunkSize) _
                 .AsParallel _
                 .Select(Function(part)
                             Return part.AsList.GroupByImpl(evaluate, equals)
@@ -303,8 +303,21 @@ Namespace Math
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As NamedCollection(Of T)()
+        <Extension>
+        Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As IEnumerable(Of NamedCollection(Of T))
             Return source.GroupBy(evaluate, equals:=Function(a, b) Abs(a - b) <= offsets)
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="numbers"></param>
+        ''' <param name="offsets#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GroupBy(numbers As IEnumerable(Of Double), offsets#) As IEnumerable(Of NamedCollection(Of Double))
+            Return numbers.GroupBy(Self(Of Double), Function(a, b) Abs(a - b) <= offsets)
         End Function
 
         ''' <summary>

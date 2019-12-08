@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ea4bf16488c3938884e26b6f9cf6e76, ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
+﻿#Region "Microsoft.VisualBasic::0cbb33942790924b29c741e8ceaf2528, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
 
     ' Author:
     ' 
@@ -92,6 +92,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             stack.Clear()
         End Sub
 
+        ''' <summary>
+        ''' 这个函数是直接返回stack list对象中的元素值
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAllNodes() As IEnumerable(Of BinaryTree(Of K, V))
             Return stack.AsEnumerable

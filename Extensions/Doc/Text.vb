@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::400f086acc384a348306716fc505f3ed, Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::e5a620c86564678f819b3f227ef922bf, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -214,6 +214,10 @@ Public Module TextDoc
     ''' </param>
     ''' <returns></returns>
     <Extension> Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
+        If path.FileLength <= 0 Then
+            Return ""
+        End If
+
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
             Using reader As New StreamReader(file, encoding Or DefaultEncoding)
                 Dim first$ = reader.ReadLine

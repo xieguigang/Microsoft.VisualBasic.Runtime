@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbfc9d45158f9faf061600d8c2b85dc1, Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::3ec1019ecd833e3e960644068a61d875, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString(Object, String)"/>.
+        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString"/>.
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
@@ -86,7 +86,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' 使用<see cref="Scripting.ToString(Object, String)"/>方法将对象集合转换为字符串序列
+        ''' 使用<see cref="Scripting.ToString"/>方法将对象集合转换为字符串序列
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="values"></param>
@@ -139,6 +139,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsDouble(source As IEnumerable(Of String)) As Double()
             Return source.AsType(Of Double).ToArray

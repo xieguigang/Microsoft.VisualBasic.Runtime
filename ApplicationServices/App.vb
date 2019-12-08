@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::215525b640c608ea63aa1549f3a52762, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -39,23 +39,22 @@
     '                 InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp
     '                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
     '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunTimeDirectory
-    '                 StartTime, StartupDirectory, StdErr, StdOut, SysTemp
-    '                 UnixTimeStamp, UserHOME, Version
+    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunningInGitBash
+    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
+    '                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __cli, __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument
-    '               BugsFormatter, CLICode, ElapsedMilliseconds, Exit, finalizeCLI
-    '               FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables
-    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
-    '               SelfFolk, SelfFolks, Shell, tempCode, TemporaryEnvironment
-    '               TraceBugs
+    '     Function: __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter
+    '               CLICode, ElapsedMilliseconds, Exit, finalizeCLI, FormatTime
+    '               GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile
+    '               GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable
+    '               (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal, SelfFolk
+    '               SelfFolks, Shell, tempCode, TemporaryEnvironment, TraceBugs
     ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
-    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
-    '          SetBufferSize, StartGC, StopGC
+    '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
+    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
+    '          RunAsAdmin, SetBufferSize, StartGC, StopGC
     ' 
     ' /********************************************************************************/
 
@@ -175,10 +174,11 @@ Public Module App
     Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
 
     ''' <summary>
-    ''' <see cref="Console.OpenStandardOutput()"/> as default text output device.
+    ''' <see cref="Console.OpenStandardOutput()"/> as default text output device. [<see cref="StreamWriter"/>]
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property StdOut As [Default](Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
+    Public ReadOnly Property StdInput As [Default](Of TextReader) = New StreamReader(Console.OpenStandardInput)
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -194,7 +194,7 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __cli()
+    Public ReadOnly Property CommandLine As CommandLine.CommandLine = GitBashEnvironment.GetCLIArgs()
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
@@ -223,28 +223,8 @@ Public Module App
         Return CommandLine(name)
     End Function
 
-    ''' <summary>
-    ''' Enable .NET application running from git bash terminal
-    ''' </summary>
-    Const gitBash$ = "C:/Program Files/Git"
-
-    ''' <summary>
-    ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
-    ''' </summary>
-    ''' <returns></returns>
-    Private Function __cli() As CommandLine.CommandLine
-        ' 第一个参数为应用程序的文件路径，不需要
-        Dim tokens$() =
-            Environment.GetCommandLineArgs _
-            .Skip(1) _
-            .Select(Function(t) t.Replace(gitBash, "")) _
-            .ToArray
-        Dim cliString$ = tokens.JoinBy(" ")
-        Dim cli = CLITools.TryParse(tokens, False, cliString)
-        Return cli
-    End Function
-
     Public ReadOnly Property Github As String = LICENSE.githubURL
+    Public ReadOnly Property RunningInGitBash As Boolean = GitBashEnvironment.isRunningOnGitBash()
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or
@@ -460,7 +440,7 @@ Public Module App
         End If
 
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+        ' Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
 
         ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
         ' 所以会导致环境变量为空
@@ -494,15 +474,15 @@ Public Module App
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
-    Dim __joinedVariables As New Dictionary(Of NamedValue(Of String))
+    Dim m_joinedVariables As New Dictionary(Of NamedValue(Of String))
 
     ''' <summary>
     ''' 添加参数到应用程序的环境变量之中
     ''' </summary>
-    ''' <param name="name$"></param>
+    ''' <param name="name">如果给定的当前这个参数名称存在于当前框架环境中，则会更新原来的值</param>
     ''' <param name="value$"></param>
     Public Sub JoinVariable(name$, value$)
-        __joinedVariables(name) =
+        m_joinedVariables(name) =
             New NamedValue(Of String) With {
                 .Name = name,
                 .Value = value
@@ -515,7 +495,7 @@ Public Module App
     ''' <param name="vars"></param>
     Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
         For Each v As NamedValue(Of String) In vars
-            __joinedVariables(v.Name) = v
+            m_joinedVariables(v.Name) = v
         Next
     End Sub
 
@@ -541,10 +521,10 @@ Public Module App
     ''' </param>
     ''' <returns>当没有查找到相对应的环境变量的时候会返回空值</returns>
     Public Function GetVariable(<CallerMemberName> Optional name$ = Nothing) As String
-        If __joinedVariables.ContainsKey(name) Then
-            Return __joinedVariables(name).Value
+        If m_joinedVariables.ContainsKey(name) Then
+            Return m_joinedVariables(name).Value
         Else
-            For Each v As NamedValue(Of String) In __joinedVariables.Values
+            For Each v As NamedValue(Of String) In m_joinedVariables.Values
                 If v.Name.TextEquals(name) Then
                     Return v.Value
                 End If
@@ -561,7 +541,7 @@ Public Module App
     Public Function GetAppVariables() As NamedValue(Of String)()
         Dim type As Type = GetType(App)
         Dim pros = type.Schema(PropertyAccess.Readable, BindingFlags.Public Or BindingFlags.Static)
-        Dim out As New List(Of NamedValue(Of String))(__joinedVariables.Values)
+        Dim out As New List(Of NamedValue(Of String))(m_joinedVariables.Values)
         Dim value$
         Dim o
 
@@ -649,7 +629,7 @@ Public Module App
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("FlushMemory", Info:="Rabbish collection To free the junk memory.")>
+    <ExportAPI("FlushMemory")>
     Public Sub FlushMemory()
         Call GC.Collect()
         Call GC.WaitForPendingFinalizers()
@@ -691,7 +671,7 @@ Public Module App
     ''' <param name="Prompted"></param>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Pause", Info:="Pause the console program.")>
+    <ExportAPI("Pause")>
     Public Sub Pause(Optional prompted$ = "Press any key to continute...")
         Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine(prompted)
@@ -701,6 +681,14 @@ Public Module App
         If App.IsConsoleApp Then
             Call Console.Read()
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Pause and then exit the application.
+    ''' </summary>
+    Public Sub [Stop]()
+        Call App.Pause()
+        Call App.Exit()
     End Sub
 
     ''' <summary>
@@ -720,10 +708,10 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' Get current time <see cref="Date"/> in unix time stamp format.
+    ''' Get current time <see cref="Date"/> in ``xxxxx.xxxx`` unix time stamp format.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UnixTimeStamp As Long
+    Public ReadOnly Property UnixTimeStamp As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return DateTimeHelper.UnixTimeStamp(Now)
@@ -734,18 +722,21 @@ Public Module App
     ''' The time tag of the application started.(应用程序的启动的时间)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StartTime As Long = UnixTimeStamp
+    Public ReadOnly Property StartTime As Double = App.UnixTimeStamp
 
     ''' <summary>
     ''' The distance of time that this application running from start and to current time.
     ''' (当前距离应用程序启动所逝去的时间)
     ''' </summary>
     ''' <returns></returns>
-    '''
+    ''' <remarks>
+    ''' 通过<see cref="App.UnixTimeStamp"/>以及<see cref="StartTime"/>得到的时间都是带小数的秒数
+    ''' 所以在这里计算出当前时间点与启动时间点之间的差值之后，还需要乘以1000才可以得到毫秒数
+    ''' </remarks>
     <ExportAPI("Elapsed.Milliseconds")>
     Public Function ElapsedMilliseconds() As Long
-        Dim nowLng As Long = App.UnixTimeStamp
-        Dim d As Long = nowLng - StartTime
+        Dim nowLng As Double = App.UnixTimeStamp
+        Dim d As Long = (nowLng - StartTime) * 1000
         Return d
     End Function
 
@@ -1040,6 +1031,13 @@ Public Module App
 
 #Region "CLI interpreter"
 
+    ''' <summary>
+    ''' 当前的应用程序是否退出运行了? 当调用<see cref="App.Exit(Integer)"/>方法的时候, 除了会终止程序的运行
+    ''' 还会讲这个属性设置为False
+    ''' 
+    ''' 在应用程序框架中, 有一些组件的线程会需要依赖于这个属性值来自动停止运行
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Running As Boolean = True
 
     ''' <summary>
@@ -1069,21 +1067,21 @@ Public Module App
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
-    <ExportAPI("RunCLI", Info:="Running the string as cli command line and the specific type define as a interpreter.")>
+    <ExportAPI("RunCLI")>
     <Extension>
     Public Function RunCLI(Interpreter As Type, args$, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
-    ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' Running the string as a cli command line, Running the string as cli command line and the specific type define as a interpreter.
+    ''' (请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
-    <ExportAPI("RunCLI",
-             Info:="Running the string as cli command line and the specific type define as a interpreter.")>
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, Nothing)
     End Function
@@ -1095,8 +1093,7 @@ Public Module App
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
-    <ExportAPI("RunCLI",
-             Info:="Running the string as cli command line and the specific type define as a interpreter.")>
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer

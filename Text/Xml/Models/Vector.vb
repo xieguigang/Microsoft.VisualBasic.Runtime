@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f0214ae618650f3a99c95a879d49d42, Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::66246ecfcb788370cee68475bb8589c9, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -108,6 +109,11 @@ Namespace Text.Xml.Models
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(v As Double()) As NumericVector
+            Return New NumericVector With {.name = "NULL", .vector = v}
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(v As List(Of Double)) As NumericVector
             Return New NumericVector With {.name = "NULL", .vector = v}
         End Operator
 

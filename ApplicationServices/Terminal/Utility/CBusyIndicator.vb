@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e8b09e7218d99da99b8ace3223a2777, ApplicationServices\Terminal\Utility\CBusyIndicator.vb"
+﻿#Region "Microsoft.VisualBasic::aa267559a941d77296fe1975ee1b590b, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\CBusyIndicator.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Parallel
 
@@ -53,25 +52,28 @@ Namespace Terminal.Utility
     Public Class CBusyIndicator : Implements IDisposable
 
         Dim _indicatorStyle As Char
-        Dim _OnRunningState As Boolean = False
-        Dim _TicksCount As Integer
+        Dim _onRunningState As Boolean = False
+        Dim _ticksCount As Integer
 
-        Sub New(Optional IndicatorStyle As Char = "."c, Optional _start As Boolean = False, Optional Ticks As Integer = -1)
-            _indicatorStyle = IndicatorStyle
-            If _start Then Call Start(Ticks)
+        Sub New(Optional indicatorStyle As Char = "."c, Optional start As Boolean = False, Optional ticks As Integer = -1)
+            _indicatorStyle = indicatorStyle
+
+            If start Then
+                Call Me.Start(ticks)
+            End If
         End Sub
 
         Private Sub DoEvents()
-            Do While _OnRunningState = True
+            Do While _onRunningState = True
 
                 Call Thread.Sleep(1000)
                 Call STDIO.Write(_indicatorStyle)
 
-                If _TicksCount > 0 Then
-                    _TicksCount -= 1
+                If _ticksCount > 0 Then
+                    _ticksCount -= 1
                 Else
-                    If _TicksCount <> -1 Then
-                        _OnRunningState = False
+                    If _ticksCount <> -1 Then
+                        _onRunningState = False
                     End If
                 End If
             Loop
@@ -83,18 +85,18 @@ Namespace Terminal.Utility
         ''' <param name="Ticks">The total ticking counts of the indicator, Unit is [second].</param>
         ''' <remarks></remarks>
         Public Sub Start(Optional Ticks As Integer = -1)
-            If _OnRunningState = True Then
+            If _onRunningState = True Then
                 Return
             End If
 
-            _TicksCount = Ticks
-            _OnRunningState = True
+            _ticksCount = Ticks
+            _onRunningState = True
 
             Call RunTask(AddressOf DoEvents)
         End Sub
 
         Public Sub [Stop]()
-            _OnRunningState = False
+            _onRunningState = False
         End Sub
 
 #Region "IDisposable Support"
@@ -105,7 +107,7 @@ Namespace Terminal.Utility
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    _OnRunningState = False
+                    _onRunningState = False
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

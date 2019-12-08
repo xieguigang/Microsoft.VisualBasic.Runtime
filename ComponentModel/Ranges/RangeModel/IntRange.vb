@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aaf99a205d4a67af35d7827b2a91f2f, ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::a22ce0ce5b9821bc33f44903dc549653, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 
@@ -64,17 +64,17 @@ Namespace ComponentModel.Ranges.Model
         ''' <summary>
         ''' Minimum value
         ''' </summary>
-        Public Property Min() As Integer Implements IRanges(Of Integer).Min
+        Public Property Min As Integer Implements IRanges(Of Integer).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
-        Public Property Max() As Integer Implements IRanges(Of Integer).Max
+        Public Property Max As Integer Implements IRanges(Of Integer).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
-        Public ReadOnly Property Length() As Integer
+        Public ReadOnly Property Length As Integer
             Get
                 Return Max - Min
             End Get

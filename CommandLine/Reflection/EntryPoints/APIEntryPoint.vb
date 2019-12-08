@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a96cb85fcf17d0101fbb7e187ce62576, CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::10a0fc85496398c6ac5f6a1be9eb7bf6, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -185,6 +185,14 @@ Namespace CommandLine.Reflection.EntryPoints
                         Call sb.AppendLine("```")
                     Next
                 End If
+            End If
+
+            Dim note As NoteAttribute = EntryPoint.GetCustomAttribute(Of NoteAttribute)
+
+            If Not note Is Nothing Then
+                Call sb.AppendLine()
+                Call sb.AppendLine("Author Comment About This Command:")
+                Call sb.AppendLine(note.noteText)
             End If
 
             Return sb.ToString

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2f15bb49db3b01391718957a00a0b37, Text\Xml\Models\ListOf.vb"
+﻿#Region "Microsoft.VisualBasic::413025d5bebef4b2c5d6423ed3e4ad28, Microsoft.VisualBasic.Core\Text\Xml\Models\ListOf.vb"
 
     ' Author:
     ' 
@@ -31,21 +31,42 @@
 
     ' Summaries:
 
+    '     Interface IList
+    ' 
+    '         Properties: size
+    ' 
     '     Class ListOf
     ' 
     '         Properties: size
     ' 
     '         Function: GenericEnumerator, GetEnumerator
     ' 
+    '     Class XmlList
+    ' 
+    '         Properties: items, TypeComment
+    ' 
+    '         Function: getCollection, getSize
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports System.Web.Script.Serialization
+Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Text.Xml.Models
+
+    Public Interface IList(Of T) : Inherits Enumeration(Of T)
+
+        ReadOnly Property size As Integer
+
+    End Interface
 
     ''' <summary>
     ''' 可以通过<see cref="AsEnumerable"/>拓展函数转换这个列表对象为枚举类型
@@ -67,8 +88,8 @@ Namespace Text.Xml.Models
         End Property
 
         Public Iterator Function GenericEnumerator() As IEnumerator(Of T) Implements Enumeration(Of T).GenericEnumerator
-            For Each x As T In getCollection()
-                Yield x
+            For Each item As T In getCollection()
+                Yield item
             Next
         End Function
 
@@ -79,5 +100,48 @@ Namespace Text.Xml.Models
         Protected MustOverride Function getSize() As Integer
         Protected MustOverride Function getCollection() As IEnumerable(Of T)
 
+    End Class
+
+    Public Class XmlList(Of T) : Inherits ListOf(Of T)
+        Implements XmlDataModel.IXmlType
+
+        ''' <summary>
+        ''' ReadOnly, Data model type tracking use Xml Comment.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' JSON存储的时候,这个属性会被自动忽略掉
+        ''' </remarks>
+        <DataMember>
+        <IgnoreDataMember>
+        <ScriptIgnore>
+        <SoapIgnore>
+        <XmlAnyElement>
+        Public Property TypeComment As XmlComment Implements XmlDataModel.IXmlType.TypeComment
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return XmlDataModel.CreateTypeReferenceComment(GetType(T))
+            End Get
+            Set(value As XmlComment)
+                ' Do Nothing
+                ' 2018-6-5 this xml comment node cause bug 
+                ' when using xml deserialization
+            End Set
+        End Property
+
+        <XmlElement("item")> Public Property items As T()
+
+        Protected Overrides Function getSize() As Integer
+            Return items.Length
+        End Function
+
+        Protected Overrides Function getCollection() As IEnumerable(Of T)
+            Return items
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(array As T()) As XmlList(Of T)
+            Return New XmlList(Of T) With {.items = array}
+        End Operator
     End Class
 End Namespace

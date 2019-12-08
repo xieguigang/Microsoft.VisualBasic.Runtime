@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb1ee2643f8913577fc3056a8b97d978, Language\Value\ByRefValueExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5fc413b9762b2a91f4fae2aecd900021, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     '     Module ByRefValueExtensions
     ' 
-    '         Function: (+2 Overloads) First, Split, ToLower
+    '         Function: CreateDelegate, (+2 Overloads) First, Split, ToLower
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports ByRefString = Microsoft.VisualBasic.Language.Value(Of String)
 
@@ -68,6 +69,18 @@ Namespace Language.Values
         <Extension>
         Public Function First(str As ByRefString) As Char
             Return str.Value.First
+        End Function
+
+        ''' <summary>
+        ''' Creates a delegate of the specified type from this method.
+        ''' </summary>
+        ''' <param name="methodInfo"></param>
+        ''' <param name="delegateType">The type of the delegate to create.</param>
+        ''' <returns>The delegate for this method.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CreateDelegate(methodInfo As Value(Of MethodInfo), delegateType As Type) As [Delegate]
+            Return methodInfo.Value.CreateDelegate(delegateType)
         End Function
     End Module
 End Namespace

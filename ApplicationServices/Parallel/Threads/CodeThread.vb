@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e100823622f774acbd1bd5233f9a410, ApplicationServices\Parallel\Threads\CodeThread.vb"
+﻿#Region "Microsoft.VisualBasic::925f82e3918fced638676dee182b7a78, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\CodeThread.vb"
 
     ' Author:
     ' 
@@ -53,10 +53,10 @@ Namespace Parallel.Threads
         Protected ReadOnly thread As Thread
 
         Sub New()
-            thread = New Thread(AddressOf __run)
+            thread = New Thread(AddressOf run)
         End Sub
 
-        Protected MustOverride Sub __run()
+        Protected MustOverride Sub run()
 
         Public Shared Function GetThread(x As CodeThread) As Thread
             Return x.thread

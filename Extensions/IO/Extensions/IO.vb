@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fc962b5cafdc719056489d0069a2859, Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::246ec7fd648a0710c153cd510e397a3e, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Text
 <Package("IO")>
 Public Module IOExtensions
 
-    ReadOnly UTF8 As [Default](Of Encoding) = Encoding.UTF8
+    Public ReadOnly UTF8 As [Default](Of Encoding) = Encoding.UTF8
 
     ''' <summary>
     ''' Open text writer interface from a given <see cref="Stream"/> <paramref name="s"/>. 
@@ -163,6 +163,10 @@ Public Module IOExtensions
                 Call .MkDIR()
             End If
         End With
+
+        If path.FileName.Length > 200 Then
+            Throw New PathTooLongException(path)
+        End If
 
         If doClear Then
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题

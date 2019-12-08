@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dee18c385910bba9c50b797ed61de515, CommandLine\InteropService\SharedORM\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::dd77343e150b055962b20367cbc85c37, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,8 @@ Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace CommandLine.InteropService.SharedORM
 
@@ -99,7 +101,7 @@ Namespace CommandLine.InteropService.SharedORM
                         .cliCommandArgvs = api.Name,
                         .SingleValue = api.Name,
                         .Tokens = {api.Name},
-                        .__arguments = New List(Of NamedValue(Of String))
+                        .arguments = New List(Of NamedValue(Of String))
                     }
                     Call $"{api.EntryPointFullName(relativePath:=True)} is nothing!".Warning
                 Else
@@ -108,9 +110,9 @@ Namespace CommandLine.InteropService.SharedORM
 
                 Try
                     help =
-$"```
-{apiUsage.Replace("<", "&lt;")}
-```" & vbCrLf & api.Info
+$"```bash
+{apiUsage.DoCall(AddressOf XmlEntity.EscapingXmlEntity)}
+```" & vbCrLf & api.Info.DoCall(AddressOf XmlEntity.EscapingXmlEntity)
 
                     CLI = New NamedValue(Of CommandLine) With {
                         .Name = api.EntryPoint.Name,

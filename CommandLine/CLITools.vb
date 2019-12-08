@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50dde47202ca31fb123169568f81031d, CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::2e374be0f7a6492d316353282f4ea409, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,11 @@
     '     Module CLITools
     ' 
     '         Function: __checkKeyDuplicated, Args, CreateObject, CreateParameterValues, Equals
-    '                   GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join, makesureQuot
-    '                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
+    '                   GetFileList, GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join
+    '                   makesureQuot, Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix
+    '                   (+3 Overloads) TryParse
     ' 
-    '         Sub: tupleParser
+    '         Sub: AppSummary, tupleParser
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,7 +49,9 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -69,6 +72,33 @@ Namespace CommandLine
                         Description:="",
                         Revision:=52)>
     Public Module CLITools
+
+        ''' <summary>
+        ''' 在命令行之中使用逗号作为分隔符分隔多个文件
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
+        Public Function GetFileList(input As String) As IEnumerable(Of String)
+            If input.FileExists Then
+                Return {input}
+            Else
+                Return input.Split(","c)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="assem"></param>
+        ''' <param name="description">命令行的使用功能描述信息文本</param>
+        ''' <param name="SYNOPSIS">命令行的使用语法</param>
+        ''' <param name="write"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub AppSummary(assem As AssemblyInfo, description$, SYNOPSIS$, write As TextWriter)
+            Call SDKManual.AppSummary(assem, description, SYNOPSIS, write)
+        End Sub
 
         <Extension>
         Public Function ShellExec(cli As IIORedirectAbstract) As String
@@ -106,6 +136,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         <Extension> Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
             Dim list As New List(Of NamedValue(Of String))
+            Dim key As String
 
             If tokens.IsNullOrEmpty Then
                 Return list
@@ -138,7 +169,7 @@ Namespace CommandLine
                 Dim s As String = tokens([next])
 
                 ' 当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                If IsPossibleLogicFlag(s) Then
+                If tokens(i).ToLower <> "/@set" AndAlso IsPossibleLogicFlag(s) Then
                     If includeLogicals Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
@@ -146,7 +177,7 @@ Namespace CommandLine
                     Continue For
                 Else
                     ' 下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
-                    Dim key As String = tokens(i).ToLower
+                    key = tokens(i).ToLower
                     list += New NamedValue(Of String)(key, s, note)
 
                     i += 1
@@ -225,6 +256,8 @@ Namespace CommandLine
 
             If tokens.Length = 0 Then
                 Return New CommandLine
+            Else
+                tokens = tokens.fixWindowsNetworkDirectory.ToArray
             End If
 
             Dim bools$() = tokens _
@@ -247,9 +280,9 @@ Namespace CommandLine
             End If
 
             If tokens.Length > 1 Then
-                cli.__arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
+                cli.arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
 
-                Dim Dk As String() = __checkKeyDuplicated(cli.__arguments)
+                Dim Dk As String() = __checkKeyDuplicated(cli.arguments)
 
                 If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key$ = String.Join(", ", Dk)
@@ -529,7 +562,7 @@ Namespace CommandLine
 
             Return New CommandLine With {
                 .Name = name,
-                .__arguments = parameters,
+                .arguments = parameters,
                 .Tokens = tokens.Join(bFlags).ToArray,
                 .BoolFlags = bFlags.SafeQuery.ToArray
             }
@@ -572,7 +605,7 @@ Namespace CommandLine
                 End If
             Next
 
-            For Each arg As NamedValue(Of String) In args1.__arguments
+            For Each arg As NamedValue(Of String) In args1.arguments
                 Dim value2 As String = args2(arg.Name)
 
                 If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
