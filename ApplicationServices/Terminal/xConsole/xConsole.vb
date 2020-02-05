@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5195ecc2349d77440a701e938d09fbdf, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::3a3209523da7aa302b78e1ed3a518bd5, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Module xConsole
+    ' 
+    '         Properties: ClearColorsAtEnd
     ' 
     '         Function: ClearInput, ClosestConsoleColor, ConvertHexStringToByteArray, getColor, GetConsoleWindow
     '                   (+2 Overloads) Implode, ParseLine, Print, ReadKeys, ReadLine
@@ -485,8 +487,7 @@ Namespace Terminal.xConsole
         ''' Set new window position
         ''' </summary>
         Public Sub SetWindowPos(x As Integer, y As Integer)
-            SetWindowPos(MyConsole, 0, x, y, 0, 0,
-                1)
+            SetWindowPos(MyConsole, 0, x, y, 0, 0, 1)
         End Sub
 #End Region
 
@@ -511,14 +512,9 @@ Namespace Terminal.xConsole
         ReadOnly NEW_LINE As String = Environment.NewLine
 
         ''' <summary>
-        ''' Check for updates every 7days. False to disable. (Default = true);
-        ''' </summary>
-        Public CheckForUpdatesEnabled As Boolean = True
-
-        ''' <summary>
         ''' Clear colors automatically at the end of each Writeline. (Default = false);
         ''' </summary>
-        Public ClearColorsAtEnd As Boolean = False
+        Public Property ClearColorsAtEnd As Boolean = False
 
 #End Region
 

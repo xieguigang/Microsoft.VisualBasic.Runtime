@@ -1,51 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::4815a500fffdc82dad422f680b2f3652, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::3d0224a2158b70b7b13c850d3f0bdf30, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module VBDebugger
-' 
-'     Function: die, LinqProc
-'     Delegate Sub
-' 
-'         Properties: ForceSTDError, Mute, UsingxConsole
-' 
-'         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
-' 
-'         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
-'              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Module VBDebugger
+    ' 
+    '     Properties: debugMode
+    ' 
+    '     Function: die, LinqProc
+    '     Delegate Sub
+    ' 
+    '         Properties: ForceSTDError, Mute, UsingxConsole
+    ' 
+    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, BugsFormatter, (+2 Overloads) PrintException
+    '                   Warning
+    ' 
+    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
+    '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +74,18 @@ Imports Microsoft.VisualBasic.Text
 ''' Debugger helper module for VisualBasic Enterprises System.
 ''' </summary>
 Public Module VBDebugger
+
+    Friend inDebugMode As Boolean
+
+    Public ReadOnly Property debugMode As Boolean
+        Get
+#If DEBUG Then
+            Return True
+#Else
+            Return inDebugMode
+#End If
+        End Get
+    End Property
 
     ''' <summary>
     ''' Assert that the expression value is correctly or not?
@@ -170,11 +185,21 @@ Public Module VBDebugger
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
     ''' </summary>
-    ''' <param name="msg">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
+    ''' <param name="msg">
+    ''' The message fro output to the debugger console, this function will add a time 
+    ''' stamp automaticly To the leading position Of the message.
+    ''' </param>
     ''' <param name="indent"></param>
+    ''' <param name="waitOutput">
+    ''' 等待调试器输出工作线程将内部的消息队列输出完毕
+    ''' </param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
-    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0, Optional mute As Boolean = False) As String
-        Static indents$() = {"",
+    <Extension> Public Function __DEBUG_ECHO(msg$,
+                                             Optional indent% = 0,
+                                             Optional mute As Boolean = False,
+                                             Optional waitOutput As Boolean = False) As String
+        Static indents$() = {
+            "",
             New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
             New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
             New String(" ", 9), New String(" ", 10)
@@ -190,16 +215,21 @@ Public Module VBDebugger
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
+        If waitOutput Then
+            Call VBDebugger.WaitOutput()
+        End If
 
         Return Nothing
     End Function
 
-    <Extension> Public Sub __INFO_ECHO(msg$)
+    <Extension> Public Sub __INFO_ECHO(msg$, Optional silent As Boolean = False)
         If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
-            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+            If Not silent Then
+                Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+            End If
 
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
@@ -224,8 +254,17 @@ Public Module VBDebugger
     ''' <param name="exception"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return New Exception(memberName, exception).ToString.PrintException(memberName)
+    <Extension>
+    Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Dim lines = New Exception(memberName, exception).ToString.LineTokens
+        Dim exceptions$() = Strings.Split(lines.First, "--->")
+        Dim formats = exceptions(0) & vbCrLf &
+            vbCrLf &
+            exceptions.Skip(1).JoinBy(vbCrLf) & vbCrLf &
+            vbCrLf &
+            lines.Skip(1).JoinBy(vbCrLf)
+
+        Return formats.PrintException(memberName)
     End Function
 
     ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f6f962adb352ccd0e7877755b9c8e5, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
+﻿#Region "Microsoft.VisualBasic::aceeec98dd5f03460d4ced5469ec1365, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class FactorValue
     ' 
-    '         Properties: factor, Value
+    '         Properties: factor, result
     ' 
     '     Class FactorString
     ' 
@@ -53,7 +53,14 @@ Namespace ComponentModel.TagData
     Public Class FactorValue(Of T As {Structure, IComparable(Of T)}, V)
 
         Public Property factor As T
-        Public Property Value As V
+        Public Property result As V
+
+        Public Shared Widening Operator CType(value As (factor As T, result As V)) As FactorValue(Of T, V)
+            Return New FactorValue(Of T, V) With {
+                .factor = value.factor,
+                .result = value.result
+            }
+        End Operator
 
     End Class
 

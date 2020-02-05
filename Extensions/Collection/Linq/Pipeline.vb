@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abed2ce454022b1fc8bd07931ab2dc5c, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::8f1ac162ed29442e523abe92f47d582e, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Pipeline.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@ Namespace Linq
         ''' <param name="apply"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension>
         Public Function DoCall(Of T, Tout)(input As T, apply As Func(Of T, Tout)) As Tout
             Return apply(input)

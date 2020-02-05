@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcb5999da9e68e133c1c60dd7bdea6ef, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\Token.vb"
+﻿#Region "Microsoft.VisualBasic::138ff13851c6d59ff9d7444401000faf, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\Token.vb"
 
     ' Author:
     ' 
@@ -62,12 +62,14 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
+    '         Operators: (+2 Overloads) <>, (+2 Overloads) =
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -280,7 +282,8 @@ Namespace Scripting.TokenIcer
         ''' The text that makes up the token.
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property text As String Implements Value(Of String).IValueOf.Value
+        <XmlAttribute>
+        Public Property text As String Implements Value(Of String).IValueOf.Value
 
         ''' <summary>
         ''' Returns a Boolean value indicating whether an expression can be evaluated as
@@ -288,6 +291,7 @@ Namespace Scripting.TokenIcer
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property isNumeric As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Information.IsNumeric(text)
             End Get
@@ -305,14 +309,27 @@ Namespace Scripting.TokenIcer
         Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{name}] {text}"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String())) As Boolean
+            Return token.name.Equals(element.Item1) AndAlso (element.Item2.IndexOf(token.text) > -1)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator <>(token As CodeToken(Of Tokens), element As (Tokens, String())) As Boolean
+            Return Not token = element
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
             Return token.name.Equals(element.Item1) AndAlso token.text = element.Item2
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <>(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
             Return Not token = element
         End Operator

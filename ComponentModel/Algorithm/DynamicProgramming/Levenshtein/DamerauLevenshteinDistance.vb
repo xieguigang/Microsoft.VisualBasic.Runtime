@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::887d8ba8c1d4a61356a14909208dca48, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::5d1365fbbbb8dd008dda8946a5f524c1, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\DamerauLevenshteinDistance.vb"
 
     ' Author:
     ' 
@@ -39,8 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 
 Namespace ComponentModel.Algorithm.DynamicProgramming
 

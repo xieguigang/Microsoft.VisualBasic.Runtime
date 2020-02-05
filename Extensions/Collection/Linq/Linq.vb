@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d437d0440fa9495dffb10e273c2b53b, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::c05f7f1e449124bf85e8a846db8f5a80, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,12 @@
 
     '     Module Extensions
     ' 
-    '         Function: DATA, Populate, SafeQuery, ToArray
+    '         Function: DATA, Populate, (+2 Overloads) SafeQuery, ToArray
     '         Delegate Sub
     ' 
-    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, IteratesALL
-    '                       (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, (+2 Overloads) Read, RemoveLeft
-    '                       (+2 Overloads) Removes, Repeats, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray
-    '                       ToVector, TryCatch
+    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, LastOrDefault
+    '                       MaxInd, (+2 Overloads) Read, RemoveLeft, (+2 Overloads) Removes, Repeats
+    '                       (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray, ToVector, TryCatch
     ' 
     ' 
     ' 
@@ -234,61 +233,6 @@ Namespace Linq
                     Return Nothing
                 End If
             End Try
-        End Function
-
-        ''' <summary>
-        ''' Iterates all of the elements in a two dimension collection as the data source 
-        ''' for the linq expression or ForEach statement.
-        ''' (适用于二维的集合做为linq的数据源，不像<see cref="Unlist"/>是进行转换，
-        ''' 这个是返回迭代器的，推荐使用这个函数)
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="source"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
-            For Each line As IEnumerable(Of T) In source
-                If Not line Is Nothing Then
-                    Using iterator = line.GetEnumerator
-                        Do While iterator.MoveNext
-                            Yield iterator.Current
-                        Loop
-                    End Using
-                End If
-            Next
-        End Function
-
-        ''' <summary>
-        ''' First, iterate populates the elements in collection <paramref name="a"/>, 
-        ''' and then populate out all of the elements on collection <paramref name="b"/>
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="a">Object collection</param>
-        ''' <param name="b">Another object collection.</param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
-            If Not a Is Nothing Then
-                For Each x As T In a
-                    Yield x
-                Next
-            End If
-            If Not b Is Nothing Then
-                For Each x As T In b
-                    Yield x
-                Next
-            End If
-        End Function
-
-        <Extension>
-        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As T) As IEnumerable(Of T)
-            If Not a Is Nothing Then
-                For Each x As T In a
-                    Yield x
-                Next
-            End If
-
-            Yield b
         End Function
 
         ''' <summary>
@@ -518,7 +462,7 @@ Namespace Linq
         ''' </param>
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
-            If source Is Nothing Then
+            If source Is Nothing OrElse Not source.Any Then
                 Return [default]
             Else
                 Return source.FirstOrDefault

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7995a8959bcd3d358a5b82d40806ed93, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::70b67ae9caa8f20ef9567c0b803d2db3, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,10 @@
     '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
     '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, (+2 Overloads) Log2
     '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
-    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, (+2 Overloads) RMS, (+8 Overloads) Round
-    '                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin
-    '                   Sinh, Sqrt, (+5 Overloads) Sum, Tan, Tanh
-    '                   (+2 Overloads) Truncate, WeighedAverage
+    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE
+    '                   (+8 Overloads) Round, RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign
+    '                   Sin, Sinh, Sqrt, (+5 Overloads) Sum, Tan
+    '                   Tanh, (+2 Overloads) Truncate, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/
@@ -2006,14 +2006,15 @@ Namespace Math
         ''' </summary>
         ''' <returns></returns>
         ''' 
-        <ExportAPI("RMS", Info:="Root mean square")>
-        <Extension> Public Function RMS(data As IEnumerable(Of Double)) As Double
+        <ExportAPI("RMS")>
+        <Extension>
+        Public Function RMS(data As IEnumerable(Of Double)) As Double
             With (From n In data Select n ^ 2).ToArray
                 Return stdNum.Sqrt(.Sum / .Length)
             End With
         End Function
 
-        Public Function RMS(a#(), b#()) As Double
+        Public Function RMSE(a#(), b#()) As Double
             Dim sum#
             Dim n% = a.Length
 
@@ -2021,7 +2022,7 @@ Namespace Math
                 sum += (a(i) - b(i)) ^ 2
             Next
 
-            Return Math.Sqrt(sum)
+            Return stdNum.Sqrt(sum)
         End Function
 
         ''' <summary>
@@ -2038,7 +2039,7 @@ Namespace Math
         ''' Returns the PDF value at x for the specified Poisson distribution.
         ''' </summary>
         ''' 
-        <ExportAPI("Poisson.PDF", Info:="Returns the PDF value at x for the specified Poisson distribution.")>
+        <ExportAPI("Poisson.PDF")>
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
             Dim result As Double = stdNum.Exp(-lambda)
             Dim k As Integer = x

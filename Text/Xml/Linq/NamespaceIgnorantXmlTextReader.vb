@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa192dc8778c6bcd4976992fe2af7087, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\SupportedLanguages.vb"
+﻿#Region "Microsoft.VisualBasic::1dd2d81772c9463a25d2615ef944eb6f, Microsoft.VisualBasic.Core\Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb"
 
     ' Author:
     ' 
@@ -31,25 +31,40 @@
 
     ' Summaries:
 
-    '     Enum Languages
+    '     Class NamespaceIgnorantXmlTextReader
     ' 
-    '         PHP, R, TypeScript, VisualBasic
+    '         Properties: NamespaceURI
     ' 
-    '  
-    ' 
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Development
+Imports System.IO
+Imports System.Xml
 
-    Public Enum Languages
-        VisualBasic
-        R
-        PHP
-        TypeScript
-    End Enum
+Namespace Text.Xml.Linq
+
+    ''' <summary>
+    ''' https://stackoverflow.com/questions/12590487/net-xml-deserialization-ignore-namespaces
+    ''' </summary>
+    Friend Class NamespaceIgnorantXmlTextReader
+        Inherits XmlTextReader
+
+        Public Overrides ReadOnly Property NamespaceURI As String
+            Get
+                Return ""
+            End Get
+        End Property
+
+        Public Sub New(stream As Stream)
+            Call MyBase.New(stream)
+        End Sub
+
+        Public Sub New(text As TextReader)
+            Call MyBase.New(text)
+        End Sub
+    End Class
 End Namespace

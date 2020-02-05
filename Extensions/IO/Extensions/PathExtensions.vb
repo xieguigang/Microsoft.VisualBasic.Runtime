@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f5d0dea545dc27fb96d0c4b194c8f5d, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9159e0f9fe95dd49cfa4575036194c42, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,12 @@
     ' Module PathExtensions
     ' 
     '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-    '               DirectoryName, EnumerateFiles, ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
-    '               FileLength, FileMove, FileName, FileOpened, GetBaseName
-    '               GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath, ListDirectory
-    '               ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short, (+2 Overloads) NormalizePathString
+    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
+    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, (+2 Overloads) NormalizePathString
     '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
-    '               (+2 Overloads) RelativePath, SafeCopyTo, SourceCopy, SplitPath, TheFile
-    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    '               (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile, ToDIR_URL
+    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
     ' 
     '     Sub: MkDIR
     ' 
@@ -57,6 +56,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -97,7 +97,8 @@ Public Module PathExtensions
     ''' <param name="path">The file path or the directory path.</param>
     ''' <param name="throwEx"></param>
     ''' <returns></returns>
-    <Extension> Public Function DeleteFile(path$, Optional throwEx As Boolean = False) As Boolean
+    <Extension>
+    Public Function DeleteFile(path$, Optional throwEx As Boolean = False) As Boolean
         Try
             If path.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(
@@ -135,6 +136,12 @@ Public Module PathExtensions
         Else
             Return path.Split("."c).Last
         End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ExtensionSuffix(path$, ParamArray isAny As String()) As String
+        Return path.ExtensionSuffix.DoCall(Function(ext) isAny.Any(Function(s) s.TextEquals(ext)))
     End Function
 
     ''' <summary>
@@ -264,7 +271,10 @@ Public Module PathExtensions
     ''' <param name="[option]"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
+    Public Iterator Function ListDirectory(DIR$,
+                                           Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly,
+                                           Optional fullName As Boolean = True) As IEnumerable(Of String)
+
         Dim current As New DirectoryInfo(DIR)
 
         If Not current.Exists Then
@@ -273,10 +283,14 @@ Public Module PathExtensions
         End If
 
         For Each folder In current.EnumerateDirectories
-            Yield folder.FullName
+            If fullName Then
+                Yield folder.FullName
+            Else
+                Yield folder.Name
+            End If
 
             If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
-                For Each path In folder.FullName.ListDirectory([option])
+                For Each path In folder.FullName.ListDirectory([option], fullName)
                     Yield path
                 Next
             End If
@@ -591,8 +605,7 @@ Public Module PathExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DirectoryExists(DIR As String) As Boolean
-        Return Not String.IsNullOrEmpty(DIR) AndAlso
-            FileIO.FileSystem.DirectoryExists(DIR)
+        Return Not String.IsNullOrEmpty(DIR) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
     End Function
 
     ''' <summary>

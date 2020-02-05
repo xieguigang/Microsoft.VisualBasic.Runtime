@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c448b90b2b792689b5be21774ae4637, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::ed5e4aad317a781d9036cb0f5efbd183, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: File, Line, Method
     ' 
-    '         Function: Parser, ToString
+    '         Function: Parser, parserImpl, ToString
     ' 
     '     Class Method
     ' 
@@ -48,6 +48,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Debugging.Diagnostics
 
@@ -75,26 +77,36 @@ Namespace ApplicationServices.Debugging.Diagnostics
 
         Public Shared Function Parser(line As String) As StackFrame
             With line.Replace("位置", "in").Replace("行号", "line")
-                Dim t = .StringSplit(" in ")
-                Dim method = t(0)
-                Dim location = t.ElementAtOrDefault(1)
-                Dim file$, lineNumber$
+                Return .StringSplit(" in ").DoCall(AddressOf parserImpl)
+            End With
+        End Function
 
-                If Not location.StringEmpty Then
-                    t = location.StringSplit("[:]line ")
-                    file = t(0)
-                    lineNumber = t(1)
-                Else
+        Private Shared Function parserImpl(t As String()) As StackFrame
+            Dim method As String = t(0)
+            Dim location As String = t.ElementAtOrDefault(1)
+            Dim file$, lineNumber$
+
+            If Not location.StringEmpty Then
+                t = location.StringSplit("[:]line ")
+
+                If t.Length = 1 Then
+                    ' on mono environment
                     file = "Unknown"
                     lineNumber = 0
+                Else
+                    file = t(0)
+                    lineNumber = t(1)
                 End If
+            Else
+                file = "Unknown"
+                lineNumber = 0
+            End If
 
-                Return New StackFrame With {
-                    .Method = New Method(method),
-                    .File = file,
-                    .Line = lineNumber
-                }
-            End With
+            Return New StackFrame With {
+                .Method = New Method(method),
+                .File = file,
+                .Line = lineNumber
+            }
         End Function
     End Class
 

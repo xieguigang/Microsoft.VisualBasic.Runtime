@@ -1,66 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::7d62185c9ec4469f9bbebbf4abff8481, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::1e764ec984dcf0e82eba480da40bc8a6, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class MarkdownRender
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: bufferAllIs, bufferIs
-' 
-'         Sub: DoParseSpans, DoPrint, EndSpan, Print, PrintSpans
-'              restoreStyle, WalkChar
-' 
-'     Class MarkdownTheme
-' 
-'         Properties: [Global], BlockQuote, Bold, CodeBlock, InlineCodeSpan
-'                     Url
-' 
-'     Class ConsoleFontStyle
-' 
-'         Properties: BackgroundColor, ForeColor
-' 
-'         Function: Clone, CreateSpan, Equals
-' 
-'         Sub: SetConfig
-' 
-'     Class Span
-' 
-'         Properties: IsEndByNewLine, style, text
-' 
-'         Sub: Print
-' 
-' 
-' /********************************************************************************/
+    '     Class MarkdownRender
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: bufferAllIs, bufferIs, DefaultStyleRender
+    ' 
+    '         Sub: applyGlobal, DoParseSpans, DoPrint, EndSpan, Print
+    '              PrintSpans, Reset, restoreStyle, WalkChar
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -85,27 +66,35 @@ Namespace ApplicationServices.Terminal
     Public Class MarkdownRender
 
         Shared ReadOnly defaultTheme As [Default](Of MarkdownTheme) = New MarkdownTheme With {
-            .[Global] = (ConsoleColor.White, ConsoleColor.Black),
+            .[Global] = Nothing,
             .BlockQuote = (ConsoleColor.Black, ConsoleColor.Gray),
             .CodeBlock = (ConsoleColor.Red, ConsoleColor.Yellow),
             .InlineCodeSpan = (ConsoleColor.Red, ConsoleColor.Black),
             .Url = (ConsoleColor.Blue, ConsoleColor.Black),
             .Bold = (ConsoleColor.Black, ConsoleColor.Yellow),
-            .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray)
+            .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray),
+            .HeaderSpan = (ConsoleColor.DarkGreen, ConsoleColor.Yellow)
         }
 
         Dim theme As MarkdownTheme
         Dim markdown As CharPtr
         Dim indent As Integer
 
+        Dim initialGlobal As ConsoleFontStyle
+
         Private Sub New(theme As MarkdownTheme)
             Me.theme = theme
+            Me.initialGlobal = New ConsoleFontStyle With {
+                .BackgroundColor = Console.BackgroundColor,
+                .ForeColor = Console.ForegroundColor
+            }
         End Sub
 
         Public Sub DoPrint(markdown$, indent%)
             Me.markdown = markdown.LineTokens.JoinBy(ASCII.LF)
             Me.indent = indent
-            Me.theme.Global.SetConfig(Me)
+            Me.applyGlobal()
+            Me.Reset()
             Me.DoParseSpans()
             Me.PrintSpans()
         End Sub
@@ -124,7 +113,8 @@ Namespace ApplicationServices.Terminal
         Dim inlineCodespan As Boolean = False
         Dim blockquote As Boolean = False
         Dim italySpan As Boolean = False
-        Dim lastNewLine As Boolean
+        Dim headerSpan As Boolean = False
+        Dim lastNewLine As Boolean = True
         Dim controlBuf As New List(Of Char)
         Dim textBuf As New List(Of Char)
 
@@ -137,14 +127,20 @@ Namespace ApplicationServices.Terminal
             blockquote = False
             boldSpan = False
             inlineCodespan = False
-            lastNewLine = False
+            lastNewLine = True
             italySpan = False
+            headerSpan = False
             controlBuf *= 0
             textBuf *= 0
             styleStack.Clear()
             spans *= 0
         End Sub
 
+        ''' <summary>
+        ''' <see cref="controlBuf"/> is in given string pattern?
+        ''' </summary>
+        ''' <param name="term"></param>
+        ''' <returns></returns>
         Private Function bufferIs(term As String) As Boolean
             If controlBuf <> term.Length Then
                 Return False
@@ -153,6 +149,11 @@ Namespace ApplicationServices.Terminal
             End If
         End Function
 
+        ''' <summary>
+        ''' All of the character value in <see cref="controlBuf"/> is equals to given character <paramref name="c"/>
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
         Private Function bufferAllIs(c As Char) As Boolean
             If controlBuf = 0 Then
                 Return False
@@ -162,12 +163,22 @@ Namespace ApplicationServices.Terminal
         End Function
 
         Private Sub restoreStyle()
-            styleStack.Pop()
+            If styleStack.Count > 0 Then
+                Call styleStack.Pop()
+            End If
 
             If styleStack.Count = 0 Then
-                Call theme.Global.SetConfig(Me)
+                Call applyGlobal()
             Else
                 Call styleStack.Peek.SetConfig(Me)
+            End If
+        End Sub
+
+        Private Sub applyGlobal()
+            If theme.Global Is Nothing Then
+                Call initialGlobal.SetConfig(Me)
+            Else
+                Call theme.Global.SetConfig(Me)
             End If
         End Sub
 
@@ -182,6 +193,9 @@ Namespace ApplicationServices.Terminal
                 span.Print()
                 isNewLine = span.IsEndByNewLine
             Next
+
+            Call applyGlobal()
+            Call Console.WriteLine()
         End Sub
 
         Private Sub EndSpan(byNewLine As Boolean)
@@ -192,16 +206,18 @@ Namespace ApplicationServices.Terminal
                 style = theme.Url
             End If
 
-            If styleStack.Peek.Equals(theme.CodeBlock) Then
+            If styleStack.Count > 0 AndAlso styleStack.Peek.Equals(theme.CodeBlock) Then
                 style.BackgroundColor = theme.CodeBlock.BackgroundColor
             End If
 
-            spans += New Span With {
-                .style = style,
-                .text = text,
-                .IsEndByNewLine = byNewLine
-            }
-            textBuf *= 0
+            If text.Length > 0 Then
+                spans += New Span With {
+                    .style = style,
+                    .text = text,
+                    .IsEndByNewLine = byNewLine
+                }
+                textBuf *= 0
+            End If
         End Sub
 
         Private Sub WalkChar(c As Char)
@@ -215,6 +231,7 @@ Namespace ApplicationServices.Terminal
                 Case ASCII.LF
                     lastNewLine = True
                     blockquote = False
+                    headerSpan = False
                     textBuf += ASCII.LF
                     EndSpan(True)
                     restoreStyle()
@@ -236,11 +253,25 @@ Namespace ApplicationServices.Terminal
                         theme.BlockQuote.SetConfig(Me)
                         textBuf += " "c
                         textBuf += " "c
+                    ElseIf headerSpan AndAlso bufferAllIs("#"c) Then
+                        theme.HeaderSpan.SetConfig(Me)
+                        controlBuf *= 0
                     Else
                         EndSpan(False)
                         textBuf += c
                         EndSpan(False)
                     End If
+                Case "#"c
+                    If lastNewLine AndAlso (controlBuf = 0 OrElse controlBuf.All(Function(x) x = "#"c)) Then
+                        controlBuf += c
+                        headerSpan = True
+                    ElseIf headerSpan AndAlso textBuf = 0 Then
+                        controlBuf += c
+                    Else
+                        textBuf += c
+                    End If
+
+                    lastNewLine = False
                 Case Else
                     lastNewLine = False
 
