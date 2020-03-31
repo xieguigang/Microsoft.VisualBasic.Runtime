@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ec1019ecd833e3e960644068a61d875, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::a7b3b2bcbd65e2cca27ea57113bcafca, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module CastStringVector
     ' 
     '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
-    '                   AsInteger, AsNumeric, AsSingle, AsType
+    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
     ' 
     ' 
     ' /********************************************************************************/
@@ -107,6 +107,12 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsNumeric(values As Dictionary(Of String, String)) As Dictionary(Of String, Double)
             Return values.ToDictionary(Function(x) x.Key, Function(x) x.Value.ParseNumeric)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsNumeric(values As Dictionary(Of String, Integer)) As Dictionary(Of String, Double)
+            Return values.ToDictionary(Function(x) x.Key, Function(x) CDbl(x.Value))
         End Function
 
         ''' <summary>

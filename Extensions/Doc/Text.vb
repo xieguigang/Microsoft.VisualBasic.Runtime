@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5a620c86564678f819b3f227ef922bf, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::54f6d5b57fb02072461335cc17660e6b, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -235,9 +235,10 @@ Public Module TextDoc
     ''' <remarks>
     ''' 不适用于大文本数据
     ''' </remarks>
-    <Extension> Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8) As String
+    <Extension>
+    Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8, Optional null$ = "null") As String
         If handle Is Nothing Then
-            Return ""
+            Return null
         ElseIf handle.IndexOf(ASCII.CR) > -1 OrElse handle.IndexOf(ASCII.LF) > -1 Then
             ' is text content, not path
             Return handle
@@ -248,7 +249,11 @@ Public Module TextDoc
                      ' 所以需要添加一个额外的判断条件
                      Return i <> ":"c AndAlso handle.IndexOf(i) > -1
                  End Function) Then
+
             ' is text content, not path
+            Return handle
+        ElseIf handle.Count(":"c) > 1 Then
+            ' json?
             Return handle
         End If
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5195ecc2349d77440a701e938d09fbdf, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::db3b8e9543d16ef36a97631e72ad620e, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Module xConsole
     ' 
+    '         Properties: ClearColorsAtEnd
+    ' 
     '         Function: ClearInput, ClosestConsoleColor, ConvertHexStringToByteArray, getColor, GetConsoleWindow
     '                   (+2 Overloads) Implode, ParseLine, Print, ReadKeys, ReadLine
     '                   SetWindowPos
@@ -63,7 +65,7 @@ Imports Microsoft.VisualBasic.Language
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
-Namespace Terminal.xConsole
+Namespace ApplicationServices.Terminal.xConsole
 
     ''' <summary>
     ''' Allows you to color and animate the console. ~ overpowered.it ~ TheTrigger - 💸

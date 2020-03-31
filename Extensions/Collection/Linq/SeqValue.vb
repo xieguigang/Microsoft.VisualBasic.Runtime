@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14c04f9e275fa69452350d6e3f26a155, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::72d4ec733dd4c54271b45616fcc40ac4, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '         Sub: Assign
     ' 
-    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
+    '         Operators: -, (+3 Overloads) +, <>, =, (+2 Overloads) Mod
     ' 
     ' 
     ' /********************************************************************************/
@@ -164,6 +164,10 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(x As SeqValue(Of T)) As T
             Return x.value
+        End Operator
+
+        Public Shared Operator +(x As SeqValue(Of T), i As Integer) As Integer
+            Return x.i + i
         End Operator
 
         ''' <summary>

@@ -1,50 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::38800f3dcbb663b37b43bab7bfcd361f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::9f805499eb74c3fa400082b5a178bdb3, Microsoft.VisualBasic.Core\Data\DataFramework.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module DataFramework
-' 
-'         Properties: Flags, StringBuilders, StringParsers
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: DictionaryTable, getOrCache, (+2 Overloads) Schema, ValueTable
-'         Delegate Function
-' 
-'             Function: CreateObject, GetValue, IsComplexType, IsNumericType, IsPrimitive
-'                       ParseSchemaInternal, valueToString
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Module DataFramework
+    ' 
+    '         Properties: Flags, StringBuilders, StringParsers
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: DictionaryTable, getOrCache, (+2 Overloads) Schema, ValueTable
+    '         Delegate Function
+    ' 
+    '             Function: CreateObject, GetValue, IsComplexType, IsNumericType, IsPrimitive
+    '                       ParseSchemaInternal, valueToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -86,6 +86,9 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="flag"></param>
         ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个函数不会缓存类型信息，因为参数组合条件过多
+        ''' </remarks>
         Public Function Schema(Of T)(flag As PropertyAccess,
                                      Optional nonIndex As Boolean = False,
                                      Optional primitive As Boolean = False) As Dictionary(Of String, PropertyInfo)
@@ -97,7 +100,9 @@ Namespace ComponentModel.DataSourceModel
                                    Return IsPrimitive(.ByRef(k).PropertyType)
                                End Function) _
                         .ToDictionary(Function(key) key,
-                                      Function(key) .ByRef(key))
+                                      Function(key)
+                                          Return .ByRef(key)
+                                      End Function)
                 Else
                     Return .ByRef
                 End If
@@ -139,7 +144,9 @@ Namespace ComponentModel.DataSourceModel
 
             If nonIndex Then
                 props = props _
-                    .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty)
+                    .Where(Function(p)
+                               Return p.GetIndexParameters.IsNullOrEmpty
+                           End Function)
             End If
 
             Return props.ToDictionary(Function(x) x.Name)

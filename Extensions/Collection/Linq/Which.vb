@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f46156ba68fd9ebc213a08670dd4b462, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
+﻿#Region "Microsoft.VisualBasic::ce7bba626256af99c8867e8f6eaf7cb2, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
 
     ' Author:
     ' 
@@ -139,11 +139,11 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IsTrue(v As IEnumerable(Of Boolean)) As Integer()
+        Public Shared Function IsTrue(v As IEnumerable(Of Boolean), Optional offset% = 0) As Integer()
             Return v _
                 .SeqIterator _
                 .Where(Function(b) True = +b) _
-                .Select(Function(i) CInt(i)) _
+                .Select(Function(i) CInt(i) + offset) _
                 .ToArray
         End Function
 

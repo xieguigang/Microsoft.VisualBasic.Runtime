@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7995a8959bcd3d358a5b82d40806ed93, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::367e0b4851290a7085cb39e0517832b6, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,10 @@
     '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
     '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, (+2 Overloads) Log2
     '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
-    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, (+2 Overloads) RMS, (+8 Overloads) Round
-    '                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin
-    '                   Sinh, Sqrt, (+5 Overloads) Sum, Tan, Tanh
-    '                   (+2 Overloads) Truncate, WeighedAverage
+    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE
+    '                   (+8 Overloads) Round, RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign
+    '                   Sin, Sinh, Sqrt, (+5 Overloads) Sum, Tan
+    '                   Tanh, (+2 Overloads) Truncate, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/
@@ -1872,7 +1872,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Double)) As Double
             Dim data#() = values.ToArray
             Dim avg# = data.Average
@@ -1886,7 +1885,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Integer)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
@@ -1897,7 +1895,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Long)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
@@ -1908,7 +1905,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Single)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
@@ -1920,20 +1916,19 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
             Return stdNum.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
+        <Extension>
+        Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
             Return stdNum.Sqrt((From n In Vector Select n ^ 2).Sum)
         End Function
 
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Integer), b As IEnumerable(Of Integer)) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As IEnumerable(Of Integer), b As IEnumerable(Of Integer)) As Double
             If a.Count <> b.Count Then
                 Return -1
             Else
@@ -1942,8 +1937,8 @@ Namespace Math
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
             Return EuclideanDistance(a.ToArray, b.ToArray)
         End Function
 
@@ -1953,8 +1948,8 @@ Namespace Math
         ''' <param name="a">Point A</param>
         ''' <param name="b">Point B</param>
         ''' <returns></returns>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As Byte(), b As Byte()) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As Byte(), b As Byte()) As Double
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
@@ -1968,8 +1963,8 @@ Namespace Math
         ''' <param name="a">Point A</param>
         ''' <param name="b">Point B</param>
         ''' <returns></returns>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As Double(), b As Double()) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As Double(), b As Double()) As Double
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
@@ -2030,9 +2025,19 @@ Namespace Math
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' RSD is also an alias of ``CV%``
+        ''' </remarks>
         <Extension>
         Public Function RSD(data As IEnumerable(Of Double)) As Double
-            Return data.SD / data.Average
+            Dim vec As Double() = data.ToArray
+            Dim sd As Double = vec.SD
+
+            If sd = 0.0 Then
+                Return 0
+            Else
+                Return sd / vec.Average
+            End If
         End Function
 
         ''' <summary>

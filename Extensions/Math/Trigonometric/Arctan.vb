@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbb2ea48f2dd4d815304d189f668b4b9, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Arctan.vb"
+﻿#Region "Microsoft.VisualBasic::1a31ee1012035c63a20b6a4a2adc7082, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Arctan.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
 
 #End Region
 
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math
 
@@ -65,24 +65,24 @@ Namespace Math
             If x# = 1.0 Then
                 Return PI / 4
             End If
-            If sys.Sign(x) = sys.Sign(-1) Then
+            If stdNum.Sign(x) = stdNum.Sign(-1) Then
                 Return -Atn(-x)
             End If
-            If x > n1 Then
+            If x > Trigonometric.n1 Then
                 Return HalfPI - Atn(1 / x)
             End If
             If x > n05 Then
-                Return Atn(n1) + Atn((x - n1) / (1 + x))
+                Return Atn(Trigonometric.n1) + Atn((x - Trigonometric.n1) / (1 + x))
             Else
                 Dim xPow2 As Double = x * x
-                Dim n__1 As Integer = AtanPrecise
-                Dim y As Double = 1 / (2 * n__1 + 1)
+                Dim n1 As Integer = AtanPrecise
+                Dim y As Double = 1 / (2 * n1 + 1)
                 Dim i As Integer = AtanPrecise
 
                 While i > 0
-                    y = (1 / (2 * n__1 - 1)) - (xPow2 * y)
+                    y = (1 / (2 * n1 - 1)) - (xPow2 * y)
                     i -= 1
-                    n__1 -= 1
+                    n1 -= 1
                 End While
 
                 Return x * y

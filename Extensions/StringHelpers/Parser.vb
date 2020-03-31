@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::581557608c03c422167a0717138431b7, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::6c3d1513b93909ae6a3b4b87373ea0ff, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -82,8 +82,8 @@ Public Module PrimitiveParser
     ''' Is this token value string is a number?
     ''' </summary>
     ''' <returns></returns>
-    <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
-    <Extension> Public Function IsNumeric(num As String) As Boolean
+    <Extension>
+    Public Function IsNumeric(num As String) As Boolean
         Dim dotCheck As Boolean = False
         Dim c As Char = num(Scan0)
         Dim offset As Integer = 0
@@ -225,6 +225,7 @@ Public Module PrimitiveParser
         {"ok!", True},
         {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
         {"right", True},
+        {"on", True}, {"off", False},
         {"wrong", False},
         {"failure", False}, {"failures", False},
         {"exception", False},

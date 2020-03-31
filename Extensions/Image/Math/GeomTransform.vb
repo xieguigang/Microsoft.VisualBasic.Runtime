@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8bd1c6a0fc7d93851919387150272dc, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::dc40206759ca6caac1a3b5a682cef17b, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
 
@@ -286,7 +286,7 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
-            Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+            Return stdNum.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
 
         ''' <summary>
@@ -337,7 +337,9 @@ Namespace Imaging.Math2D
         <Extension> Public Function CalculateAngle(p1 As PointF, p2 As PointF) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y
-            Return sys.Atan2(yDiff, xDiff) * 180.0 / PI
+            Dim a = stdNum.Atan2(yDiff, xDiff) * 180.0 / PI
+
+            Return a
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::207b8c7e8f905170be918a69f5f6cc7f, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
+﻿#Region "Microsoft.VisualBasic::3c4b5e020dd25b44ba41feb2c4e20222, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Module EnumerationExtensions
     ' 
-    '         Function: AsEnumerable, AsObjectEnumerator
+    '         Function: AsEnumerable, (+2 Overloads) AsObjectEnumerator
     '         Class Enumerator
     ' 
     '             Function: GetEnumerator, IEnumerable_GetEnumerator
@@ -109,8 +109,8 @@ Namespace Linq
         ''' </remarks>
         <Extension>
         Public Iterator Function AsObjectEnumerator(enums As Array) As IEnumerable(Of Object)
-            For Each element As Object In enums
-                Yield element
+            For i As Integer = 0 To enums.Length - 1
+                Yield enums.GetValue(i)
             Next
         End Function
 
@@ -124,8 +124,8 @@ Namespace Linq
         ''' </remarks>
         <Extension>
         Public Iterator Function AsObjectEnumerator(Of T)(enums As Array) As IEnumerable(Of T)
-            For Each element As Object In enums
-                Yield DirectCast(element, T)
+            For i As Integer = 0 To enums.Length - 1
+                Yield DirectCast(enums.GetValue(i), T)
             Next
         End Function
 

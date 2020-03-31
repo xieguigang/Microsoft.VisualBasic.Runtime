@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6576a5569926b427ebe1e6bbd35401cb, Microsoft.VisualBasic.Core\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::7e489e704091906cfdd5d5b228a37c46, Microsoft.VisualBasic.Core\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 
@@ -102,7 +102,9 @@ Namespace Math
 
             Return hash.ToDictionary(
                 Function(tp) tp.Item1,
-                Function(tp) tp.Item2)
+                Function(tp)
+                    Return tp.Item2
+                End Function)
         End Function
 
         ''' <summary>
@@ -193,7 +195,6 @@ Namespace Math
         ''' <param name="center">either a logical value or a numeric vector of length equal to the number of columns of x</param>
         ''' <param name="isScale">either a logical value or a numeric vector of length equal to the number of columns of x</param>
         ''' <returns></returns>
-        <ExportAPI("Scale", Info:="function centers and/or scales the columns of a numeric matrix.")>
         Public Function Scale(<Parameter("x", "numeric matrix")> data As IEnumerable(Of Double),
                               <Parameter("center", "either a logical value or a numeric vector of length equal to the number of columns of x")>
                               Optional center As Boolean = True,

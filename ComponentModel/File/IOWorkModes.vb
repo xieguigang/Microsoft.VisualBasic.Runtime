@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa192dc8778c6bcd4976992fe2af7087, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\SupportedLanguages.vb"
+﻿#Region "Microsoft.VisualBasic::82ad86a14276506d26974dca9f3cd332, Microsoft.VisualBasic.Core\ComponentModel\File\IOWorkModes.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,9 @@
 
     ' Summaries:
 
-    '     Enum Languages
+    '     Enum IOWorkModes
     ' 
-    '         PHP, R, TypeScript, VisualBasic
+    '         Read, Write
     ' 
     '  
     ' 
@@ -44,12 +44,10 @@
 
 #End Region
 
-Namespace ApplicationServices.Development
+Namespace ComponentModel
 
-    Public Enum Languages
-        VisualBasic
-        R
-        PHP
-        TypeScript
+    Public Enum IOWorkModes
+        Read
+        Write
     End Enum
 End Namespace

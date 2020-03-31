@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ea48bcfccd3737ab9c2660a4589dd6, Microsoft.VisualBasic.Core\Extensions\IO\Path\ProgramPathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::188fff6f99f2de291d7cda77f4332a23, Microsoft.VisualBasic.Core\Extensions\IO\Path\ProgramPathSearchTool.vb"
 
     ' Author:
     ' 
@@ -169,7 +169,6 @@ Namespace FileIO.Path
         ''' <returns></returns>
         ''' <remarks></remarks>
         '''
-        <ExportAPI("Search.Scripts", Info:="Search for the path of a script file with a specific extension name.")>
         Public Shared Function SearchScriptFile(dir$, keyword$, Optional withExtension$ = Nothing) As IEnumerable(Of String)
             Dim scriptFileNameRule$ = $"*{keyword}*{withExtension}"
             Dim extNameAssert As Assert(Of String)

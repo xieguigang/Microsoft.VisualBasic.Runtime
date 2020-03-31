@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10a0fc85496398c6ac5f6a1be9eb7bf6, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::91f190c969bd8ce7ba229be04bca2bcc, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke, InvokeCLI
-    '                   tryInvoke
+    '         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
+    '                   InvokeCLI, tryInvoke
     ' 
     ' 
     ' /********************************************************************************/
@@ -235,6 +235,14 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="[throw]"></param>
         ''' <returns></returns>
         Private Function tryInvoke(callParameters As Object(), target As Object, [throw] As Boolean) As Object
+#If DEBUG Then
+            Return EntryPoint.Invoke(target, callParameters)
+#Else
+            Return handleUnexpectedErrorCalls(callParameters, target, [throw])
+#End If
+        End Function
+
+        Private Function handleUnexpectedErrorCalls(callParameters As Object(), target As Object, [throw] As Boolean) As Object
             Dim rtvl As Object
 
             Try

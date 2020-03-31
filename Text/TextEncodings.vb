@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e7f1a4a2c4046acad3f34789d3583b4, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::dba5ba95a22a740945e28474f9756840, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -263,9 +263,9 @@ Namespace Text
         End Function
 
         ''' <summary>
-        ''' 从字符串名称之中解析出编码格式的枚举值
+        ''' 从字符串名称之中解析出编码格式的枚举值(名称的大小写不敏感)
         ''' </summary>
-        ''' <param name="encoding$"></param>
+        ''' <param name="encoding">名称的大小写不敏感</param>
         ''' <param name="onFailure"></param>
         ''' <returns></returns>
         <Extension> Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings

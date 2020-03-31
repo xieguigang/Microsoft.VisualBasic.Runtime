@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::182a146ac882c4d58c0f95e982e1b4ce, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::ca2bffcc418ff3c96383d8bbebf86ce1, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module TagAttributeParser
     ' 
     '         Function: [class], attr, classList, GetImageLinks, href
-    '                   img, (+2 Overloads) src, TagAttributes
+    '                   img, parseAttrValImpl, (+2 Overloads) src, TagAttributes
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,6 +44,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -70,13 +71,23 @@ Namespace Text.Parser.HtmlParser
                 .EachValue _
                 .Select(Function(t)
                             Dim a = t.GetTagValue("=", trim:="""'")
-                            Dim val = a.Value.GetStackValue("""", """").GetStackValue("'", "'")
+                            Dim val As String = parseAttrValImpl(a.Value)
 
                             Return New NamedValue(Of String)(a.Name, val)
                         End Function)
         End Function
 
         Const attributePattern$ = "%s\s*=\s*([""].+?[""])|(['].+?['])"
+
+        Private Function parseAttrValImpl(value As String) As String
+            If value.Length = 1 AndAlso value.First <> """"c AndAlso value.First <> "'"c Then
+                Return value
+            Else
+                Return value _
+                    .GetStackValue("""", """") _
+                    .GetStackValue("'", "'")
+            End If
+        End Function
 
         ''' <summary>
         ''' Get element attribute value
@@ -96,10 +107,10 @@ Namespace Text.Parser.HtmlParser
             If String.IsNullOrEmpty(html) Then
                 Return ""
             Else
-                Return html.GetTagValue("=", trim:=True) _
+                Return html _
+                    .GetTagValue("=", trim:="""'") _
                     .Value _
-                    .GetStackValue("""", """") _
-                    .GetStackValue("'", "'")
+                    .DoCall(AddressOf parseAttrValImpl)
             End If
         End Function
 

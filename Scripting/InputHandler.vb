@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26f38fa3a0c0846c829640aa4daf27b8, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::c9140db09b157a293bf91907771e1dd2, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: [String], CasterString, Types
     ' 
     '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
-    '                   DefaultTextParser, IsPrimitive, StringParser, (+2 Overloads) ToString
+    '                   DefaultTextParser, IsPrimitive, ParseDateTime, StringParser, (+2 Overloads) ToString
     ' 
     '         Sub: CapabilityPromise
     ' 
@@ -53,6 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
@@ -108,6 +109,22 @@ Namespace Scripting
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function StringParser(type As Type) As [Default](Of Func(Of String, Object))
             Return New Func(Of String, Object)(Function(s$) s.CTypeDynamic(type))
+        End Function
+
+        ''' <summary>
+        ''' Parsing the dat value from the expression text, if any exception happend, a null date value will returned.
+        ''' (空字符串会返回空的日期)
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        '''
+        <ExportAPI("Date.Parse")>
+        <Extension> Public Function ParseDateTime(s As String) As Date
+            If String.IsNullOrEmpty(s) Then
+                Return New Date
+            Else
+                Return DateTime.Parse(s)
+            End If
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70e68318cf1bdf1b9675d9786ea4858e, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::37420063ea459f8543e5d052146392c4, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -42,12 +42,15 @@
     '         Properties: ElapsedMilliseconds, Enable
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Sub: [Step], consoleWindowResize, (+2 Overloads) Dispose, SetProgress, SetToEchoLine
-    '              tick
+    ' 
+    '         Function: GetCurrentConsoleTop
+    ' 
+    '         Sub: [Step], ClearPinnedTop, consoleWindowResize, (+2 Overloads) Dispose, PinTop
+    '              SetProgress, SetToEchoLine, tick
     ' 
     '     Class ProgressProvider
     ' 
-    '         Properties: Current, Target
+    '         Properties: Current, Elapsed, Target
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: [Step], (+2 Overloads) ETA, StepProgress, ToString
@@ -63,7 +66,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     ''' <summary>
     ''' The <see cref="ConsoleColor"/> theme for the <see cref="ProgressBar"/>
@@ -392,27 +395,34 @@ Namespace Terminal.ProgressBar
         ''' <returns></returns>
         Public ReadOnly Property Current As Integer
 
+        ReadOnly bindProgress As ProgressBar
+
         ''' <summary>
         ''' 生成进度条的百分比值
         ''' </summary>
         ''' <param name="total"></param>
-        Sub New(total As Integer)
+        Sub New(bind As ProgressBar, total%)
             Target = total
+            bindProgress = bind
         End Sub
 
         Dim previous#
         Dim previousTime&
 
-        Public Function ETA(elapsed&, Optional avg As Boolean = True) As TimeSpan
+        Public ReadOnly Property Elapsed As TimeSpan
+            Get
+                Return TimeSpan.FromMilliseconds(bindProgress.ElapsedMilliseconds)
+            End Get
+        End Property
+
+        Public Function ETA(Optional avg As Boolean = True) As TimeSpan
             Dim out As TimeSpan
+            Dim elapsed& = bindProgress.ElapsedMilliseconds
 
             If avg Then
                 out = ETA(0R, Current / Target, elapsed)
             Else
-                out = ETA(
-                    previous,
-                    Current / Target,
-                    elapsed - previousTime)
+                out = ETA(previous, Current / Target, elapsed - previousTime)
 
                 previousTime = elapsed
                 previous = Current / Target
