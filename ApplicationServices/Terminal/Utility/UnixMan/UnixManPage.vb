@@ -5,6 +5,8 @@
     ''' </summary>
     Public Class UnixManPage
 
+        Public Property PROLOG As String
+
         ''' <summary>
         ''' 手册叙述对象名称，及简要描述。
         ''' </summary>
