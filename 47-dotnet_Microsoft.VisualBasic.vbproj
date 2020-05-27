@@ -1143,6 +1143,7 @@
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
