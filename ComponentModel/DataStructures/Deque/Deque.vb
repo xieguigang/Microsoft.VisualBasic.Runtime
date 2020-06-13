@@ -10,7 +10,7 @@
         ''' <summary>
         ''' actuall data of this Deque(Of T)
         ''' </summary>
-        Private data As n_Data(Of T) = New n_Data(Of T)()
+        Private data As Data(Of T) = New Data(Of T)()
 
         ''' <summary>
         ''' to detect changes during enumeration
