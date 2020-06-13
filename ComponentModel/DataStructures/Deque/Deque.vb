@@ -4,13 +4,13 @@
     ''' Double ended queue implementation
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Partial Public Class Deque(Of T)
+    Public Class Deque(Of T)
         Implements IDeque(Of T)
 
         ''' <summary>
         ''' actuall data of this Deque(Of T)
         ''' </summary>
-        Private data As Data(Of T) = New Data(Of T)()
+        Dim data As Data(Of T) = New Data(Of T)()
 
         ''' <summary>
         ''' to detect changes during enumeration
@@ -27,6 +27,7 @@
                 version += 1
             End Set
         End Property
+
         ''' <summary>
         ''' peek the firts element of the Deque(Of T)
         ''' </summary>
@@ -35,6 +36,7 @@
                 Return data(0)
             End Get
         End Property
+
         ''' <summary>
         ''' peek the last element of the Deque(Of T)
         ''' </summary>
@@ -43,6 +45,7 @@
                 Return data(Count - 1)
             End Get
         End Property
+
         ''' <summary>
         ''' Number of elements in Deque(Of T)
         ''' </summary>
@@ -57,6 +60,7 @@
                 Return False
             End Get
         End Property
+
         ''' <summary>
         ''' Adds an object to the end of the Deque(Of T).
         ''' </summary>
@@ -66,6 +70,7 @@
             data.AddEnd(item)
             version += 1
         End Sub
+
         ''' <summary>
         ''' Adds an element to the beggining of the Deque(Of T)
         ''' </summary>
@@ -74,6 +79,7 @@
             data.AddBegining(item)
             version += 1
         End Sub
+
         ''' <summary>
         ''' returns the firts element of the Deque(Of T) and removes it from Deque(Of T)
         ''' </summary>
@@ -83,6 +89,7 @@
             version += 1
             Return item
         End Function
+
         ''' <summary>
         ''' returns the last element of the Deque(Of T) and removes it from Deque(Of T)
         ''' </summary>
@@ -100,6 +107,7 @@
             data.Clear()
             version += 1
         End Sub
+
         ''' <summary>
         ''' Determines whether an element is in the Deque(Of T).
         ''' </summary>
@@ -108,16 +116,21 @@
         Public Function Contains(ByVal item As T) As Boolean Implements ICollection(Of T).Contains
             Return data.Contains(item)
         End Function
+
         ''' <summary>
-        ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, starting at the specified index of the target array.
+        ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, 
+        ''' starting at the specified index of the target array.
         ''' </summary>
         ''' <param name="array"></param>
         ''' <param name="arrayIndex"></param>
         Public Sub CopyTo(ByVal array As T(), ByVal arrayIndex As Integer) Implements ICollection(Of T).CopyTo
             data.CopyTo(array, arrayIndex, False)
         End Sub
+
         ''' <summary>
-        ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, starting at the specified index of the target array, in reversed order
+        ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, 
+        ''' starting at the specified index of the target array, in reversed 
+        ''' order
         ''' </summary>
         ''' <param name="array"></param>
         ''' <param name="arrayIndex"></param>
@@ -140,6 +153,7 @@
         Public Function IndexOf(ByVal item As T) As Integer Implements IList(Of T).IndexOf
             Return data.IndexOf(item)
         End Function
+
         ''' <summary>
         ''' Inserts an element into the Deque(Of T) at the specified index.
         ''' </summary>
@@ -149,8 +163,9 @@
             data.Insert(index, item)
             version += 1
         End Sub
+
         ''' <summary>
-        ''' /// Removes the first occurrence of a specific object from the Deque(Of T).
+        ''' Removes the first occurrence of a specific object from the Deque(Of T).
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List(Of T).</returns>
@@ -159,6 +174,7 @@
             version += 1
             Return data.Remove(item)
         End Function
+
         ''' <summary>
         ''' Removes the element at the specified index of the Deque(Of T).
         ''' </summary>
