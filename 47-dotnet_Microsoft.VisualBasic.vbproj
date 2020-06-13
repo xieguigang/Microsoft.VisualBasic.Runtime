@@ -1157,6 +1157,7 @@
     <Compile Include="ComponentModel\DataStructures\Deque\Deque.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\DequeTest.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\Enumerator.vb" />
+    <Compile Include="ComponentModel\DataStructures\Deque\IDeque.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\ReverseView.vb" />
     <Compile Include="ComponentModel\File\IOWorkModes.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />

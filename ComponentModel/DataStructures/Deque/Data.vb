@@ -2,8 +2,8 @@
     ''' <summary>
     ''' contains actuall data od deque, Deque(Of T) provides abstraction above this data
     ''' </summary>
-    ''' <typeparamname="S"></typeparam>
-    Private Class n_Data(Of S)
+    ''' <typeparam name="S"></typeparam>
+    Friend Class n_Data(Of S)
         ''' <summary>
         ''' Number of elements in Deque(Of T)
         ''' </summary>   
@@ -56,8 +56,6 @@
 
         Public Property Count As Integer = 0
 
-        'private int currCapacity { get => (NumOfBlockRefs * sizeOfBlock) - Count; }
-
         Private data = New S(1)() {}
 
         Public Sub New()
@@ -68,8 +66,8 @@
         ''' <summary>
         ''' allows to treat the Deque(Of T) as if it stored data linearly
         ''' </summary>
-        ''' <paramname="i"></param>
-        ''' <returns></returns></summary>      
+        ''' <param name="i"></param>
+        ''' <returns></returns>  
         Default Public Property Item(ByVal i As Integer) As S
             Get
 
@@ -152,7 +150,7 @@
         ''' <summary>
         ''' Adds Item as a new Head of the Deque(Of T), Count is incremented
         ''' </summary>
-        ''' <paramname="item"></param></summary>       
+        ''' <param name="item"></param>   
         Public Sub AddBegining(ByVal item As S)
             If beforeFirst <= 0 Then
                 AllocBlockBeginning()
@@ -166,7 +164,7 @@
         ''' <summary>
         ''' Adds Item as a new Tail of the Deque(Of T), Count is incremented
         ''' </summary>
-        ''' <paramname="item"></param></summary>   
+        ''' <param name="item"></param> 
         Public Sub AddEnd(ByVal item As S)
             If afterLast <= 0 Then
                 AllocBlockEnd()
@@ -178,7 +176,7 @@
         ''' <summary>
         ''' returns the firts element of the Deque(Of T) while removing it from Deque(Of T)
         ''' </summary>
-        ''' <returns></returns></T></summary>       
+        ''' <returns></returns>    
         Public Function RemoveHead() As S
             If Count = 0 Then
                 Throw New InvalidOperationException("Deque(Of T) is empty")
@@ -194,7 +192,7 @@
         ''' <summary>
         ''' returns the last element of the Deque(Of T) and removes it from Deque(Of T)
         ''' </summary>
-        ''' <returns></returns></T></summary>     
+        ''' <returns></returns> 
         Public Function RemoveTail() As S
             If Count = 0 Then
                 Throw New InvalidOperationException("Deque(Of T) is empty")
@@ -210,8 +208,8 @@
         ''' Insert at the beggining or end in O(1)
         ''' Allows to insert item on index 0 of an empty Deque(Of T) - List(Of T) behaves the same way, I recon
         ''' </summary>
-        ''' <paramname="index"></param>
-        ''' <paramname="item"></param></T></T></summary>    
+        ''' <param name="index"></param>
+        ''' <param name="item"></param> 
         Public Sub Insert(ByVal index As Integer, ByVal item As S)
             If index = Count Then
                 AddEnd(item)
@@ -242,7 +240,7 @@
         ''' <summary>
         ''' Removes an element from the specified index of Deque(Of T), removal of the first and the last item in O(1)
         ''' </summary>
-        ''' <paramname="index"></param></summary>      
+        ''' <param name="index"></param> 
         Public Sub RemoveAt(ByVal index As Integer)
             If index < 0 OrElse index >= Count Then
                 Throw New ArgumentOutOfRangeException("My awesome exception")
@@ -268,8 +266,7 @@
         ''' <summary>
         ''' Searches for the specified object and returns the zero-based index of the first occurrence within the entire Deque(Of T).
         ''' </summary>
-        ''' <paramname="S"></param>
-        ''' <returns>e zero-based index of the first occurrence of item within the entire Deque(Of T), if found; otherwise, -1.</returns></returns></summary> 
+        ''' <returns>e zero-based index of the first occurrence of item within the entire Deque(Of T), if found; otherwise, -1.</returns>
         Public Function IndexOf(ByVal item As S) As Integer
             For index = 0 To Count - 1
 
@@ -283,8 +280,8 @@
         ''' <summary>
         ''' Removes item from the Deque(Of T), removal of the first and the last item in O(1)
         ''' </summary>
-        ''' <paramname="item"></param>
-        ''' <returns></returns></summary>       
+        ''' <param name="item"></param>
+        ''' <returns></returns> 
         Public Function Remove(ByVal item As S) As Boolean
             Dim index = IndexOf(item)
 
@@ -298,8 +295,8 @@
         ''' <summary>
         ''' Determines whether an element is in the Deque(Of T).
         ''' </summary>
-        ''' <paramname="item"></param>
-        ''' <returns>true if item is found in the List(Of T); otherwise, false</returns></returns></summary> 
+        ''' <param name="item"></param>
+        ''' <returns>true if item is found in the List(Of T); otherwise, false</returns> 
         Public Function Contains(ByVal item As S) As Boolean
             For index = 0 To Count - 1
 
@@ -332,13 +329,7 @@
         End Sub
         ''' <summary>
         ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, starting at the specified index of the target array.
-        ''' </summary>
-        ''' <paramname="array"></param>
-        ''' <paramname="arrayIndex"></param>
-        ''' </summary>
-        ''' <paramname="array"></param>
-        ''' <paramname="arrayIndex"></param>
-        ''' <paramname="reversed"></param></summary>     
+        ''' </summary>    
         Public Sub CopyTo(ByVal array As S(), ByVal arrayIndex As Integer, ByVal reversed As Boolean)
             If array Is Nothing Then
                 Throw New ArgumentNullException()
