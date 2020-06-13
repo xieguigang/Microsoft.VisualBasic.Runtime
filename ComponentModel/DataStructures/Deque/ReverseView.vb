@@ -1,4 +1,4 @@
-﻿Namespace ComponentModel.Collection
+﻿Namespace ComponentModel.Collection.Deque
 
     Public Class ReverseView(Of T)
         Implements IDeque(Of T)

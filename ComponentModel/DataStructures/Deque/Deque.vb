@@ -1,4 +1,4 @@
-﻿Namespace ComponentModel.Collection
+﻿Namespace ComponentModel.Collection.Deque
 
     Public Interface IDeque(Of T)
         Inherits IList(Of T)

@@ -1,4 +1,4 @@
-﻿Namespace ComponentModel.Collection
+﻿Namespace ComponentModel.Collection.Deque
 
     Partial Public Class Deque(Of T)
         Private Class Enumerator(Of S)

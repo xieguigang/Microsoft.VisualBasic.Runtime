@@ -1,4 +1,4 @@
-﻿Namespace ComponentModel.Collection
+﻿Namespace ComponentModel.Collection.Deque
     Public Module DequeTest
         Public Function GetReverseView(Of T)(ByVal d As Deque(Of T)) As IList(Of T)
             Return d.Reverse()

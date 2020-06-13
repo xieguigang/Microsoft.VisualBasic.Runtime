@@ -1,4 +1,4 @@
-﻿Namespace ComponentModel.Collection
+﻿Namespace ComponentModel.Collection.Deque
     ''' <summary>
     ''' contains actuall data od deque, Deque(Of T) provides abstraction above this data
     ''' </summary>
