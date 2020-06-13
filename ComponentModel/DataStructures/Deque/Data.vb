@@ -1,16 +1,12 @@
-﻿''' <summary>
-''' Double ended queue
-''' </summary>
-''' <typeparamname="T">type of items in a Deque</typeparam>
-Partial Public Class Deque(Of T) : Implements IDeque(Of T)
+﻿Namespace ComponentModel.Collection
     ''' <summary>
-    ''' contains actuall data od deque, Deque<T> provides abstraction above this data
+    ''' contains actuall data od deque, Deque(Of T) provides abstraction above this data
     ''' </summary>
-    ''' <typeparamname="S"></typeparam></summary>   
+    ''' <typeparamname="S"></typeparam>
     Private Class n_Data(Of S)
         ''' <summary>
-        ''' Number of elements in Deque<T>
-        ''' </summary></summary>        Private _Count As Integer
+        ''' Number of elements in Deque(Of T)
+        ''' </summary>   
         Private Shared ReadOnly sizeOfBlock = 128
         ''' <summary>
         ''' Current number of allocated references to data blocks, data blocks themselves doesn't have to be allocated yet
@@ -70,7 +66,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
         End Sub
 
         ''' <summary>
-        ''' allows to treat the Deque<T> as if it stored data linearly
+        ''' allows to treat the Deque(Of T) as if it stored data linearly
         ''' </summary>
         ''' <paramname="i"></param>
         ''' <returns></returns></summary>      
@@ -154,7 +150,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             NumOfBlockInitialized += 1 'this will increment afterLast by  128 - size of block
         End Sub
         ''' <summary>
-        ''' Adds Item as a new Head of the Deque<T>, Count is incremented
+        ''' Adds Item as a new Head of the Deque(Of T), Count is incremented
         ''' </summary>
         ''' <paramname="item"></param></summary>       
         Public Sub AddBegining(ByVal item As S)
@@ -168,7 +164,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Me(0) = item 'to 0 index relative to head index
         End Sub
         ''' <summary>
-        ''' Adds Item as a new Tail of the Deque<T>, Count is incremented
+        ''' Adds Item as a new Tail of the Deque(Of T), Count is incremented
         ''' </summary>
         ''' <paramname="item"></param></summary>   
         Public Sub AddEnd(ByVal item As S)
@@ -180,12 +176,12 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Me(Count - 1) = item 'indexing relative to head index
         End Sub
         ''' <summary>
-        ''' returns the firts element of the Deque<T> while removing it from Deque<T>
+        ''' returns the firts element of the Deque(Of T) while removing it from Deque(Of T)
         ''' </summary>
         ''' <returns></returns></T></summary>       
         Public Function RemoveHead() As S
             If Count = 0 Then
-                Throw New InvalidOperationException("Deque<T> is empty")
+                Throw New InvalidOperationException("Deque(Of T) is empty")
             End If
 
             Dim item = Me(0)
@@ -196,12 +192,12 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Return item
         End Function
         ''' <summary>
-        ''' returns the last element of the Deque<T> and removes it from Deque<T>
+        ''' returns the last element of the Deque(Of T) and removes it from Deque(Of T)
         ''' </summary>
         ''' <returns></returns></T></summary>     
         Public Function RemoveTail() As S
             If Count = 0 Then
-                Throw New InvalidOperationException("Deque<T> is empty")
+                Throw New InvalidOperationException("Deque(Of T) is empty")
             End If
 
             Dim item = Me(Count - 1)
@@ -210,9 +206,9 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Return item
         End Function
         ''' <summary>
-        ''' Inserts element on a specified index id Deque<T>
+        ''' Inserts element on a specified index id Deque(Of T)
         ''' Insert at the beggining or end in O(1)
-        ''' Allows to insert item on index 0 of an empty Deque<T> - List<T> behaves the same way, I recon
+        ''' Allows to insert item on index 0 of an empty Deque(Of T) - List(Of T) behaves the same way, I recon
         ''' </summary>
         ''' <paramname="index"></param>
         ''' <paramname="item"></param></T></T></summary>    
@@ -236,7 +232,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             End If
 
             Count += 1
-            'shift element to tail of the Deque<T> to make space to insert the new element to
+            'shift element to tail of the Deque(Of T) to make space to insert the new element to
             For i = Count - 1 To index + 1 Step -1
                 Me(i) = Me(i - 1)
             Next
@@ -244,7 +240,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Me(index) = item
         End Sub
         ''' <summary>
-        ''' Removes an element from the specified index of Deque<T>, removal of the first and the last item in O(1)
+        ''' Removes an element from the specified index of Deque(Of T), removal of the first and the last item in O(1)
         ''' </summary>
         ''' <paramname="index"></param></summary>      
         Public Sub RemoveAt(ByVal index As Integer)
@@ -270,10 +266,10 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Count -= 1
         End Sub
         ''' <summary>
-        ''' Searches for the specified object and returns the zero-based index of the first occurrence within the entire Deque<T>.
+        ''' Searches for the specified object and returns the zero-based index of the first occurrence within the entire Deque(Of T).
         ''' </summary>
         ''' <paramname="S"></param>
-        ''' <returns>e zero-based index of the first occurrence of item within the entire Deque<T>, if found; otherwise, -1.</returns></returns></summary> 
+        ''' <returns>e zero-based index of the first occurrence of item within the entire Deque(Of T), if found; otherwise, -1.</returns></returns></summary> 
         Public Function IndexOf(ByVal item As S) As Integer
             For index = 0 To Count - 1
 
@@ -285,7 +281,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Return -1
         End Function
         ''' <summary>
-        ''' Removes item from the Deque<T>, removal of the first and the last item in O(1)
+        ''' Removes item from the Deque(Of T), removal of the first and the last item in O(1)
         ''' </summary>
         ''' <paramname="item"></param>
         ''' <returns></returns></summary>       
@@ -300,10 +296,10 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Return True
         End Function
         ''' <summary>
-        ''' Determines whether an element is in the Deque<T>.
+        ''' Determines whether an element is in the Deque(Of T).
         ''' </summary>
         ''' <paramname="item"></param>
-        ''' <returns>true if item is found in the List<T>; otherwise, false</returns></returns></summary> 
+        ''' <returns>true if item is found in the List(Of T); otherwise, false</returns></returns></summary> 
         Public Function Contains(ByVal item As S) As Boolean
             For index = 0 To Count - 1
 
@@ -315,7 +311,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             Return False
         End Function
         ''' <summary>
-        ''' Removes all elements from the Deque<T>.
+        ''' Removes all elements from the Deque(Of T).
         ''' </summary>
         Public Sub Clear()
             For i = 0 To Count - 1
@@ -335,7 +331,7 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             'data(1) = New S(sizeOfBlock - 1) {}
         End Sub
         ''' <summary>
-        ''' Copies the entire Deque<T> to a compatible one-dimensional array, starting at the specified index of the target array.
+        ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, starting at the specified index of the target array.
         ''' </summary>
         ''' <paramname="array"></param>
         ''' <paramname="arrayIndex"></param>
@@ -368,5 +364,5 @@ Partial Public Class Deque(Of T) : Implements IDeque(Of T)
             End If
         End Sub
     End Class
-End Class
+End Namespace
 
