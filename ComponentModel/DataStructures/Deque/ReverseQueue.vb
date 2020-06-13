@@ -1,15 +1,6 @@
 ﻿Namespace ComponentModel.Collection.Deque
 
-    Public Class ReverseView(Of T)
-        Implements IDeque(Of T)
-        ''' <summary>
-        ''' Deque(Of T) that this instance of ReverseView wraps and allows to access in the reversed order
-        ''' </summary>
-        Private Property deque As Deque(Of T)
-
-        Public Sub New(ByVal que As Deque(Of T))
-            deque = que
-        End Sub
+    Public Class ReverseQueue(Of T) : Implements IDeque(Of T)
 
         Default Public Property Item(ByVal index As Integer) As T Implements IList(Of T).Item
             Get
@@ -28,6 +19,7 @@
                 Return deque.Last
             End Get
         End Property
+
         ''' <summary>
         ''' peek the last element of the reversed Deque(Of T)
         ''' </summary>
@@ -36,6 +28,7 @@
                 Return deque.First
             End Get
         End Property
+
         ''' <summary>
         ''' Number of elements in Deque(Of T)
         ''' </summary>
@@ -50,6 +43,16 @@
                 Return deque.IsReadOnly
             End Get
         End Property
+
+        ''' <summary>
+        ''' Deque(Of T) that this instance of ReverseView wraps and allows to access in the reversed order
+        ''' </summary>
+        Dim deque As Deque(Of T)
+
+        Public Sub New(ByVal que As Deque(Of T))
+            deque = que
+        End Sub
+
         ''' <summary>
         ''' Adds an object to the end of the reversed Deque(Of T).
         ''' </summary>
@@ -57,6 +60,7 @@
         Public Sub Add(ByVal item As T) Implements ICollection(Of T).Add
             deque.AddHead(item)
         End Sub
+
         ''' <summary>
         ''' Adds an element to the beggining of the reversed Deque(Of T)
         ''' </summary>
@@ -64,12 +68,14 @@
         Public Sub AddHead(ByVal item As T) Implements IDeque(Of T).AddHead
             deque.Add(item)
         End Sub
+
         ''' <summary>
         ''' Removes all elements from the Deque(Of T).
         ''' </summary> 
         Public Sub Clear() Implements ICollection(Of T).Clear
             deque.Clear()
         End Sub
+
         ''' <summary>
         ''' Determines whether an element is in the Deque(Of T).
         ''' </summary>
@@ -78,6 +84,7 @@
         Public Function Contains(ByVal item As T) As Boolean Implements ICollection(Of T).Contains
             Return deque.Contains(item)
         End Function
+
         ''' <summary>
         ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, starting at the specified index of the target array.
         ''' </summary> 
@@ -99,7 +106,6 @@
         ''' <returns>e zero-based index of the first occurrence of item within the entire Deque(Of T), if found; otherwise, -1.</returns>
         Public Function IndexOf(ByVal item As T) As Integer Implements IList(Of T).IndexOf
             For index = 0 To Count - 1
-
                 If Equals(Me(index), item) Then
                     Return index
                 End If
@@ -107,6 +113,7 @@
 
             Return -1
         End Function
+
         ''' <summary>
         ''' Inserts an element into the reversedDeque(Of T) at the specified index.
         ''' </summary>
@@ -115,11 +122,11 @@
             If index = 0 Then
                 'I need to add it to end of actual list
                 deque.Add(item)
-                Return
             Else
                 deque.Insert(Count - index, item)
             End If
         End Sub
+
         ''' <summary>
         ''' Removes the first occurrence of a specific object from the Deque(Of T).
         ''' </summary>
@@ -127,12 +134,14 @@
         Public Function Remove(ByVal item As T) As Boolean Implements ICollection(Of T).Remove
             Return deque.Remove(item)
         End Function
+
         ''' <summary>
         ''' Removes the element at the specified index of the Deque(Of T).
         ''' </summary>
         Public Sub RemoveAt(ByVal index As Integer) Implements IList(Of T).RemoveAt
             deque.RemoveAt(Count - 1 - index)
         End Sub
+
         ''' <summary>
         ''' returns the firts element of the reversed Deque(Of T) and removes it from Deque(Of T)
         ''' </summary>
@@ -140,6 +149,7 @@
         Public Function RemoveHead() As T Implements IDeque(Of T).RemoveHead
             Return deque.RemoveTail()
         End Function
+
         ''' <summary>
         ''' returns the last element of the reversed Deque(Of T) and removes it from Deque(Of T)
         ''' </summary>
@@ -147,6 +157,7 @@
         Public Function RemoveTail() As T Implements IDeque(Of T).RemoveTail
             Return deque.RemoveHead()
         End Function
+
         ''' <summary>
         ''' returns 
         ''' </summary>
@@ -154,67 +165,5 @@
         Public Function Reverse() As IDeque(Of T) Implements IDeque(Of T).Reverse
             Return deque
         End Function
-
-        Private Class ReversedEnumerator(Of S)
-            Implements IEnumerator(Of S)
-
-            Private Property curIndex As Integer
-            ''' <summary>
-            ''' version of Deque(Of T) this Enumerator is enumerating from the moment this enumerator has been created
-            ''' </summary> 
-            Private Property version As Long
-            ''' <summary>
-            ''' Deque(Of T) this enumerator is enumerating
-            ''' </summary>
-            Private Property Que As Deque(Of S)
-
-            Public Sub New(ByVal que As Deque(Of S), ByVal version As Long)
-                Me.version = version
-                Me.Que = que
-                'initialize with que.Count to ensure that InvalidOperationException is thrown when Current is called befor the first call of MoveNext
-                curIndex = que.Count
-            End Sub
-
-            Public ReadOnly Property p_Current As S Implements IEnumerator(Of S).Current
-                Get
-
-                    If curIndex < 0 OrElse curIndex >= Que.Count OrElse version <> Que.version Then
-                        Throw New InvalidOperationException()
-                    Else
-                        Return Que(curIndex)
-                    End If
-                End Get
-            End Property
-
-            Private ReadOnly Property Current As Object Implements IEnumerator.Current
-                Get
-                    Return p_Current
-                End Get
-            End Property
-
-            Public Sub Dispose() Implements IDisposable.Dispose
-                Que = Nothing
-                curIndex = Nothing
-                version = Nothing
-            End Sub
-
-            Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
-                If version <> Que.version Then
-                    Throw New InvalidOperationException()
-                End If
-
-                curIndex -= 1
-
-                If curIndex < 0 Then
-                    Return False
-                End If
-
-                Return True
-            End Function
-
-            Public Sub Reset() Implements IEnumerator.Reset
-                curIndex = Que.Count - 1
-            End Sub
-        End Class
     End Class
 End Namespace

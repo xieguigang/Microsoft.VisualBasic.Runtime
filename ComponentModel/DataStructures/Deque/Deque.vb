@@ -4,8 +4,7 @@
     ''' Double ended queue implementation
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Deque(Of T)
-        Implements IDeque(Of T)
+    Public Class Deque(Of T) : Implements IDeque(Of T)
 
         ''' <summary>
         ''' actuall data of this Deque(Of T)
@@ -189,7 +188,7 @@
         ''' </summary>
         ''' <returns></returns> 
         Public Function Reverse() As IDeque(Of T) Implements IDeque(Of T).Reverse
-            Return New ReverseView(Of T)(Me)
+            Return New ReverseQueue(Of T)(Me)
         End Function
     End Class
 End Namespace
