@@ -248,6 +248,12 @@ Namespace Parallel.Threads
             Return threads.GetJson
         End Function
 
+        Public Sub [Exit]()
+            For Each task In threads
+                Call task.Dispose()
+            Next
+        End Sub
+
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
 
@@ -256,6 +262,7 @@ Namespace Parallel.Threads
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
+                    Call [Exit]()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
