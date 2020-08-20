@@ -133,13 +133,16 @@ Namespace Parallel.Threads
             For i As Integer = 0 To threads.Length - 1
                 threads(i) = New TaskQueue(Of Long)
             Next
-
-            Call ParallelExtension.RunTask(AddressOf allocate)
         End Sub
 
         Sub New()
             Me.New(LQuerySchedule.Recommended_NUM_THREADS)
         End Sub
+
+        Public Function Start() As ThreadPool
+            Call ParallelExtension.RunTask(AddressOf allocate)
+            Return Me
+        End Function
 
         ''' <summary>
         ''' 获取当前的这个线程池对象的状态的摘要信息
