@@ -61,7 +61,11 @@ Namespace ApplicationServices.DynamicInterop
         <MarshalAs(UnmanagedType.LPStr)> ByVal lpProcName As String) As IntPtr
         End Function
 
-        Public Const MaxPathLength As Integer = 248 'MaxPath is 248. MaxFileName is 260.
+        ''' <summary>
+        ''' MaxPath is 248. 
+        ''' </summary>
+        Public Const MaxPathLength As Integer = 248
+        Public Const MaxFileName As Integer = 260
 
         <DllImport("kernel32.dll", CharSet:=CharSet.Auto)>
         Public Function GetShortPathName(
