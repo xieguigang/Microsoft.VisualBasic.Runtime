@@ -1,11 +1,11 @@
-﻿Imports System
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Runtime.ConstrainedExecution
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 Imports System.Text
 
 Namespace ApplicationServices.DynamicInterop
+
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
     Friend Class WindowsLibraryLoader
         Implements IDynamicLibraryLoader
