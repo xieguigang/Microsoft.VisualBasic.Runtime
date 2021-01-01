@@ -56,6 +56,13 @@ Namespace Emit.CodeDOM_VBC
     Public Module VBC
 
         ''' <summary>
+        ''' Get the referenced dll list of current running ``*.exe`` program.
+        ''' (获取得到当前的这个所运行的应用程序所引用的dll文件列表)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
+
+        ''' <summary>
         ''' Construct of the ``vbc.exe`` compiler parameters <see cref="CompilerParameters"/>.
         ''' </summary>
         ''' <param name="ref"></param>
@@ -83,7 +90,7 @@ Namespace Emit.CodeDOM_VBC
         End Function
 
         ''' <summary>
-        ''' <see cref="App.References"/>
+        ''' <see cref="References"/>
         ''' </summary>
         ''' <param name="SDK$"></param>
         ''' <param name="dll"></param>
