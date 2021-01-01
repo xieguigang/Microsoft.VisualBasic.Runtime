@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::392e3ddd3233c9af8fca7a47ff882ad8, Microsoft.VisualBasic.Core\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::c22bffca1ea42371e306387a2c1426c3, Microsoft.VisualBasic.Core\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: AlphaNumericTable, Nonprintings, Symbols
     ' 
-    '         Function: IsASCIIString, IsNonPrinting, ReplaceQuot, TrimNonPrintings
+    '         Function: IsAsciiChar, IsASCIIString, IsNonPrinting, ReplaceQuot, TrimNonPrintings
     '         Class [Byte]
     ' 
     '             Function: GetASCIISymbols
@@ -298,7 +298,7 @@ Namespace Text
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsNonPrinting(b As Byte) As Boolean
-            Return b Like nonPrintingBytes
+            Return b = 0 OrElse b Like nonPrintingBytes
         End Function
 
         ''' <summary>
@@ -321,6 +321,11 @@ Namespace Text
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsASCIIString(str As String) As Boolean
             Return Not str.Any(Function(c) Asc(c) > 128)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsAsciiChar(c As Char) As Boolean
+            Return AscW(c) > 0 AndAlso AscW(c) < 128
         End Function
 
         ''' <summary>

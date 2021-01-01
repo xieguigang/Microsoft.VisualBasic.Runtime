@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::413025d5bebef4b2c5d6423ed3e4ad28, Microsoft.VisualBasic.Core\Text\Xml\Models\ListOf.vb"
+﻿#Region "Microsoft.VisualBasic::0a93e8c426a751bd826d2213e025127f, Microsoft.VisualBasic.Core\Text\Xml\Models\ListOf.vb"
 
     ' Author:
     ' 
@@ -78,6 +78,9 @@ Namespace Text.Xml.Models
         ''' 在这个列表之中的元素数量的长度
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个属性值会在进行XML序列化的时候自动生成，无需设置
+        ''' </remarks>
         <XmlAttribute> Public Property size As Integer
             Get
                 Return getSize()
@@ -136,7 +139,11 @@ Namespace Text.Xml.Models
         End Function
 
         Protected Overrides Function getCollection() As IEnumerable(Of T)
-            Return items
+            If items Is Nothing Then
+                Return {}
+            Else
+                Return items
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

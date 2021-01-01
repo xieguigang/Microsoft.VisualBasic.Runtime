@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::608abffde3f61be9ee3d4904c843e0f5, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\PolarPoint.vb"
+﻿#Region "Microsoft.VisualBasic::888f79c5299ff5047041e4cd43dc1dd2, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\PolarPoint.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '         Properties: Angle, Point, Radius
     ' 
-    '         Function: ToString
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString, Translate
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,12 +61,20 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         Public Property Angle As Single
 
+        Sub New(Optional radius As Double = 0, Optional angle As Double = 0)
+            Me.Angle = angle
+            Me.Radius = radius
+        End Sub
+
 #If NET_48 Then
 
         ''' <summary>
         ''' 与这个极坐标点等价的笛卡尔直角坐标系上面的坐标点
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个是默认以[0,0]为圆心进行计算的
+        ''' </remarks>
         Public ReadOnly Property Point As PointF
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -73,6 +82,10 @@ Namespace Imaging.Math2D
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(center As PointF, Optional fromDegree As Boolean = True) As PointF
+            Return (Radius, Angle).ToCartesianPoint(fromDegree, offsetX:=center.X, offsetY:=center.Y)
+        End Function
 #End If
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::f8fb9d8c3f392482d3d4b812712e6791, Microsoft.VisualBasic.Core\Extensions\Collection\DelimiterLocation.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,32 @@
 
     ' Summaries:
 
-    '     Class Method
+    ' Enum DelimiterLocation
     ' 
-    '         Properties: [Module], [Namespace], Method
+    '     NextFirst, NotIncludes, PreviousLast
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '  
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
-
-    Public Class Method
-
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
-
-        Sub New()
-        End Sub
-
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
-
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
-        End Function
-    End Class
-End Namespace
+''' <summary>
+''' 分隔符对象在分块之中的位置
+''' </summary>
+Public Enum DelimiterLocation As Integer
+    ''' <summary>
+    ''' 上一个分块的最末尾
+    ''' </summary>
+    PreviousLast
+    ''' <summary>
+    ''' 不会再任何分块之中包含有分隔符
+    ''' </summary>
+    NotIncludes
+    ''' <summary>
+    ''' 包含在下一个分块之中的最开始的位置
+    ''' </summary>
+    NextFirst
+End Enum

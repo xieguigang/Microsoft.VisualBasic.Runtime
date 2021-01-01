@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::248fa61a5001d1effe5a6cf2906fbf92, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a1068aea370c4149d1447d03a79ee8d3, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -230,15 +230,22 @@ Public Module PathExtensions
     ''' **当前的**(不是递归的搜索所有的子文件夹)文件夹之中的
     ''' 所有的符合条件的文件路径
     ''' </summary>
-    ''' <param name="DIR">文件夹路径</param>
+    ''' <param name="dir">文件夹路径</param>
     ''' <param name="keyword">
     ''' Default is ``*.*`` for match any kind of files.
     ''' (文件名进行匹配的关键词)
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function EnumerateFiles(DIR$, ParamArray keyword$()) As IEnumerable(Of String)
-        Return FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword Or allKinds)
+    Public Function EnumerateFiles(dir$, ParamArray keyword$()) As IEnumerable(Of String)
+        Const top = FileIO.SearchOption.SearchTopLevelOnly
+
+        If Not dir.DirectoryExists Then
+            Call $"Directory {dir} is not valid on your file system!".Warning
+            Return New String() {}
+        Else
+            Return FileIO.FileSystem.GetFiles(dir, top, keyword Or allKinds)
+        End If
     End Function
 
     ''' <summary>
@@ -248,13 +255,15 @@ Public Module PathExtensions
     ''' 
     ''' 的简化拓展函数模式
     ''' </summary>
-    ''' <param name="DIR$"></param>
-    ''' <param name="pattern$"></param>
+    ''' <param name="directory"></param>
+    ''' <param name="pattern">
+    ''' 如果匹配的模式字符串是带有文件后缀名的，那么文件夹之中所有没有后缀名的文件都可能会被忽略掉
+    ''' </param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ListFiles(DIR$, Optional pattern$ = "*.*") As IEnumerable(Of String)
-        Return ls - l - r - pattern <= DIR
+    Public Function ListFiles(directory$, Optional pattern$ = "*.*") As IEnumerable(Of String)
+        Return ls - l - r - pattern <= directory
     End Function
 
     ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33ebb6c9b00bab86580cfcbf302ba6ca, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::20bebfc7c07ed4a5dabc476dd86d3b2a, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,6 @@
     '     Module GeometryMath
     ' 
     '         Function: (+2 Overloads) angleBetween2Lines, GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
-    ' 
-    '     Enum QuadrantRegions
-    ' 
-    '         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
-    '         XRight, YBottom, YTop
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum Intersections
-    ' 
-    '         Containment, Intersection, None, Tangent
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -385,55 +368,4 @@ Namespace Imaging.Math2D
             End If
         End Function
     End Module
-
-    ''' <summary>
-    ''' 请注意，视图上面的象限的位置和计算机之中的象限是反过来的
-    ''' </summary>
-    Public Enum QuadrantRegions
-
-        ''' <summary>
-        ''' 重叠在一起
-        ''' </summary>
-        Origin = 0
-
-        ''' <summary>
-        ''' quadrant 1 = 0,90 ~ -90,0 ~ 270,360
-        ''' </summary>
-        RightTop
-        YTop
-        ''' <summary>
-        ''' quadrant 2 = 90,180 ~ -180,-90 ~ 180,270
-        ''' </summary>
-        LeftTop
-        XLeft
-        ''' <summary>
-        ''' quadrant 3 = 180,270 ~ -270,-180 ~ 90,180 
-        ''' </summary>
-        LeftBottom
-        YBottom
-        ''' <summary>
-        ''' quadrant 4 = 270,360 ~ -270, -360 ~ 0, 90
-        ''' </summary>
-        RightBottom
-        XRight
-    End Enum
-
-    ''' <summary>
-    ''' 几何体之间的关系类型
-    ''' </summary>
-    Public Enum Intersections As Byte
-        None
-        ''' <summary>
-        ''' 正切
-        ''' </summary>
-        Tangent
-        ''' <summary>
-        ''' 相交
-        ''' </summary>
-        Intersection
-        ''' <summary>
-        ''' 包围
-        ''' </summary>
-        Containment
-    End Enum
 End Namespace

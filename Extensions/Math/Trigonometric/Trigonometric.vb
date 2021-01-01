@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd597c54ce2ba57bb6587bcf84f77dcb, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
+﻿#Region "Microsoft.VisualBasic::beeb87a13df90fdfa5891355c33e0949, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
 
     ' Author:
     ' 
@@ -61,8 +61,11 @@ Namespace Math
         ''' <param name="polar">(半径, 角度)</param>
         ''' <param name="fromDegree">alpha角度参数是否是度为单位，默认是真，即函数会在这里自动转换为弧度</param>
         ''' <returns></returns>
-        <Extension> Public Function ToCartesianPoint(polar As (r#, alpha!), Optional fromDegree As Boolean = True) As PointF
-            Dim alpha = polar.alpha
+        <Extension> Public Function ToCartesianPoint(polar As (r#, alpha!),
+                                                     Optional fromDegree As Boolean = True,
+                                                     Optional offsetX As Double = 0,
+                                                     Optional offsetY As Double = 0) As PointF
+            Dim alpha As Single = polar.alpha
 
             If fromDegree Then
                 alpha = alpha * stdNum.PI / 180
@@ -71,7 +74,7 @@ Namespace Math
             Dim x = polar.r * stdNum.Cos(alpha)
             Dim y = polar.r * stdNum.Sin(alpha)
 
-            Return New PointF(x, y)
+            Return New PointF(x + offsetX, y + offsetY)
         End Function
 
 #End If

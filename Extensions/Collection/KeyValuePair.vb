@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9699d21e82d3ed1acc82b5192aa94452, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::c3ab04f2350b23d320207d26cc97e796, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -106,12 +106,24 @@ Namespace ComponentModel.Collection
         End Function
 #End If
 
+        ''' <summary>
+        ''' transform the hash key string to lower case characters
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="table"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToLower(Of T)(table As Dictionary(Of String, T)) As Dictionary(Of String, T)
             Return table.ToDictionary(Function(k) k.Key.ToLower, Function(k) k.Value)
         End Function
 
+        ''' <summary>
+        ''' transform the hash key string to upper case characters
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="table"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToUpper(Of T)(table As Dictionary(Of String, T)) As Dictionary(Of String, T)
@@ -129,11 +141,13 @@ Namespace ComponentModel.Collection
         ''' <returns></returns>
         <Extension>
         Public Function ComputeIfAbsent(Of K, V)(table As IDictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
-            If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
-                table(key) = lazyValue(key)
-            End If
+            SyncLock table
+                If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
+                    table(key) = lazyValue(key)
+                End If
 
-            Return table(key)
+                Return table(key)
+            End SyncLock
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -443,11 +457,12 @@ Namespace ComponentModel.Collection
         End Function
 
         ''' <summary>
-        ''' gets all <see cref="INamedValue.Key"/> values
+        ''' gets all <see cref="INamedValue.Key"/> values.
+        ''' (按照顺序得到输入的序列之中的<see cref="INamedValue.Key"/>属性值)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="distinct"></param>
+        ''' <param name="distinct">是否还进行去重操作？默认不做去重</param>
         ''' <returns></returns>
         <Extension>
         Public Function Keys(Of T As INamedValue)(source As IEnumerable(Of T), Optional distinct As Boolean = False) As List(Of String)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f9d2981aacef777585e0f35232615eb, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::ca36726d5d4d7e272bb79c5e53f2d52a, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -521,11 +521,19 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <Extension> Public Function SD(values As IEnumerable(Of Double)) As Double
+        <Extension>
+        Public Function SD(values As IEnumerable(Of Double), Optional isSample As Boolean = False) As Double
             Dim data#() = values.ToArray
             Dim avg# = data.Average
-            Dim sumValue# = Aggregate n As Double In data Into Sum((n - avg) ^ 2)
-            Return stdNum.Sqrt(sumValue / data.Length)
+            Dim sumValue# = Aggregate n As Double
+                            In data
+                            Into Sum((n - avg) ^ 2)
+
+            If isSample Then
+                Return stdNum.Sqrt(sumValue / (data.Length - 1))
+            Else
+                Return stdNum.Sqrt(sumValue / data.Length)
+            End If
         End Function
 
         ''' <summary>

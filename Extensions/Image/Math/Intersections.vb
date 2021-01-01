@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::7cbe2116c4c0a85a4d59fee4610999e9, Microsoft.VisualBasic.Core\Extensions\Image\Math\Intersections.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,37 @@
 
     ' Summaries:
 
-    '     Class Method
+    '     Enum Intersections
     ' 
-    '         Properties: [Module], [Namespace], Method
+    '         Containment, Intersection, None, Tangent
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '  
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
+Namespace Imaging.Math2D
 
-    Public Class Method
-
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
-
-        Sub New()
-        End Sub
-
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
-
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
-        End Function
-    End Class
+    ''' <summary>
+    ''' 几何体之间的关系类型
+    ''' </summary>
+    Public Enum Intersections As Byte
+        None
+        ''' <summary>
+        ''' 正切
+        ''' </summary>
+        Tangent
+        ''' <summary>
+        ''' 相交
+        ''' </summary>
+        Intersection
+        ''' <summary>
+        ''' 包围
+        ''' </summary>
+        Containment
+    End Enum
 End Namespace

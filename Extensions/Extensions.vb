@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7638a2d3e63988809ba7d9459755e848, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::73723afd1dbacd3cfbc032fff893babb, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -44,9 +44,9 @@
     '               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
     '               Second, SelectFile, SeqRandom, (+3 Overloads) Sequence, (+2 Overloads) SetValue
     '               (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice, (+2 Overloads) SplitMV
-    '               StdError, ToArray, ToBoolean, ToDictionary, ToNormalizedPathString
-    '               ToString, ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount
-    '               Unlist, WriteAddress
+    '               ToArray, ToBoolean, ToDictionary, ToNormalizedPathString, ToString
+    '               ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount, Unlist
+    '               WriteAddress
     ' 
     '     Sub: Add, FillBlank, Removes, (+2 Overloads) Swap, SwapItem
     ' 
@@ -937,21 +937,6 @@ Public Module Extensions
 #End If
 
     ''' <summary>
-    ''' 求取该数据集的标准差
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("StdError")>
-    <Extension> Public Function StdError(data As IEnumerable(Of Double)) As Double
-        Dim Average As Double = data.Average
-        Dim Sum = (From n As Double In data Select (n - Average) ^ 2).Sum
-        Sum /= data.Count
-        Return Global.System.Math.Sqrt(Sum)
-    End Function
-
-    ''' <summary>
     ''' 函数只返回有重复的数据
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -1361,12 +1346,6 @@ Public Module Extensions
         End Using
     End Sub
 #End If
-
-    ''' <summary>
-    ''' Nothing
-    ''' </summary>
-    Friend Const null = Nothing
-    Public Const void As Object = Nothing
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::7463f59d14794f842f0e5e46595536c6, Microsoft.VisualBasic.Core\Extensions\Image\Math\QuadrantRegions.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,51 @@
 
     ' Summaries:
 
-    '     Class Method
+    '     Enum QuadrantRegions
     ' 
-    '         Properties: [Module], [Namespace], Method
+    '         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
+    '         XRight, YBottom, YTop
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '  
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
+Namespace Imaging.Math2D
 
-    Public Class Method
+    ''' <summary>
+    ''' 请注意，视图上面的象限的位置和计算机之中的象限是反过来的
+    ''' </summary>
+    Public Enum QuadrantRegions
 
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
+        ''' <summary>
+        ''' 重叠在一起
+        ''' </summary>
+        Origin = 0
 
-        Sub New()
-        End Sub
-
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
-
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
-        End Function
-    End Class
+        ''' <summary>
+        ''' quadrant 1 = 0,90 ~ -90,0 ~ 270,360
+        ''' </summary>
+        RightTop
+        YTop
+        ''' <summary>
+        ''' quadrant 2 = 90,180 ~ -180,-90 ~ 180,270
+        ''' </summary>
+        LeftTop
+        XLeft
+        ''' <summary>
+        ''' quadrant 3 = 180,270 ~ -270,-180 ~ 90,180 
+        ''' </summary>
+        LeftBottom
+        YBottom
+        ''' <summary>
+        ''' quadrant 4 = 270,360 ~ -270, -360 ~ 0, 90
+        ''' </summary>
+        RightBottom
+        XRight
+    End Enum
 End Namespace

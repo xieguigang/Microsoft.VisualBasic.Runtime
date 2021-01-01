@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff6f78cfe9ee33dc066d788c6054e051, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a00aa7623aa248d4612e7a658c77639a, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -170,12 +170,26 @@ Namespace Imaging
             Return path
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="fill"></param>
+        ''' <param name="val">a value in range ``[0, 1]``</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Opacity(fill As Color, val#) As Color
             Return Color.FromArgb(val * 255, baseColor:=fill)
         End Function
 
+        ''' <summary>
+        ''' adjust the color opacity value of the <see cref="SolidBrush"/>
+        ''' </summary>
+        ''' <param name="fill"></param>
+        ''' <param name="val">
+        ''' the alpha value for <see cref="Opacity"/>, value in range ``[0, 1]``.
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function Opacity(fill As Brush, val#) As Brush
             If TypeOf fill Is SolidBrush Then
@@ -195,20 +209,25 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="res$"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetBrush(res$) As Brush
+        <Extension>
+        Public Function GetBrush(res As String) As Brush
             Dim bgColor As Color = res.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then
                 Return New SolidBrush(bgColor)
+            End If
+
+            Dim img As Image
+
+            If res.FileExists Then
+                img = LoadImage(path:=res$)
             Else
-                Dim img As Image
+                img = Base64Codec.GetImage(res$)
+            End If
 
-                If res.FileExists Then
-                    img = LoadImage(path:=res$)
-                Else
-                    img = Base64Codec.GetImage(res$)
-                End If
-
+            If img Is Nothing Then
+                Throw New InvalidCastException($"unable to cast expression '{res}' to any brush object!")
+            Else
                 Return New TextureBrush(img)
             End If
         End Function

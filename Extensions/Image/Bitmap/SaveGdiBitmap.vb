@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::1b371e321a291f68cf2a6122ea0811b7, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\SaveGdiBitmap.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,27 @@
 
     ' Summaries:
 
-    '     Class Method
+    '     Interface SaveGdiBitmap
     ' 
-    '         Properties: [Module], [Namespace], Method
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Function: Save
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
+Imports System.Drawing
+Imports System.Drawing.Imaging
 
-    Public Class Method
+Namespace Imaging.BitmapImage
 
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
+    Public Interface SaveGdiBitmap
 
-        Sub New()
-        End Sub
-
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
-
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
-        End Function
-    End Class
+        ''' <summary>
+        ''' <see cref="Image.Save"/>
+        ''' </summary>
+        ''' <param name="stream"></param>
+        ''' <param name="format"></param>
+        Function Save(stream As IO.Stream, format As ImageFormat) As Boolean
+    End Interface
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::9469df824995e9fade5353fd0936ea11, Microsoft.VisualBasic.Core\CommandLine\POSIX\POSIXParser.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,43 @@
 
     ' Summaries:
 
-    '     Class Method
+    '     Module POSIXParser
     ' 
-    '         Properties: [Module], [Namespace], Method
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Function: JoinTokens
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
+Imports Microsoft.VisualBasic.CommandLine.Parsers
 
-    Public Class Method
+Namespace CommandLine.POSIX
 
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
+    Module POSIXParser
 
-        Sub New()
-        End Sub
+        Public Iterator Function JoinTokens(tokens As IEnumerable(Of String)) As IEnumerable(Of String)
+            Dim continuteToken As String = Nothing
 
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
+            For Each item As String In tokens
+                If CliArgumentParsers.IsPossibleLogicFlag(item) Then
+                    ' 在这里使用nothing来和""产生的空字符串进行区分
+                    If Not continuteToken Is Nothing Then
+                        Yield continuteToken
+                        continuteToken = Nothing
+                    End If
 
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
+                    Yield item
+                ElseIf continuteToken Is Nothing Then
+                    continuteToken = item
+                Else
+                    continuteToken = $"{continuteToken} {item}"
+                End If
+            Next
 
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
+            If Not continuteToken Is Nothing Then
+                Yield continuteToken
+            End If
         End Function
-    End Class
+    End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed08d88a65a02432b9cde2a8cc1c09dd, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::bfb6d76e539ccba11eb613f5bd659a12, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ParallelExtension
     ' 
-    '         Function: AsyncTask, RunTask
+    '         Function: AsyncTask, DoEvents, RunTask
     ' 
     '         Sub: DoEvents
     ' 
@@ -82,6 +82,14 @@ Namespace Parallel
             Call Application.DoEvents()
 #End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function DoEvents(Of T)(func As Func(Of T)) As T
+            Dim result As T = func()
+            Call DoEvents()
+            Return result
+        End Function
 
         ''' <summary>
         ''' Start a new thread and then returns the background thread task handle.

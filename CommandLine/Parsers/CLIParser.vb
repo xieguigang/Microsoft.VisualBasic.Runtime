@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e3fb7ff70f094915c4b59cf2120abfd, Microsoft.VisualBasic.Core\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::c7b82975a8f2a6d5ad70781db8069798, Microsoft.VisualBasic.Core\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module CLIParser
     ' 
-    '         Function: checkKeyDuplicated, GetTokens, (+2 Overloads) TryParse
+    '         Function: checkKeyDuplicated, extract, GetTokens, (+2 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/
@@ -149,7 +149,11 @@ Namespace CommandLine.Parsers
                                  Optional duplicatedAllows As Boolean = False,
                                  Optional rawInput$ = Nothing) As CommandLine
 
+#If UNIX Then
+            Dim tokens$() = POSIX.JoinTokens(args.SafeQuery).ToArray
+#Else
             Dim tokens$() = args.SafeQuery.ToArray
+#End If
             Dim singleValue$ = ""
 
             If tokens.Length = 0 Then

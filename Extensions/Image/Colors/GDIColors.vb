@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::718a3c45eec786b08177b444a1b0b2d8, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::77bc4b31bd2042793362dac60df6be9c, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@
     '         Properties: AllDotNetPrefixColors, ChartColors
     ' 
     '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
-    '                   Darken, Equals, EuclideanDistance, Greyscale, HTMLColors
-    '                   IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten, Middle
-    '                   RGBExpression, ToColor, TranslateColor
+    '                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale
+    '                   HTMLColors, IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten
+    '                   Middle, RGBExpression, ToColor, TranslateColor
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,6 +50,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports stdNum = System.Math
@@ -307,10 +308,18 @@ Namespace Imaging
         ''' <see cref="Color.Black"/> will be return if the <paramref name="exp"/> is null or empty,
         ''' 
         ''' </returns>
-        <Extension> Public Function TranslateColor(exp$, Optional throwEx As Boolean = True) As Color
+        <Extension>
+        Public Function TranslateColor(exp$, Optional throwEx As Boolean = True) As Color
+            Static cache As New Dictionary(Of String, Color)
+
             If exp.StringEmpty Then
                 Return Color.Black
+            Else
+                Return cache.ComputeIfAbsent(exp, Function() ColorTranslatorInternal(exp, throwEx))
             End If
+        End Function
+
+        Private Function ColorTranslatorInternal(exp$, throwEx As Boolean) As Color
             If exp.First = "#"c Then
                 ' 2017-2-2
                 ' 经过测试与3mf文件之中的材质颜色定义一致，没有问题

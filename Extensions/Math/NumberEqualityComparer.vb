@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8972aae26a7b14ee5c1a162a754eeed1, Microsoft.VisualBasic.Core\Extensions\Math\NumberEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::cad92d5eeb55ae5a2249713b36b9cfa5, Microsoft.VisualBasic.Core\Extensions\Math\NumberEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -53,8 +53,16 @@ Namespace Math
     ''' </summary>
     Public Class NumberEqualityComparer : Implements IEqualityComparer(Of Double)
 
+        ''' <summary>
+        ''' the threshold value
+        ''' </summary>
+        ''' <returns></returns>
         Public Property DeltaTolerance As Double
 
+        ''' <summary>
+        ''' the threshold value
+        ''' </summary>
+        ''' <param name="tolerance"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(tolerance As Double)
             DeltaTolerance = tolerance

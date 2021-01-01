@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::f2fdd8611e3bc881462155feaba57b58, Microsoft.VisualBasic.Core\CommandLine\POSIX\POSIXArguments.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,31 @@
 
     ' Summaries:
 
-    '     Class Method
+    '     Class POSIXArguments
     ' 
-    '         Properties: [Module], [Namespace], Method
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Sub: PrintHelp
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
+Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
-    Public Class Method
+Namespace CommandLine.POSIX
 
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
+    Public Class POSIXArguments
 
-        Sub New()
+        Public Shared Sub PrintHelp(mail$, home$, help$)
+            Call New StringBuilder() _
+                .AppendLine($"Report bugs to: {mail}") _
+                .AppendLine($"pkg home page: <{home}>") _
+                .AppendLine($"General help using GNU software: <{help}>") _
+                .DoCall(Sub(str)
+                            Console.WriteLine(str.ToString)
+                        End Sub)
         End Sub
 
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
-
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
-        End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56bd5ca4833cfdd3a363502c64d34741, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::23dcf8f081d68008bc0e179d1daeb6b4, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -349,7 +349,7 @@ Public Module WebServiceUtils
             Return New NameValueCollection
         End If
 
-        Dim params$() = data.UrlDecode.Split("&"c)
+        Dim params$() = data.Split("&"c)
         Dim table = ParseUrlQueryParameters(params, toLower)
         Return table
     End Function
@@ -490,15 +490,18 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="url$"></param>
     ''' <param name="params"></param>
-    ''' <param name="Referer$"></param>
-    ''' <returns></returns>
+    ''' <param name="Referer"></param>
+    ''' <returns>
+    ''' this function will returns nothing if the http error happends.
+    ''' </returns>
     <Extension>
     Public Function POST(url$,
                          Optional params As NameValueCollection = Nothing,
                          Optional headers As Dictionary(Of String, String) = Nothing,
                          Optional Referer$ = "",
                          Optional proxy$ = Nothing,
-                         Optional contentEncoding As Encodings = Encodings.UTF8) As WebResponseResult
+                         Optional contentEncoding As Encodings = Encodings.UTF8,
+                         Optional retry As Integer = 5) As WebResponseResult
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
             .value = New NameValueCollection,
@@ -528,13 +531,30 @@ Public Module WebServiceUtils
             Call $"[POST] {url}....".__DEBUG_ECHO
 
             Dim timer As Stopwatch = Stopwatch.StartNew
-            Dim response As Byte() = request.UploadValues(url, "POST", params Or emptyBody)
-            Dim str$ = contentEncoding.CodePage.GetString(response)
+            Dim response As Byte() = Nothing
+            Dim str$
 
-            Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
+            For i As Integer = 0 To retry
+                Try
+                    response = request.UploadValues(url, "POST", params Or emptyBody)
+                    Exit For
+                Catch ex As Exception
+                    Call App.LogException(ex)
+                End Try
+            Next
+
+            If response Is Nothing Then
+                Return Nothing
+            Else
+                str = contentEncoding _
+                    .CodePage _
+                    .GetString(response)
+
+                Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
+            End If
 
             Dim rtvlHeaders As New Dictionary(Of HttpHeaderName, String)
-            Dim raw = request.ResponseHeaders
+            Dim raw As WebHeaderCollection = request.ResponseHeaders
 
             For Each key As String In raw.AllKeys
                 Call rtvlHeaders.Add(ParseHeaderName(key), raw.Get(key))

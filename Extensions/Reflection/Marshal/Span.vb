@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::fc7dc3168a2449078295907a679b11ba, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Span.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,28 @@
 
     ' Summaries:
 
-    '     Class Method
+    '     Module SpanHelper
     ' 
-    '         Properties: [Module], [Namespace], Method
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Sub: Flush
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
+Imports System.Runtime.CompilerServices
 
-    Public Class Method
+Namespace Emit.Marshal
 
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
+    <HideModuleName>
+    Public Module SpanHelper
 
-        Sub New()
+        <Extension>
+        Public Sub Flush(Of T)(src As T(), span As T(), start As Integer)
+            For i As Integer = 0 To span.Length - 1
+                src(start + i) = span(i)
+            Next
         End Sub
 
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
-
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
-        End Function
-    End Class
+    End Module
 End Namespace

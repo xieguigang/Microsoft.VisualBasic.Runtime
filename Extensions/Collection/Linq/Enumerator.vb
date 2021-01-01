@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::8ef5e07986e9065218497a65eeada9e2, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumerator.vb"
 
     ' Author:
     ' 
@@ -31,39 +31,31 @@
 
     ' Summaries:
 
-    '     Class Method
+    '     Class Enumerator
     ' 
-    '         Properties: [Module], [Namespace], Method
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ApplicationServices.Debugging.Diagnostics
+Imports System.Runtime.CompilerServices
 
-    Public Class Method
+Namespace Linq
 
-        Public Property [Namespace] As String
-        Public Property [Module] As String
-        Public Property Method As String
+    Friend Class Enumerator(Of T) : Implements IEnumerable(Of T)
 
-        Sub New()
-        End Sub
+        Public Enumeration As Enumeration(Of T)
 
-        Sub New(s As String)
-            Dim t = s.Split("."c).AsList
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            Return Enumeration.GenericEnumerator
+        End Function
 
-            Method = t(-1)
-            [Module] = t(-2)
-            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{[Namespace]}.{[Module]}.{Method}"
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Return Enumeration.GetEnumerator
         End Function
     End Class
 End Namespace
