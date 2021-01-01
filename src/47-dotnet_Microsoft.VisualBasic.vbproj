@@ -1809,8 +1809,6 @@
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
     <Compile Include="ApplicationServices\Utils.vb" />
-    <Compile Include="Extensions\CodeDOM\CodeHelper.vb" />
-    <Compile Include="Extensions\CodeDOM\References.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
@@ -2066,9 +2064,6 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\xConsole.vb" />
     <Compile Include="Language\Language\UnixBash\Cowsay.vb" />
     <Compile Include="ApplicationServices\App.vb" />
-    <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
-    <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
-    <Compile Include="Extensions\CodeDOM\VBC.vb" />
     <Compile Include="ComponentModel\DataSource\Property\Controls.vb" />
     <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
