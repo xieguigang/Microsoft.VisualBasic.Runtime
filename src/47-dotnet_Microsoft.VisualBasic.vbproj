@@ -92,7 +92,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1,NET_48=True</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -1809,8 +1809,6 @@
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
     <Compile Include="ApplicationServices\Utils.vb" />
-    <Compile Include="Extensions\CodeDOM\CodeHelper.vb" />
-    <Compile Include="Extensions\CodeDOM\References.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
@@ -2056,9 +2054,6 @@
     <Compile Include="ApplicationServices\Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\TaskManager.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\PriorityClass.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\ChromeUIRender.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\Extensions.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\VistaSecurity.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\Win32API.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\Win32File.vb" />
     <None Include="app.config" />
@@ -2066,9 +2061,6 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\xConsole.vb" />
     <Compile Include="Language\Language\UnixBash\Cowsay.vb" />
     <Compile Include="ApplicationServices\App.vb" />
-    <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
-    <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
-    <Compile Include="Extensions\CodeDOM\VBC.vb" />
     <Compile Include="ComponentModel\DataSource\Property\Controls.vb" />
     <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
@@ -2177,8 +2169,6 @@
     <Compile Include="Net\DomainParser.vb" />
     <Compile Include="Net\PingUtility.vb" />
     <Compile Include="ApplicationServices\Tools\OSVersionInfo.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
     <Compile Include="ApplicationServices\Tools\Resources.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\StringResources.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
@@ -2317,7 +2307,6 @@
     <None Include="Resources\scripts\bashRunner.sh" />
     <None Include="Resources\scripts\help.sh" />
     <Content Include="Serialization\JSON\Formatter\license.txt" />
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

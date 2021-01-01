@@ -77,7 +77,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Default
@@ -92,7 +91,6 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 '                   _ooOoo_
 '                  o8888888o
@@ -160,12 +158,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property IsConsoleApp As Boolean = (Not Console.IsErrorRedirected) OrElse (Not Console.IsOutputRedirected)
-    ''' <summary>
-    ''' Get the referenced dll list of current running ``*.exe`` program.
-    ''' (获取得到当前的这个所运行的应用程序所引用的dll文件列表)
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
+
     ''' <summary>
     ''' Gets a path name pointing to the Desktop directory.
     ''' </summary>
@@ -1538,12 +1531,4 @@ Public Module App
         Call App.__GCThread.Stop()
     End Sub
 #End Region
-
-    ''' <summary>
-    ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
-    ''' </summary>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub RunAsAdmin(Optional args$ = "")
-        Call RestartElevated(args)
-    End Sub
 End Module
