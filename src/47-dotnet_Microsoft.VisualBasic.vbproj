@@ -2054,9 +2054,6 @@
     <Compile Include="ApplicationServices\Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\TaskManager.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\PriorityClass.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\ChromeUIRender.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\Extensions.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\VistaSecurity.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\Win32API.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\Win32File.vb" />
     <None Include="app.config" />
@@ -2172,8 +2169,6 @@
     <Compile Include="Net\DomainParser.vb" />
     <Compile Include="Net\PingUtility.vb" />
     <Compile Include="ApplicationServices\Tools\OSVersionInfo.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />
-    <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
     <Compile Include="ApplicationServices\Tools\Resources.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\StringResources.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
