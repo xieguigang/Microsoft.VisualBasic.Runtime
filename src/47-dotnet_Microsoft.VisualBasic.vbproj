@@ -2062,7 +2062,6 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\xConsole.vb" />
     <Compile Include="Language\Language\UnixBash\Cowsay.vb" />
     <Compile Include="ApplicationServices\App.vb" />
-    <Compile Include="ComponentModel\DataSource\Property\Controls.vb" />
     <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
     <Compile Include="Extensions\Collection\KeyValuePair.vb" />
