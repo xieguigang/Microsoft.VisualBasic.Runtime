@@ -407,7 +407,7 @@ Public Module App
                 .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
                 .FullName _
                 .Replace("/", "\")
-            App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
+            App.Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
             App.Info = ApplicationInfoUtils.CurrentExe()
             App.AssemblyName = BaseName(App.ExecutablePath)

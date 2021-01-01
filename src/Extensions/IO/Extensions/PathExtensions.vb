@@ -577,7 +577,7 @@ Public Module PathExtensions
     <Extension>
     Public Function FileMove(source$, target$) As Boolean
         Try
-            Call My.Computer.FileSystem.MoveFile(source, target)
+            Call File.Move(source, target)
             Return True
         Catch ex As Exception
             ex = New Exception("source: " & source, ex)

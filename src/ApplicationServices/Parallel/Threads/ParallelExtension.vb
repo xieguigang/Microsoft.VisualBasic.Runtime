@@ -78,8 +78,10 @@ Namespace Parallel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Sub DoEvents()
+#If netcore5 = 0 Then
 #If UNIX = False Then
             Call Application.DoEvents()
+#End If
 #End If
         End Sub
 
