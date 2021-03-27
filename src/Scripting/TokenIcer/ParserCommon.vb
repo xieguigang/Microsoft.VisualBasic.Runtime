@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::0c1951e4214c058cf64c4091e94a8136, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\ParserCommon.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ParserCommon
-    ' 
-    '         Function: [As], [CType], [TryCast], GetCodeComment, GetTokens
-    '                   (+2 Overloads) StartEscaping, TokenParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ParserCommon
+' 
+'         Function: [As], [CType], [TryCast], GetCodeComment, GetTokens
+'                   (+2 Overloads) StartEscaping, TokenParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -101,46 +101,6 @@ Namespace Scripting.TokenIcer
             Return Nothing
         End Function
 
-        <Extension>
-        Public Function GetTokens(Of Tokens As IComparable)(parser As TokenParser(Of Tokens), expr As String) As Token(Of Tokens)()
-            Dim lstToken As New List(Of Token(Of Tokens))
-            Dim tmp As New Value(Of Token(Of Tokens))
-
-            parser.InputString = expr
-            Do While Not (tmp = parser.GetToken) Is Nothing
-                Call lstToken.Add(+tmp)
-            Loop
-
-            Return lstToken.ToArray
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <typeparam name="Tokens"></typeparam>
-        ''' <param name="parser"></param>
-        ''' <param name="expr">表达式字符串</param>
-        ''' <param name="stackT"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function TokenParser(Of Tokens As IComparable)(parser As TokenParser(Of Tokens),
-                                               expr$,
-                                               stackT As StackTokens(Of Tokens)) As Func(Of Tokens)
-
-            Dim lstToken As Token(Of Tokens)() = parser.GetTokens(expr)
-            Dim whiteSpace As Tokens = stackT.WhiteSpace
-            Dim source As Token(Of Tokens)() = LinqAPI.Exec(Of Token(Of Tokens)) <=
- _
-                From x As Token(Of Tokens)
-                In lstToken
-                Where Not stackT.Equals(x.name, whiteSpace)
-                Select x
-
-            Dim func As Func(Of Tokens) =
-                StackParser.Parsing(Of Tokens)(source, stackT)
-            Return func
-        End Function
-
         ''' <summary>
         ''' Dynamics casting the token value expression as target type object.
         ''' </summary>
@@ -148,8 +108,8 @@ Namespace Scripting.TokenIcer
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As Token(Of Tokens)) As T
-            Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.Value)
+        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As CodeToken(Of Tokens)) As T
+            Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.text)
             Return obj
         End Function
 
@@ -160,8 +120,8 @@ Namespace Scripting.TokenIcer
         ''' <param name="x"></param>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        <Extension> Public Function [CType](Of Tokens As IComparable)(x As Token(Of Tokens), type As Type) As Object
-            Dim obj As Object = InputHandler.CTypeDynamic(x.Value, type)
+        <Extension> Public Function [CType](Of Tokens As IComparable)(x As CodeToken(Of Tokens), type As Type) As Object
+            Dim obj As Object = InputHandler.CTypeDynamic(x.text, type)
             Return obj
         End Function
 
@@ -171,14 +131,14 @@ Namespace Scripting.TokenIcer
         ''' <typeparam name="Tokens"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function [TryCast](Of Tokens As IComparable)(x As Token(Of Tokens)) As Object
+        <Extension> Public Function [TryCast](Of Tokens As IComparable)(x As CodeToken(Of Tokens)) As Object
             Dim typeName As String = Scripting.ToString(x.name)
             Dim type As New Value(Of Type)
 
             If type = Scripting.GetType(typeName, False) Is Nothing Then
-                Return x.Value
+                Return x.text
             Else
-                Return CTypeDynamic(x.Value, +type)
+                Return CTypeDynamic(x.text, +type)
             End If
         End Function
     End Module
