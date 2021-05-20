@@ -71,6 +71,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+<<<<<<< HEAD:My Project/Resources.Designer.vb
+=======
         '''  查找类似 ?&lt;html&gt;
         '''&lt;head&gt;
         '''&lt;title&gt;The Code Project Open License (CPOL)&lt;/title&gt;
@@ -114,6 +116,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+>>>>>>> 129e55ba03960a32b711bedd72751caa62edafaf:src/My Project/Resources.Designer.vb
         '''  查找 System.Byte[] 类型的本地化资源。
         '''</summary>
         Friend ReadOnly Property help() As Byte()
@@ -124,6 +127,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+<<<<<<< HEAD:My Project/Resources.Designer.vb
+=======
         '''  查找类似 This program is free software: you can redistribute it and/or modify
         '''it under the terms of the GNU General Public License as published by
         '''the Free Software Foundation, either version 3 of the License, or
@@ -159,6 +164,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+>>>>>>> 129e55ba03960a32b711bedd72751caa62edafaf:src/My Project/Resources.Designer.vb
         '''  查找 System.Byte[] 类型的本地化资源。
         '''</summary>
         Friend ReadOnly Property runMono() As Byte()
