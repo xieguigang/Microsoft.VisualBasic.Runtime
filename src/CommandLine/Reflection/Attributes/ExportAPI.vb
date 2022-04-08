@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5951f352564f26c5da0f962913f208b, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::2d04cc804323531a4023f6eaeb89e1ea, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 20
+    ' Comment Lines: 42
+    '   Blank Lines: 6
+    '     File Size: 2.69 KB
+
 
     '     Class ExportAPIAttribute
     ' 
@@ -87,11 +97,18 @@ Namespace CommandLine.Reflection
         <Obsolete> Public Property Example As String Implements IExportAPI.Example
 
         ''' <summary>
-        ''' You are going to define a available export api for you application to another language or scripting program environment.
+        ''' You are going to define a available export api 
+        ''' for you application to another language or 
+        ''' scripting program environment.
         ''' (定义一个命令行程序之中可以使用的命令)
         ''' </summary>
-        ''' <param name="Name">The name of the commandline object or you define the exported API name here.(这个命令的名称)</param>
+        ''' <param name="Name">
+        ''' The name of the commandline object or you define 
+        ''' the exported API name here.(这个命令的名称)
+        ''' </param>
         ''' <remarks></remarks>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(Name As String)
             _Name = Name
         End Sub

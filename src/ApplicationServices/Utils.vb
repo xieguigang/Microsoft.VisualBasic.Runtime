@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b66c7d1af4fa1766cd9ea6a6c9865e2f, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::3100a7ea38a12470f719ea40466d9db7, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 256
+    '    Code Lines: 147
+    ' Comment Lines: 75
+    '   Blank Lines: 34
+    '     File Size: 9.85 KB
+
 
     '     Module Utils
     ' 
@@ -264,6 +274,15 @@ Namespace ApplicationServices
             If token.Contains(" "c) Then
                 token = $"""{token}"""
             End If
+
+#If netcore5 Then
+            ' 20210819 fix for docker command on unix platform
+            If token.TextEquals("$PWD") Then
+                token = """$PWD"""
+            ElseIf token.TextEquals("$PWD:$PWD") Then
+                token = """$PWD:$PWD"""
+            End If
+#End If
 
             Return token
         End Function

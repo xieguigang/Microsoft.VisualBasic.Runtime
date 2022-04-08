@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d11c1fee9f48da20a6ce6a913714ff23, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::02ad38662d39b50a3089e36f10e0ef2f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -31,14 +31,24 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 645
+    '    Code Lines: 366
+    ' Comment Lines: 204
+    '   Blank Lines: 75
+    '     File Size: 23.62 KB
+
+
     ' Module VectorExtensions
     ' 
-    '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
-    '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
-    '               Midv, PadLeft, RepeatCalls, Replicate, SetValue
-    '               (+3 Overloads) Sort, Split, VectorShadows
+    '     Function: (+2 Overloads) After, All, Append, Coalesce, (+3 Overloads) Delete
+    '               (+2 Overloads) Fill, GetRange, IndexOf, Last, LoadAsNumericVector
+    '               MappingData, Midv, PadLeft, RepeatCalls, Replicate
+    '               SetValue, (+3 Overloads) Sort, Split, VectorShadows
     ' 
-    '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
+    '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset, RotateLeft, RotateRight
     ' 
     ' /********************************************************************************/
 
@@ -50,7 +60,6 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -63,6 +72,26 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 ''' 
 <HideModuleName>
 Public Module VectorExtensions
+
+    <Extension>
+    Public Sub RotateLeft(Of T)(ByRef ArrayToRotate As T(), iPlacesToRotate As Integer)
+        Dim kdd = ArrayToRotate.Take(iPlacesToRotate).ToArray
+        Dim ddk = ArrayToRotate.Skip(iPlacesToRotate).ToArray
+
+        Array.ConstrainedCopy(kdd, Scan0, ArrayToRotate, ArrayToRotate.Length - kdd.Length, kdd.Length)
+        Array.ConstrainedCopy(ddk, Scan0, ArrayToRotate, Scan0, ddk.Length)
+    End Sub
+
+    <Extension>
+    Public Sub RotateRight(Of T)(ByRef ArrayToRotate As T(), iPlacesToRotate As Integer)
+        ArrayToRotate = ArrayToRotate.Reverse.ToArray
+
+        Dim ddk = ArrayToRotate.Take(iPlacesToRotate).Reverse.ToArray
+        Dim kdd = ArrayToRotate.Skip(iPlacesToRotate).Reverse.ToArray
+
+        Array.ConstrainedCopy(ddk, Scan0, ArrayToRotate, Scan0, iPlacesToRotate)
+        Array.ConstrainedCopy(kdd, Scan0, ArrayToRotate, iPlacesToRotate, ArrayToRotate.Length - iPlacesToRotate)
+    End Sub
 
     ''' <summary>
     ''' Does all boolean test result is TRUE?
@@ -186,7 +215,8 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="values"></param>
-    <Extension> Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
+    <Extension>
+    Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
         Dim data = values.SafeQuery.ToArray
         Dim appendBuffer As T() = New T(vector.Length + data.Length - 1) {}
 
@@ -208,7 +238,8 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
-    <Extension> Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
+    <Extension>
+    Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
         If value.IsNullOrEmpty Then
             Return
         End If
@@ -229,7 +260,8 @@ Public Module VectorExtensions
     ''' <param name="buffer"></param>
     ''' <param name="value"></param>
     ''' <returns></returns>
-    <Extension> Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
+    <Extension>
+    Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
         If buffer Is Nothing Then
             Return value.ToArray
         End If
@@ -246,7 +278,8 @@ Public Module VectorExtensions
     ''' <param name="value"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
+    <Extension>
+    Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
         Call Add(Of T)(array, value.ToArray)
     End Sub
 
@@ -410,7 +443,8 @@ Public Module VectorExtensions
     ''' <param name="index%"></param>
     ''' <param name="count%"></param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function GetRange(Of T)(vector As T(), index%, count%) As IEnumerable(Of T)
+    <Extension>
+    Public Iterator Function GetRange(Of T)(vector As T(), index%, count%) As IEnumerable(Of T)
         Dim ends% = index + count - 1
 
         For i As Integer = index To ends
@@ -583,7 +617,8 @@ Public Module VectorExtensions
     ''' <param name="start">0 base</param>
     ''' <param name="length"></param>
     ''' <returns></returns>
-    <Extension> Public Function Midv(Of T)(source As IEnumerable(Of T), start%, length%) As T()
+    <Extension>
+    Public Function Midv(Of T)(source As IEnumerable(Of T), start%, length%) As T()
         If source Is Nothing Then
             Return New T() {}
         ElseIf source.Count < length Then
@@ -608,7 +643,8 @@ Public Module VectorExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function LoadAsNumericVector(path As String) As Double()
+    <Extension>
+    Public Function LoadAsNumericVector(path As String) As Double()
         Dim array As String() = IO.File.ReadAllLines(path)
         Dim n As Double() = array.Select(AddressOf Val).ToArray
         Return n
@@ -626,7 +662,9 @@ Public Module VectorExtensions
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Predicate(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
+    Public Iterator Function Split(Of T)(source As IEnumerable(Of T),
+                                         delimiter As Predicate(Of T),
+                                         Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
         Dim tmp As New List(Of T)
 
         For Each x As T In source.SafeQuery

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5a87ff1247563c2eb0d404bbf3c6774, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb"
+﻿#Region "Microsoft.VisualBasic::11f876578ff4099060a3b739d3998b3b, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb"
 
     ' Author:
     ' 
@@ -31,8 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 10
+    ' Comment Lines: 23
+    '   Blank Lines: 4
+    '     File Size: 1.17 KB
+
+
     '     Enum MSG_TYPES
     ' 
+    '         FINEST
     ' 
     '  
     ' 
@@ -73,5 +84,10 @@ Namespace ApplicationServices.Debugging.Logging
         ''' </summary>
         ''' <remarks></remarks>
         <Description("DEBUG")> DEBUG = ConsoleColor.Blue
+
+        ''' <summary>
+        ''' Specialized Developer Info
+        ''' </summary>
+        FINEST
     End Enum
 End Namespace

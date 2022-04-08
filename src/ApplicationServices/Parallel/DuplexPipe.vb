@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab1c7458894b1e103e67de5530b822ec, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\DuplexPipe.vb"
+﻿#Region "Microsoft.VisualBasic::052e346c045c06541259983408215178, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\DuplexPipe.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 138
+    ' Comment Lines: 20
+    '   Blank Lines: 39
+    '     File Size: 6.51 KB
+
+
     '     Class DuplexPipe
     ' 
     '         Properties: Length
@@ -53,7 +63,7 @@
     ' 
     '     Class DataPipe
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     ' 
     '         Function: GetBlocks, Read
     ' 
@@ -65,6 +75,8 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -189,14 +201,37 @@ Namespace Parallel
         Dim data As Byte()
         Dim disposedValue As Boolean
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of Byte))
             Me.data = data.ToArray
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Sub New(str As String)
+            Me.data = Encoding.UTF8.GetBytes(str)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Sub New(data As IEnumerable(Of Double))
+            Me.data = data _
+                .Select(Function(mzi) BitConverter.GetBytes(mzi)) _
+                .IteratesALL _
+                .ToArray
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Sub New(data As RawStream)
             Call Me.New(data.Serialize)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Sub New(data As MemoryStream)
+            Call Me.New(data.ToArray)
         End Sub
 
         <DebuggerStepThrough>

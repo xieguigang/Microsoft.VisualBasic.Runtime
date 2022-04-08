@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4eca099d62522f9c3be910f7f77f99f3, Microsoft.VisualBasic.Core\src\My\Framework\IOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::00be1d6d919b48e02d8de045b9739b5a, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\IOHandler.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 31
+    ' Comment Lines: 8
+    '   Blank Lines: 11
+    '     File Size: 2.05 KB
+
+
     '     Module IOHandler
     ' 
     ' 
     '         Delegate Function
     ' 
-    '             Function: GetWrite, IsRegister, SaveJSON, SaveXml
+    '             Function: getLogger, GetWrite, IsRegister, SaveJSON, SaveXml
     ' 
     '             Sub: RegisterHandle
     ' 
@@ -47,6 +57,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -66,6 +77,13 @@ Namespace My.FrameworkInternal
 
         ReadOnly saveWrite As New Dictionary(Of Type, ISave)
         ReadOnly defaultWriter As New [Default](Of ISave)(AddressOf SaveJSON)
+
+        Public Function getLogger(category As String, Optional split As LoggingDriver = Nothing) As LogFile
+            Dim path As String = App.CurrentDirectory & $"/{category}{MD5(Now.ToString & RandomASCIIString(8))}.log"
+            Dim file As New LogFile(path, split:=split)
+
+            Return file
+        End Function
 
         Public Function GetWrite(type As Type) As ISave
             Return saveWrite.TryGetValue(type) Or defaultWriter

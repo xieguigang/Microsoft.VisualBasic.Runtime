@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::900e31b0444209fb553658c606572684, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::ae11c528a546231cc375971e6dce18b6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4479
+    '    Code Lines: 265
+    ' Comment Lines: 4169
+    '   Blank Lines: 45
+    '     File Size: 203.71 KB
+
 
     '     Class IGraphics
     ' 
@@ -69,6 +79,12 @@ Namespace Imaging
 
         Public MustOverride ReadOnly Property Size As Size
 
+        ''' <summary>
+        ''' set background via <see cref="Clear"/> method.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Background As Color
+
         ''
         '' Summary:
         ''     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
@@ -102,22 +118,23 @@ Namespace Imaging
         ''' enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.</returns>
         Public MustOverride Property CompositingQuality As CompositingQuality
 
-        '
-        ' Summary:
-        '     Gets the horizontal resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the horizontal resolution supported by this
-        '     System.Drawing.Graphics.
+        ''' <summary>
+        ''' Gets the horizontal resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the horizontal resolution supported by this
+        ''' System.Drawing.Graphics.</returns>
         Public MustOverride ReadOnly Property DpiX As Single
-        '
-        ' Summary:
-        '     Gets the vertical resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
+
+        ''' <summary>
+        ''' Gets the vertical resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.</returns>
         Public MustOverride ReadOnly Property DpiY As Single
 
+        ''' <summary>
+        ''' max value of the [DpiX, DpiY]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
             Get
                 Return stdNum.Max(DpiX, DpiY)
@@ -235,16 +252,27 @@ Namespace Imaging
         '   data:
         '     Array of bytes that contains the comment.
         Public MustOverride Sub AddMetafileComment(data() As Byte)
-        '
-        ' Summary:
-        '     Clears the entire drawing surface and fills it with the specified background
-        '     color.
-        '
-        ' Parameters:
-        '   color:
-        '     System.Drawing.Color structure that represents the background color of the drawing
-        '     surface.
-        Public MustOverride Sub Clear(color As Color)
+
+        ''' <summary>
+        ''' Clears the entire drawing surface and fills it with the specified background
+        ''' color.
+        ''' </summary>
+        ''' <param name="color">
+        ''' <see cref="Color"/> structure that represents the background color of the drawing
+        ''' surface.
+        ''' </param>
+        Public Sub Clear(color As Color)
+            Me.ClearCanvas(color)
+            Me._Background = color
+        End Sub
+
+        ''' <summary>
+        ''' Clears the entire drawing surface and fills it with the specified background
+        ''' color.
+        ''' </summary>
+        ''' <param name="color"></param>
+        Protected MustOverride Sub ClearCanvas(color As Color)
+
         '
         ' Summary:
         '     Performs a bit-block transfer of color data, corresponding to a rectangle of
@@ -4347,12 +4375,12 @@ Namespace Imaging
         Public MustOverride Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
 
         ''' <summary>
-        ''' Measures the specified string when drawn with the specified <see cref="System.Drawing.Font"/>.
+        ''' Measures the specified string when drawn with the specified <see cref="Font"/>.
         ''' </summary>
         ''' <param name="text">String to measure.</param>
-        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
-        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
-        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        ''' <returns>This method returns a <see cref="SizeF"/> structure that represents the size,
+        ''' in the units specified by the <see cref="PageUnit"/> property, of the
         ''' string specified by the text parameter as drawn with the font parameter.
         ''' </returns>
         Public MustOverride Function MeasureString(text As String, font As Font) As SizeF

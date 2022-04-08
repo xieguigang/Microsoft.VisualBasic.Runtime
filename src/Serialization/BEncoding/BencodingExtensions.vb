@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::163922ba57320b3d8683793de94ac606, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0e6b2953cfc1559fa0aa5848ed5fcf14, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 72
+    ' Comment Lines: 43
+    '   Blank Lines: 19
+    '     File Size: 5.38 KB
+
 
     '     Module BencodingExtensions
     ' 
@@ -126,6 +136,11 @@ Namespace Serialization.Bencoding
 
                 For Each key As Object In raw.Keys
                     item = raw.Item(key)
+
+                    If item Is Nothing Then
+                        Continue For
+                    End If
+
                     table.Add(New BString(key.ToString), ToBEncode(item, digest))
                 Next
 

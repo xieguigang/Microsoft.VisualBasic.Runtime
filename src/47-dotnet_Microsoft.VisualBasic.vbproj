@@ -173,11 +173,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\CLI_tools\MLkit\Apps\</OutputPath>
+    <OutputPath>..\..\..\Darwinism\build\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -264,9 +264,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64' ">
-    <OutputPath>./bin</OutputPath>
+    <OutputPath>..\..\..\..\..\..\COVID-19\assembly\</OutputPath>
     <DefineTrace>true</DefineTrace>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
@@ -356,7 +356,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\mzkit\App\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>false</Optimize>
@@ -406,8 +406,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\R-sharp\App\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,NET_48=True,UNIX=0</DefineConstants>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=1,UNIX=0</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>false</Optimize>
@@ -1099,8 +1099,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\BioDeep_database\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,NET_48=True,UNIX=1</DefineConstants>
+    <OutputPath>..\..\..\..\..\..\biodeep\biodeepdb_v3\biodeepdb_v3\assembly\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=1,UNIX=0</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -1158,10 +1158,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\mzkit\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -1225,8 +1225,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Voyager1|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\voyager-1\Apps\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
+    <OutputPath>..\..\..\..\..\..\voyager-1\dist\assembly\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -1386,8 +1386,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\mzkit\dist\bin\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
+    <OutputPath>..\..\..\..\..\..\mzkit\dist\bin\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -1632,8 +1632,14 @@
     <Compile Include="ApplicationServices\FileSystem\TempFileSystem.vb" />
     <Compile Include="ApplicationServices\Parallel\DuplexPipe.vb" />
     <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
+    <Compile Include="ApplicationServices\Parallel\Tasks\BackgroundTask.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleTableBaseData.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb" />
@@ -1644,6 +1650,7 @@
     <Compile Include="ApplicationServices\VBDev\NetCore5\target.vb" />
     <Compile Include="ApplicationServices\VBDev\NetCore5\deps.json.vb" />
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
+    <Compile Include="CommandLine\InteropService\Pipeline\RunSlavePipeline.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
     <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />
     <Compile Include="CommandLine\POSIX\POSIXArguments.vb" />
@@ -1654,16 +1661,20 @@
     <Compile Include="CommandLine\Reflection\Attributes\ExampleAttribute.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\UsageAttribute.vb" />
     <Compile Include="CommandLine\Reflection\ExportApiInformation.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\CombinationExtensions.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\Permutation.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinarySearchFunction.vb" />
     <Compile Include="ComponentModel\Algorithm\QuickSortFunction.vb" />
     <Compile Include="ComponentModel\DataSource\Property\Extensions.vb" />
+    <Compile Include="ComponentModel\DataSource\TemplateAttribute.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\Data.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\Deque.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\Enumerator.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\IDeque.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\ReversedEnumerator.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\ReverseQueue.vb" />
+    <Compile Include="ComponentModel\File\ITextWriter.vb" />
     <Compile Include="ComponentModel\File\IOWorkModes.vb" />
     <Compile Include="ComponentModel\File\XmlAssembly\DigitalSignature.vb" />
     <Compile Include="ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb" />
@@ -1673,6 +1684,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\ChangesWatcher.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\JoinElement.vb" />
+    <Compile Include="ComponentModel\ValuePair\IDataIndex.vb" />
     <Compile Include="Data\NamespaceDoc.vb" />
     <Compile Include="Data\Repository\RepositoryFileSystem.vb" />
     <Compile Include="Data\Trinity\WordSimilarityIndex.vb" />
@@ -1687,10 +1699,26 @@
     <Compile Include="Extensions\Image\IStyleSelector.vb" />
     <Compile Include="Extensions\Image\Math\Intersections.vb" />
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />
+    <Compile Include="Extensions\Math\Correlations\RankOrder.vb" />
+    <Compile Include="Extensions\Math\Information\EntropyScore.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
+    <Compile Include="Language\Value\TripleVariant.vb" />
+    <Compile Include="My\Framework\MemoryLoads.vb" />
+    <Compile Include="My\JavaScript\DataView.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\Abstract.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\Descriptor.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptValue.vb" />
+    <Compile Include="Net\HTTP\JsonRPC\RpcResponse.vb" />
+    <Compile Include="Net\HTTP\JsonRPC\RpcRequest.vb" />
     <Compile Include="Net\HTTP\WebResponse.vb" />
     <Compile Include="Globals.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\ConsoleTableBuilderFormat.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\TextAligntment.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span1.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span.vb" />
     <Compile Include="Extensions\Reflection\ScriptMeta.vb" />
@@ -1762,7 +1790,6 @@
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
-    <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
     <Compile Include="Extensions\IO\IOStream.vb" />
     <Compile Include="Extensions\IO\Extensions\StreamHelper.vb" />
@@ -1783,7 +1810,7 @@
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="My\JavaScript\ES6\Map.vb" />
     <Compile Include="My\JavaScript\Linq.vb" />
-    <Compile Include="My\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptObject.vb" />
     <Compile Include="My\JavaScript\String.vb" />
     <Compile Include="My\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
@@ -1878,11 +1905,11 @@
     <Compile Include="Scripting\TokenIcer\CodeSpan.vb" />
     <Compile Include="Scripting\TokenIcer\Token.vb" />
     <Compile Include="Serialization\BEncoding\BencodeDecoder.vb" />
-    <Compile Include="Serialization\BEncoding\BElement.vb" />
-    <Compile Include="Serialization\BEncoding\BInteger.vb" />
-    <Compile Include="Serialization\BEncoding\BString.vb" />
-    <Compile Include="Serialization\BEncoding\BList.vb" />
-    <Compile Include="Serialization\BEncoding\BDictionary.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BElement.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BInteger.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BString.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BList.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BDictionary.vb" />
     <Compile Include="Serialization\BEncoding\BencodingException.vb" />
     <Compile Include="Serialization\BEncoding\BencodingExtensions.vb" />
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
@@ -1969,6 +1996,7 @@
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Net\HTTP\Stream\GZStream.vb" />
+    <Compile Include="Extensions\Math\Correlations\DistanceMethods.vb" />
     <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
@@ -2092,7 +2120,6 @@
     <None Include="ApplicationServices\Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
     <Compile Include="Language\Language\UnixBash\PS1.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\IParallelTask.vb" />
-    <Compile Include="ApplicationServices\Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />

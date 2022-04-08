@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d8f3b9091882af7d91726c6bbbfddfa, Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::facb8060fb17ca8f6374b9325c1e01b2, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 371
+    '    Code Lines: 224
+    ' Comment Lines: 112
+    '   Blank Lines: 35
+    '     File Size: 16.32 KB
+
 
     '     Module InputHandler
     ' 
@@ -142,6 +152,8 @@ Namespace Scripting
         Public Function CTypeDynamic(expression$, target As Type) As Object
             If expression.StringEmpty Then
                 Return Nothing
+            ElseIf target Is GetType(String) Then
+                Return expression
             End If
             If _CasterString.ContainsKey(target) Then
                 Dim caster As LoadObject = _CasterString(target)
@@ -364,7 +376,11 @@ Namespace Scripting
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToString(obj As Object, Optional null$ = "", Optional originToStringAsNothing As Boolean = False) As String
-            Return CStrSafe(obj, null, originToStringAsNothing)
+            If TypeOf obj Is String Then
+                Return DirectCast(obj, String)
+            Else
+                Return CStrSafe(obj, null, originToStringAsNothing)
+            End If
         End Function
 
         ''' <summary>

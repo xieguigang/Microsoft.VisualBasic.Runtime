@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c62f777354a96b5ce47ae821f461717, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::e50f53417f6f2b31cee3aaa4e9f9aa37, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 455
+    '    Code Lines: 255
+    ' Comment Lines: 154
+    '   Blank Lines: 46
+    '     File Size: 17.66 KB
+
 
     '     Module Extensions
     ' 
@@ -266,7 +276,8 @@ Namespace Linq
         ''' <returns>An array consist of source with n elements.</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Repeats(Of T)(source As T, times%) As T()
+        <Extension>
+        Public Function Repeats(Of T)(source As T, times%) As T()
             Return times.Sequence.Select(Function(x) source).ToArray
         End Function
 

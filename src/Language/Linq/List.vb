@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e42c046f7ea6284a7826985cf3c824e4, Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
+﻿#Region "Microsoft.VisualBasic::772de024f836ad890c4eb4db49dd50da, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 678
+    '    Code Lines: 363
+    ' Comment Lines: 251
+    '   Blank Lines: 64
+    '     File Size: 26.09 KB
+
+
     '     Class List
     ' 
     '         Properties: First, Last
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
+    '         Function: [Default], Poll, Pop, PopAll, ReverseIterator
+    '                   ValuesEnumerator
     '         Operators: (+5 Overloads) -, *, ^, (+9 Overloads) +, <
     '                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
     '                    >>
@@ -714,6 +725,12 @@ Namespace Language
         Public Function Pop() As T
             Dim out = Last
             Call Me.RemoveLast
+            Return out
+        End Function
+
+        Public Function Poll() As T
+            Dim out = First
+            Call Me.RemoveAt(Scan0)
             Return out
         End Function
     End Class

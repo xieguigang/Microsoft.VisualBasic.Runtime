@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7eae30de9a7a30da019e1d768ce52f24, Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::1b2f1f4372d00ddb31d26466a8bc3a0f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 247
+    '    Code Lines: 121
+    ' Comment Lines: 99
+    '   Blank Lines: 27
+    '     File Size: 12.27 KB
+
 
     '     Module TextEncodings
     ' 
@@ -194,6 +204,11 @@ Namespace Text
         ''' </remarks>
         Private Function __gbk2312_encoding() As Encoding
             Try
+#If netcore5 = 1 Then
+                ' 注册Nuget包System.Text.Encoding.CodePages中的编码到.NET Core
+                ' https://www.cnblogs.com/OpenCoder/p/10386540.html
+                Call Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
+#End If
                 Return Encoding.GetEncoding("GB2312")
             Catch ex As Exception
 

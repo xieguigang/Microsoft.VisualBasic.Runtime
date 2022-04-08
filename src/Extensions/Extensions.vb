@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::534f360d61f7b5cb5ba47d7c33b8cca0, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7e15e7afa07ed0cd78a7e3ea6090cd6e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1407
+    '    Code Lines: 790
+    ' Comment Lines: 485
+    '   Blank Lines: 132
+    '     File Size: 50.64 KB
+
 
     ' Module Extensions
     ' 
@@ -1086,7 +1096,8 @@ Public Module Extensions
     ''' <param name="n"></param>
     ''' <returns></returns>
     <ExportAPI("Sequence.Random")>
-    <Extension> Public Function SeqRandom(n As Integer) As Integer()
+    <Extension>
+    Public Function SeqRandom(n As Integer) As Integer()
         Dim source As Integer() = n.Sequence.ToArray
         Dim Random As Integer() = source.Shuffles
         Return Random
@@ -1099,7 +1110,8 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToStringArray(Of T)(source As IEnumerable(Of T)) As String()
+    <Extension>
+    Public Function ToStringArray(Of T)(source As IEnumerable(Of T)) As String()
         If source Is Nothing Then
             Return {}
         End If
@@ -1153,7 +1165,8 @@ Public Module Extensions
     ''' <param name="list"></param>
     ''' <param name="obj_1"></param>
     ''' <param name="obj_2"></param>
-    <Extension> Public Sub SwapItem(Of T)(ByRef list As List(Of T), obj_1 As T, obj_2 As T)
+    <Extension>
+    Public Sub SwapItem(Of T)(ByRef list As List(Of T), obj_1 As T, obj_2 As T)
         Dim idx_1 As Integer = list.IndexOf(obj_1)
         Dim idx_2 As Integer = list.IndexOf(obj_2)
 
@@ -1168,13 +1181,15 @@ Public Module Extensions
     End Sub
 
 #If FRAMEWORD_CORE Then
+
     ''' <summary>
     ''' Add array location index value for the <see cref="IAddressOf"/> elements in the sequence.
     ''' (为列表中的对象添加对象句柄值)
     ''' </summary>
     ''' <param name="source"></param>
     ''' <remarks></remarks>
-    <Extension> Public Function WriteAddress(Of T As IAddressOf)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
+    <Extension>
+    Public Function WriteAddress(Of T As IAddressOf)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
         Dim list As New List(Of T)
         Dim i As Integer = offset
 
@@ -1198,7 +1213,8 @@ Public Module Extensions
     ''' <returns>A integer array of subscript index of the target generic collection.</returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Iterator Function Sequence(Of T)(
+    <Extension>
+    Public Iterator Function Sequence(Of T)(
                                         <Parameter("source", "")> source As IEnumerable(Of T),
                                         <Parameter("index.OffSet", "")> Optional offSet% = 0) _
                                      As <FunctionReturns("A integer array of subscript index of the target generic collection.")> IEnumerable(Of Integer)
@@ -1251,7 +1267,8 @@ Public Module Extensions
         Return New IntRange(ints)
     End Function
 
-    <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of Long)
+    <Extension>
+    Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of Long)
         If source Is Nothing Then
             Return
         Else
@@ -1264,11 +1281,14 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Function LongSeq(n&) As Long()
+    <Extension>
+    Public Function LongSeq(n&) As Long()
         Dim array&() = New Long(n - 1) {}
+
         For i As Long = 0 To array.Length - 1
             array(i) = i
         Next
+
         Return array
     End Function
 
@@ -1281,7 +1301,8 @@ Public Module Extensions
     ''' <param name="remoteDuplicates">当这个参数为False的时候，出现重复的键名会抛出错误，当为True的时候，有重复的键名存在的话，可能会丢失一部分的数据</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToDictionary(Of TKey, TValue)(
+    <Extension>
+    Public Function ToDictionary(Of TKey, TValue)(
                                 source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
                        Optional remoteDuplicates As Boolean = False) As Dictionary(Of TKey, TValue)
 
@@ -1332,7 +1353,8 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("Shell")>
-    <Extension> Public Function Shell(CLI As String) As IIORedirectAbstract
+    <Extension>
+    Public Function Shell(CLI As String) As IIORedirectAbstract
         Return CType(CLI, IORedirect)
     End Function
 #End If
@@ -1345,7 +1367,8 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("PI")>
-    <Extension> Public Function π(source As IEnumerable(Of Double)) As Double
+    <Extension>
+    Public Function π(source As IEnumerable(Of Double)) As Double
         If source Is Nothing Then
             Return 0
         End If
@@ -1373,7 +1396,8 @@ Public Module Extensions
     ''' <param name="Image"></param>
     ''' <param name="FilledColor"></param>
     ''' <remarks></remarks>
-    <Extension> Public Sub FillBlank(ByRef Image As Image, FilledColor As Brush)
+    <Extension>
+    Public Sub FillBlank(ByRef Image As Image, FilledColor As Brush)
         If Image Is Nothing Then
             Return
         End If
@@ -1391,7 +1415,8 @@ Public Module Extensions
     ''' <param name="List"></param>
     ''' <param name="collection"></param>
     ''' <remarks></remarks>
-    <Extension> Public Sub Removes(Of T)(ByRef List As List(Of T), collection As IEnumerable(Of T))
+    <Extension>
+    Public Sub Removes(Of T)(ByRef List As List(Of T), collection As IEnumerable(Of T))
         For Each obj In collection
             Call List.Remove(obj)
         Next

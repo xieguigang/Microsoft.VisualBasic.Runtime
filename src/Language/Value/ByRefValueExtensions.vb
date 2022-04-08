@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::613f4b5f4e2c32a7a2c8c81fdff46410, Microsoft.VisualBasic.Core\src\Language\Value\ByRefValueExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b055a48c0ebaf19e89a8e9f2cf2d413d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\ByRefValueExtensions.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 38
+    ' Comment Lines: 18
+    '   Blank Lines: 8
+    '     File Size: 2.61 KB
+
+
     '     Module ByRefValueExtensions
     ' 
     '         Function: CreateDelegate, (+2 Overloads) First, Split, StartsWith, ToLower
@@ -46,10 +56,24 @@ Imports ByRefString = Microsoft.VisualBasic.Language.Value(Of String)
 
 Namespace Language.Values
 
+    <HideModuleName>
     Public Module ByRefValueExtensions
 
+        ''' <summary>
+        ''' Splits a string into substrings that are based on the 
+        ''' characters in the separator array.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="delimiter">
+        ''' A character array that delimits the substrings in this string, 
+        ''' an empty array that contains no delimiters, Or null.
+        ''' </param>
+        ''' <returns>An array whose elements contain the substrings from this 
+        ''' instance that are delimited by one Or more characters in separator. 
+        ''' For more information, see the Remarks section.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Split(s As ByRefString, ParamArray delimiter As Char()) As String()
+        <Extension>
+        Public Function Split(s As ByRefString, ParamArray delimiter As Char()) As String()
             Return s.Value.Split(delimiter)
         End Function
 

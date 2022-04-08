@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e10b3145213fb0eb2d8f282f2834d0f7, Microsoft.VisualBasic.Core\src\ApplicationServices\Application.vb"
+﻿#Region "Microsoft.VisualBasic::24cc1155d83f61b8e8869ed46dfa86fc, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Application.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 50
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 2.11 KB
+
+
     '     Class Application
     ' 
     '         Properties: ExecutablePath, ProductName, ProductVersion, StartupPath
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: DoEvents
     ' 
     ' 
@@ -51,8 +62,18 @@ Namespace ApplicationServices
 
     Public Class Application
 
-        Shared ReadOnly main As Assembly = Assembly.GetEntryAssembly()
-        Shared ReadOnly meta As AssemblyMeta = main.FromAssembly
+        Shared ReadOnly main As Assembly
+        Shared ReadOnly meta As AssemblyMeta
+
+        ''' <summary>
+        ''' try to fix for the winform visual designer error
+        ''' </summary>
+        Shared Sub New()
+            On Error Resume Next
+
+            main = Assembly.GetEntryAssembly()
+            meta = main.FromAssembly
+        End Sub
 
         ''' <summary>
         ''' Gets the path for the executable file that started the application, 
@@ -61,7 +82,11 @@ Namespace ApplicationServices
         ''' <returns></returns>
         Public Shared ReadOnly Property StartupPath As String
             Get
-                Return Path.GetDirectoryName(main.Location)
+                If main Is Nothing Then
+                    Return Environment.CurrentDirectory
+                Else
+                    Return Path.GetDirectoryName(main.Location)
+                End If
             End Get
         End Property
 
@@ -83,10 +108,17 @@ Namespace ApplicationServices
             End Get
         End Property
 
+        ''' <summary>
+        ''' Processes all Windows messages currently in the message queue.
+        ''' </summary>
         Public Shared Sub DoEvents()
 #If netcore5 = 0 Then
 #If UNIX = False Then
-            Call Parallel.DoEvents()
+            Try
+                Call Parallel.DoEvents()
+            Catch ex As Exception
+                Call ex.PrintException
+            End Try
 #End If
 #End If
         End Sub

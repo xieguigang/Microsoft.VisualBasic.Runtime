@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41143267e70f799ff23bc3bc88caa538, Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
+﻿#Region "Microsoft.VisualBasic::face17ffe3b45c1e040f5610245677a4, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,26 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 124
+    ' Comment Lines: 8
+    '   Blank Lines: 20
+    '     File Size: 5.64 KB
+
+
     '     Class URL
     ' 
     '         Properties: hashcode, hostName, path, port, protocol
     '                     query
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: BuildUrl, GetValues, ToString
+    ' 
+    '         Function: BuildUrl, GetValues, Parse, ToString
+    ' 
+    '         Sub: Parser
     ' 
     ' 
     ' /********************************************************************************/
@@ -81,6 +94,34 @@ Namespace Net.Http
         End Property
 
         Sub New(url As String)
+            Call Parser(url, hashcode, query, protocol, port, hostName, path)
+        End Sub
+
+        Private Sub New()
+        End Sub
+
+        Public Function GetValues(query As String) As String()
+            With LCase(query)
+                If .DoCall(AddressOf _query.ContainsKey) Then
+                    Return .DoCall(Function(key) _query(key))
+                Else
+                    Return Nothing
+                End If
+            End With
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{protocol}{hostName}:{port}/{path}?{query.Select(Function(q) q.Value.Select(Function(val) $"{q.Key}={UrlEncode(val)}")).IteratesALL.JoinBy("&")}#{hashcode}"
+        End Function
+
+        Private Shared Sub Parser(url As String,
+                                  ByRef hashcode As String,
+                                  ByRef query As Dictionary(Of String, String()),
+                                  ByRef protocol As String,
+                                  ByRef port As Integer,
+                                  ByRef hostName As String,
+                                  ByRef path As String)
+
             With url.GetTagValue("?", trim:=True, failureNoName:=False)
                 Dim tokens = .Value.Split("#"c)
                 Dim tmp$
@@ -143,21 +184,10 @@ Namespace Net.Http
             End If
         End Sub
 
-        Private Sub New()
-        End Sub
-
-        Public Function GetValues(query As String) As String()
-            With LCase(query)
-                If .DoCall(AddressOf _query.ContainsKey) Then
-                    Return .DoCall(Function(key) _query(key))
-                Else
-                    Return Nothing
-                End If
-            End With
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return $"{protocol}{hostName}:{port}/{path}?{query.Select(Function(q) q.Value.Select(Function(val) $"{q.Key}={UrlEncode(val)}")).IteratesALL.JoinBy("&")}#{hashcode}"
+        Public Shared Function Parse(urlStr As String) As URL
+            Dim url As New URL
+            Call Parser(urlStr, url.hashcode, url.query, url.protocol, url.port, url.hostName, url.path)
+            Return url
         End Function
 
         Public Shared Function BuildUrl(url As String, query As IEnumerable(Of NamedValue(Of String))) As URL

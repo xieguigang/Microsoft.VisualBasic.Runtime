@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d3a8020e3457d39268c231f63cb01ac, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::d48b5568d40eaf8f6902886e0b5e1fc6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,26 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 279
+    '    Code Lines: 152
+    ' Comment Lines: 87
+    '   Blank Lines: 40
+    '     File Size: 10.06 KB
+
+
     '     Class BitmapBuffer
     ' 
     '         Properties: Height, Size, Stride, Width
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: FromBitmap, FromImage, GetEnumerator, GetImage, GetIndex
-    '                   GetPixel, IEnumerable_GetEnumerator, OutOfRange
+    '         Function: FromBitmap, FromImage, GetEnumerator, GetImage, (+2 Overloads) GetIndex
+    '                   (+2 Overloads) GetPixel, IEnumerable_GetEnumerator, OutOfRange, ToPixel2D
     ' 
-    '         Sub: Dispose, SetPixel
+    '         Sub: Dispose, (+3 Overloads) SetPixel
     ' 
     '         Operators: +
     ' 
@@ -66,20 +76,28 @@ Namespace Imaging.BitmapImage
         ReadOnly raw As Bitmap
         ReadOnly handle As BitmapData
 
+        ''' <summary>
+        ''' 图片可能是 BGRA 4通道
+        ''' 也可能是 BGR 3通道的
+        ''' </summary>
+        ReadOnly channels As Integer
+
         Protected Sub New(ptr As IntPtr,
                           byts%,
                           raw As Bitmap,
-                          handle As BitmapData)
+                          handle As BitmapData,
+                          channel As Integer)
 
             Call MyBase.New(ptr, byts)
 
             Me.raw = raw
             Me.handle = handle
 
-            Stride = handle.Stride
-            Width = raw.Width
-            Height = raw.Height
-            Size = New Size(Width, Height)
+            Me.Stride = handle.Stride
+            Me.Width = raw.Width
+            Me.Height = raw.Height
+            Me.Size = New Size(Width, Height)
+            Me.channels = channel
         End Sub
 
         Public ReadOnly Property Width As Integer
@@ -93,7 +111,11 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetImage() As Bitmap
+        Public Function GetImage(Optional flush As Boolean = False) As Bitmap
+            If flush Then
+                Call Write()
+            End If
+
             Return DirectCast(raw.Clone, Bitmap)
         End Function
 
@@ -119,8 +141,14 @@ Namespace Imaging.BitmapImage
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIndex(x As Integer, y As Integer) As Integer
-            y = y * (Width * 4)
-            x = x * 4
+            y = y * (Width * channels)
+            x = x * channels
+            Return x + y
+        End Function
+
+        Public Shared Function GetIndex(x As Integer, y As Integer, width As Integer, channels As Integer) As Integer
+            y = y * (width * channels)
+            x = x * channels
             Return x + y
         End Function
 
@@ -142,7 +170,12 @@ Namespace Imaging.BitmapImage
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Dim i As Integer = GetIndex(x, y)
-            Dim iA As Byte = buffer(i + 3)
+            Dim iA As Byte = 255
+
+            If channels = 4 Then
+                iA = buffer(i + 3)
+            End If
+
             Dim iR As Byte = buffer(i + 2)
             Dim iG As Byte = buffer(i + 1)
             Dim iB As Byte = buffer(i + 0)
@@ -151,10 +184,40 @@ Namespace Imaging.BitmapImage
         End Function
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="channel">0r 1g 2b 3a</param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        Public Function GetPixel(channel As Integer, x As Integer, y As Integer) As Byte
+            Dim i As Integer = GetIndex(x, y)
+
+            If channel = 3 Then
+                If channels = 4 Then
+                    Return buffer(i + 3)
+                Else
+                    Return 255
+                End If
+            Else
+                Return buffer(i + (2 - channel))
+            End If
+        End Function
+
+        Public Shared Function ToPixel2D(i As Integer, width As Integer, Optional channels As Integer = 4) As Point
+            i = i / channels
+
+            Dim y As Integer = i / width
+            Dim x As Integer = i Mod width
+
+            Return New Point(x, y)
+        End Function
+
+        ''' <summary>
         ''' Sets the color of the specified pixel in this System.Drawing.Bitmap.(这个函数线程不安全)
         ''' </summary>
-        ''' <param name="x">The x-coordinate of the pixel to set.</param>
-        ''' <param name="y">The y-coordinate of the pixel to set.</param>
+        ''' <param name="x">The x-coordinate of the pixel to set. [0, width-1]</param>
+        ''' <param name="y">The y-coordinate of the pixel to set. [0, height-1]</param>
         ''' <param name="color">
         ''' A System.Drawing.Color structure that represents the color to assign to the specified
         ''' pixel.</param>
@@ -163,10 +226,43 @@ Namespace Imaging.BitmapImage
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
 
-            buffer(i + 3) = color.A
+            If channels = 4 Then
+                buffer(i + 3) = color.A
+            End If
+
             buffer(i + 2) = color.R
             buffer(i + 1) = color.G
             buffer(i + 0) = color.B
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetPixel(x As Integer, y As Integer, R As Byte, G As Byte, B As Byte)
+            Dim i As Integer = GetIndex(x, y)
+
+            buffer(i + 2) = R
+            buffer(i + 1) = G
+            buffer(i + 0) = B
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="channel">0r 1g 2b 3a</param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="val"></param>
+        Public Sub SetPixel(channel As Integer, x As Integer, y As Integer, val As Byte)
+            Dim i As Integer = GetIndex(x, y)
+
+            If channel = 3 Then
+                If channels = 4 Then
+                    buffer(i + 3) = val
+                Else
+                    ' do nothing
+                End If
+            Else
+                buffer(i + (2 - channel)) = val
+            End If
         End Sub
 
         ''' <summary>
@@ -180,6 +276,12 @@ Namespace Imaging.BitmapImage
             Return BitmapBuffer.FromBitmap(New Bitmap(res))
         End Function
 
+        ''' <summary>
+        ''' 使用这个函数进行写数据的话，会修改到原图
+        ''' </summary>
+        ''' <param name="curBitmap"></param>
+        ''' <param name="mode"></param>
+        ''' <returns></returns>
         Public Shared Function FromBitmap(curBitmap As Bitmap, Optional mode As ImageLockMode = ImageLockMode.ReadWrite) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
@@ -193,8 +295,18 @@ Namespace Imaging.BitmapImage
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
             Dim bytes As Integer = stdNum.Abs(bmpData.Stride) * curBitmap.Height
+            Dim pixels As Integer = curBitmap.Width * curBitmap.Height
+            Dim channels As Integer
 
-            Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData)
+            If bytes = pixels * 3 Then
+                channels = 3
+            ElseIf bytes = pixels * 4 Then
+                channels = 4
+            Else
+                Throw New NotImplementedException
+            End If
+
+            Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData, channels)
         End Function
 
         Protected Overrides Sub Dispose(disposing As Boolean)

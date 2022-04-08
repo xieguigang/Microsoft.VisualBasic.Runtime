@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b32c762063091ea1ee889654869327dd, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::88c05bfb0bb1a8ea0f27d302c80d18c7, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 910
+    '    Code Lines: 539
+    ' Comment Lines: 266
+    '   Blank Lines: 105
+    '     File Size: 38.47 KB
+
 
     '     Module KeyValuePairExtensions
     ' 
@@ -142,11 +152,11 @@ Namespace ComponentModel.Collection
         <Extension>
         Public Function ComputeIfAbsent(Of K, V)(table As IDictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
             SyncLock table
-                If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
-                    table(key) = lazyValue(key)
+                If Not table.ContainsKey(key) OrElse table(key:=key) Is Nothing Then
+                    table(key:=key) = lazyValue(key)
                 End If
 
-                Return table(key)
+                Return table(key:=key)
             End SyncLock
         End Function
 
@@ -344,10 +354,15 @@ Namespace ComponentModel.Collection
         ''' <param name="default">
         ''' Use this as default value is key is not exists
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' <paramref name="default"/> value will be returned if the 
+        ''' specific key is not exists in the given <paramref name="table"/>
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Iterator Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional [default] As T = Nothing) As IEnumerable(Of T)
+        Public Iterator Function Takes(Of T)(table As IDictionary(Of String, T),
+                                             keys As IEnumerable(Of String),
+                                             Optional [default] As T = Nothing) As IEnumerable(Of T)
             For Each key As String In keys
                 If table.ContainsKey(key) Then
                     Yield table(key)

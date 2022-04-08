@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c113d96b43f39aafdaee13891127ba33, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::54558a2e78e9ffa4cb6cb38f3142387c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 60
+    ' Comment Lines: 11
+    '   Blank Lines: 12
+    '     File Size: 2.70 KB
+
+
     ' Module StringFormats
     ' 
     '     Function: FormatTime, (+2 Overloads) Lanudry, ReadableElapsedTime
@@ -54,6 +64,8 @@ Public Module StringFormats
     Public Function Lanudry(bytes As Double) As String
         If bytes <= 0 Then
             Return "0 B"
+        ElseIf bytes.IsNaNImaginary Then
+            Return "n/a KB"
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}

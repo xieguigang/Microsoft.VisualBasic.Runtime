@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78f741da79e61b6b64965e263fa4af77, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\VectorShadows.vb"
+﻿#Region "Microsoft.VisualBasic::e14f58461701c1a2b0d3c10cd375b9b7, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\VectorShadows.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 344
+    '    Code Lines: 233
+    ' Comment Lines: 63
+    '   Blank Lines: 48
+    '     File Size: 13.22 KB
+
 
     '     Class VectorShadows
     ' 
@@ -126,6 +136,10 @@ Namespace Language.Vectorization
         End Sub
 
         Protected Sub writeBuffer(seq As IEnumerable(Of T))
+            If seq Is Nothing Then
+                seq = {}
+            End If
+
             buffer = seq.ToArray
             linq = New DataValue(Of T)(buffer)
         End Sub

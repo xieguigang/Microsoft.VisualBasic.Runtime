@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a6c949f8bd03b2b1555e857dfed4bca, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::0064a6a31284baa503da7845ed505bf0, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\VBLanguage.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 77
+    '    Code Lines: 59
+    ' Comment Lines: 10
+    '   Blank Lines: 8
+    '     File Size: 3.38 KB
+
+
     '     Class Patterns
     ' 
     '         Properties: TypeChar
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: TypeCharName
+    '         Function: CharToType, TypeCharName
     ' 
     ' 
     ' /********************************************************************************/
@@ -93,6 +103,27 @@ Namespace Scripting.SymbolBuilder.VBLanguage
                     Return "Long"
                 Case "?"c
                     Return "Boolean"
+                Case Else
+                    Throw New InvalidExpressionException($"Character '{c}' is not a valid VB type char!")
+            End Select
+        End Function
+
+        Public Shared Function CharToType(c As Char) As Type
+            Select Case c
+                Case "!"c
+                    Return GetType(Single)
+                Case "@"c
+                    Return GetType(Decimal)
+                Case "#"c
+                    Return GetType(Double)
+                Case "$"c
+                    Return GetType(String)
+                Case "%"c
+                    Return GetType(Integer)
+                Case "&"c
+                    Return GetType(Long)
+                Case "?"c
+                    Return GetType(Boolean)
                 Case Else
                     Throw New InvalidExpressionException($"Character '{c}' is not a valid VB type char!")
             End Select

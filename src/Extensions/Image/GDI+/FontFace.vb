@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::196f606a0eab968477bea059d0ec3ace, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::3ecfbe2938d1361aab03baf957919d5c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 75
+    ' Comment Lines: 31
+    '   Blank Lines: 19
+    '     File Size: 5.13 KB
+
+
     '     Class FontFace
     ' 
     '         Properties: InstalledFontFamilies
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetFontName, IsInstalled, MeasureString
+    '         Function: GetFontName, IsInstalled, MeasureString, PointSizeScale
     ' 
     '     Module DefaultFontValues
     ' 
@@ -106,6 +116,23 @@ Namespace Imaging
 
         Private Sub New()
         End Sub
+
+        ''' <summary>
+        ''' fix for dpi bugs on unix mono platform when create a font object.
+        ''' 
+        ''' https://github.com/dotnet/runtime/issues/28361
+        ''' </summary>
+        ''' <param name="pointSize"></param>
+        ''' <param name="dpiResolution"></param>
+        ''' <returns></returns>
+        Public Shared Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
+            If Environment.OSVersion.Platform <> PlatformID.Win32NT Then
+                ' fix for running on unix mono/dotnet core 
+                Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
+            Else
+                Return pointSize
+            End If
+        End Function
 
         ''' <summary>
         ''' 检查当前的操作系统之中是否安装有指定名称的字体

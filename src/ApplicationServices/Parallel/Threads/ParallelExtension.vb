@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2875acd90dd861470a506cbeb2c8cf4, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::ea56ce42c81b5bfd44b7321219c14f86, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 37
+    ' Comment Lines: 49
+    '   Blank Lines: 7
+    '     File Size: 3.77 KB
+
+
     '     Module ParallelExtension
     ' 
     '         Function: AsyncTask, DoEvents, RunTask
@@ -55,7 +65,7 @@ Namespace Parallel
     Public Module ParallelExtension
 
         ''' <summary>
-        ''' Application.DoEvents() proxy in winform
+        ''' Application.DoEvents() proxy in winform, Processes all Windows messages currently in the message queue.
         ''' </summary>
         ''' <remarks>
         ''' this function will fixed the errors on centos linux system:
@@ -85,11 +95,21 @@ Namespace Parallel
 #End If
         End Sub
 
+        ''' <summary>
+        ''' execute the given <paramref name="func"/>, and hen do events
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="func"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function DoEvents(Of T)(func As Func(Of T)) As T
             Dim result As T = func()
+#If netcore5 = 0 Then
+#If UNIX = False Then
             Call DoEvents()
+#End If
+#End If
             Return result
         End Function
 
@@ -102,7 +122,7 @@ Namespace Parallel
         ''' </returns>
         <Extension>
         <DebuggerStepThrough>
-        Public Function RunTask(start As ThreadStart) As Thread
+        Public Function RunTask(start As Threading.ThreadStart) As Thread
             Dim thread As New Thread(start)
             thread.Start()
             Return thread
@@ -120,7 +140,7 @@ Namespace Parallel
         ''' </summary>
         ''' <param name="start"></param>
         ''' <returns></returns>
-        Public Function AsyncTask(start As ThreadStart) As IAsyncResult
+        Public Function AsyncTask(start As Threading.ThreadStart) As IAsyncResult
             Return start.BeginInvoke(Nothing, Nothing)
         End Function
     End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69c3b155ffbc11bec813324df1d4df31, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::312fa77ea9a67da8bbce3239b3f7e303, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4915
+    '    Code Lines: 672
+    ' Comment Lines: 4074
+    '   Blank Lines: 169
+    '     File Size: 211.52 KB
+
 
     '     Class GDICanvas
     ' 
@@ -163,7 +173,7 @@ Namespace Imaging
                 Return Graphics.InterpolationMode
             End Get
             Set(value As InterpolationMode)
-                Graphics.InterpolationMode = value
+                g.InterpolationMode = value
             End Set
         End Property
         '
@@ -269,7 +279,7 @@ Namespace Imaging
                 Return Graphics.SmoothingMode
             End Get
             Set(value As SmoothingMode)
-                Graphics.SmoothingMode = value
+                g.SmoothingMode = value
             End Set
         End Property
         '
@@ -311,15 +321,7 @@ Namespace Imaging
             Call Graphics.AddMetafileComment(data)
         End Sub
 
-        ''' <summary>
-        ''' Clears the entire drawing surface and fills it with the specified background
-        ''' color.
-        ''' </summary>
-        ''' <param name="color">System.Drawing.Color structure that represents the background color of the drawing
-        ''' surface.</param>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Sub Clear(color As Color)
+        Protected Overrides Sub ClearCanvas(color As Color)
             Call Graphics.Clear(color)
         End Sub
 
@@ -1243,7 +1245,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
-
+            Call Graphics.DrawImage(image, destPoints, srcRect, srcUnit)
         End Sub
         '
         ' Summary:
@@ -1270,7 +1272,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
-
+            Call Graphics.DrawImage(image, destRect, srcRect, srcUnit)
         End Sub
 
         ''' <summary>
@@ -1327,7 +1329,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
-
+            Graphics.DrawImage(image, x, y, srcRect, srcUnit)
         End Sub
         '
         ' Summary:
@@ -1357,7 +1359,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-
+            Graphics.DrawImage(image, destPoints, srcRect, srcUnit, imageAttr)
         End Sub
         '
         ' Summary:
@@ -1419,7 +1421,7 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
-        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' Draws the specified <see cref="Image"/> at the specified location and with the
         ''' specified size.
         ''' </summary>
         ''' <param name="image">System.Drawing.Image to draw.</param>
@@ -2046,9 +2048,9 @@ Namespace Imaging
         ''' <param name="pt1">System.Drawing.PointF structure that represents the first point to connect.</param>
         ''' <param name="pt2">System.Drawing.PointF structure that represents the second point to connect.</param>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-            If pt1.X < 0 OrElse pt1.Y < 0 OrElse pt2.X < 0 OrElse pt2.Y < 0 Then
-                Return
-            End If
+            'If pt1.X < 0 OrElse pt1.Y < 0 OrElse pt2.X < 0 OrElse pt2.Y < 0 Then
+            '    Return
+            'End If
 
             Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
@@ -4114,13 +4116,15 @@ Namespace Imaging
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
 
         End Sub
-        '
-        ' Summary:
-        '     Forces execution of all pending graphics operations and returns immediately without
-        '     waiting for the operations to finish.
-        Public Overrides Sub Flush()
 
+        ''' <summary>
+        ''' Forces execution of all pending graphics operations and returns immediately without
+        ''' waiting for the operations to finish.
+        ''' </summary>
+        Public Overrides Sub Flush()
+            Call Graphics.Flush()
         End Sub
+
         '
         ' Summary:
         '     Forces execution of all pending graphics operations with the method waiting or

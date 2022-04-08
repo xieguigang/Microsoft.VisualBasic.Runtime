@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9469df824995e9fade5353fd0936ea11, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
+﻿#Region "Microsoft.VisualBasic::12e36488154c82a974a262949ebef461, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 24
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 1.09 KB
+
+
     '     Module POSIXParser
     ' 
     '         Function: JoinTokens
@@ -50,7 +60,7 @@ Namespace CommandLine.POSIX
             Dim continuteToken As String = Nothing
 
             For Each item As String In tokens
-                If CliArgumentParsers.IsPossibleLogicFlag(item) Then
+                If item = "?" OrElse item = "??" OrElse CliArgumentParsers.IsPossibleLogicFlag(item) Then
                     ' 在这里使用nothing来和""产生的空字符串进行区分
                     If Not continuteToken Is Nothing Then
                         Yield continuteToken

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03a0c1c189263b776fe431a5d9118070, Microsoft.VisualBasic.Core\src\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::641e3aa930e4a4f782144a5806302a36, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 293
+    '    Code Lines: 153
+    ' Comment Lines: 105
+    '   Blank Lines: 35
+    '     File Size: 11.73 KB
+
 
     '     Module MD5Hash
     ' 
@@ -231,6 +241,7 @@ Namespace SecurityString
             ElseIf size < 1024 * 1024 * 5 Then
                 ' small files
                 Dim bufs As Byte() = File.ReadAllBytes(PathUri)
+
                 Return GetMd5Hash(bufs)
             Else
                 ' large files
@@ -238,7 +249,11 @@ Namespace SecurityString
                     Dim sha As New SHA256Managed()
                     Dim checksum = sha.ComputeHash(stream)
 
-                    Return BitConverter.ToString(checksum).Replace("-", String.Empty)
+                    Return BitConverter _
+                        .ToString(checksum) _
+                        .Replace("-", String.Empty) _
+                        .ToLower _
+                        .Substring(0, 32)
                 End Using
             End If
         End Function
@@ -327,6 +342,18 @@ Namespace SecurityString
             s2 = (s2 And &HFFFF) + (CInt(CUInt(s2) >> 16))
 
             Return (s2 << 16) Or s1
+        End Function
+
+        ''' <summary>
+        ''' # Generate SHA1 checksum of a file
+        ''' </summary>
+        ''' <param name="filePath"></param>
+        ''' <returns></returns>
+        Public Function GetSha1Hash(filePath As String) As String
+            Using fs As FileStream = File.OpenRead(filePath)
+                Dim sha As SHA1 = New SHA1Managed()
+                Return BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "").ToLower
+            End Using
         End Function
     End Module
 End Namespace

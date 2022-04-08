@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d60307d810dd9446858860f1dd36e636, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::3b0c3112940bb250ccdb1fcf427f7e41, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\NetFile.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 77
+    ' Comment Lines: 11
+    '   Blank Lines: 15
+    '     File Size: 3.63 KB
+
+
     '     Module NetFile
     ' 
-    '         Function: GetMapPath, MapNetFile, NetFileExists, OpenNetStream
+    '         Function: GetMapPath, MapGithubRawUrl, MapNetFile, mapToLocalUrl, NetFileExists
+    '                   OpenNetStream
     ' 
     ' 
     ' /********************************************************************************/
@@ -103,23 +114,12 @@ Namespace FileIO
         <ExportAPI("Map.Path")>
         <Extension>
         Public Function GetMapPath(url As String) As String
-            If InStr(url, "http://", CompareMethod.Text) +
-                InStr(url, "https://", CompareMethod.Text) > 0 Then
-
-                url = Strings.Split(url, "//").Last
-
-                Dim tokens$() = url.Split("/"c)
-                Dim folders As String = tokens.Take(tokens.Length - 1).JoinBy("/")
-
-                url = tokens.Last.NormalizePathString
-                url = App.AppSystemTemp & "/" & folders & "/" & url
-
-                Call folders.MakeDir
-
-                Return url
+            If InStr(url, "http://", CompareMethod.Text) + InStr(url, "https://", CompareMethod.Text) > 0 Then
+                Return mapToLocalUrl(url)
+            ElseIf url.StartsWith("github://") Then
+                Return mapToLocalUrl(MapGithubRawUrl(url))
             ElseIf InStr(url, "file://", CompareMethod.Text) = 1 Then
-                url = Mid(url, 8)
-                Return url
+                Return Mid(url, 8)
             Else
                 If url.FileExists Then
                     Return url
@@ -127,6 +127,30 @@ Namespace FileIO
                     Throw New Exception(url & " is a unrecognized url path!")
                 End If
             End If
+        End Function
+
+        Friend Function MapGithubRawUrl(url As String) As String
+            If url.StartsWith("github://") Then
+                Return url _
+                    .Replace("github://", "https://raw.githubusercontent.com/") _
+                    .Replace("/blob/master/", "/master/")
+            Else
+                Return url
+            End If
+        End Function
+
+        Private Function mapToLocalUrl(url As String) As String
+            url = Strings.Split(url, "//").Last
+
+            Dim tokens$() = url.Split("/"c)
+            Dim folders As String = tokens.Take(tokens.Length - 1).JoinBy("/")
+
+            url = tokens.Last.NormalizePathString
+            url = App.AppSystemTemp & "/" & folders & "/" & url
+
+            Call folders.MakeDir
+
+            Return url
         End Function
     End Module
 End Namespace

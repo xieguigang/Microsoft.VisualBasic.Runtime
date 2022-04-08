@@ -1,50 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::9d92e0c5aa27014389535aef2669c1eb, Microsoft.VisualBasic.Core\src\ComponentModel\Count.vb"
+﻿#Region "Microsoft.VisualBasic::e33dbabb23de3f7ed96b705bea945e8e, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Counter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Counter
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: Hit
-' 
-'         Sub: Add
-' 
-'     Module CounterExtensions
-' 
-'         Function: AsInteger, AsNumeric
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 75
+    ' Comment Lines: 28
+    '   Blank Lines: 20
+    '     File Size: 4.16 KB
+
+
+    '     Class Counter
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CompareTo, Hit
+    ' 
+    '         Sub: Add
+    ' 
+    '         Operators: <=, <>, =, >=
+    ' 
+    '     Module CounterExtensions
+    ' 
+    '         Function: AsInteger, AsNumeric, Pop
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +69,9 @@ Namespace ComponentModel
     ''' The object counter
     ''' </summary>
     Public Class Counter : Inherits i32
+        Implements IComparable
+        Implements IComparable(Of Integer)
+        Implements IComparable(Of Counter)
 
         ''' <summary>
         ''' Create a new integer counter start from ZERO.(新建一个计数器)
@@ -81,6 +96,42 @@ Namespace ComponentModel
         Public Function Hit() As Integer
             Return ++Me
         End Function
+
+        Public Overloads Function CompareTo(other As Counter) As Integer Implements IComparable(Of Counter).CompareTo
+            If other Is Nothing Then
+                Return 1
+            Else
+                Return Value.CompareTo(other.Value)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' the count hit value is equals to each other?
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator =(a As Counter, b As Counter) As Boolean
+            Return a.Value = b.Value
+        End Operator
+
+        Public Overloads Shared Operator >=(a As Counter, b As Integer) As Boolean
+            Return a.Value >= b
+        End Operator
+
+        Public Overloads Shared Operator <=(a As Counter, b As Integer) As Boolean
+            Return a.Value <= b
+        End Operator
+
+        ''' <summary>
+        ''' the count hit value is not equals to each other?
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator <>(a As Counter, b As Counter) As Boolean
+            Return a.Value <> b.Value
+        End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(c As Integer) As Counter

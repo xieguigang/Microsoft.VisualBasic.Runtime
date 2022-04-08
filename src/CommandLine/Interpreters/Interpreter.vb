@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b26540f344ecc5650ef5013695ca69ef, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::c7aad64e5bc0f948b6bd738050ff874d, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 668
+    '    Code Lines: 381
+    ' Comment Lines: 201
+    '   Blank Lines: 86
+    '     File Size: 29.19 KB
+
 
     '     Class Interpreter
     ' 
@@ -239,7 +249,8 @@ Namespace CommandLine
                         ex = New Exception(cli.ToString, ex)
 
                         Call App.LogException(ex)
-                        Call ex.PrintException
+                        Call ex.PrintException(enableRedirect:=False)
+                        Call VBDebugger.WaitOutput()
 
                         Return 500
                     End Try

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f038ed2715d52cac85ef0aa2fe9f807, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b1001930f9c4b17a4eb8503d1592fbf6, sciBASIC#\Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 77
+    ' Comment Lines: 31
+    '   Blank Lines: 18
+    '     File Size: 4.49 KB
+
+
     '     Module LinuxRunHelper
     ' 
     '         Function: BashRun, BashShell, GetLocationHelper, getRunnerBash, MonoRun
@@ -40,6 +50,11 @@
     ' /********************************************************************************/
 
 #End Region
+
+#If netcore5 = 1 Then
+Imports System.Buffers
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+#End If
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -121,28 +136,44 @@ Namespace My.UNIX
         End Function
 
         ''' <summary>
-        ''' Run linux command
+        ''' Run linux command via ``/bin/bash``
         ''' </summary>
         ''' <param name="command"></param>
         ''' <param name="args"></param>
         ''' <param name="verbose"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="CommandLine.Call"/>
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Shell(command As String, args As String, Optional verbose As Boolean = False, Optional stdin$ = Nothing) As String
-            Dim cmdl As String
+            If command = "docker" Or command = "/usr/bin/docker" Then
+                Dim bash As New StringBuilder("#!/bin/bash" & vbLf)
+                Dim script As String = $"/tmp/{App.GetNextUniqueName("docker_")}_{App.PID.ToHexString}.sh"
+                bash.AppendLine()
+                bash.AppendLine($"{command} {args}")
+                bash.SaveTo(script)
 
-            If args.StringEmpty Then
-                cmdl = command
+                'Call Console.WriteLine(bash.ToString)
+                'Call Console.WriteLine(script)
+
+                Return CommandLine.Call(script)
             Else
-                cmdl = $"{command} {args}"
-            End If
+                Dim cmdl As String
 
-            If verbose Then
-                Call Console.WriteLine("run commandline:")
-                Call Console.WriteLine($"/bin/bash -c ""{cmdl}""")
-            End If
+                If args.StringEmpty Then
+                    cmdl = command
+                Else
+                    cmdl = $"{command} {args}"
+                End If
 
-            Return CommandLine.Call("/bin/bash", $"-c ""{cmdl}""", [in]:=stdin)
+                If verbose Then
+                    Call Console.WriteLine("run commandline:")
+                    Call Console.WriteLine($"/bin/bash -c ""{cmdl}""")
+                End If
+
+                Return CommandLine.Call("/bin/bash", $"-c ""{cmdl}""", [in]:=stdin)
+            End If
         End Function
     End Module
 End Namespace

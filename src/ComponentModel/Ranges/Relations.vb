@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46642feb1338db563f29bfee8498d597, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Relations.vb"
+﻿#Region "Microsoft.VisualBasic::1ff373be14dc1263b63cdc3e1eb3d107, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Relations.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 8
+    ' Comment Lines: 12
+    '   Blank Lines: 2
+    '     File Size: 556.00 B
+
+
     '     Enum Relations
     ' 
     '         Equals, Include, IncludeBy
@@ -47,9 +57,22 @@
 Namespace ComponentModel.Ranges
 
     Public Enum Relations As Byte
+
+        ''' <summary>
+        ''' a &lt;> b
+        ''' </summary>
         Irrelevant = 0
+        ''' <summary>
+        ''' a = b
+        ''' </summary>
         Equals
+        ''' <summary>
+        ''' a = {b} (a including b, b is one of the element in range a)
+        ''' </summary>
         Include
+        ''' <summary>
+        ''' b = {a} (a is included by b, a is one of the element in range b)
+        ''' </summary>
         IncludeBy
     End Enum
 End Namespace

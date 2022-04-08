@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1da58685ed6ef204d07121ad3a8890fd, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1ea05d24e01bfd08268b14b0fe7aa3bb, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 290
+    '    Code Lines: 141
+    ' Comment Lines: 114
+    '   Blank Lines: 35
+    '     File Size: 11.54 KB
+
+
     '     Delegate Function
     ' 
     ' 
@@ -41,9 +51,9 @@
     ' 
     '         Properties: seeds
     ' 
-    '         Function: GetNextBetween, (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian
-    '                   NextInteger, NextTriangular, Permutation, randf, RandomSingle
-    '                   Seed
+    '         Function: [Next], GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble
+    '                   (+2 Overloads) NextGaussian, NextInteger, NextTriangular, Permutation, randf
+    '                   RandomSingle, Seed
     ' 
     '         Sub: SetSeed, (+3 Overloads) Shuffle
     ' 
@@ -83,6 +93,11 @@ Namespace Math
     ''' 
     <Package("Random", Publisher:="rvs76", Description:="Some extension methods for Random for creating a few more kinds of random stuff.")>
     Public Module RandomExtensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function [Next](Of T)(array As T()) As T
+            Return array(seeds.Next(0, array.Length))
+        End Function
 
         ''' <summary>
         ''' A number used to calculate a starting value for the pseudo-random number sequence.
@@ -124,6 +139,10 @@ Namespace Math
             Return seeds.NextDouble()
         End Function
 
+        Public Function NextDouble() As Double
+            Return seeds.NextDouble
+        End Function
+
         ''' <summary>
         ''' Returns a non-negative random integer that is less than the specified maximum.
         ''' </summary>
@@ -152,6 +171,18 @@ Namespace Math
             SyncLock seeds
                 Return seeds.NextDouble(range:=rng)
             End SyncLock
+        End Function
+
+        ''' <summary>
+        ''' Returns a random floating-point number that is greater than or equal to min of the range,
+        ''' and less than the max of the range.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function NextDouble(min As Double, max As Double) As Double
+            Return (max - min) * seeds.NextDouble + min
         End Function
 
         ''' <summary>
@@ -238,8 +269,13 @@ Namespace Math
         ''' </remarks>
         <ExportAPI("NextBoolean")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function NextBoolean(r As Random) As Boolean
+        <Extension>
+        Public Function NextBoolean(r As Random) As Boolean
             Return r.[Next](2) > 0 ' 1 > 0 OR 0 > 0
+        End Function
+
+        Public Function NextBoolean() As Boolean
+            Return seeds.[Next](2) > 0 ' 1 > 0 OR 0 > 0
         End Function
 
         ''' <summary>

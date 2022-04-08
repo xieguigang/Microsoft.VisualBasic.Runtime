@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca14b5fdbc14310fce50c21b66ac1ad4, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::d416036c65263774d092b0ea2aaa40e1, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 179
+    '    Code Lines: 104
+    ' Comment Lines: 53
+    '   Blank Lines: 22
+    '     File Size: 6.68 KB
+
+
     '     Module Base64Codec
     ' 
     '         Function: __getImageFromBase64, __toBase64String, Base64RawBytes, Base64String, DecodeBase64
-    '                   GetImage, (+3 Overloads) ToBase64String, (+2 Overloads) ToStream
+    '                   GetImage, IsBase64Pattern, (+4 Overloads) ToBase64String, (+2 Overloads) ToStream
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,9 +56,10 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Net.Http
 
@@ -56,6 +67,20 @@ Namespace Net.Http
     ''' Tools API for encoded the image into a base64 string.
     ''' </summary>
     Public Module Base64Codec
+
+        ReadOnly base64Chrs As Index(Of Char) = Enumerable.Range(Asc("a"c), 26) _
+            .JoinIterates(Enumerable.Range(Asc("A"c), 26)) _
+            .Select(Function(a) Chr(a)) _
+            .JoinIterates({"/"c, "+"c, "="c}) _
+            .JoinIterates({"0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c}) _
+            .Indexing
+
+        Public Function IsBase64Pattern(str As String) As Boolean
+            Dim allChars As Char() = str.Distinct.OrderBy(Function(c) c).ToArray
+            Dim test As Boolean = allChars.All(Function(c) c Like base64Chrs)
+
+            Return test
+        End Function
 
 #Region "text"
 
@@ -91,6 +116,12 @@ Namespace Net.Http
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToBase64String(byts As IEnumerable(Of Byte)) As String
+            Return Convert.ToBase64String(byts.ToArray)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToBase64String(byts As MemoryStream) As String
             Return Convert.ToBase64String(byts.ToArray)
         End Function
 #End Region

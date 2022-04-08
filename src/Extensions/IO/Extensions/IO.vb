@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daf274f5260749c385e7e96bb0a5868c, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::57810654eb0d80ac4d61d7e0d83ef57f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 245
+    '    Code Lines: 128
+    ' Comment Lines: 93
+    '   Blank Lines: 24
+    '     File Size: 9.83 KB
+
 
     ' Module IOExtensions
     ' 
@@ -76,7 +86,9 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' 
+    ''' copy the data from the input <paramref name="stream"/> to 
+    ''' the target file which is specified by the parameter
+    ''' <paramref name="path"/>
     ''' </summary>
     ''' <param name="stream">
     ''' 必须要能够支持<see cref="Stream.Length"/>，对于有些网络服务器的HttpResponseStream可能不支持
@@ -87,9 +99,11 @@ Public Module IOExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function FlushStream(stream As Stream, path$) As Boolean
-        Dim buffer As Byte() = New Byte(stream.Length - 1) {}
-        Call stream.Read(buffer, Scan0, stream.Length)
-        Return buffer.FlushStream(path)
+        Using writer As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call stream.CopyTo(writer)
+            Call writer.Flush()
+            Call writer.Close()
+        End Using
     End Function
 
     ''' <summary>
@@ -100,8 +114,13 @@ Public Module IOExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub FlushTo(data$, out As StreamWriter)
+    Public Sub FlushTo(data$, out As StreamWriter, Optional closeFile As Boolean = False)
         Call out.WriteLine(data)
+
+        If closeFile Then
+            Call out.Flush()
+            Call out.Dispose()
+        End If
     End Sub
 
     ''' <summary>
@@ -154,12 +173,15 @@ Public Module IOExtensions
     ''' 是否将原来的文件之中的数据清空？默认不是，否则将会以追加模式工作
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 这个函数只有在完全处于<see cref="FileMode.Open"/>模式下，并且readonly为TRUE，这个时候才会有可能将所有原始数据一次性读取进入内存中
+    ''' </remarks>
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path$,
                          Optional mode As FileMode = FileMode.OpenOrCreate,
                          Optional doClear As Boolean = False,
-                         Optional [readOnly] As Boolean = False) As FileStream
+                         Optional [readOnly] As Boolean = False) As Stream
 
         Dim access As FileShare
 
@@ -183,6 +205,15 @@ Public Module IOExtensions
         Else
             ' 读操作，则只允许共享读文件
             access = FileShare.Read
+        End If
+
+        If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Heavy Then
+            If path.FileLength < 1024& * 1024& * 1024& * 2& Then
+                Call Console.WriteLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
+                Call Console.WriteLine($"loads all binary data into memory for max performance!")
+
+                Return New MemoryStream(path.ReadBinary)
+            End If
         End If
 
         Return New FileStream(path, mode, If([readOnly], FileAccess.Read, FileAccess.ReadWrite), access, App.BufferSize)

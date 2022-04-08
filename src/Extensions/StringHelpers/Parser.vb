@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d133fe0382c51c436a9d0b44bef8ddf, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::4bd785b0bb78c24e2b580bf518e2d01f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 344
+    '    Code Lines: 212
+    ' Comment Lines: 89
+    '   Blank Lines: 43
+    '     File Size: 10.33 KB
+
+
     ' Module PrimitiveParser
     ' 
     '     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
-    '               (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger, ParseLong
-    '               ParseSingle, ParseTimeSpan
+    '               IsSimpleNumber, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
+    '               ParseLong, ParseSingle, ParseTimeSpan
     ' 
     ' /********************************************************************************/
 
@@ -80,10 +90,13 @@ Public Module PrimitiveParser
 #Region "text token pattern assert"
     ' 2019-04-17 正则表达式的执行效率过低
 
+    ''' <summary>
+    ''' NA literal is comes from the Rscript environment
+    ''' </summary>
     ReadOnly NaN As Index(Of String) = {
         "正无穷大", "负无穷大", "非数字",
         "Infinity", "-Infinity",
-        "NaN",
+        "NaN", "NA",
         "∞", "-∞"
     }
 
@@ -172,7 +185,7 @@ Public Module PrimitiveParser
         If num Is Nothing OrElse num = "" Then
             Return False
         Else
-            c = num(Scan0)
+            c = num(offset)
         End If
 
         ' check for number sign symbol

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35489166c3921897868360271a31e3dd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb"
+﻿#Region "Microsoft.VisualBasic::37e12e83fd66148fc3454c92a5173268, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 98
+    ' Comment Lines: 43
+    '   Blank Lines: 19
+    '     File Size: 5.92 KB
+
 
     '     Class Index
     ' 
@@ -170,7 +180,7 @@ Namespace ApplicationServices.Terminal.Utility
 
                 For Each opt As NamedValue(Of String) In man.OPTIONS.SafeQuery
                     Call text.AppendLine(".PP")
-                    Call text.AppendLine($"\fB{opt.Name}\fB \fR\- {opt.Value}")
+                    Call text.AppendLine($"\fB{opt.Name}\fB \fR\- {opt.Value}. {opt.Description}")
                     Call text.AppendLine(".PP")
                 Next
             End If

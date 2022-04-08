@@ -1,75 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::da95ee99a60e21d9671e1700c65d59bc, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::3f0b263a722e820cb244b5f83fcf977a, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Interface IJavaScriptObjectAccessor
-' 
-'         Properties: Accessor
-' 
-'     Class Descriptor
-' 
-'         Properties: configurable, enumerable, value, writable
-' 
-'     Enum MemberAccessorResult
-' 
-'         ClassMemberProperty, ExtensionProperty, Undefined
-' 
-'  
-' 
-' 
-' 
-'     Class JavaScriptValue
-' 
-'         Properties: Accessor, IsConstant, Literal
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: GetValue, ToString
-' 
-'         Sub: SetValue
-' 
-'     Class JavaScriptObject
-' 
-'         Properties: length, this
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
-'                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, ToString
-' 
-'         Sub: Delete
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 191
+    '    Code Lines: 139
+    ' Comment Lines: 21
+    '   Blank Lines: 31
+    '     File Size: 7.35 KB
+
+
+    '     Class JavaScriptObject
+    ' 
+    '         Properties: length, this
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
+    '                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join, ToString
+    ' 
+    '         Sub: Delete
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -77,81 +61,9 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace My.JavaScript
-
-    Public Interface IJavaScriptObjectAccessor
-        Default Property Accessor(name As String) As Object
-    End Interface
-
-    Public Class Descriptor
-
-        Public Property value As Object
-        Public Property writable As Boolean
-        Public Property enumerable As Boolean
-        Public Property configurable As Boolean
-
-    End Class
-
-    Public Enum MemberAccessorResult
-        ''' <summary>
-        ''' Member is not exists in current javascript object
-        ''' </summary>
-        Undefined
-        ''' <summary>
-        ''' IS a member property in this javascript object
-        ''' </summary>
-        ClassMemberProperty
-        ''' <summary>
-        ''' Is an extension property object this javascript object
-        ''' </summary>
-        ExtensionProperty
-    End Enum
-
-    Public Class JavaScriptValue
-
-        Public Property Accessor As BindProperty(Of DataFrameColumnAttribute)
-        Public Property Literal As Object
-
-        Dim target As JavaScriptObject
-
-        Public ReadOnly Property IsConstant As Boolean
-            Get
-                Return Accessor.IsNull
-            End Get
-        End Property
-
-        Sub New(bind As BindProperty(Of DataFrameColumnAttribute), target As JavaScriptObject)
-            Me.Accessor = bind
-            Me.target = target
-        End Sub
-
-        Sub New()
-        End Sub
-
-        Public Function GetValue() As Object
-            If IsConstant Then
-                Return Literal
-            Else
-                Return Accessor.GetValue(target)
-            End If
-        End Function
-
-        Public Sub SetValue(value As Object)
-            If IsConstant Then
-                Literal = value
-            Else
-                Accessor.SetValue(target, value)
-            End If
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return any.ToString(GetValue)
-        End Function
-    End Class
 
     ''' <summary>
     ''' javascript object
@@ -179,7 +91,7 @@ Namespace My.JavaScript
         ''' </summary>
         ''' <param name="memberName"></param>
         ''' <returns></returns>
-        Default Public Property Accessor(memberName As String) As Object Implements IJavaScriptObjectAccessor.Accessor
+        Default Public Property Item(memberName As String) As Object Implements IJavaScriptObjectAccessor.Accessor
             Get
                 Return GetMemberValue(memberName, Nothing)
             End Get
@@ -295,7 +207,7 @@ Namespace My.JavaScript
             Next
         End Function
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Protected Overridable Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
             Yield IEnumerable_GetEnumerator1()
         End Function

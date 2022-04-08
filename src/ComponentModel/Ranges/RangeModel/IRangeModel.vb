@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59eb37d2a374c04c979f9f4952ad4a57, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IRangeModel.vb"
+﻿#Region "Microsoft.VisualBasic::41b61ec31306d7bec8bde887b326d10f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IRangeModel.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,16 @@
 
     ' Summaries:
 
-    '     Interface IRange
-    ' 
-    '         Properties: Max, Min
-    ' 
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 8
+    ' Comment Lines: 22
+    '   Blank Lines: 4
+    '     File Size: 1.40 KB
+
+
     '     Interface IRangeModel
     ' 
     '         Function: (+2 Overloads) IsInside, IsOverlapping

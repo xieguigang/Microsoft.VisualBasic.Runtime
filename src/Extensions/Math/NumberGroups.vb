@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e29c929dbfbd2169572b406b503398f, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::f64c610ec46173e61ace65757363e124, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,24 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 379
+    '    Code Lines: 247
+    ' Comment Lines: 88
+    '   Blank Lines: 44
+    '     File Size: 14.36 KB
+
+
+    '     Interface INumericKey
+    ' 
+    '         Properties: key
+    ' 
     '     Module NumberGroups
     ' 
-    '         Function: BinarySearch, (+3 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
-    '                   Match, Min
+    '         Function: BinarySearch, diff, (+5 Overloads) GroupBy, GroupByImpl, GroupByParallel
+    '                   Groups, Match, Min
     ' 
     '     Interface IVector
     ' 
@@ -50,20 +64,48 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Parallel
 Imports stdNum = System.Math
 
 Namespace Math
 
+    Public Interface INumericKey
+        Property key As Double
+    End Interface
+
     ''' <summary>
     ''' Simple number vector grouping
     ''' </summary>
     Public Module NumberGroups
+
+        ''' <summary>
+        ''' ### Lagged Differences
+        ''' 
+        ''' Returns suitably lagged and iterated differences.
+        ''' </summary>
+        ''' <param name="x">
+        ''' a numeric vector Or matrix containing the values To be differenced.
+        ''' </param>
+        ''' <returns></returns>
+        <ExportAPI("diff")>
+        Public Function diff(x As Double()) As Double()
+            Dim diffs As New List(Of Double)
+            Dim base As Double = x(Scan0)
+
+            For Each xi As Double In x.Skip(1)
+                diffs.Add(xi - base)
+                base = xi
+            Next
+
+            Return diffs.ToArray
+        End Function
 
         <Extension>
         Public Function Match(Of T As IVector)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As Double
@@ -169,15 +211,28 @@ Namespace Math
             End With
         End Function
 
+        '''' <summary>
+        '''' 将一维的数据按照一定的偏移量分组输出
+        '''' </summary>
+        '''' <param name="source"></param>
+        '''' <returns></returns>
+        '<Extension>
+        'Public Function GroupBy(Of T)(source As IEnumerable(Of T),
+        '                              evaluate As Evaluate(Of T),
+        '                              equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
+
+        '    Return source.GroupBy(AddressOf evaluate.Invoke, equals)
+        'End Function
+
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
-                                                           evaluate As Func(Of T, Double),
-                                                           equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
-
+        <Extension>
+        Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
+                                               evaluate As Func(Of T, Double),
+                                               equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
 #If NET_48 = 1 Or netcore5 = 1 Then
 
             ' 先进行预处理：求值然后进行排序
@@ -233,19 +288,19 @@ Namespace Math
                 .AsList
 
             ' 先分割，再对name做分组
-            Dim union = partitions.GroupByImpl(Function(part) Val(part.Name), equals)
+            Dim union = partitions.GroupByImpl(Function(part) Val(part.name), equals)
 
             For Each unionGroup In union
-                Dim name$ = unionGroup.Name
+                Dim name$ = unionGroup.name
                 Dim data = unionGroup _
-                    .Value _
-                    .Select(Function(member) member.Value) _
+                    .value _
+                    .Select(Function(member) member.value) _
                     .IteratesALL _
                     .ToArray
 
                 Yield New NamedCollection(Of T) With {
-                    .Name = name,
-                    .Value = data
+                    .name = name,
+                    .value = data
                 }
             Next
         End Function
@@ -286,11 +341,11 @@ Namespace Math
             Return groups _
                 .Select(Function(tuple)
                             Return New NamedCollection(Of T) With {
-                                .Name = tuple.avg.Average,
-                                .Value = tuple.list
+                                .name = tuple.avg.Average,
+                                .value = tuple.list
                             }
                         End Function) _
-                .OrderBy(Function(tuple) Val(tuple.Name)) _
+                .OrderBy(Function(tuple) Val(tuple.name)) _
                 .ToArray
         End Function
 
@@ -317,6 +372,28 @@ Namespace Math
         <Extension>
         Public Function GroupBy(numbers As IEnumerable(Of Double), offsets#) As IEnumerable(Of NamedCollection(Of Double))
             Return numbers.GroupBy(Self(Of Double), Function(a, b) stdNum.Abs(a - b) <= offsets)
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="numbers"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GroupBy(numbers As IEnumerable(Of Double), tolerance As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of Double))
+            Return numbers.GroupBy(Self(Of Double), tolerance)
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="numbers"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GroupBy(Of T As INumericKey)(numbers As IEnumerable(Of T), tolerance As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
+            Return numbers.GroupBy(Function(i) i.key, tolerance)
         End Function
 
         ''' <summary>

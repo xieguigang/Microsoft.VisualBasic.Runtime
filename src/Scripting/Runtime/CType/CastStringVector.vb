@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7b3b2bcbd65e2cca27ea57113bcafca, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::c3eccbb9ee12b95e304571a11a288053, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 161
+    '    Code Lines: 85
+    ' Comment Lines: 60
+    '   Blank Lines: 16
+    '     File Size: 6.57 KB
+
 
     '     Module CastStringVector
     ' 
@@ -133,7 +143,8 @@ Namespace Scripting.Runtime
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Function AsType(Of T)(source As IEnumerable(Of String)) As IEnumerable(Of T)
+        <Extension>
+        Public Function AsType(Of T)(source As IEnumerable(Of String)) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
             Dim [ctype] As LoadObject = InputHandler.CasterString(type)
             Dim result = source.Select(Function(x) DirectCast([ctype](x), T))
@@ -160,21 +171,41 @@ Namespace Scripting.Runtime
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' parse string as float number in batch mode
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsSingle(source As IEnumerable(Of String)) As Single()
             Return source.AsType(Of Single).ToArray
         End Function
 
+        ''' <summary>
+        ''' parse string as boolean in batch mode
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsBoolean(source As IEnumerable(Of String)) As Boolean()
             Return source.AsType(Of Boolean).ToArray
         End Function
 
+        ''' <summary>
+        ''' parse string as integer in batch mode
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsInteger(source As IEnumerable(Of String)) As Integer()
             Return source.AsType(Of Integer).ToArray
         End Function
 
+        ''' <summary>
+        ''' parse string as gdi+ color object in batch mode
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsColor(source As IEnumerable(Of String)) As Color()
             Return source.AsType(Of Color).ToArray

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a03dc56605445e07c6f23f658528f3f, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::3ff5adbfb2ab12789802898a6ca21eca, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 474
+    '    Code Lines: 276
+    ' Comment Lines: 145
+    '   Blank Lines: 53
+    '     File Size: 18.52 KB
+
+
     ' Module TextDoc
     ' 
-    '     Function: ForEachChar, IsTextFile, IterateAllLines, LineIterators, LoadTextDoc
+    '     Function: ForEachChar, IsTextFile, (+2 Overloads) IterateAllLines, LineIterators, LoadTextDoc
     '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
     '               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
     '               TsvHeaders
@@ -108,9 +118,13 @@ Public Module TextDoc
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function LineIterators(handle$) As IEnumerable(Of String)
+    Public Function LineIterators(handle$,
+                                  Optional encoding As Encodings = Encodings.Default,
+                                  Optional strictFile As Boolean = False) As IEnumerable(Of String)
         If handle.FileExists Then
-            Return handle.IterateAllLines
+            Return handle.IterateAllLines(encoding)
+        ElseIf strictFile Then
+            Throw New FileNotFoundException($"missing target file at location: {handle.GetFullPath}")
         Else
             Return handle.LineTokens
         End If
@@ -194,7 +208,18 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
     <Extension>
-    Public Iterator Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+    Public Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+        Return path.IterateAllLines(encoding.CodePage)
+    End Function
+
+    ''' <summary>
+    ''' Reading a super large size text file through stream method.
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns>不存在的文件会返回空集合</returns>
+    <Extension>
+    Public Iterator Function IterateAllLines(path$, encoding As Encoding) As IEnumerable(Of String)
         If path.IsURLPattern Then
             For Each line As String In path.GET.LineTokens
                 Yield line
@@ -209,9 +234,8 @@ Public Module TextDoc
             Return
         End If
 
-        Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
-            Using reader As New StreamReader(fs, encoding.CodePage)
-
+        Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine
                 Loop
@@ -328,7 +352,7 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllLines(path$, Optional Encoding As Encoding = Nothing) As String()
         If path.FileExists Then
-            Return File.ReadAllLines(path, encoding:=Encoding Or DefaultEncoding)
+            Return path.IterateAllLines(encoding:=Encoding).ToArray
         Else
             Return New String() {}
         End If
@@ -462,10 +486,14 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(array As IEnumerable(Of String), path$, Optional encoding As Encoding = Nothing) As Boolean
+    ''' <remarks>
+    ''' 这个函数是以For循环的方式来兼容大型数据集的文件写入操作的
+    ''' </remarks>
+    <Extension>
+    Public Function SaveTo(array As IEnumerable(Of String), path$,
+                           Optional encoding As Encoding = Nothing,
+                           Optional newLine As Char = ASCII.LF) As Boolean
+
         If String.IsNullOrEmpty(path) Then
             Return False
         End If
@@ -473,7 +501,9 @@ Public Module TextDoc
         Call "".SaveTo(path)
 
         Using fs As New FileStream(path, FileMode.OpenOrCreate),
-            file As New StreamWriter(fs, encoding Or DefaultEncoding)
+            file As New StreamWriter(fs, encoding Or DefaultEncoding) With {
+                .NewLine = newLine
+            }
 
             For Each line$ In array.SafeQuery
                 Call file.WriteLine(line)

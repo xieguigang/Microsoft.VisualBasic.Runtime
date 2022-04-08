@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450dd0eb3e616839e96d8fd2c0df00fb, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::bbb02d80e95ae87e727150f71f9da47b, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 366
+    '    Code Lines: 236
+    ' Comment Lines: 81
+    '   Blank Lines: 49
+    '     File Size: 13.66 KB
+
+
     '     Module HtmlStrips
     ' 
     '         Constructor: (+1 Overloads) Sub New
@@ -38,7 +48,7 @@
     '                   GetSelectOptions, GetSelectValue, GetValue, HtmlLines, HtmlList
     '                   HTMLTitle, paragraph, Regexp, RemovesCSSstyles, RemovesFooter
     '                   RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks, RemovesJavaScript
-    '                   RemoveTags, StripHTMLTags, stripTag, TrimResponseTail
+    '                   RemoveTags, StripHTMLTags, TrimResponseTail
     ' 
     ' 
     ' /********************************************************************************/
@@ -322,18 +332,6 @@ Namespace Text.Parser.HtmlParser
                     Return splitOut
                 End If
             End If
-        End Function
-
-        <Extension> Private Function stripTag(ByRef tag$) As String
-            If tag Is Nothing Then
-                tag = ""
-            Else
-                tag = tag _
-                    .Trim("<"c) _
-                    .Trim(">"c) _
-                    .Trim("/"c)
-            End If
-            Return tag
         End Function
 
         ''' <summary>

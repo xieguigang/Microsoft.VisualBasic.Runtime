@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::781b185dab07cc8d30b406dfff03edd1, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
+﻿#Region "Microsoft.VisualBasic::4a12f01427b67c195135c1bb479f62a4, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 248
+    '    Code Lines: 158
+    ' Comment Lines: 65
+    '   Blank Lines: 25
+    '     File Size: 8.79 KB
+
 
     ' Module CollectionValueGetter
     ' 
@@ -112,19 +122,24 @@ Public Module CollectionValueGetter
     End Function
 
     ''' <summary>
-    ''' This is a safely method for gets the value in a array, if the index was outside of the boundary, then the default value will be return.
+    ''' This is a safely method for gets the value in a array, if the index was 
+    ''' outside of the boundary, then the default value will be return.
     ''' (假若下标越界的话会返回默认值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for return when the array object is nothing or index outside of the boundary.</param>
+    ''' <param name="[default]">
+    ''' Default value for return when the array object is nothing or index outside of the boundary.
+    ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension>
+    Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
         If array.IsNullOrEmpty Then
             Return [default]
         End If
 
+        ' 负数值直接返回默认值
         If index < 0 OrElse index >= array.Length Then
             Return [default]
         End If
@@ -184,11 +199,14 @@ Public Module CollectionValueGetter
     ''' <param name="keys"></param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
-                                                             keys As TKey(),
-                                                             Optional [default] As TValue = Nothing,
-                                                             Optional mute As Boolean = False,
-                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
+    <Extension>
+    Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+                                                 keys As TKey(),
+                                                 Optional [default] As TValue = Nothing,
+                                                 Optional mute As Boolean = False,
+                                                 <CallerMemberName>
+                                                 Optional trace$ = Nothing) As TValue
+
         ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
         ' 直接返回默认值
         If table Is Nothing Then
@@ -259,7 +277,8 @@ Public Module CollectionValueGetter
         Return table(index)
     End Function
 
-    <Extension> Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
+    <Extension>
+    Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
         If hash Is Nothing Then
             Return Nothing
         End If

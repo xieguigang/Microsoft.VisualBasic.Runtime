@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e509d6bd110f54472c75507449c78e9, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::97a8ba1406ac068eed28744e54a57846, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 440
+    '    Code Lines: 252
+    ' Comment Lines: 143
+    '   Blank Lines: 45
+    '     File Size: 18.32 KB
+
 
     ' Module VBDebugger
     ' 
@@ -261,7 +271,11 @@ Public Module VBDebugger
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+    Public Function PrintException(Of ex As Exception)(exception As ex,
+                                                       <CallerMemberName>
+                                                       Optional memberName$ = "",
+                                                       Optional enableRedirect As Boolean = True) As Boolean
+
         Dim lines = New Exception(memberName, exception).ToString.LineTokens
         Dim exceptions$() = Strings.Split(lines.First, "--->")
         Dim formats = exceptions(0) & vbCrLf &
@@ -270,7 +284,7 @@ Public Module VBDebugger
             vbCrLf &
             lines.Skip(1).JoinBy(vbCrLf)
 
-        Return formats.PrintException(memberName)
+        Return formats.PrintException(memberName, enableRedirect)
     End Function
 
     ''' <summary>
@@ -282,8 +296,12 @@ Public Module VBDebugger
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
-        If My.Log4VB.redirectError Is Nothing Then
+    Public Function PrintException(msg$,
+                                   <CallerMemberName>
+                                   Optional memberName$ = "",
+                                   Optional enableRedirect As Boolean = True) As Boolean
+
+        If My.Log4VB.redirectError Is Nothing OrElse Not enableRedirect Then
             Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
         Else
             Call My.Log4VB.redirectError(memberName, msg, MSG_TYPES.ERR)
@@ -474,11 +492,11 @@ Public Module VBDebugger
     ''' print message, alias for <see cref="Console.Write(String)"/>.(支持``sprintf``之中的转义字符)
     ''' </summary>
     ''' <param name="s$"></param>
-    Public Sub cat(s$)
+    Public Sub cat(ParamArray s As String())
         If Not Mute Then
             Call My.InnerQueue.AddToQueue(
                 Sub()
-                    Call Console.Write(s.ReplaceMetaChars)
+                    Call Console.Write(s.SafeQuery.Select(AddressOf ReplaceMetaChars).JoinBy(""))
                 End Sub)
         End If
     End Sub

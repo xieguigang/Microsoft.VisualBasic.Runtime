@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4716d19ec99e1438ef94d2a701d8ded, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\OperationTimeOut.vb"
+﻿#Region "Microsoft.VisualBasic::82d8a48a4f051f64a98db1f0c21d8878, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\OperationTimeOut.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 37
+    ' Comment Lines: 27
+    '   Blank Lines: 10
+    '     File Size: 2.65 KB
+
+
     '     Module TimeOutAPI
     ' 
     '         Function: (+3 Overloads) OperationTimeOut
@@ -61,7 +71,7 @@ Namespace Parallel
         ''' 
         <Extension>
         Public Function OperationTimeOut(Of T, TOut)(handle As Func(Of T, TOut), [in] As T, ByRef out As TOut, timeOut As Double) As Boolean
-            Dim invoke As New backgroundTask(Of TOut)(Function() handle([in]))
+            Dim invoke As New BackgroundTask(Of TOut)(Function() handle([in]))
             Dim i As Integer
 
             timeOut = timeOut * 1000

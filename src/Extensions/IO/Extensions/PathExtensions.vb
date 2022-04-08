@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acc7b0307a639e3fb2d5338819f44492, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::578d764912529950e2bc58f3cdeb3aca, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -31,17 +31,25 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 991
+    '    Code Lines: 588
+    ' Comment Lines: 297
+    '   Blank Lines: 106
+    '     File Size: 37.92 KB
+
+
     ' Module PathExtensions
     ' 
     '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
     '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
     '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-    '               GetFullPath, ListDirectory, ListFiles, Long2Short, (+2 Overloads) NormalizePathString
-    '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
-    '               (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile, ToDIR_URL
-    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
-    ' 
-    '     Sub: MakeDir
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
     ' 
     ' /********************************************************************************/
 
@@ -79,7 +87,7 @@ Public Module PathExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ChangeSuffix(path$, newSuffix$) As String
-        Return path.TrimSuffix & "." & newSuffix
+        Return path.TrimSuffix & "." & newSuffix.Trim("."c, "*"c)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -137,8 +145,12 @@ Public Module PathExtensions
     ''' <summary>
     ''' 函数返回文件的拓展名后缀，请注意，这里的返回值是不会带有小数点的
     ''' </summary>
-    ''' <param name="path$"></param>
-    ''' <returns></returns>
+    ''' <param name="path">the file path string</param>
+    ''' <returns>
+    ''' returns a file extension suffix name in lower case, if there is 
+    ''' no extension name or path string is empty, then empty string 
+    ''' value will be returned.
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path As String) As String
@@ -146,12 +158,12 @@ Public Module PathExtensions
             Return ""
         Else
             Dim fileName = path.Split("\"c).Last.Split("/"c).Last
-            Dim suffix = fileName.Split("."c).Last
+            Dim suffix As String = fileName.Split("."c).Last
 
             If fileName = suffix Then
                 Return ""
             Else
-                Return suffix
+                Return suffix.ToLower
             End If
         End If
     End Function
@@ -164,6 +176,9 @@ Public Module PathExtensions
     ''' <param name="path"></param>
     ''' <param name="isAny">不带小数点的文件拓展名列表</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' case ignored
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path$, ParamArray isAny As String()) As Boolean
@@ -201,7 +216,8 @@ Public Module PathExtensions
     ''' Make directory
     ''' </summary>
     ''' <param name="DIR"></param>
-    <Extension> Public Sub MakeDir(DIR$, Optional throwEx As Boolean = True)
+    <Extension>
+    Public Function MakeDir(DIR$, Optional throwEx As Boolean = True) As Boolean
         If DIR.StringEmpty OrElse DIR = "./" OrElse DIR = ".\" Then
             ' 2017-12-25
             ' 当前文件夹
@@ -215,6 +231,7 @@ Public Module PathExtensions
 
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
+            Return True
         Catch ex As Exception
             ex = New Exception("DIR value is: " & DIR, ex)
 
@@ -224,7 +241,9 @@ Public Module PathExtensions
                 Call App.LogException(ex)
             End If
         End Try
-    End Sub
+
+        Return False
+    End Function
 
     <Extension>
     Public Function PathCombine(path As String, addTag As String) As String
@@ -905,8 +924,18 @@ Public Module PathExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.FullPath")>
     <Extension>
-    Public Function GetFullPath(file As String) As String
-        Dim fullName As String = FileIO.FileSystem.GetFileInfo(file).FullName
+    Public Function GetFullPath(file As String, Optional throwEx As Boolean = True) As String
+        Dim fullName As String
+
+        Try
+            fullName = FileIO.FileSystem.GetFileInfo(file).FullName
+        Catch ex As Exception When throwEx
+            Throw
+        Catch ex As Exception
+            Call $"invalid file path [{file}]!".Warning
+            Return ""
+        End Try
+
         Dim UNCprefix As String = fullName.Match("\\\\\d+(\.\d+)+")
 
         If (Not UNCprefix.StringEmpty) AndAlso fullName.StartsWith(UNCprefix) Then

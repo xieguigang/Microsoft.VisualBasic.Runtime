@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e17390153e398d62e934039349beb25e, Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
+﻿#Region "Microsoft.VisualBasic::127d85c8ae8ca614fe863f4df0569911, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 1.53 KB
+
+
     '     Class WebResponseResult
     ' 
     '         Properties: headers, html, timespan, url
@@ -39,8 +49,8 @@
     ' 
     '         Properties: customHeaders, headers
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) TryGetValue
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Header404NotFound, (+2 Overloads) TryGetValue
     ' 
     ' 
     ' /********************************************************************************/
@@ -82,6 +92,13 @@ Namespace Net.Http
                 stringIndex(key.ToLower) = raw.Get(key)
             Next
         End Sub
+
+        Private Sub New()
+        End Sub
+
+        Public Shared Function Header404NotFound() As ResponseHeaders
+            Return New ResponseHeaders
+        End Function
 
         Public Function TryGetValue(header As HttpHeaderName) As String
             Return headers.TryGetValue(header)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcb465d1ae94b9658fc094d326463c14, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BinaryHeap.vb"
+﻿#Region "Microsoft.VisualBasic::3ae888f626a3b818319faa9b836de1a0, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BinaryHeap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 178
+    '    Code Lines: 118
+    ' Comment Lines: 32
+    '   Blank Lines: 28
+    '     File Size: 6.05 KB
+
 
     '     Class BinaryHeap
     ' 
@@ -68,7 +78,7 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
-        Default Public ReadOnly Property Item(i As Integer) As T
+        Default Public Property Item(i As Integer) As T
             Get
                 If i >= content.Count Then
                     Return Nothing
@@ -76,11 +86,18 @@ Namespace ComponentModel.Collection
                     Return content(i)
                 End If
             End Get
+            Set(value As T)
+                content(i) = value
+            End Set
         End Property
 
         Public ReadOnly Property peek As T
             Get
-                Return content(Scan0)
+                If content.Count > 0 Then
+                    Return content(Scan0)
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27cf818b5c02f6ae6739d23df3c966fc, Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::726d7bbcf639f8d3c9602f888104162c, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 48
+    ' Comment Lines: 22
+    '   Blank Lines: 8
+    '     File Size: 3.08 KB
+
 
     '     Module MIME
     ' 
@@ -74,6 +84,7 @@ Namespace Net.Protocols.ContentTypes
         Public Const ZIP As String = "application/zip"
         Public Const Png As String = "image/png"
         Public Const Xml As String = "text/xml"
+        Public Const Html As String = "text/html"
 
         ''' <summary>
         ''' ``application/octet-stream``

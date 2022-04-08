@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f1a80f26d3ae3ab31478c1b52f44d96, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::c3e517b9688e41d5a4b26b8de4f79305, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 405
+    '    Code Lines: 250
+    ' Comment Lines: 108
+    '   Blank Lines: 47
+    '     File Size: 16.06 KB
+
+
     '     Module GDIColors
     ' 
     '         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
@@ -53,6 +63,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
 Namespace Imaging
@@ -79,7 +90,8 @@ Namespace Imaging
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        <Extension> Public Function Middle(x As Color, y As Color) As Color
+        <Extension>
+        Public Function Middle(x As Color, y As Color) As Color
             Dim r% = (y.R - x.R) / 2 + x.R
             Dim g% = (y.G - x.G) / 2 + x.G
             Dim b% = (y.B - x.B) / 2 + x.B
@@ -254,11 +266,17 @@ Namespace Imaging
         ''' <param name="str">颜色表达式或者名称</param>
         ''' <returns></returns>
         <ExportAPI("Get.Color")>
-        <Extension> Public Function ToColor(str As String, Optional onFailure As Color = Nothing, Optional throwEx As Boolean = True) As Color
+        <Extension>
+        Public Function ToColor(str As String,
+                                Optional onFailure As Color = Nothing,
+                                Optional throwEx As Boolean = True,
+                                Optional ByRef success As Boolean = True) As Color
 #If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
+                success = False
                 Return Color.Black
             ElseIf str.TextEquals("transparent") Then
+                success = True
                 Return Color.Transparent
             End If
 
@@ -272,12 +290,16 @@ Namespace Imaging
                     Dim G As Integer = CInt(Val(tokens(1)))
                     Dim B As Integer = CInt(Val(tokens(2)))
 
+                    success = True
+
                     Return Color.FromArgb(R, G, B)
                 ElseIf tokens.Length = 4 Then ' argb
                     Dim A As Integer = CInt(Val(tokens(0)))
                     Dim R As Integer = CInt(Val(tokens(1)))
                     Dim G As Integer = CInt(Val(tokens(2)))
                     Dim B As Integer = CInt(Val(tokens(3)))
+
+                    success = True
 
                     Return Color.FromArgb(A, R, G, B)
                 End If
@@ -287,8 +309,11 @@ Namespace Imaging
             Dim key As String = str.ToLower
 
             If __allDotNETPrefixColors.ContainsKey(key) Then
+                success = True
                 Return __allDotNETPrefixColors(key)
             Else
+                success = False
+
                 ' __allDotNETPrefixColors里面已经包含有所有的颜色了
                 ' 如果不存在,则只能够返回空值了
                 If Not onFailure.IsEmpty Then
@@ -315,17 +340,27 @@ Namespace Imaging
         ''' 
         ''' </returns>
         <Extension>
-        Public Function TranslateColor(exp$, Optional throwEx As Boolean = True) As Color
+        Public Function TranslateColor(exp$,
+                                       Optional throwEx As Boolean = True,
+                                       Optional ByRef success As Boolean = False) As Color
+
             Static cache As New Dictionary(Of String, Color)
 
             If exp.StringEmpty Then
+                success = False
                 Return Color.Black
+            ElseIf cache.ContainsKey(exp) Then
+                success = Not cache(exp).IsEmpty
+                Return cache(exp)
             Else
-                Return cache.ComputeIfAbsent(exp, Function() ColorTranslatorInternal(exp, throwEx))
+                cache(exp) = ColorTranslatorInternal(exp, throwEx, success)
+                Return cache(exp)
             End If
         End Function
 
-        Private Function ColorTranslatorInternal(exp$, throwEx As Boolean) As Color
+        Private Function ColorTranslatorInternal(exp$, throwEx As Boolean, ByRef success As Boolean) As Color
+            success = True
+
             If exp.First = "#"c Then
                 ' 2017-2-2
                 ' 经过测试与3mf文件之中的材质颜色定义一致，没有问题
@@ -337,7 +372,7 @@ Namespace Imaging
                 Return ColorTranslator.FromOle(CInt(exp))
             End If
 
-            Return exp.ToColor(throwEx:=throwEx)
+            Return exp.ToColor(throwEx:=throwEx, success:=success)
         End Function
 
         <Extension>
@@ -421,7 +456,7 @@ Namespace Imaging
 
         <Extension>
         Public Function EuclideanDistance(a As Color, b As Color) As Double
-            Return Math.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})
+            Return DistanceMethods.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77217b3c2b3b5f041bd5529e7073b150, Microsoft.VisualBasic.Core\src\Language\Language\Python\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::2843442d7f9c74cde1791d4f1ce8ab15, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Python\Collection.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 25
+    ' Comment Lines: 23
+    '   Blank Lines: 7
+    '     File Size: 2.12 KB
+
+
     '     Module Collection
     ' 
     '         Function: slice, SpanSlice
@@ -57,40 +67,24 @@ Namespace Language.Python
         ''' </param>
         ''' <param name="[step]"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 20210810 test success by kdtree
+        ''' </remarks>
         <Extension>
         Public Iterator Function slice(Of T)([set] As IEnumerable(Of T),
                                              Optional start% = 0,
                                              Optional stop% = -1,
                                              Optional step% = 1) As IEnumerable(Of T)
-            Dim array As T()
 
-            If start = 0 AndAlso [stop] = -1 Then
-                ' [:] 所有的参数都被忽略掉了，返回序列的拷贝
-                For Each x In [set]
-                    Yield x
-                Next
-
-                Return
-            ElseIf start = 0 Then
-                array = [set].ToArray
-            Else
-                If start < 0 Then
-                    array = [set].ToArray
-                    start = array.Length + start
-                    array = array.Skip(start).ToArray
-                Else
-                    array = [set].Skip(start).ToArray
-                End If
-            End If
+            Dim array As T() = [set].ToArray
 
             If [stop] < 0 Then
                 [stop] = array.Length + [stop]
+            Else
+                [stop] -= 1
             End If
 
-            [stop] -= start
-            [stop] -= 1
-
-            For i As Integer = 0 To [stop] Step [step]
+            For i As Integer = start To [stop] Step [step]
                 Yield array(i)
             Next
         End Function

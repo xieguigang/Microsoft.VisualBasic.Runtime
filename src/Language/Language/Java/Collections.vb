@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05ed8542e0bde23290ea9842fb090118, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
+﻿#Region "Microsoft.VisualBasic::92789fc3f159cba49e8155950fb25b0d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 720
+    '    Code Lines: 126
+    ' Comment Lines: 551
+    '   Blank Lines: 43
+    '     File Size: 36.63 KB
+
+
     '     Module Collections
     ' 
-    '         Function: [get], (+2 Overloads) binarySearch, (+2 Overloads) indexedBinarySearch, (+2 Overloads) iteratorBinarySearch
+    '         Function: [get], (+2 Overloads) binarySearch, (+2 Overloads) indexedBinarySearch, (+2 Overloads) iteratorBinarySearch, put
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +55,7 @@ Imports System.Diagnostics
 Imports System.Collections
 Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Linq
+Imports System.Runtime.CompilerServices
 
 '
 ' * Copyright (c) 1997, 2014, Oracle and/or its affiliates. All rights reserved.
@@ -132,7 +143,12 @@ Namespace Language.Java
         Private Const REPLACEALL_THRESHOLD As Integer = 11
         Private Const INDEXOFSUBLIST_THRESHOLD As Integer = 35
 
-
+        <Extension>
+        Public Function put(Of K, V)(map As IDictionary(Of K, V), key As K, value As V) As V
+            Dim previous As V = If(map.ContainsKey(key), map(key), Nothing)
+            map(key) = value
+            Return previous
+        End Function
 
         ''' <summary>
         ''' Searches the specified list for the specified object using the binary

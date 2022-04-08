@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68b027c2426ee954592b66c111ef89b7, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::6ef04bbf0ea5d7bbdf559d7ad9abfa02, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 97
+    '    Code Lines: 44
+    ' Comment Lines: 34
+    '   Blank Lines: 19
+    '     File Size: 3.11 KB
+
+
     '     Class TagData
     ' 
     '         Properties: Key, Tag, TagStr
@@ -41,7 +51,8 @@
     ' 
     '     Class DoubleTagged
     ' 
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Class LongTagged
     ' 
@@ -128,6 +139,17 @@ Namespace ComponentModel.TagData
     ''' <typeparam name="T"></typeparam>
     Public Class DoubleTagged(Of T) : Inherits TagData(Of Double, T)
 
+        Sub New()
+        End Sub
+
+        Sub New(tag As Double, data As T)
+            Me.Tag = tag
+            Me.Value = data
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"({TagStr}) {Tag.ToString("G3")} - {Value.ToString}"
+        End Function
     End Class
 
     ''' <summary>

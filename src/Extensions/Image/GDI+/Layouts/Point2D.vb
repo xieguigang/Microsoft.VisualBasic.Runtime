@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b31ffe789fd07f7d6e2741fc15d059fa, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::4c6e4bcaf43cd53cf190230a393b776e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 159
+    '    Code Lines: 89
+    ' Comment Lines: 48
+    '   Blank Lines: 22
+    '     File Size: 5.67 KB
+
+
     '     Class Point2D
     ' 
-    '         Properties: Point, X, Y
+    '         Properties: Point, PointF, X, Y
     ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) Equals, ToString
+    '         Constructor: (+5 Overloads) Sub New
+    '         Function: Clone, (+3 Overloads) DistanceTo, (+2 Overloads) Equals, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +55,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
 Namespace Imaging.LayoutModel
@@ -104,6 +115,12 @@ Namespace Imaging.LayoutModel
             End Get
         End Property
 
+        Public ReadOnly Property PointF As PointF
+            Get
+                Return New PointF(X, Y)
+            End Get
+        End Property
+
         ''' <summary>
         ''' Constructs a new point at (0, 0).
         ''' </summary>
@@ -119,6 +136,11 @@ Namespace Imaging.LayoutModel
             Me.New(point.X, point.Y)
         End Sub
 
+        <DebuggerStepThrough>
+        Sub New(point As PointF)
+            Call Me.New(point.X, point.Y)
+        End Sub
+
         ''' <summary>
         ''' Constructs a new point at the location of the given point.
         ''' </summary>
@@ -132,6 +154,8 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         ''' <param name="x"> X-coordinate of the point to be created. </param>
         ''' <param name="y"> Y-coordinate of the point to be created. </param>
+        ''' 
+        <DebuggerStepThrough>
         Public Sub New(x As Double, y As Double)
             Me.X = x
             Me.Y = y
@@ -163,6 +187,18 @@ Namespace Imaging.LayoutModel
             Return New Point2D(X, Y)
         End Function
 
+        Public Function DistanceTo(b As Point) As Double
+            Return {X, Y}.EuclideanDistance(New Double() {b.X, b.Y})
+        End Function
+
+        Public Function DistanceTo(b As PointF) As Double
+            Return {X, Y}.EuclideanDistance(New Double() {b.X, b.Y})
+        End Function
+
+        Public Function DistanceTo(b As Point2D) As Double
+            Return {X, Y}.EuclideanDistance({b.X, b.Y})
+        End Function
+
         ''' <summary>
         ''' Returns a <code>String</code> that represents the value
         ''' of this <code>mxPoint</code>. </summary>
@@ -170,5 +206,9 @@ Namespace Imaging.LayoutModel
         Public Overrides Function ToString() As String
             Return Me.GetType().Name & "[" & X & ", " & Y & "]"
         End Function
+
+        Public Shared Narrowing Operator CType(p As Point2D) As PointF
+            Return New PointF(p.X, p.Y)
+        End Operator
     End Class
 End Namespace

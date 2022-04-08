@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20700decc0955f1c887c6de4cb752dd5, Microsoft.VisualBasic.Core\src\Language\Linq\Indexer.vb"
+﻿#Region "Microsoft.VisualBasic::21b606b1226b294efb6ef4c10082b3bb, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Indexer.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 33
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 1.81 KB
+
+
     '     Module Indexer
     ' 
     '         Function: Indexing
@@ -59,6 +69,8 @@ Namespace Language
 
             If type Is GetType(Integer) Then
                 Return {DirectCast(args, Integer)}
+            ElseIf type Is GetType(Double) OrElse type Is GetType(Single) Then
+                Return {CType(CDbl(args), Integer)}
             ElseIf type.ImplementInterface(GetType(IEnumerable(Of Integer))) Then
                 Return DirectCast(args, IEnumerable(Of Integer))
             ElseIf type.ImplementInterface(GetType(IEnumerable(Of Boolean))) Then

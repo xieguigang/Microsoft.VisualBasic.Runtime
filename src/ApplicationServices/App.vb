@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::771eb9fad2622b4d540deed296e93f6d, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::55aac9ecaa705432fa836bba8c6156ea, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -31,17 +31,28 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 1460
+    '    Code Lines: 701
+    ' Comment Lines: 593
+    '   Blank Lines: 166
+    '     File Size: 62.33 KB
+
+
     ' Module App
     ' 
     '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
     '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
     '                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
     '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
-    '                 LocalDataTemp, LogErrDIR, NanoTime, NextTempName, OutFile
-    '                 PID, Platform, PreviousDirectory, Process, ProductName
-    '                 ProductProgramData, ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash
-    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
-    '                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
+    '                 LocalDataTemp, LogErrDIR, MemoryLoad, n_threads, NanoTime
+    '                 NextTempName, OutFile, PID, Platform, PreviousDirectory
+    '                 Process, ProductName, ProductProgramData, ProductSharedDIR, ProductSharedTemp
+    '                 Running, RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory
+    '                 StdErr, StdInput, StdOut, SysTemp, UnixTimeStamp
+    '                 UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
@@ -80,6 +91,7 @@ Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.My.UNIX
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -89,6 +101,7 @@ Imports Microsoft.VisualBasic.ValueTypes
 Imports CommandLineArgs = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 Imports FS = Microsoft.VisualBasic.FileIO.FileSystem
+Imports stdNum = System.Math
 
 '                   _ooOoo_
 '                  o8888888o
@@ -149,6 +162,15 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
+
+    Public ReadOnly Property MemoryLoad As MemoryLoads
+        Get
+            Return m_memoryLoad
+        End Get
+    End Property
+
+    Friend m_memoryLoad As MemoryLoads = MemoryLoads.Light
+
     ''' <summary>
     ''' 判断当前运行的程序是否为Console类型的应用和程序，由于在执行初始化的时候，
     ''' 最先被初始化的是这个模块，所以没有任何代码能够先执行<see cref="Console.IsErrorRedirected"/>了，
@@ -191,6 +213,10 @@ Public Module App
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
     Public ReadOnly Property CommandLine As CommandLineArgs = GitBashEnvironment.GetCommandLineArgs()
+
+#If netcore5 = 1 Then
+    Public ReadOnly Property n_threads As Integer = stdNum.Min(8, LQuerySchedule.CPU_NUMBER)
+#End If
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
@@ -475,7 +501,14 @@ Public Module App
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String
-        Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{app}/{assemblyName}".GetDirectoryFullPath(track)
+#If netcore5 = 0 Then
+        ' XDG_DATA_HOME make be empty on unix
+        Dim localAppData As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+#Else
+        Dim localAppData As String = $"{UserHOME}/.local/share/"
+#End If
+
+        Return $"{localAppData}/{app}/{assemblyName}".GetDirectoryFullPath(track)
     End Function
 
     Public Function GetAppLocalData(exe$) As String
@@ -991,13 +1024,18 @@ Public Module App
     ''' </summary>
     ''' <param name="state">Exit code to be given to the operating system. Use 0 (zero) to indicate that the process completed successfully.</param>
     '''
-    <SecuritySafeCritical> Public Function Exit%(Optional state% = 0)
+    <SecuritySafeCritical>
+    Public Function Exit%(Optional state% = 0)
         App._Running = False
 
-        Call My.InnerQueue.WaitQueue()
-        Call App.StopGC()
-        Call __GCThread.Dispose()
-        Call Environment.Exit(state)
+        Try
+            Call My.InnerQueue.WaitQueue()
+            Call App.StopGC()
+            Call __GCThread.Dispose()
+            Call Environment.Exit(state)
+        Catch ex As Exception
+            Process.GetCurrentProcess.Kill()
+        End Try
 
         Return state
     End Function

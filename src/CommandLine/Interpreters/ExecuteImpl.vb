@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab8efcb9c4794bfbb95e6be96ee8920b, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\ExecuteImpl.vb"
+﻿#Region "Microsoft.VisualBasic::07c62dd41b650ea5a8ed80b370171ac3, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\ExecuteImpl.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 111
+    ' Comment Lines: 5
+    '   Blank Lines: 20
+    '     File Size: 5.34 KB
+
 
     '     Module ExecuteImpl
     ' 
@@ -69,7 +79,7 @@ Namespace CommandLine
             If args("---echo") Then
                 dev = App.StdOut
             Else
-                dev = ($"{App.HOME}/{cli_app.Type.Assembly.CodeBase.BaseName}.vb") _
+                dev = ($"{App.HOME}/{cli_app.Type.Assembly.Location.BaseName}.vb") _
                     .Open(, doClear:=True) _
                     .DoCall(Function(file)
                                 Return New StreamWriter(file, Encodings.UTF8WithoutBOM.CodePage)

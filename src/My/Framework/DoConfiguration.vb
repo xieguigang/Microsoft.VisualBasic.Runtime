@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85ca6ea2cdd22152193014a0a31005d9, Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::7406e5448a12504df6f55f859547282f, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 45
+    ' Comment Lines: 16
+    '   Blank Lines: 9
+    '     File Size: 3.03 KB
+
+
     '     Module DoConfiguration
     ' 
-    '         Sub: ConfigFrameworkRuntime
+    '         Sub: ConfigFrameworkRuntime, ConfigMemory
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,7 +60,7 @@ Namespace My.FrameworkInternal
     ''' <summary>
     ''' Do configuration
     ''' </summary>
-    Module DoConfiguration
+    Public Module DoConfiguration
 
         <Extension>
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
@@ -103,6 +113,10 @@ Namespace My.FrameworkInternal
                     End If
                 End With
             Next
+        End Sub
+
+        Public Sub ConfigMemory(load As MemoryLoads)
+            App.m_memoryLoad = load
         End Sub
     End Module
 End Namespace

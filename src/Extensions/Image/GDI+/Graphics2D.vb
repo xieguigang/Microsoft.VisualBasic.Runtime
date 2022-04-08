@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::371e488e4ea0918e604f6594c428615a, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::cee1c02315c8b92eddeba6be53138c24, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,25 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 222
+    '    Code Lines: 129
+    ' Comment Lines: 60
+    '   Blank Lines: 33
+    '     File Size: 8.20 KB
+
+
     '     Class Graphics2D
     ' 
     '         Properties: Center, Height, ImageResource, Size, Width
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
+    '         Function: CreateDevice, CreateObject, Open, (+3 Overloads) Save, ToString
     ' 
-    '         Sub: __save, DrawCircle
+    '         Sub: DrawCircle, saveFile
     '         Structure Context
     ' 
     '             Function: Create
@@ -53,8 +63,10 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Namespace Imaging
 
@@ -65,6 +77,7 @@ Namespace Imaging
     ''' <remarks></remarks>
     Public Class Graphics2D : Inherits GDICanvas
         Implements IDisposable
+        Implements SaveGdiBitmap
 
         ''' <summary>
         ''' GDI+ device handle memory.(GDI+设备之中的图像数据)
@@ -183,7 +196,7 @@ Namespace Imaging
         ''' <returns></returns>
         Public Overloads Function Save(path$, Optional Format As ImageFormat = Nothing) As Boolean
             Try
-                Call __save(path, Format Or Png)
+                Call saveFile(path, Format Or Png)
             Catch ex As Exception
                 Return App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             End Try
@@ -191,9 +204,8 @@ Namespace Imaging
             Return True
         End Function
 
-        Private Sub __save(path As String, format As ImageFormat)
-            Call path.ParentPath.MakeDir
-            Call ImageResource.Save(path, format)
+        Private Sub saveFile(path As String, format As ImageFormat)
+            Call Save(path.Open(FileMode.OpenOrCreate, doClear:=True), format)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -258,5 +270,16 @@ Namespace Imaging
             Call Me.DrawCircle(center, radius, New SolidBrush(fill))
             Call Me.DrawCircle(center, radius, stroke, fill:=False)
         End Sub
+
+        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+            If format Is Nothing Then
+                format = ImageFormat.Png
+            End If
+
+            Call ImageResource.Save(stream, format)
+            Call stream.Flush()
+
+            Return True
+        End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d13a972be6243bff1fdc790c828849d, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
+﻿#Region "Microsoft.VisualBasic::0716a5b05dcf2fc8058026ce23068067, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
 
     ' Author:
     ' 
@@ -31,92 +31,91 @@
 
     ' Summaries:
 
-    '     Module Combination
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 46
+    ' Comment Lines: 4
+    '   Blank Lines: 10
+    '     File Size: 1.94 KB
+
+
+    '     Class Combination
     ' 
-    '         Function: CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates, Iteration
+    '         Properties: CanRun
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Execute
+    '         Structure StackState
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-#If NET_48 Or netcore5 = 1 Then
-
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
-
 Namespace ComponentModel.Algorithm.base
 
     ''' <summary>
-    ''' 任意多个集合之间的对象之间相互组成组合输出
+    ''' https://github.com/coderespawn/permutations
     ''' </summary>
-    ''' <remarks></remarks>
-    Public Module Combination
+    ''' <typeparam name="T"></typeparam>
+    Friend Class Combination(Of T)
 
-        ''' <summary>
-        ''' 生成两个序列的两两组合 ``{<paramref name="seq_1"/> -> <paramref name="seq_2"/>}()``
-        ''' </summary>
-        ''' <typeparam name="TA"></typeparam>
-        ''' <typeparam name="TB"></typeparam>
-        ''' <param name="seq_1"></param>
-        ''' <param name="seq_2"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function CreateCombos(Of TA, TB)(seq_1 As IEnumerable(Of TA), seq_2 As IEnumerable(Of TB)) As IEnumerable(Of (a As TA, b As TB))
-            Dim b As TB() = seq_2.ToArray
+        Private data As T()
+        Private selectionCount As Integer
+        Private stack As New Stack(Of StackState)()
 
-            For Each i As TA In seq_1
-                For Each j As TB In b
-                    Yield (i, j)
-                Next
-            Next
-        End Function
+        Friend Structure StackState
+            Public buffer As T()
+            Public startIndex As Integer
+        End Structure
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function FullCombination(Of T)(seq As IEnumerable(Of T)) As IEnumerable(Of (a As T, b As T))
-            With seq.ToArray
-                Return .CreateCombos(.ByRef)
-            End With
-        End Function
+        Public ReadOnly Property CanRun As Boolean
+            Get
+                Return stack.Count > 0
+            End Get
+        End Property
 
-        <Extension> Public Iterator Function Iteration(Of T)(source As T()()) As IEnumerable(Of T())
-            Dim first As T() = source.First
+        Public Sub New(data As T(), selectionCount As Integer)
+            Me.data = data
+            Me.selectionCount = selectionCount
 
-            If source.Length = 2 Then ' 只剩下两个的时候，会退出递归操作
-                Dim last As T() = source.Last
+            stack.Push(New StackState With {
+                .buffer = New T(-1) {},
+                .startIndex = 0
+            })
+        End Sub
 
-                For Each x As T In first
-                    For Each _item As T In last
-                        Yield {x, _item}
+        Public Function Execute() As T()
+            While stack.Count > 0
+                Dim top = stack.Pop()
+
+                If top.buffer.Length = selectionCount Then
+                    Return top.buffer
+                Else
+                    Dim bufferLength = top.buffer.Length
+                    Dim itemsLeft = selectionCount - bufferLength - 1
+                    Dim endIndex = data.Length - itemsLeft
+
+                    For i = top.startIndex To endIndex - 1
+                        Dim nextBuffer = New List(Of T)(top.buffer)
+                        nextBuffer.Add(data(i))
+                        Dim nextState = New StackState With {
+                            .buffer = nextBuffer.ToArray(),
+                            .startIndex = i + 1
+                        }
+                        stack.Push(nextState)
                     Next
-                Next
-            Else
-                For Each x As T In first
-                    For Each subArray As T() In source.Skip(1).ToArray.Iteration   ' 递归组合迭代
-                        Yield New List(Of T)(x) + subArray
-                    Next
-                Next
-            End If
-        End Function
+                End If
+            End While
 
-        Public Function Generate(Of T)(source As T()()) As T()()
-            Return source.Iteration.ToArray
+            Return Nothing
         End Function
-
-        <Extension>
-        Public Iterator Function Iterates(Of T)(comb As (T, T)) As IEnumerable(Of T)
-            Yield comb.Item1
-            Yield comb.Item2
-        End Function
-
-        <Extension>
-        Public Iterator Function Iterates(Of T)(comb As Tuple(Of T, T)) As IEnumerable(Of T)
-            Yield comb.Item1
-            Yield comb.Item2
-        End Function
-    End Module
+    End Class
 End Namespace
 
-#End If

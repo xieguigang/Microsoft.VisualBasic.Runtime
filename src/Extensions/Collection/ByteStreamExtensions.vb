@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b1acf46c0da816f42b79cd97de6df05, Microsoft.VisualBasic.Core\src\Extensions\Collection\ByteStreamExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2ac8d0c6bb29410ddd947bd1c3ec59e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\ByteStreamExtensions.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.30 KB
+
+
     ' Module ByteStreamExtensions
     ' 
-    '     Function: AsciiString, UnicodeString, UTF8String
+    '     Function: AsciiString, RotateLeft, RotateRight, UnicodeString, UTF8String
     ' 
     ' /********************************************************************************/
 
@@ -64,5 +74,15 @@ Public Module ByteStreamExtensions
     <Extension>
     Public Function AsciiString(stream As IEnumerable(Of Byte)) As String
         Return Encoding.ASCII.GetString(stream.ToArray)
+    End Function
+
+    <Extension>
+    Public Function RotateLeft(value As Integer, count As Integer) As Integer
+        Return (value << count) Or (value >> (32 - count))
+    End Function
+
+    <Extension>
+    Public Function RotateRight(value As Integer, count As Integer) As Integer
+        Return (value >> count) Or (value << (32 - count))
     End Function
 End Module

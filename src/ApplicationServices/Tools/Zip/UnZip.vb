@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a114dfa07192522412fc7036f4093edf, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
+﻿#Region "Microsoft.VisualBasic::bf1bbc5a8c6eae30a57c602fcfc64f69, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 111
+    ' Comment Lines: 84
+    '   Blank Lines: 23
+    '     File Size: 10.84 KB
+
+
     '     Module UnZip
     ' 
-    '         Function: ExtractToSelfDirectory
+    '         Function: ExtractToSelfDirectory, ImprovedExtractToDirectory
     ' 
-    '         Sub: ExtractToFileInternal, (+3 Overloads) ImprovedExtractToDirectory, ImprovedExtractToFile
+    '         Sub: ExtractToFileInternal, (+2 Overloads) ImprovedExtractToDirectory, ImprovedExtractToFile
     ' 
     ' 
     ' /********************************************************************************/
@@ -146,13 +156,16 @@ Namespace ApplicationServices.Zip
         ''' Specifies how we are going to handle an existing file.
         ''' The default is IfNewer.
         ''' </param>
-        ''' 
+        ''' <returns>
+        ''' this function returns the parameter value of <paramref name="destinationDirectoryName"/>
+        ''' </returns>
         <ExportAPI("ExtractToDir")>
-        Public Sub ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName$,
-                                              <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName$,
-                                              <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
-                                              Optional overwriteMethod As Overwrite = Overwrite.IfNewer,
-                                              Optional extractToFlat As Boolean = False)
+        <Extension>
+        Public Function ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName$,
+                                                   <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName$,
+                                                   <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
+                                                   Optional overwriteMethod As Overwrite = Overwrite.IfNewer,
+                                                   Optional extractToFlat As Boolean = False) As String
             Dim rootDir As String = Nothing
 
             Using zip As Stream = sourceArchiveFileName.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
@@ -164,7 +177,9 @@ Namespace ApplicationServices.Zip
                     rootDir:=rootDir
                 )
             End Using
-        End Sub
+
+            Return destinationDirectoryName
+        End Function
 
         ''' <summary>
         ''' Unzips the specified file to the given folder in a safe

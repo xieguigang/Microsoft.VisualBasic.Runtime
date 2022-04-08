@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9532b806ca689105e525c1747bd765b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::82ecd271dd553aa30f81cc8c154dd810, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 62
+    ' Comment Lines: 17
+    '   Blank Lines: 12
+    '     File Size: 2.93 KB
+
+
     '     Class StackFrame
     ' 
     '         Properties: File, Line, Method
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Parser, parserImpl, ToString
+    '         Function: FromUnknownLocation, Parser, parserImpl, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -65,6 +75,7 @@ Namespace ApplicationServices.Debugging.Diagnostics
         ''' <returns></returns>
         Public Property Line As String
 
+        <DebuggerStepThrough>
         Sub New()
         End Sub
 
@@ -117,6 +128,18 @@ Namespace ApplicationServices.Debugging.Diagnostics
                 .Method = New Method(method),
                 .File = file.Replace("\", "/"), ' fix for BSON string storage
                 .Line = lineNumber
+            }
+        End Function
+
+        Public Shared Function FromUnknownLocation(stackName As String) As StackFrame
+            Return New StackFrame With {
+                .File = "n/a",
+                .Line = "n/a",
+                .Method = New Method With {
+                    .Method = stackName,
+                    .[Module] = "unknown",
+                    .[Namespace] = "unknown"
+                }
             }
         End Function
     End Class

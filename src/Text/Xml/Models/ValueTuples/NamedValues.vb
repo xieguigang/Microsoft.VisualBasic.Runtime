@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c58eca13db8521ece65b9d2e76b1132b, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::fc611785dade38398154b491973ac26b, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 70
+    ' Comment Lines: 35
+    '   Blank Lines: 20
+    '     File Size: 3.99 KB
+
+
     '     Class NamedValue
     ' 
     '         Properties: name, text
@@ -39,11 +49,11 @@
     '         Function: ToString
     '         Operators: +
     ' 
-    '     Structure [Property]
+    '     Class [Property]
     ' 
     '         Properties: comment, name, value
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Structure NamedVector
@@ -115,7 +125,7 @@ Namespace Text.Xml.Models
     ''' Property Info (Property Name and Property Value).
     ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
     ''' </summary>
-    <XmlType("property")> Public Structure [Property] : Implements INamedValue
+    <XmlType("property")> Public Class [Property] : Implements INamedValue
 
         ''' <summary>
         ''' The property name
@@ -142,10 +152,13 @@ Namespace Text.Xml.Models
             Me.comment = comment
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{name} = ""{value}"""
         End Function
-    End Structure
+    End Class
 
     ''' <summary>
     ''' 在这里不实现<see cref="IEnumerable(Of T)"/>是为了方便的实现XML序列化操作

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d98a076bb727a0d7586af915108b5fd5, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::92db6de6913aa883ab06894aeb52cc59, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 189
+    '    Code Lines: 130
+    ' Comment Lines: 29
+    '   Blank Lines: 30
+    '     File Size: 7.10 KB
+
+
     '     Structure DefaultString
     ' 
     '         Properties: DefaultValue, IsEmpty, IsTrue
@@ -38,7 +48,7 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: assertIsNothing, Base64Decode, LoadJson, LoadXml, ReadAllLines
     '                   ToString
-    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+8 Overloads) Or
+    '         Operators: (+2 Overloads) And, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+8 Overloads) Or
     ' 
     ' 
     ' /********************************************************************************/
@@ -125,6 +135,10 @@ Namespace Language.Default
         Private Shared Function assertIsNothing(s As String) As Boolean
             Return s Is Nothing OrElse String.IsNullOrEmpty(s)
         End Function
+
+        Public Shared Operator And(flag As Boolean, arg As DefaultString) As Boolean
+            Return flag And CBool(arg)
+        End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(str As DefaultString) As Boolean

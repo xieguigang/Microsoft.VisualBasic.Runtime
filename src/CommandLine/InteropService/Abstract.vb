@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7ab0853d5c13c177cac4cf7c81a9ace, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::92f028a3f359625461fff6f1b0c4f029, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 167
+    '    Code Lines: 90
+    ' Comment Lines: 52
+    '   Blank Lines: 25
+    '     File Size: 6.15 KB
+
+
     '     Class InteropService
     ' 
     '         Properties: IORedirect, IsAvailable, Path
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetLastCLRException, GetLastError, RunDotNetApp, RunProgram, ToString
+    '         Function: CreateSlave, GetLastCLRException, GetLastError, RunDotNetApp, RunProgram
+    '                   ToString
     ' 
     '     Interface AppDriver
     ' 
@@ -54,6 +65,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
@@ -107,6 +119,7 @@ Namespace CommandLine.InteropService
         ''' <param name="app"></param>
         Sub New(app As String)
             _executableAssembly = app
+            _executableDll = app.ChangeSuffix("dll")
         End Sub
 
         ''' <summary>
@@ -114,11 +127,19 @@ Namespace CommandLine.InteropService
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend _executableAssembly As String
+        ''' <summary>
+        ''' .NET Core dll corresponding to run <see cref="_executableAssembly"/>.
+        ''' </summary>
+        Protected Friend _executableDll As String
 
         Dim lastProc As IIORedirectAbstract
 
         Public Function RunDotNetApp(args$) As IIORedirectAbstract
+#If netcore5 = 1 Then
+            lastProc = App.Shell(_executableDll, args, CLR:=True)
+#Else
             lastProc = App.Shell(_executableAssembly, args, CLR:=True)
+#End If
             Return lastProc
         End Function
 
@@ -154,6 +175,10 @@ Namespace CommandLine.InteropService
             Return ExceptionData.CreateInstance(message, tracess, typeINF)
         End Function
 
+        Public Function CreateSlave(args As String) As RunSlavePipeline
+            Return New RunSlavePipeline(_executableAssembly, args)
+        End Function
+
         ''' <summary>
         ''' 运行非.NET应用程序
         ''' 请注意，这个函数只是生成了具体的进程调用对象，还需要手动调用
@@ -166,7 +191,11 @@ Namespace CommandLine.InteropService
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RunProgram(args$, Optional stdin$ = Nothing) As IIORedirectAbstract
+#If netcore5 = 1 Then
+            Return App.Shell(_executableDll, args, CLR:=False, stdin:=stdin)
+#Else
             Return App.Shell(_executableAssembly, args, CLR:=False, stdin:=stdin)
+#End If
         End Function
 
         Public Overrides Function ToString() As String

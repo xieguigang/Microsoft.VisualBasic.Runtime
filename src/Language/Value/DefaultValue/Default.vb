@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d4eb4bcc6bdabf192b318f8088b3a68, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::ed3f4b544815f9f29a412d328d9af56d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 227
+    '    Code Lines: 128
+    ' Comment Lines: 71
+    '   Blank Lines: 28
+    '     File Size: 8.83 KB
+
 
     '     Delegate Function
     ' 
@@ -261,6 +271,7 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Shared Widening Operator CType(obj As T) As [Default](Of T)
             Return New [Default](Of T) With {
                 .value = obj,

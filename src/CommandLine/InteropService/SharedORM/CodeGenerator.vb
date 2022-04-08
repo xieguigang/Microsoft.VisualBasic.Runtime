@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd77343e150b055962b20367cbc85c37, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::df6c30b20183d0575770c1c9e429664f, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 80
+    ' Comment Lines: 5
+    '   Blank Lines: 17
+    '     File Size: 3.54 KB
+
 
     '     Class CodeGenerator
     ' 
@@ -71,10 +81,18 @@ Namespace CommandLine.InteropService.SharedORM
 
         Sub New(App As Interpreter)
             Me.App = App
+
+#If netcore5 = 0 Then
             Me.exe = App.Type _
                 .Assembly _
                 .CodeBase _
                 .BaseName
+#Else
+            Me.exe = App.Type _
+                .Assembly _
+                .Location _
+                .BaseName
+#End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

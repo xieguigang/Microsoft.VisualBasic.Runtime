@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad184ecd54193d91a6987291c62d39b9, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3e4d6b9e71ddbdd42224718031795db5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 607
+    '    Code Lines: 369
+    ' Comment Lines: 153
+    '   Blank Lines: 85
+    '     File Size: 23.08 KB
+
+
     '     Module GraphicsExtensions
     ' 
     '         Function: CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+4 Overloads) CreateGDIDevice
     '                   CreateObject, EntireImage, GetBrush, GetBrushes, (+2 Overloads) GetIcon
     '                   GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame, IsValidGDIParameter
-    '                   (+3 Overloads) LoadImage, (+2 Overloads) Opacity, (+2 Overloads) PointF, PointSizeScale, SaveIcon
-    '                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
+    '                   (+3 Overloads) LoadImage, (+2 Overloads) Opacity, (+2 Overloads) PointF, SaveIcon, SizeF
+    '                   ToFloat, ToPoint, ToPoints, ToStream
     ' 
     '         Sub: (+5 Overloads) DrawCircle
     ' 
@@ -99,23 +109,6 @@ Namespace Imaging
             End With
         End Function
 
-        ''' <summary>
-        ''' fix for dpi bugs on unix mono platform when create a font object.
-        ''' 
-        ''' https://github.com/dotnet/runtime/issues/28361
-        ''' </summary>
-        ''' <param name="pointSize"></param>
-        ''' <param name="dpiResolution"></param>
-        ''' <returns></returns>
-        Public Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
-#If netcore5 = 1 Then
-            Return pointSize
-#Else
-            ' fix for running on unix mono 
-            Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
-#End If
-        End Function
-
         <Extension>
         Public Function GetStringPath(s$, dpi!, rect As RectangleF, font As Font, format As StringFormat) As GraphicsPath
             Dim path As New GraphicsPath()
@@ -126,7 +119,8 @@ Namespace Imaging
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
+        <Extension>
+        Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
             Return polygon.Select(Function(pt) New PointF(pt.X, pt.Y))
         End Function
 
@@ -142,11 +136,13 @@ Namespace Imaging
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+        <Extension>
+        Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
             Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
         End Function
 
-        <Extension> Public Function SaveIcon(ico As Icon, path$) As Boolean
+        <Extension>
+        Public Function SaveIcon(ico As Icon, path$) As Boolean
             Call path.ParentPath.MakeDir
 
             Try
@@ -402,7 +398,7 @@ Namespace Imaging
                                   Optional base64 As Boolean = False,
                                   Optional throwEx As Boolean = True) As Image
             If base64 Then
-                Dim base64String = path.ReadAllText
+                Dim base64String = path.SolveStream
                 Dim img As Image = base64String.GetImage
                 Return img
             Else

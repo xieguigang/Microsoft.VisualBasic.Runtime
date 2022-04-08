@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a26dbda2dc9895f13a06b22986b2042, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::d10e10959a21ceb1bbfba098092f8fd4, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 177
+    '    Code Lines: 69
+    ' Comment Lines: 87
+    '   Blank Lines: 21
+    '     File Size: 6.98 KB
+
+
     '     Delegate Sub
     ' 
     ' 
@@ -43,9 +53,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: ToString
+    '         Function: Read, ToString
     ' 
-    '         Sub: __unsafeWrite, (+2 Overloads) Dispose, (+2 Overloads) Write
+    '         Sub: __unsafeWrite, (+2 Overloads) Dispose, (+3 Overloads) Write
     ' 
     '         Operators: -, +
     ' 
@@ -58,6 +68,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports PInvoke = System.Runtime.InteropServices.Marshal
 
 Namespace Emit.Marshal
 
@@ -100,6 +111,7 @@ Namespace Emit.Marshal
         ''' ```
         ''' </summary>
         ReadOnly __writeMemory As UnsafeWrite(Of T)
+        ReadOnly __unsafeCopys As UnsafeCopys(Of T)
 
         ''' <summary>
         ''' 
@@ -118,6 +130,8 @@ Namespace Emit.Marshal
         ''' </param>
         Sub New(p As System.IntPtr, chunkSize As Integer, unsafeCopys As UnsafeCopys(Of T), unsafeWrite As UnsafeWrite(Of T))
             __writeMemory = unsafeWrite
+            __unsafeCopys = unsafeCopys
+
             Scan0 = p
             buffer = New T(chunkSize - 1) {}
             Call unsafeCopys(Scan0, buffer, 0, buffer.Length)
@@ -128,9 +142,14 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="raw"></param>
         ''' <param name="p"></param>
-        Sub New(ByRef raw As T(), Optional p As System.IntPtr = Nothing)
+        Sub New(ByRef raw As T(), Optional p As System.IntPtr? = Nothing)
             Call MyBase.New(raw)
             Scan0 = p
+        End Sub
+
+        Public Sub Write(data As T())
+            buffer = data
+            Call __unsafeWrite(Scan0)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -146,6 +165,11 @@ Namespace Emit.Marshal
         Public Sub Write()
             Call __unsafeWrite(Scan0)
         End Sub
+
+        Public Function Read() As T()
+            Call __unsafeCopys(Scan0, buffer, 0, buffer.Length)
+            Return buffer
+        End Function
 
         ''' <summary>
         ''' Please be carefull by using this method, if the memory region size of <see cref="Scan0"/> 
@@ -193,6 +217,8 @@ Namespace Emit.Marshal
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call Write()
+                    ' Free HGlobal memory
+                    Call PInvoke.FreeHGlobal(Scan0)
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

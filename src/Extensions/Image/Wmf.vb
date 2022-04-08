@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4feabaa86eedc60c605335b5f779bdc9, Microsoft.VisualBasic.Core\src\Extensions\Image\Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::544d24fd28eb0610bfaa52ba1d9bdd0e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Wmf.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 166
+    '    Code Lines: 89
+    ' Comment Lines: 53
+    '   Blank Lines: 24
+    '     File Size: 7.70 KB
+
+
     '     Class Wmf
     ' 
     '         Properties: Size, wmfFile
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Dispose, DrawCircle, releaseInternal
+    '         Constructor: (+4 Overloads) Sub New
+    '         Sub: Dispose, DrawCircle, Flush, initg, releaseInternal
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,6 +56,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports System.IO
 
 Namespace Imaging
 
@@ -83,6 +94,7 @@ Namespace Imaging
         ReadOnly vectorMetafile As Metafile
         ReadOnly hdc As IntPtr
         ReadOnly bounds As Size
+        ReadOnly stream As Stream
 
         ''' <summary>
         ''' The file path of the target wmf image file.
@@ -109,8 +121,31 @@ Namespace Imaging
         ''' <param name="save$"></param>
         ''' <param name="backgroundColor$"></param>
         Sub New(size As Size, save$, Optional backgroundColor$ = NameOf(Color.Transparent))
-            Dim bitmap As New Bitmap(size.Width, size.Height)
+            Call Me.New(
+                bitmap:=New Bitmap(size.Width, size.Height),
+                stream:=save.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False),
+                backgroundColor:=backgroundColor
+            )
+
+            wmfFile = save
+        End Sub
+
+        Sub New(size As Size, save As Stream, Optional backgroundColor$ = NameOf(Color.Transparent), Optional dpi As Size = Nothing)
+            Call Me.New(
+                bitmap:=New Bitmap(size.Width, size.Height),
+                stream:=save,
+                backgroundColor:=backgroundColor,
+                dpi:=dpi
+            )
+        End Sub
+
+        Sub New(bitmap As Bitmap, stream As Stream, Optional backgroundColor$ = NameOf(Color.Transparent), Optional dpi As Size = Nothing)
+            Dim size As Size = bitmap.Size
             Dim bounds As New RectangleF(0, 0, size.Width, size.Height)
+
+            If Not (dpi.Width = 0 OrElse dpi.Height = 0) Then
+                Call bitmap.SetResolution(dpi.Width, dpi.Height)
+            End If
 
             ' Make a Graphics object so we can use its hDC as a reference.
             Dim gSource = Graphics.FromImage(bitmap)
@@ -120,10 +155,16 @@ Namespace Imaging
             Me.bounds = bounds.Size.ToSize
 
             ' Make the Metafile, using the reference hDC.
-            save.ParentPath.MakeDir
-            vectorMetafile = New Metafile(save, hdc, bounds, MetafileFrameUnit.Pixel)
-            gSource.ReleaseHdc(hdc)
+            Me.vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+            Me.stream = stream
 
+            Call gSource.ReleaseHdc(hdc)
+            ' Make a Graphics object and draw.
+            Call initg(vectorMetafile)
+            Call g.Clear(backgroundColor.TranslateColor)
+        End Sub
+
+        Private Sub initg(vectorMetafile As Metafile)
             ' Make a Graphics object and draw.
             g = Graphics.FromImage(vectorMetafile)
             g.SmoothingMode = SmoothingMode.HighQuality
@@ -133,9 +174,30 @@ Namespace Imaging
             g.InterpolationMode = InterpolationMode.HighQualityBicubic
             g.PixelOffsetMode = PixelOffsetMode.HighQuality
             g.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
-            g.Clear(backgroundColor.TranslateColor)
+        End Sub
 
-            wmfFile = save
+        Sub New(gr As Graphics2D, stream As Stream)
+            Dim gSource As Graphics = gr.Graphics
+            Dim size As Size = gr.Size
+            Dim bounds As New RectangleF(0, 0, size.Width, size.Height)
+
+            ' Make a Graphics object so we can use its hDC as a reference.
+            Dim hdc As IntPtr = gSource.GetHdc()
+
+            Me.hdc = hdc
+            Me.bounds = bounds.Size.ToSize
+
+            ' Make the Metafile, using the reference hDC.
+            Me.vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+            Me.stream = stream
+
+            Call gSource.ReleaseHdc(hdc)
+            Call initg(vectorMetafile)
+        End Sub
+
+        Public Overrides Sub Flush()
+            Call MyBase.Flush()
+            Call stream.Flush()
         End Sub
 
         ''' <summary>
@@ -144,6 +206,7 @@ Namespace Imaging
         Private Sub releaseInternal()
             Call Graphics.Dispose()
             Call vectorMetafile.Dispose()
+            Call stream.Flush()
         End Sub
 
         Public Overrides Sub Dispose()

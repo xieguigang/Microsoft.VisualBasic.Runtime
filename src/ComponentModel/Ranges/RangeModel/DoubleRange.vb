@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c85afb4bd1380d2ee929f90df30d1e43, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::7c932e187e546e8a998322812eee09f2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 348
+    '    Code Lines: 183
+    ' Comment Lines: 120
+    '   Blank Lines: 45
+    '     File Size: 12.47 KB
+
+
     '     Class DoubleRange
     ' 
     '         Properties: Length, Max, Min
     ' 
-    '         Constructor: (+7 Overloads) Sub New
+    '         Constructor: (+9 Overloads) Sub New
     '         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside
-    '                   (+2 Overloads) IsOverlapping, ScaleMapping, (+2 Overloads) ToString, TryParse
+    '                   (+2 Overloads) IsOverlapping, (+2 Overloads) ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like
     ' 
     ' 
@@ -114,12 +124,34 @@ Namespace ComponentModel.Ranges.Model
             End If
         End Sub
 
+        Sub New(data As Integer())
+            If data.Length = 0 Then
+                Min = Double.NaN
+                Max = Double.NaN
+            Else
+                Min = data.Min
+                Max = data.Max
+            End If
+        End Sub
+
         ''' <summary>
         ''' 从一个任意的实数向量之中构建出一个实数区间范围
         ''' </summary>
         ''' <param name="vector"></param>
         Sub New(vector As IEnumerable(Of Double))
             Call Me.New(data:=vector.ToArray)
+        End Sub
+
+        Sub New(vector As IEnumerable(Of Integer))
+            With vector.ToArray
+                If .Length = 0 Then
+                    Min = Double.NaN
+                    Max = Double.NaN
+                Else
+                    Min = .Min
+                    Max = .Max
+                End If
+            End With
         End Sub
 
         Sub New(range As IntRange)
@@ -159,7 +191,7 @@ Namespace ComponentModel.Ranges.Model
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return ToString("F2")
+            Return ToString("G4")
         End Function
 
         Public Overloads Function ToString(format As String) As String
@@ -212,12 +244,12 @@ Namespace ComponentModel.Ranges.Model
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(exp As String) As DoubleRange
-            Dim r As New DoubleRange
-            Call exp.Parser(r.Min, r.Max)
-            Return r
-        End Operator
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Public Shared Widening Operator CType(exp As String) As DoubleRange
+        '    Dim r As New DoubleRange
+        '    Call exp.Parser(r.Min, r.Max)
+        '    Return r
+        'End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data#()) As DoubleRange
@@ -292,7 +324,10 @@ Namespace ComponentModel.Ranges.Model
             If Length = 0 Then
                 Return {}
             Else
-                Return Enumerate(Length / n).ToArray
+                ' 因为double类型的精度问题
+                ' 有些时候返回来的元素数量可能不是n个？
+                ' 极有可能是n+1个？
+                Return Enumerate(Length / n).Take(n).ToArray
             End If
         End Function
 
@@ -314,6 +349,19 @@ Namespace ComponentModel.Ranges.Model
             Dim percent# = (x - Min) / Length
             Dim value# = percent * valueRange.Length + valueRange.Min
             Return value
+        End Function
+
+        ''' <summary>
+        ''' Transform a numeric value in this <see cref="DoubleRange"/> into 
+        ''' target numeric range: ``<paramref name="valueRange"/>``.
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="valueRange">levels in integer values.</param>
+        ''' <returns></returns>
+        Public Function ScaleMapping(x As Double, valueRange As IntRange) As Integer
+            Dim percent# = (x - Min) / Length
+            Dim value# = percent * valueRange.Length + valueRange.Min
+            Return CInt(value)
         End Function
 
         Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
@@ -346,7 +394,9 @@ Namespace ComponentModel.Ranges.Model
             End If
 
             Try
-                Return expression
+                Dim r As New DoubleRange
+                Call expression.Parser(r.Min, r.Max)
+                Return r
             Catch ex As Exception
                 Return Nothing
             End Try

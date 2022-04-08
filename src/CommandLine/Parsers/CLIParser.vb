@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b82975a8f2a6d5ad70781db8069798, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::2741f05148c513f185f4641f9c6c6f0c, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 145
+    ' Comment Lines: 34
+    '   Blank Lines: 30
+    '     File Size: 7.80 KB
+
 
     '     Module CLIParser
     ' 
@@ -150,6 +160,7 @@ Namespace CommandLine.Parsers
                                  Optional rawInput$ = Nothing) As CommandLine
 
 #If UNIX Then
+            ' 20210606 这个主要是针对docker环境的命令行传递的问题
             Dim tokens$() = POSIX.JoinTokens(args.SafeQuery).ToArray
 #Else
             Dim tokens$() = args.SafeQuery.ToArray

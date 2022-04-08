@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0b81c7bf726d3d5a37a601762bcb6d0, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::32808061d6b51f10776fcb0704568a2c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 387
+    '    Code Lines: 194
+    ' Comment Lines: 148
+    '   Blank Lines: 45
+    '     File Size: 14.16 KB
+
+
     '     Module MathUtils
     ' 
     '         Properties: Seed
@@ -48,7 +58,7 @@
 
 #End Region
 
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 '
 ' * MathUtils.java
@@ -104,16 +114,17 @@ Namespace Language.Java
         ''' <param name="cf"></param>
         ''' <returns></returns>
         Public Function randomChoice(cf As Double()) As Integer
-
             Dim U As Double = random.nextDouble()
-
             Dim s As Integer
+
             If U <= cf(0) Then
                 s = 0
             Else
                 For s = 1 To cf.Length - 1
-                    If U <= cf(s) AndAlso U > cf(s - 1) Then Exit For
-                Next s
+                    If U <= cf(s) AndAlso U > cf(s - 1) Then
+                        Exit For
+                    End If
+                Next
             End If
 
             Return s
@@ -123,17 +134,20 @@ Namespace Language.Java
         '''            array of unnormalized probabilities </param>
         ''' <returns> a sample according to an unnormalized probability distribution </returns>
         Public Function randomChoicePDF(pdf As Double()) As Integer
-
             Dim U As Double = random.nextDouble() * getTotal(pdf)
+
             For i As Integer = 0 To pdf.Length - 1
-
                 U -= pdf(i)
-                If U < 0.0 Then Return i
 
-            Next i
+                If U < 0.0 Then
+                    Return i
+                End If
+            Next
+
             For i As Integer = 0 To pdf.Length - 1
                 Console.WriteLine(i & vbTab & pdf(i))
-            Next i
+            Next
+
             Throw New Exception("randomChoiceUnnormalized falls through -- negative components in input distribution?")
         End Function
 
@@ -258,7 +272,7 @@ Namespace Language.Java
 
         ''' <returns> log of random variable in [0,1] </returns>
         Public Function randomLogDouble() As Double
-            Return sys.Log(nextDouble())
+            Return stdNum.Log(nextDouble())
         End Function
 
         ''' <summary>
@@ -266,7 +280,7 @@ Namespace Language.Java
         ''' </summary>
         Public Function nextExponential(lambda As Double) As Double
             SyncLock random
-                Return -1.0 * sys.Log(1 - random.nextDouble()) / lambda
+                Return -1.0 * stdNum.Log(1 - random.nextDouble()) / lambda
             End SyncLock
         End Function
 
@@ -283,7 +297,7 @@ Namespace Language.Java
                 ' distribution with a mean of 0
                 ' and 1 standard deviation
                 Dim y As Double = v * v
-                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * sys.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
+                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * stdNum.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
                 Dim test As Double = MathUtils.nextDouble() ' sample from a uniform
                 ' distribution between 0
                 ' and 1
@@ -416,15 +430,17 @@ Namespace Language.Java
         ''' </summary>
         Public Function hypot(a As Double, b As Double) As Double
             Dim r As Double
-            If sys.Abs(a) > sys.Abs(b) Then
+
+            If stdNum.Abs(a) > stdNum.Abs(b) Then
                 r = b / a
-                r = sys.Abs(a) * sys.Sqrt(1 + r * r)
+                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = sys.Abs(b) * sys.Sqrt(1 + r * r)
+                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
+
             Return r
         End Function
     End Module

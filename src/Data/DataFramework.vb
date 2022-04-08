@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70e83e367a8e4fb685e4ab7251e1a1d5, Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::478b06ff41fecaa700288b78592c2d33, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 415
+    '    Code Lines: 264
+    ' Comment Lines: 98
+    '   Blank Lines: 53
+    '     File Size: 18.68 KB
+
+
     '     Module DataFramework
     ' 
     '         Properties: Flags, StringBuilders, StringParsers
@@ -40,7 +50,7 @@
     '                   ParseSchemaInternal, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
-    '             Function: IsNumericType, IsPrimitive, valueToString
+    '             Function: IsIntegerType, IsNumericType, IsPrimitive, valueToString
     '         Enum EnumCastTo
     ' 
     '             [integer], [string], none
@@ -314,6 +324,15 @@ Namespace ComponentModel.DataSourceModel
                 GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
             }
             Return numerics.Any(Function(num) num Is type)
+        End Function
+
+        Public Function IsIntegerType(type As Type) As Boolean
+            Static ints As Type() = {
+                GetType(Integer), GetType(Short), GetType(Byte), GetType(Long),
+                GetType(UInteger), GetType(UShort), GetType(SByte), GetType(ULong)
+            }
+
+            Return ints.Any(Function(int) int Is type)
         End Function
 
         Public Enum EnumCastTo

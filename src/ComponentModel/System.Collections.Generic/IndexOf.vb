@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d20bb5be4046a2734ca54f784bfe4ae8, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::cd9414c3c5c9df4562149d9bda7acd33, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,28 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 370
+    '    Code Lines: 223
+    ' Comment Lines: 99
+    '   Blank Lines: 48
+    '     File Size: 13.12 KB
+
+
     '     Class Index
     ' 
     '         Properties: Count, Map, Objects
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
-    '                   indexing, (+2 Overloads) Intersect, NotExists, ToString
+    '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
+    '                   indexing, Indexing, (+2 Overloads) Intersect, NotExists, ToString
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
+    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
     '                    (+2 Overloads) IsTrue, (+2 Overloads) Like
     ' 
     ' 
@@ -170,6 +180,14 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        Default Public ReadOnly Property IndexOf([set] As IEnumerable(Of T)) As Integer()
+            Get
+                Return (From i As T
+                        In [set]
+                        Select Me.IndexOf(i)).ToArray
+            End Get
+        End Property
+
         ''' <summary>
         ''' 直接通过索引获取目标对象的值，请注意，如果<typeparamref name="T"/>泛型类型是<see cref="Integer"/>，
         ''' 则如果需要查找index的话，则必须要显式的指定参数名为``x:=``，否则调用的是当前的这个索引方法，
@@ -249,6 +267,12 @@ Namespace ComponentModel.Collection
             End If
 
             Return maps(x)
+        End Function
+
+        Public Iterator Function Add(x As T()) As IEnumerable(Of Integer)
+            For Each xi As T In x
+                Yield Add(xi)
+            Next
         End Function
 
         Public Sub Clear()
@@ -386,5 +410,31 @@ Namespace ComponentModel.Collection
         Public Shared Operator IsFalse(index As Index(Of T)) As Boolean
             Return Not op_True(index)
         End Operator
+
+        ''' <summary>
+        ''' removes elements from <paramref name="list"/> based on a 
+        ''' given <paramref name="filter"/> element list.
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="filter"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(list As T(), filter As Index(Of T)) As T()
+            Return list.Where(Function(i) Not i Like filter).ToArray
+        End Operator
+
+        Public Shared Function Indexing(data As IEnumerable(Of T)) As Dictionary(Of T, Integer)
+            Dim i As Integer = Scan0
+            Dim index As New Dictionary(Of T, Integer)
+
+            For Each item As T In data
+                If Not index.ContainsKey(item) Then
+                    index.Add(item, i)
+                End If
+
+                i += 1
+            Next
+
+            Return index
+        End Function
     End Class
 End Namespace

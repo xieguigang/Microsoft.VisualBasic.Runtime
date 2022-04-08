@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53f12267d3eb14849418e9e159656e6b, Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::04e52d99ad351a31827a2add1b5efe36, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 35
+    ' Comment Lines: 13
+    '   Blank Lines: 8
+    '     File Size: 2.33 KB
+
+
     '     Module Arrays
     ' 
-    '         Function: copyOfRange, Max, Min, Shuffle, SubList
+    '         Function: copyOfRange, Max, Min, shuffle, subList
     ' 
-    '         Sub: Fill
+    '         Sub: fill
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,7 +61,7 @@ Namespace Language.Java
     Public Module Arrays
 
         <Extension>
-        Public Sub Fill(Of T)(ByRef a As T(), val As T)
+        Public Sub fill(Of T)(ByRef a As T(), val As T)
             For i% = 0 To a.Length - 1
                 a(i%) = val
             Next
@@ -64,7 +74,7 @@ Namespace Language.Java
         End Function
 
         <Extension>
-        Public Function Shuffle(Of T)(ByRef list As List(Of T)) As List(Of T)
+        Public Function shuffle(Of T)(ByRef list As List(Of T)) As List(Of T)
             Call randf.seeds.Shuffle(list)
             Return list
         End Function
@@ -83,7 +93,7 @@ Namespace Language.Java
         ''' <returns>a view of the specified range within this list</returns>
         ''' 
         <Extension>
-        Public Function SubList(Of T)(list As List(Of T), fromIndex%, toIndex%) As List(Of T)
+        Public Function subList(Of T)(list As System.Collections.Generic.List(Of T), fromIndex%, toIndex%) As List(Of T)
             Return list.Skip(fromIndex).Take(toIndex - fromIndex).AsList
         End Function
 

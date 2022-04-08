@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc27284be3ecf5c6745c7b913a4dee36, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::53349569ab297031fac6eddb9dfb19d2, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 434
+    '    Code Lines: 232
+    ' Comment Lines: 146
+    '   Blank Lines: 56
+    '     File Size: 17.50 KB
+
+
     '     Delegate Function
     ' 
     '         Properties: IsPing, IsPlantText, IsSSL_PublicToken, IsSSLHandshaking, IsSSLProtocol
@@ -45,8 +55,8 @@
     ' 
     '         Constructor: (+7 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetString, GetUTF8String
-    '                   IsAvaliableStream, (+2 Overloads) LoadObject, ToString
+    '         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetDoubles, GetIntegers, GetRawStream
+    '                   GetString, GetUTF8String, IsAvaliableStream, (+2 Overloads) LoadObject, ToString
     ' 
     '         Sub: Serialize, WriteBuffer
     '         Enum Protocols
@@ -151,13 +161,15 @@ Namespace Parallel
         End Sub
 
         ''' <summary>
-        ''' The default text encoding is <see cref="System.Text.Encoding.UTF8"/>
+        ''' The default text encoding is <see cref="Encoding.UTF8"/>
         ''' </summary>
-        ''' <param name="ProtocolCategory"></param>
-        ''' <param name="Protocol"></param>
-        ''' <param name="str">Protocol request argument parameters</param>
-        Sub New(ProtocolCategory As Long, Protocol As Long, str As String)
-            Call Me.New(ProtocolCategory, Protocol, UTF8WithoutBOM.GetBytes(str))
+        ''' <param name="protocolCategory"></param>
+        ''' <param name="protocol"></param>
+        ''' <param name="strData">Protocol request argument parameters</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(protocolCategory As Long, protocol As Long, strData As String)
+            Call Me.New(protocolCategory, protocol, UTF8WithoutBOM.GetBytes(strData))
         End Sub
 
         Sub New(ProtocolCategory As Long, Protocol As Long, str As String, encoding As Encoding)
@@ -222,6 +234,20 @@ Namespace Parallel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(encoding As Encoding) As String
             Return encoding.GetString(ChunkBuffer)
+        End Function
+
+        Public Function GetIntegers() As Integer()
+            Return ChunkBuffer _
+                .Split(4) _
+                .Select(Function(byts) BitConverter.ToInt32(byts, Scan0)) _
+                .ToArray
+        End Function
+
+        Public Function GetDoubles() As Double()
+            Return ChunkBuffer _
+                .Split(8) _
+                .Select(Function(byts) BitConverter.ToDouble(byts, Scan0)) _
+                .ToArray
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b909b540252635d1a7b179838160e385, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::cc9f0b79bd12b93f7399cac48b5732d8, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 50
+    ' Comment Lines: 23
+    '   Blank Lines: 17
+    '     File Size: 3.56 KB
+
+
     '     Class TempFileSystem
     ' 
-    '         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GetAppSysTempFile
+    '         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GenerateTempDir, GetAppSysTempFile
+    '                   TempDir
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,6 +62,10 @@ Namespace ApplicationServices
     ''' </summary>
     Public Class TempFileSystem
 
+        Public Shared Function TempDir() As String
+            Return App.AppSystemTemp
+        End Function
+
         ''' <summary>
         ''' Get temp file name in app system temp directory.
         ''' </summary>
@@ -65,11 +80,27 @@ Namespace ApplicationServices
         Public Shared Function CreateTempFilePath(tmpdir$, Optional ext$ = ".tmp", Optional sessionID$ = "", Optional prefix$ = Nothing) As String
             Dim tmp As String = tmpdir & "/" & App.GetNextUniqueName(prefix) & ext
 
-            tmp = GenerateTemp(tmp, sessionID)
-            tmp.DoCall(AddressOf FS.GetParentPath).DoCall(AddressOf FS.CreateDirectory)
-            tmp = FS.GetFileInfo(tmp).FullName.Replace("\", "/")
+            If tmp.EndsWith("/"c) OrElse tmp.EndsWith("\"c) Then
+                ' is a directory
+                tmp = GenerateTempDir(tmp, sessionID)
+                tmp.DoCall(AddressOf FS.CreateDirectory)
+                tmp = FS.GetDirectoryInfo(tmp).FullName.Replace("\", "/")
+            Else
+                tmp = GenerateTemp(tmp, sessionID)
+                tmp.DoCall(AddressOf FS.GetParentPath).DoCall(AddressOf FS.CreateDirectory)
+                tmp = FS.GetFileInfo(tmp).FullName.Replace("\", "/")
+            End If
 
             Return tmp
+        End Function
+
+        Private Shared Function GenerateTempDir(sysTemp$, sessionID$) As String
+            Dim dirt As String = FS.GetParentPath(sysTemp)
+            Dim name As String = sysTemp.DirectoryName
+
+            sysTemp = $"{dirt}/{App.AssemblyName}/{sessionID}/{name}"
+
+            Return sysTemp
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9963abdb1cd9050ffd80f3c10d220fc, Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::9bc73033c5aafb7d024daec3c94433eb, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 64
+    ' Comment Lines: 16
+    '   Blank Lines: 12
+    '     File Size: 3.47 KB
+
+
     '     Module Paragraph
     ' 
     '         Function: Chunks, SplitParagraph, Trim
@@ -52,8 +62,8 @@ Namespace Text
         ''' <summary>
         ''' 对于空文本，这个函数返回一个空集合
         ''' </summary>
-        ''' <param name="text$"></param>
-        ''' <param name="lineBreak%"></param>
+        ''' <param name="text">原始文本</param>
+        ''' <param name="lineBreak">每一行文本的最大字符数量</param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function Chunks(text$, lineBreak%) As IEnumerable(Of String)
@@ -73,7 +83,8 @@ Namespace Text
         ''' <remarks>
         ''' 假若长度分割落在单词内，则添加一个连接符，假如是空格或者标点符号，则不处理
         ''' </remarks>
-        <Extension> Public Iterator Function SplitParagraph(text$, len%) As IEnumerable(Of String)
+        <Extension>
+        Public Iterator Function SplitParagraph(text$, len%) As IEnumerable(Of String)
             Dim lines$() = text.LineTokens
 
             For Each i As SeqValue(Of String) In lines.SeqIterator

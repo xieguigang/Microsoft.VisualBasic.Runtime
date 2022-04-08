@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b09890ca24056e526d08a965c88bf3e6, Microsoft.VisualBasic.Core\src\Language\Linq\LanguageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a2a9f627ada43b81f3631c70fde96537, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\LanguageExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 41
+    ' Comment Lines: 17
+    '   Blank Lines: 7
+    '     File Size: 2.19 KB
+
 
     '     Module LanguageExtensions
     ' 
@@ -82,7 +92,7 @@ Namespace Language
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Sub Add(list As List(Of DoubleRange), range$)
-            list += range
+            list += DoubleRange.TryParse(range)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

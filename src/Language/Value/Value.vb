@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a020e6f2d0f8017045a83d73c6b56d0, Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::32dd697f58fd9ffc2abbfaf70aa0ab51, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 289
+    '    Code Lines: 146
+    ' Comment Lines: 110
+    '   Blank Lines: 33
+    '     File Size: 11.09 KB
+
+
     '     Class Value
     ' 
     '         Properties: HasValue, Value
@@ -38,7 +48,7 @@
     '         Constructor: (+2 Overloads) Sub New
     '         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
     '                   IsNothing, ToString
-    '         Operators: -, (+3 Overloads) +, <=, <>, =
+    '         Operators: -, (+3 Overloads) +, <=, (+2 Overloads) <>, (+2 Overloads) =
     '                    >=, (+4 Overloads) Like
     '         Interface IValueOf
     ' 
@@ -280,6 +290,20 @@ Namespace Language
         Public Shared Operator =(value As Value(Of T), o As T) As T
             value.Value = o
             Return o
+        End Operator
+
+        ''' <summary>
+        ''' value equals?
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(o As T, value As Value(Of T)) As Boolean
+            Return o.Equals(value.Value)
+        End Operator
+
+        Public Shared Operator <>(o As T, value As Value(Of T)) As Boolean
+            Return Not o = value
         End Operator
 
         ''' <summary>

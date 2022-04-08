@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ea1312942042941bf6a18473a8b8d6a, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::cc9070bd952b2258139f9faf41536cf3, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 415
+    '    Code Lines: 245
+    ' Comment Lines: 126
+    '   Blank Lines: 44
+    '     File Size: 15.96 KB
+
 
     '     Module Casting
     ' 
@@ -132,7 +142,7 @@ Namespace Scripting.Runtime
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NumericRangeParser(exp As String) As DoubleRange
-            Return CType(exp, DoubleRange)
+            Return DoubleRange.TryParse(exp)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -141,6 +151,11 @@ Namespace Scripting.Runtime
             Return CType(CObj(x), T)
         End Function
 
+        ''' <summary>
+        ''' width,height
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As Size) As String
@@ -149,6 +164,11 @@ Namespace Scripting.Runtime
             End With
         End Function
 
+        ''' <summary>
+        ''' width,height
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As SizeF) As String
@@ -185,6 +205,7 @@ Namespace Scripting.Runtime
         ''' <param name="pt$"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension> Public Function SizeParser(pt$) As Size
             Return pt.FloatSizeParser.ToSize
         End Function
@@ -266,12 +287,14 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="s">
         ''' + numeric
-        ''' + NaN
+        ''' + NaN, NA
         ''' + p%
         ''' + a/b
         ''' </param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' this function will mapping factor string ``NaN`` and ``NA`` as <see cref="System.Double.NaN"/>
+        ''' </remarks>
         <Extension>
         Public Function ParseNumeric(s As String) As Double
             s = Strings.Trim(s)

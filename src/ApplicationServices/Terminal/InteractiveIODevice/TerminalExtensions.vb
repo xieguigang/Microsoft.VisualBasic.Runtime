@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09223a62d016cb1d5b3fdd044f2d19ab, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::43d91a17e98f66766b91d1e098b525ea, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 65
+    ' Comment Lines: 6
+    '   Blank Lines: 14
+    '     File Size: 3.01 KB
+
 
     '     Module TerminalEvents
     ' 
@@ -109,8 +119,10 @@ Namespace ApplicationServices.Terminal
                 End If
 
                 If resizeHandles.Count = 0 Then
+#If netcore5 = 0 Then
                     eventThread.Abort()
                     eventThread = Nothing
+#End If
                 End If
             End RemoveHandler
             RaiseEvent()

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c07470d05fa7e02f1ca1fe84b0c684c0, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::84267a091925de0068dc69f7add4099c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,25 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 309
+    '    Code Lines: 175
+    ' Comment Lines: 94
+    '   Blank Lines: 40
+    '     File Size: 11.10 KB
+
+
     '     Class i32
     ' 
     '         Properties: Hex, Oct
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, Equals, GetHexInteger, (+2 Overloads) ToString
-    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+4 Overloads) +, (+3 Overloads) <, <<
-    '                    <=, (+3 Overloads) >, >=, (+2 Overloads) And, (+2 Overloads) IsFalse
-    '                    (+2 Overloads) IsTrue, (+2 Overloads) Not
+    '         Operators: (+3 Overloads) -, *, (+2 Overloads) /, (+4 Overloads) +, (+3 Overloads) <
+    '                    <<, <=, (+3 Overloads) >, >=, (+2 Overloads) And
+    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,6 +58,7 @@
 
 Imports System.Globalization
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace Language
 
@@ -123,6 +134,8 @@ Namespace Language
                 Return Value.CompareTo(DirectCast(obj, Integer))
             ElseIf type.Equals(GetType(i32)) Then
                 Return Value.CompareTo(DirectCast(obj, i32).Value)
+            ElseIf type.Equals(GetType(Counter)) Then
+                Return Value.CompareTo(DirectCast(obj, Counter).Value)
             Else
                 Throw New Exception($"Miss-match of type:  {GetType(i32).FullName} -> {type.FullName}")
             End If
@@ -234,6 +247,10 @@ Namespace Language
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(x As Integer, b As i32) As Double
             Return x / b.Value
+        End Operator
+
+        Public Shared Operator *(x As i32, b As Integer) As Integer
+            Return x.Value * b
         End Operator
 
         ''' <summary>

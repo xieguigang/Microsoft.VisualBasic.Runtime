@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::193c19a8b6f69e06eff6c1f9cb8c646a, Microsoft.VisualBasic.Core\src\Extensions\Collection\BucketOperators.vb"
+﻿#Region "Microsoft.VisualBasic::79b7fdec7ccc63b6a3a733dfb733105d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\BucketOperators.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 44
+    ' Comment Lines: 48
+    '   Blank Lines: 12
+    '     File Size: 4.22 KB
+
+
     ' Module BucketOperators
     ' 
     '     Function: (+4 Overloads) Join, Split, SplitIterator
@@ -51,7 +61,7 @@ Public Module BucketOperators
     ''' Data partitioning function.
     ''' (将目标集合之中的数据按照<paramref name="partitionSize"></paramref>参数分配到子集合之中，
     ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
-    ''' 每一个子集和之中的元素数量为<paramref name="partitionSize"/>)
+    ''' 每一个子集合之中的元素数量为<paramref name="partitionSize"/>)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>

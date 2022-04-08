@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d99d5c4881ada5d4631a8db4833f444, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::e86112081065242e0d82f2b4e8c68feb, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 344
+    '    Code Lines: 188
+    ' Comment Lines: 107
+    '   Blank Lines: 49
+    '     File Size: 14.95 KB
+
+
     '     Module ZipLib
     ' 
-    '         Function: CheckValidZipFile, IsADirectoryEntry, IsSourceFolderZip
+    '         Function: CheckValidZipFile, IsADirectoryEntry, (+2 Overloads) IsSourceFolderZip
     ' 
     '         Sub: AddToArchive, AppendZip, DeleteItems, DirectoryArchive, FileArchive
     '              WriteFiles
@@ -107,7 +117,7 @@ Namespace ApplicationServices.Zip
         ''' <returns></returns>
         <Extension>
         Public Function IsSourceFolderZip(zip$, Optional ByRef folder$ = Nothing) As Boolean
-            Using file As FileStream = zip.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Using file As Stream = zip.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return file.IsSourceFolderZip(folder)
             End Using
         End Function

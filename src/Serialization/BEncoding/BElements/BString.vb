@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a03ed1f2498dcdf0be5178912b024c4, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BInteger.vb"
+﻿#Region "Microsoft.VisualBasic::0af5bd10e7facc3f5ec1c233c89c6233, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BString.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,17 @@
 
     ' Summaries:
 
-    '     Class BInteger
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 40
+    ' Comment Lines: 30
+    '   Blank Lines: 12
+    '     File Size: 2.69 KB
+
+
+    '     Class BString
     ' 
     '         Properties: Value
     ' 
@@ -48,44 +58,45 @@ Imports System.Text
 Namespace Serialization.Bencoding
 
     ''' <summary>
-    ''' A bencode integer.
+    ''' A bencode string.
     ''' </summary>
-    Public Class BInteger
-        Implements BElement, IComparable(Of BInteger)
+    Public Class BString
+        Implements BElement, IComparable(Of BString)
 
         ''' <summary>
         ''' The value of the bencoded integer.
         ''' </summary>
-        Public Property Value As Long
+        Public Property Value As String
 
         ''' <summary>
         ''' The main constructor.
         ''' </summary>
-        ''' <param name="value">The value of the bencoded integer.</param>
-        Public Sub New(value As Long)
+        ''' <param name="value"></param>
+        Public Sub New(value As String)
             Me.Value = value
         End Sub
 
         ''' <summary>
-        ''' Generates the bencoded equivalent of the integer.
+        ''' Generates the bencoded equivalent of the string.
         ''' </summary>
-        ''' <returns>The bencoded equivalent of the integer.</returns>
+        ''' <returns>The bencoded equivalent of the string.</returns>
         Public Function ToBencodedString() As String Implements BElement.ToBencodedString
             Return ToBencodedString(New StringBuilder()).ToString()
         End Function
 
         ''' <summary>
-        ''' Generates the bencoded equivalent of the integer.
+        ''' Generates the bencoded equivalent of the string.
         ''' </summary>
-        ''' <returns>The bencoded equivalent of the integer.</returns>
+        ''' <param name="u">The StringBuilder to append to.</param>
+        ''' <returns>The bencoded equivalent of the string.</returns>
         Public Function ToBencodedString(u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
             If u Is Nothing Then
-                u = New StringBuilder("i"c)
+                u = New StringBuilder(Value.Length)
             Else
-                u.Append("i"c)
+                u.Append(Value.Length)
             End If
 
-            Return u.Append(Value.ToString()).Append("e"c)
+            Return u.Append(":"c).Append(Value)
         End Function
 
         ''' <see cref="Object.GetHashCode()"/>
@@ -94,11 +105,11 @@ Namespace Serialization.Bencoding
         End Function
 
         ''' <summary>
-        ''' Int32.Equals(object)
+        ''' String.Equals(object)
         ''' </summary>
         Public Overrides Function Equals(obj As Object) As Boolean
             Try
-                Return Value.Equals(CType(obj, BInteger).Value)
+                Return Value.Equals(CType(obj, BString).Value)
             Catch
                 Return False
             End Try
@@ -110,17 +121,17 @@ Namespace Serialization.Bencoding
         End Function
 
         ''' <see cref="IComparable.CompareTo(Object)"/>
-        Public Function CompareTo(other As BInteger) As Integer Implements IComparable(Of BInteger).CompareTo
+        Public Function CompareTo(other As BString) As Integer Implements IComparable(Of BString).CompareTo
             Return Value.CompareTo(other.Value)
         End Function
 
         ''' <summary>
-        ''' Allows you to set an integer to a BInteger.
+        ''' Allows you to set a string to a BString.
         ''' </summary>
-        ''' <param name="n"></param>
+        ''' <param name="s"></param>
         ''' <returns></returns>
-        Public Shared Widening Operator CType(n As Integer) As BInteger
-            Return New BInteger(n)
+        Public Overloads Shared Widening Operator CType(s As String) As BString
+            Return New BString(value:=s)
         End Operator
     End Class
 End Namespace

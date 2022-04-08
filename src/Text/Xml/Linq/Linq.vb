@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae5db8a5b0d8cf258e497c24f6c4b642, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::32a60aad54c0b93e4dcf24c5d5105a41, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 362
+    '    Code Lines: 214
+    ' Comment Lines: 109
+    '   Blank Lines: 39
+    '     File Size: 18.00 KB
+
 
     '     Module Data
     ' 
@@ -379,7 +389,7 @@ Namespace Text.Xml.Linq
                 Do While (reader.Read())
                     ' Parse the file And return each of the child_node
                     If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
-                        If (Not (el = XNode.ReadFrom(reader)) Is Nothing) Then
+                        If (Not (el = DirectCast(XNode.ReadFrom(reader), XElement)) Is Nothing) Then
                             If Not selector Is Nothing Then
                                 If selector(el.Value) Then
                                     Yield el.Value
