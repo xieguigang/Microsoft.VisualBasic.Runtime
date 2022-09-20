@@ -1,10 +1,13 @@
 ﻿Imports System.Runtime.Intrinsics
 
-Namespace Math.SIMDIntrinsics
+Namespace Math
 #If NETCOREAPP Then
-    Public Class Add
 
-        Public Shared Function Add(v1 As Double(), v2 As Double(), math As Func(Of Vector256(Of Double), Vector256(Of Double), Vector256(Of Double))) As Double()
+    Public Class SIMDIntrinsics
+
+        Public Delegate Function Math(a As Vector256(Of Double), b As Vector256(Of Double)) As Vector256(Of Double)
+
+        Public Shared Function Vector2(v1 As Double(), v2 As Double(), math As Math) As Double()
             Dim a As Vector256(Of Double)
             Dim b As Vector256(Of Double)
             Dim c As Vector256(Of Double)
