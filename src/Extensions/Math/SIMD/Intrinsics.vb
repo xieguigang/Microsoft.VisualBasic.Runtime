@@ -14,8 +14,9 @@ Namespace Math
             Dim size As Integer = v1.Length
             Dim vec As Double() = New Double(size - 1) {}
             Dim remaining As Integer = v1.Length Mod SIMD.countDouble
+            Dim ends = vec.Length - remaining - 1
 
-            For i As Integer = 0 To vec.Length - 1 Step 4
+            For i As Integer = 0 To ends Step 4
                 a = Vector256.Create(v1(i), v1(i + 1), v1(i + 2), v1(i + 3))
                 b = Vector256.Create(v2(i), v2(i + 1), v2(i + 2), v2(i + 3))
                 c = math(a, b)

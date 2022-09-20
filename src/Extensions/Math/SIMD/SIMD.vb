@@ -69,8 +69,9 @@ legacy:             Dim x1 As Vector(Of Double)
                     Dim x2 As Vector(Of Double)
                     Dim vec As Double() = New Double(v1.Length - 1) {}
                     Dim remaining As Integer = v1.Length Mod SIMD.countDouble
+                    Dim ends As Integer = v1.Length - remaining - 1
 
-                    For i As Integer = 0 To v1.Length - remaining - 1 Step SIMD.countDouble
+                    For i As Integer = 0 To ends Step SIMD.countDouble
                         x1 = New Vector(Of Double)(v1, i)
                         x2 = New Vector(Of Double)(v2, i)
 
