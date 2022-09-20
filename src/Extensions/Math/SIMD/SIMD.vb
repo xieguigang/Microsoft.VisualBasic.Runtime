@@ -22,7 +22,7 @@ Namespace Math
         ''' This option only works for .NET core runtime
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Property enable As Boolean = True
+        Public Shared Property enable As Boolean = False
 
         Friend Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
         Friend Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
@@ -54,10 +54,10 @@ Namespace Math
 
                 Return out
 #Else
-                If Avx.IsSupported Then
-                    Return AvxIntrinsics.Add(v1, v2, AddressOf Avx.Add)
-                ElseIf Sse.IsSupported Then
-                    Throw New NotImplementedException
+                If Avx2.IsSupported Then
+                    Return SIMDIntrinsics.Add.Add(v1, v2, AddressOf Avx2.Add)
+                ElseIf Avx.IsSupported Then
+                    Return SIMDIntrinsics.Add.Add(v1, v2, AddressOf Avx.Add)
                 Else
                     GoTo FALLBACK
                 End If

@@ -1,9 +1,8 @@
 ﻿Imports System.Runtime.Intrinsics
 
-Namespace Math
-
+Namespace Math.SIMDIntrinsics
 #If NETCOREAPP Then
-    Public Class AvxIntrinsics
+    Public Class Add
 
         Public Shared Function Add(v1 As Double(), v2 As Double(), math As Func(Of Vector256(Of Double), Vector256(Of Double), Vector256(Of Double))) As Double()
             Dim a As Vector256(Of Double)
