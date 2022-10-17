@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e241f6ea449d4b88cd54d088038c923, sciBASIC#\Microsoft.VisualBasic.Core\test\terminalTest.vb"
+﻿#Region "Microsoft.VisualBasic::3f8d7f43c2499bc623b7f7fc83e448a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Multiply.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,51 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 12
-    '    Code Lines: 9
+    '   Total Lines: 32
+    '    Code Lines: 23
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 359 B
+    '   Blank Lines: 9
+    '     File Size: 872 B
 
 
-    ' Module terminalTest
+    '     Class Multiply
     ' 
-    '     Sub: Main
+    '         Function: f64_op_multiply_f64, f64_scalar_op_multiply_f64
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal
-Imports Microsoft.VisualBasic.Language.UnixBash
+Imports System.Numerics
 
-Module terminalTest
+#If Not NET48 Then
+Imports System.Runtime.Intrinsics
+Imports System.Runtime.Intrinsics.X86
+#End If
 
-    Sub Main()
-        Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine)
+Namespace Math.SIMD
 
-        shell.autoCompleteCandidates.Add("file.copy", "file.delete", "file.cache", "file.rename")
-        shell.Run()
-    End Sub
-End Module
+    Public Class Multiply
+
+        Public Shared Function f64_scalar_op_multiply_f64(v1 As Double, v2 As Double()) As Double()
+            Dim result As Double() = New Double(v2.Length - 1) {}
+
+            For i As Integer = 0 To v2.Length - 1
+                result(i) = v1 * v2(i)
+            Next
+
+            Return result
+        End Function
+
+        Public Shared Function f64_op_multiply_f64(v1 As Double(), v2 As Double()) As Double()
+            Dim result As Double() = New Double(v1.Length - 1) {}
+
+            For i As Integer = 0 To v1.Length - 1
+                result(i) = v1(i) * v2(i)
+            Next
+
+            Return result
+        End Function
+    End Class
+End Namespace
