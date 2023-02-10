@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1615bda73659afef3bc11c603dadad2d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NegativeMaxTicksExample.vb"
+﻿#Region "Microsoft.VisualBasic::2847cc47d8661f7df702f6cafc16e335, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\StringTokenizer.vb"
 
     ' Author:
     ' 
@@ -34,38 +34,56 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 18
+    '   Total Lines: 34
+    '    Code Lines: 26
     ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 698 B
+    '   Blank Lines: 8
+    '     File Size: 925 B
 
 
-    '     Class NegativeMaxTicksExample
+    '     Class StringTokenizer
     ' 
-    '         Function: Start
+    '         Properties: countTokens
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: nextToken, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Threading
-Imports System.Threading.Tasks
+Imports System.Runtime.CompilerServices
 
-Namespace ShellProgressBar.Example.TestCases
-    Public Class NegativeMaxTicksExample
-        Implements IProgressBarExample
-        Public Function Start(token As CancellationToken) As Task Implements IProgressBarExample.Start
-            Dim ticks = -100
-            Using pbar = New ProgressBar(ticks, "my operation with negative ticks", ConsoleColor.Cyan)
-                For i = 0 To ticks - 1
-                    pbar.Tick("step " & i)
-                    Thread.Sleep(50)
-                Next
-            End Using
-            Return Task.FromResult(1)
+Namespace Language.Java
+
+    Public Class StringTokenizer
+
+        ReadOnly rawText As String
+        ReadOnly sep As String
+        ReadOnly tokens As String()
+
+        Dim i As i32 = 0
+
+        Public ReadOnly Property countTokens As Integer
+            Get
+                Return tokens.Length
+            End Get
+        End Property
+
+        Public Sub New(text As String, sep As String)
+            Me.rawText = text
+            Me.sep = sep
+            Me.tokens = text.StringSplit(sep)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function nextToken() As String
+            Return tokens.ElementAtOrDefault(++i)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{countTokens} tokens from '{rawText}'"
         End Function
     End Class
 End Namespace
