@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Reflection.Emit
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -111,7 +112,37 @@ Public Class DynamicType
 
     Public Shared Function Create(metadata As Dictionary(Of String, Object)) As Object
         Dim properties As New List(Of PropertyInfo)
-        Dim obj As Object = New DynamicType(properties.ToArray).Create.GeneratedType.DoCall(AddressOf Activator.CreateInstance)
 
+        For Each meta In metadata
+            Dim symbol As String = meta.Key.NormalizePathString()
+            Dim type As Type
+            Dim value As Object = meta.Value
+
+            If value Is Nothing Then
+                type = GetType(String)
+                value = "NULL"
+            Else
+                type = value.GetType
+            End If
+
+            properties.Add(New PropertyInfo With {
+                .Name = symbol,
+                .PropertyType = type,
+                .Description = "",
+                .DisplayName = meta.Key
+            })
+        Next
+
+        Dim obj As Object = New DynamicType(properties.ToArray).Create.GeneratedType.DoCall(AddressOf Activator.CreateInstance)
+        Dim schema = DataFramework.Schema(obj.GetType, flag:=PropertyAccess.Writeable, nonIndex:=True)
+
+        For Each meta In properties
+            Dim value As Object = metadata(meta.DisplayName)
+            Dim prop = schema(meta.Name)
+
+            Call prop.SetValue(obj, value)
+        Next
+
+        Return obj
     End Function
 End Class
