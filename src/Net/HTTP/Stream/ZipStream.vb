@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::085ae1e21e68e7c84e20f5cad7cd5a26, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::d871669c0eb18149f7ac5217614df636, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\ZipStream.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 51
-    ' Comment Lines: 37
-    '   Blank Lines: 15
-    '     File Size: 3.83 KB
+    '   Total Lines: 126
+    '    Code Lines: 59 (46.83%)
+    ' Comment Lines: 51 (40.48%)
+    '    - Xml Docs: 64.71%
+    ' 
+    '   Blank Lines: 16 (12.70%)
+    '     File Size: 4.67 KB
 
 
     '     Module ZipStreamExtensions
     ' 
-    '         Function: Deflate, UnZipStream, Zip
+    '         Function: Deflate, TestZipMagic, UnZipStream, Zip
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,13 +59,36 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Net.Http
 
+    ''' <summary>
+    ''' zip magic header: 120, 218
+    ''' </summary>
     Public Module ZipStreamExtensions
+
+        ''' <summary>
+        ''' test the zip magic header
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function TestZipMagic(buffer As Byte()) As Boolean
+            If buffer.IsNullOrEmpty OrElse buffer.Length < 2 Then
+                Return False
+            Else
+                Return buffer(0) = 120 AndAlso buffer(1) = 218
+            End If
+        End Function
 
         ''' <summary>
         ''' zip stream compression
         ''' </summary>
         ''' <param name="stream"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will add the zlib magic header when 
+        ''' <paramref name="magicHeader"/> is set to true. [NOTE:
+        ''' the zlib compression result via the .NET library did
+        ''' not contains the zlib magic header.]
+        ''' </remarks>
         <Extension>
         Public Function Zip(stream As Stream, Optional magicHeader As Boolean = True) As MemoryStream
             Dim deflatMs As New MemoryStream()

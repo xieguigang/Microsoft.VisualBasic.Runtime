@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f29898f13d70f2a08a8edd6b54b6de3b, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\OverloadsFunction.vb"
+﻿#Region "Microsoft.VisualBasic::f29898f13d70f2a08a8edd6b54b6de3b, Microsoft.VisualBasic.Core\src\Scripting\Runtime\OverloadsFunction.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 67
-    '    Code Lines: 46
-    ' Comment Lines: 6
-    '   Blank Lines: 15
+    '    Code Lines: 46 (68.66%)
+    ' Comment Lines: 6 (8.96%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (22.39%)
     '     File Size: 2.24 KB
 
 

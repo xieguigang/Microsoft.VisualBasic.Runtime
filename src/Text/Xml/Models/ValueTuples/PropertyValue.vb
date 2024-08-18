@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac9fdfb96edbbf46fe23f518ba87fc3c, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::4ff408c5f945b9b02f8ac7e6ca3fd3f3, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 68
-    '    Code Lines: 36
-    ' Comment Lines: 24
-    '   Blank Lines: 8
-    '     File Size: 2.36 KB
+    '    Code Lines: 36 (52.94%)
+    ' Comment Lines: 24 (35.29%)
+    '    - Xml Docs: 95.83%
+    ' 
+    '   Blank Lines: 8 (11.76%)
+    '     File Size: 2.43 KB
 
 
     '     Class PropertyValue

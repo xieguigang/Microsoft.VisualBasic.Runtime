@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cd06372a0ab61fdc6935b640899b086, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Python\NamedTuple.vb"
+﻿#Region "Microsoft.VisualBasic::6cd06372a0ab61fdc6935b640899b086, Microsoft.VisualBasic.Core\src\Language\Language\Python\NamedTuple.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 12
-    ' Comment Lines: 3
-    '   Blank Lines: 4
+    '    Code Lines: 12 (63.16%)
+    ' Comment Lines: 3 (15.79%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (21.05%)
     '     File Size: 621 B
 
 

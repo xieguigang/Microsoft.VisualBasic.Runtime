@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f68c02a2d6247208e0d9a5467a2540c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::1f68c02a2d6247208e0d9a5467a2540c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 127
-    '    Code Lines: 82
-    ' Comment Lines: 25
-    '   Blank Lines: 20
+    '    Code Lines: 82 (64.57%)
+    ' Comment Lines: 25 (19.69%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 20 (15.75%)
     '     File Size: 4.55 KB
 
 

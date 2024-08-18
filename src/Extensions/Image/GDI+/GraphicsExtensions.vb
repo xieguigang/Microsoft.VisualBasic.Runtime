@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76a6b197484730eecf1168a257e27c78, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1843be5fda645f36a6d048add2a3e3ea, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 635
-    '    Code Lines: 380
-    ' Comment Lines: 168
-    '   Blank Lines: 87
-    '     File Size: 24.73 KB
+    '   Total Lines: 662
+    '    Code Lines: 409 (61.78%)
+    ' Comment Lines: 166 (25.08%)
+    '    - Xml Docs: 75.90%
+    ' 
+    '   Blank Lines: 87 (13.14%)
+    '     File Size: 25.71 KB
 
 
     '     Module GraphicsExtensions
@@ -50,7 +52,7 @@
     '                   ToFloat, ToPoint, ToPoints, ToStream, X
     '                   Y
     ' 
-    '         Sub: (+5 Overloads) DrawCircle
+    '         Sub: (+5 Overloads) DrawCircle, FillPolygon
     ' 
     ' 
     ' /********************************************************************************/
@@ -64,6 +66,7 @@ Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
@@ -84,6 +87,15 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     <HideModuleName>
     Public Module GraphicsExtensions
+
+        <Extension>
+        Public Sub FillPolygon(g As IGraphics, color As Brush, x As Double(), y As Double())
+            If x.TryCount <> y.TryCount Then
+                Throw New SafeArrayRankMismatchException("dimension of axis x and axis y is mis-matched!")
+            Else
+                Call g.FillPolygon(color, x.Select(Function(xi, i) New PointF(xi, y(i))).ToArray)
+            End If
+        End Sub
 
         ''' <summary>
         ''' Internal create gdi device helper.(这个函数不会克隆原来的图像对象<paramref name="res"/>)
@@ -659,20 +671,20 @@ Namespace Imaging
                                         Optional trace$ = "",
                                         Optional dpi$ = "100,100") As Graphics2D
             Dim bitmap As Bitmap
+            Dim dpi_sz As Size = dpi.SizeParser
 
-            If width = 0 OrElse height = 0 Then
+            If width <= 0 OrElse height <= 0 Then
                 Throw New Exception(InvalidSize)
+            ElseIf dpi_sz.Width <= 0 OrElse dpi_sz.Height <= 0 Then
+                Throw New Exception("dpi size should be a tuple of the positive integers!")
             End If
 
             Try
                 bitmap = New Bitmap(width, height)
 
-                With dpi.SizeParser
+                With dpi_sz
                     Call bitmap.SetResolution(.Width, .Height)
                 End With
-
-                ' Call $"Bitmap size: [{bitmap.Width}, {bitmap.Height}]".__DEBUG_ECHO
-                ' Call $"Bitmap dpi: [{bitmap.HorizontalResolution}, {bitmap.VerticalResolution}]".__DEBUG_ECHO
             Catch ex As Exception
                 ex = New Exception(New Size(width, height).ToString, ex)
                 ex = New Exception(trace, ex)

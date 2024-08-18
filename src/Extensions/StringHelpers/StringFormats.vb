@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52cfd0a3aa09e27e45d05d7bbf938c41, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::2d006d7ad3af901d81a1d8bd003c4b1f, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 62
-    ' Comment Lines: 11
-    '   Blank Lines: 12
-    '     File Size: 2.85 KB
+    '   Total Lines: 137
+    '    Code Lines: 94 (68.61%)
+    ' Comment Lines: 26 (18.98%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 17 (12.41%)
+    '     File Size: 4.82 KB
 
 
     ' Module StringFormats
     ' 
-    '     Function: FormatTime, (+2 Overloads) Lanudry, ReadableElapsedTime
+    '     Function: FormatTime, (+2 Overloads) Lanudry, nsize, (+2 Overloads) ReadableElapsedTime
     ' 
     ' /********************************************************************************/
 
@@ -52,9 +54,21 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language.C
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module StringFormats
+
+    Public Function nsize(x As Double) As String
+        If x <= 0 Then
+            Return "0"
+        ElseIf x.IsNaNImaginary Then
+            Return "n/a"
+        ElseIf x < 500 Then
+            Return CInt(x).ToString
+        Else
+            Return CInt(x / 1000).ToString & "K"
+        End If
+    End Function
 
     ''' <summary>
     ''' 对bytes数值进行格式自动优化显示
@@ -67,13 +81,13 @@ Public Module StringFormats
         ElseIf bytes.IsNaNImaginary Then
             Return "n/a KB"
         ElseIf bytes < 1024 Then
-            Return $"{bytes} B"
+            Return $"{CInt(bytes)} B"
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}
-        Dim exp = stdNum.Floor(stdNum.Log(bytes) / stdNum.Log(1000))
+        Dim exp = std.Floor(std.Log(bytes) / std.Log(1000))
         Dim symbol = symbols(exp)
-        Dim val = (bytes / (1000 ^ stdNum.Floor(exp)))
+        Dim val = (bytes / (1000 ^ std.Floor(exp)))
 
         Return sprintf($"%.2f %s", val, symbol)
     End Function
@@ -86,9 +100,17 @@ Public Module StringFormats
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function FormatTime(t As TimeSpan, Optional showMs As Boolean = True) As String
+    Public Function FormatTime(t As TimeSpan,
+                               Optional showMs As Boolean = True,
+                               Optional showDays As Boolean = False) As String
         With t
-            Dim dhms As String = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            Dim dhms As String
+
+            If showDays Then
+                dhms = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            Else
+                dhms = $"{ZeroFill(std.Ceiling(.TotalHours) - 1, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            End If
 
             If showMs Then
                 Return $"{dhms}.{ZeroFill(.Milliseconds, 3)}"
@@ -100,7 +122,9 @@ Public Module StringFormats
 
     <Extension>
     Public Function Lanudry(timespan As TimeSpan, Optional showMs As Boolean = True) As String
-        If timespan < TimeSpan.FromMinutes(1) Then
+        If timespan < TimeSpan.FromSeconds(1) Then
+            Return $"{timespan.TotalMilliseconds} ms"
+        ElseIf timespan < TimeSpan.FromMinutes(1) Then
             Return $"{timespan.TotalSeconds.ToString("F1")} seconds"
         ElseIf timespan < TimeSpan.FromHours(1) Then
             Return $"{timespan.TotalMinutes.ToString("F2")} min"
@@ -111,17 +135,47 @@ Public Module StringFormats
         End If
     End Function
 
+    ''' <summary>
+    ''' convert the ms value to human readable string
+    ''' </summary>
+    ''' <param name="span"><see cref="TimeSpan.TotalMilliseconds"/></param>
+    ''' <param name="format"></param>
+    ''' <param name="round"></param>
+    ''' <returns>human readable time string, example as: 3.6s, 45min or 1.99h</returns>
+    ''' 
+    <Extension>
+    Public Function ReadableElapsedTime(span As TimeSpan, Optional format$ = "%.3f%s", Optional round% = 3) As String
+        Return ReadableElapsedTime(span.TotalMilliseconds, format, round)
+    End Function
+
+    ''' <summary>
+    ''' convert the ms value to human readable string
+    ''' </summary>
+    ''' <param name="microtime"><see cref="TimeSpan.TotalMilliseconds"/></param>
+    ''' <param name="format"></param>
+    ''' <param name="round"></param>
+    ''' <returns>human readable time string, example as: 3.6s, 45min or 1.99h</returns>
     Public Function ReadableElapsedTime(microtime&, Optional format$ = "%.3f%s", Optional round% = 3) As String
         Dim unit$
         Dim time!
 
         If microtime >= 1000 Then
             unit = "s"
-            time = stdNum.Round(microtime / 1000, round)
+            time = std.Round(microtime / 1000, round)
 
             If time >= 60 Then
                 unit = "min"
-                time = stdNum.Round(time / 60, round)
+                time = std.Round(time / 60, round)
+
+                If time >= 60 Then
+                    unit = "h"
+                    time = std.Round(time / 60, round)
+
+                    If time >= 24 Then
+                        unit = "days"
+                        time = std.Round(time / 24, round)
+                    End If
+                End If
             End If
 
             format = sprintf(format, time, unit)

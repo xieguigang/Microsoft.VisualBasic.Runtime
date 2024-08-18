@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdaa5660f50ab7996396aafc4aade498, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Patterns\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cdaa5660f50ab7996396aafc4aade498, Microsoft.VisualBasic.Core\src\Text\Patterns\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 8
-    '    Code Lines: 4
-    ' Comment Lines: 3
-    '   Blank Lines: 1
+    '    Code Lines: 4 (50.00%)
+    ' Comment Lines: 3 (37.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (12.50%)
     '     File Size: 159 B
 
 

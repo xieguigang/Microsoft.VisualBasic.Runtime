@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed9fc06dfa15f5d676d8e5033794d4c7, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Enumerator.vb"
+﻿#Region "Microsoft.VisualBasic::ed9fc06dfa15f5d676d8e5033794d4c7, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Enumerator.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 68
-    '    Code Lines: 43
-    ' Comment Lines: 12
-    '   Blank Lines: 13
+    '    Code Lines: 43 (63.24%)
+    ' Comment Lines: 12 (17.65%)
+    '    - Xml Docs: 91.67%
+    ' 
+    '   Blank Lines: 13 (19.12%)
     '     File Size: 2.09 KB
 
 

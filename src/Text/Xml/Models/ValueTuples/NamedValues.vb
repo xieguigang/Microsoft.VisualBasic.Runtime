@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26e8d17572f2f763a16888cb4dfae8f4, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::f26dac78c8cc846104843d743440f9b9, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 71
-    ' Comment Lines: 35
-    '   Blank Lines: 20
-    '     File Size: 4.02 KB
+    '   Total Lines: 143
+    '    Code Lines: 77 (53.85%)
+    ' Comment Lines: 44 (30.77%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 22 (15.38%)
+    '     File Size: 4.49 KB
 
 
     '     Class NamedValue
     ' 
     '         Properties: name, text
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: ToString
     '         Operators: +
     ' 
@@ -53,7 +55,7 @@
     ' 
     '         Properties: comment, name, value
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Structure NamedVector
@@ -78,8 +80,11 @@ Imports Microsoft.VisualBasic.Language
 Namespace Text.Xml.Models
 
     ''' <summary>
-    ''' 键值对集合的键值<see cref="text"/>可能是一大段文本
+    ''' A key-value pair data for xml
     ''' </summary>
+    ''' <remarks>
+    ''' 键值对集合的键值<see cref="text"/>可能是一大段文本
+    ''' </remarks>
     <XmlType("data")> Public Class NamedValue
         Implements INamedValue
         Implements Value(Of String).IValueOf
@@ -102,6 +107,10 @@ Namespace Text.Xml.Models
             Me.text = value
         End Sub
 
+        ''' <summary>
+        ''' get name and value from the given tuple
+        ''' </summary>
+        ''' <param name="namedValue"></param>
         Sub New(namedValue As NamedValue(Of String))
             Me.name = namedValue.Name
             Me.text = namedValue.Value
@@ -128,8 +137,10 @@ Namespace Text.Xml.Models
 
     ''' <summary>
     ''' Property Info (Property Name and Property Value).
-    ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
     ''' </summary>
+    ''' <remarks>
+    ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
+    ''' </remarks>
     <XmlType("property")> Public Class [Property] : Implements INamedValue
 
         ''' <summary>

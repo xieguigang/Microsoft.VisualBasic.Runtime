@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::171099e69881948464942c8f1a782ed5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::a2063b55c4813831ab4ac8c6263e5889, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 478
-    '    Code Lines: 277
-    ' Comment Lines: 149
-    '   Blank Lines: 52
-    '     File Size: 18.35 KB
+    '   Total Lines: 533
+    '    Code Lines: 313 (58.72%)
+    ' Comment Lines: 160 (30.02%)
+    '    - Xml Docs: 91.25%
+    ' 
+    '   Blank Lines: 60 (11.26%)
+    '     File Size: 20.45 KB
 
 
     ' Module TextDoc
@@ -64,7 +66,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports fs = Microsoft.VisualBasic.FileIO.FileSystem
 
-<Package("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
 
     ''' <summary>
@@ -193,7 +194,7 @@ Public Module TextDoc
     <Extension>
     Public Function OpenWriter(path$,
                                Optional encoding As Encodings = Encodings.UTF8,
-                               Optional newLine$ = ASCII.LF,
+                               Optional newLine As String = vbLf,
                                Optional append As Boolean = False,
                                Optional bufferSize As Integer = -1) As StreamWriter
 
@@ -202,39 +203,66 @@ Public Module TextDoc
 
     ''' <summary>
     ''' Reading a super large size text file through stream method.
-    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
+    ''' <remarks>
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
+    ''' </remarks>
     <Extension>
-    Public Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
-        Return path.IterateAllLines(encoding.CodePage)
+    Public Function IterateAllLines(path$,
+                                    Optional encoding As Encodings = Encodings.Default,
+                                    Optional verbose As Boolean = True,
+                                    Optional unsafe As Boolean = False) As IEnumerable(Of String)
+
+        Return path.IterateAllLines(encoding.CodePage, verbose:=verbose, unsafe:=unsafe)
     End Function
 
     ''' <summary>
     ''' Reading a super large size text file through stream method.
-    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
+    ''' <remarks>
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
+    ''' </remarks>
     <Extension>
-    Public Iterator Function IterateAllLines(path$, encoding As Encoding) As IEnumerable(Of String)
+    Public Iterator Function IterateAllLines(path$, encoding As Encoding,
+                                             Optional verbose As Boolean = True,
+                                             Optional unsafe As Boolean = False) As IEnumerable(Of String)
         If path.IsURLPattern Then
+            ' get request a html page
             For Each line As String In path.GET.LineTokens
                 Yield line
             Next
         ElseIf Not path.FileExists Then
-            If path.Contains(ASCII.CR) OrElse path.Contains(ASCII.LF) OrElse path.Length > 60 Then
-                path = Mid(path, 1, 63) & "..."
+            Dim display_str As String = path
+
+            If path.Contains(ASCII.CR) OrElse path.Contains(ASCII.LF) Then
+                If unsafe Then
+                    Throw New InvalidProgramException($"in-valid! ({path})")
+                Else
+                    If verbose Then
+                        Call $"the given path is a text paragraph? ({path})".Warning
+                    End If
+
+                    ' returns an empty string collection
+                    Return
+                End If
+            ElseIf path.Length > 60 Then
+                display_str = path.Substring(0, 63) & "..."
             End If
 
-            Call $"the given path ({path}) is not exists on your file system!".Warning
+            If verbose Then
+                Call $"the given path ({display_str}) is not exists on your file system!".Warning
+            End If
 
+            ' returns an empty string collection
             Return
         End If
 
         ' path.Open is affects by the memory configuration
-        Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
             Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine
@@ -251,7 +279,8 @@ Public Module TextDoc
     ''' Parameter value is set to <see cref="DefaultEncoding"/> if this parameter is not specific.
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
+    <Extension>
+    Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
         If path.FileLength <= 0 Then
             Return ""
         End If
@@ -306,13 +335,15 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' This function just suite for read a small text file.(这个函数只建议读取小文本文件的时候使用)
+    ''' This function just suite for read a small text file.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="encoding">Default value is <see cref="Encoding.UTF8"/></param>
     ''' <param name="suppress">Suppress error message??</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (这个函数只建议读取小文本文件的时候使用)
+    ''' </remarks>
     '''
     <ExportAPI("Read.TXT")>
     <Extension>
@@ -322,7 +353,15 @@ Public Module TextDoc
                                 Optional throwEx As Boolean = True,
                                 Optional suppress As Boolean = False) As String
         Try
-            Return fs.ReadAllText(path, encoding:=encoding Or UTF8)
+            If Not path.FileExists Then
+                If Not throwEx Then
+                    Return ""
+                End If
+            End If
+
+            Using s As Stream = path.OpenReadonly
+                Return New StreamReader(s, encoding:=encoding Or UTF8).ReadToEnd
+            End Using
         Catch ex As Exception
             ex = New Exception(path.ToFileURL, ex)
 
@@ -342,20 +381,35 @@ Public Module TextDoc
 
     ''' <summary>
     ''' This function is recommend using for the small(probably smaller than 300MB) text file reading.
-    ''' (这个函数只建议读取小文本文件的时候使用)
     ''' </summary>
     ''' <param name="path"></param>
-    ''' <param name="Encoding">Default value is UTF8</param>
+    ''' <param name="encoding">Default value is UTF8</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (这个函数只建议读取小文本文件的时候使用)
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Read.Lines")>
     <Extension>
-    Public Function ReadAllLines(path$, Optional Encoding As Encoding = Nothing) As String()
-        If path.FileExists Then
-            Return path.IterateAllLines(encoding:=Encoding).ToArray
+    Public Function ReadAllLines(path$,
+                                 Optional encoding As Encoding = Nothing,
+                                 Optional verbose As Boolean = True) As String()
+
+        If (Not path.StringEmpty) AndAlso path.FileExists Then
+            Return path _
+                .IterateAllLines(encoding:=encoding, verbose:=verbose) _
+                .ToArray
         Else
-            Call $"missing text file: {path.GetFullPath}!".Warning
+            If path.StringEmpty Then
+                Call "empty file path!".Warning
+            Else
+                Try
+                    Call $"missing text file: {path.GetFullPath}!".Warning
+                Catch ex As Exception
+
+                End Try
+            End If
+
             Return New String() {}
         End If
     End Function
@@ -375,58 +429,63 @@ Public Module TextDoc
     ''' <summary>
     ''' Write the text file data into a file which was specific by the <paramref name="path"></paramref> value,
     ''' this function not append the new data onto the target file.
-    ''' (将目标文本字符串写入到一个指定路径的文件之中，但是不会在文件末尾追加新的数据)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="text"></param>
     ''' <param name="encoding">这个函数会自动处理文本的编码的</param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' default text encoding: utf-8
+    ''' default text encoding: utf-8(将目标文本字符串写入到一个指定路径的文件之中，但是不会在文件末尾追加新的数据)
     ''' </remarks>
     '''
-    <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
-                                       <Parameter("Path")> path As String,
-                                       <Parameter("Text.Encoding")>
-                                       Optional encoding As Encoding = Nothing,
-                                       Optional append As Boolean = False,
-                                       Optional throwEx As Boolean = True) As Boolean
+    <Extension>
+    Public Function SaveTo(<Parameter("Text")> text As String,
+                           <Parameter("Path")> path As String,
+                           <Parameter("Text.Encoding")>
+                           Optional encoding As Encoding = Nothing,
+                           Optional append As Boolean = False,
+                           Optional throwEx As Boolean = True) As Boolean
 
         If String.IsNullOrEmpty(path) Then
             Return False
         End If
 
-        Dim DIR As String
+        Dim dir As String = Nothing
 
-#If UNIX Then
-        DIR = System.IO.Directory.GetParent(path).FullName
-#Else
         Try
+#If UNIX Then
+            dir = System.IO.Directory.GetParent(path).FullName
+#Else
             path = PathExtensions.Long2Short(path)
-            DIR = fs.GetParentPath(path)
+            dir = fs.GetParentPath(path)
+#End If
         Catch ex As Exception
             Dim msg As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
-            Throw New Exception(msg, ex)
-        End Try
-#End If
+            ex = New Exception(msg, ex)
+            App.LogException(ex)
 
-        If String.IsNullOrEmpty(DIR) Then
-            DIR = App.CurrentDirectory
+            If throwEx Then
+                Throw ex
+            End If
+        End Try
+
+        If String.IsNullOrEmpty(dir) Then
+            dir = App.CurrentDirectory
         Else
-            DIR.MakeDir(throwEx:=False)
+            dir.MakeDir(throwEx:=False)
         End If
 
         Try
             Call fs.WriteAllText(path, text Or EmptyString, append, encoding Or UTF8)
         Catch ex As Exception
-            ex = New Exception("[DIR]  " & DIR, ex)
+            ex = New Exception("[DIR]  " & dir, ex)
             ex = New Exception("[Path]  " & path, ex)
+
+            Call App.LogException(ex)
 
             If throwEx Then
                 Throw ex
             Else
-                Call App.LogException(ex)
                 Return False
             End If
         End Try
@@ -443,7 +502,8 @@ Public Module TextDoc
     ''' <returns></returns>
     <ExportAPI("Write.Text")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function SaveTo(value As XElement, path$, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension>
+    Public Function SaveTo(value As XElement, path$, Optional encoding As Encoding = Nothing) As Boolean
         Return value.Value.SaveTo(path, encoding)
     End Function
 
@@ -463,7 +523,8 @@ Public Module TextDoc
     ''' <remarks>2012年12月5日</remarks>
     '''
     <ExportAPI("IsTextFile")>
-    <Extension> Public Function IsTextFile(path$, Optional chunkSize% = 4 * 1024) As Boolean
+    <Extension>
+    Public Function IsTextFile(path$, Optional chunkSize% = 4 * 1024) As Boolean
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read)
             Dim byteData(1) As Byte
             Dim i%
@@ -484,10 +545,12 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 将目标字符串集合数据全部写入到文件之中，当所写入的文件位置之上没有父文件夹存在的时候，会自动创建文件夹
+    ''' Save a collection of the text data in line by line
     ''' </summary>
     ''' <param name="array"></param>
-    ''' <param name="path"></param>
+    ''' <param name="path">
+    ''' 将目标字符串集合数据全部写入到文件之中，当所写入的文件位置之上没有父文件夹存在的时候，会自动创建文件夹
+    ''' </param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     ''' <remarks>
@@ -524,9 +587,9 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <ExportAPI("Write.Text")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function SaveTo(sb As StringBuilder, path$, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension>
+    Public Function SaveTo(sb As StringBuilder, path$, Optional encoding As Encoding = Nothing) As Boolean
         Return sb.ToString.SaveTo(path, encoding)
     End Function
 End Module

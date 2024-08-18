@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1d0cec8228de1019b9c7e5945b6c7ef, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\RangeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b1d0cec8228de1019b9c7e5945b6c7ef, Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\RangeExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 22
-    '    Code Lines: 10
-    ' Comment Lines: 9
-    '   Blank Lines: 3
+    '    Code Lines: 10 (45.45%)
+    ' Comment Lines: 9 (40.91%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 3 (13.64%)
     '     File Size: 778 B
 
 

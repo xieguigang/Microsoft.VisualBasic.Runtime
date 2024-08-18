@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c920223387a0eb7997fe9918647ef48c, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\OutputAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::c920223387a0eb7997fe9918647ef48c, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\OutputAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 11
-    ' Comment Lines: 4
-    '   Blank Lines: 4
+    '    Code Lines: 11 (57.89%)
+    ' Comment Lines: 4 (21.05%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (21.05%)
     '     File Size: 576 B
 
 

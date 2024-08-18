@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9681b0176aeaf675bcc991d3601dda5d, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\ImplictCType.vb"
+﻿#Region "Microsoft.VisualBasic::9681b0176aeaf675bcc991d3601dda5d, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\ImplictCType.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 89
-    '    Code Lines: 55
-    ' Comment Lines: 20
-    '   Blank Lines: 14
+    '    Code Lines: 55 (61.80%)
+    ' Comment Lines: 20 (22.47%)
+    '    - Xml Docs: 85.00%
+    ' 
+    '   Blank Lines: 14 (15.73%)
     '     File Size: 3.66 KB
 
 

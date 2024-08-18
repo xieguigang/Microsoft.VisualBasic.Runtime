@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38a462c70b9fb3da2d1017a213b80e5c, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::742c8bfa81660fc6ae66f5eae36b658d, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 306
-    '    Code Lines: 197
-    ' Comment Lines: 75
-    '   Blank Lines: 34
-    '     File Size: 13.11 KB
+    '   Total Lines: 327
+    '    Code Lines: 209 (63.91%)
+    ' Comment Lines: 80 (24.46%)
+    '    - Xml Docs: 96.25%
+    ' 
+    '   Blank Lines: 38 (11.62%)
+    '     File Size: 13.72 KB
 
 
     '     Module JsonContract
@@ -53,18 +55,18 @@
 
 #End Region
 
+#If NETCOREAPP Then
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+#Else
+Imports System.Web.Script.Serialization
+#End If
+
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization.Json
 Imports System.Text
 Imports System.Text.RegularExpressions
-#If netcore5 = 0 Then
-Imports System.Web.Script.Serialization
-#End If
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-#If netcore5 = 1 Then
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-#End If
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -194,12 +196,13 @@ Namespace Serialization.JSON
         ''' <summary>
         ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
         ''' can be used for block the property which is will not serialize to the text.
-        ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
         ''' <remarks>
+        ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
+        ''' 
         ''' 2016-11-9 对字典进行序列化的时候，假若对象类型是从字典类型继承而来的，则新的附加属性并不会被序列化，只会序列化字典本身
         ''' 2018-10-5 不可以序列化匿名类型
         ''' </remarks>
@@ -211,6 +214,10 @@ Namespace Serialization.JSON
                                       Optional simpleDict As Boolean = True,
                                       Optional knownTypes As IEnumerable(Of Type) = Nothing) As String
             Dim schema As Type
+
+            If obj Is Nothing Then
+                Return "null"
+            End If
 
             If GetType(T) Is GetType(Array) AndAlso Not obj Is Nothing Then
                 schema = obj.GetType
@@ -278,13 +285,29 @@ Namespace Serialization.JSON
         ''' 从文本文件或者文本内容之中进行JSON反序列化
         ''' </summary>
         ''' <param name="json">This string value can be json text or json file path.</param>
-        <Extension> Public Function LoadJSON(Of T)(json$,
-                                                   Optional simpleDict As Boolean = True,
-                                                   Optional throwEx As Boolean = True,
-                                                   Optional ByRef exception As Exception = Nothing,
-                                                   Optional knownTypes As IEnumerable(Of Type) = Nothing) As T
+        ''' <remarks>
+        ''' null or empty string will be parsed as nothing if the optional
+        ''' parameter <paramref name="throwEx"/> option value is set to false
+        ''' </remarks>
+        <Extension>
+        Public Function LoadJSON(Of T)(json$,
+                                       Optional simpleDict As Boolean = True,
+                                       Optional throwEx As Boolean = True,
+                                       Optional ByRef exception As Exception = Nothing,
+                                       Optional knownTypes As IEnumerable(Of Type) = Nothing) As T
 
             Dim text$ = json.SolveStream(Encodings.UTF8)
+
+            If text.StringEmpty Then
+                If throwEx Then
+                    Throw New NullReferenceException("empty json text!")
+                Else
+                    Return Nothing
+                End If
+            ElseIf text.TextEquals("null") Then
+                Return Nothing
+            End If
+
             Dim value As Object = text.LoadObject(GetType(T), simpleDict, throwEx, exception, knownTypes)
             Dim obj As T = DirectCast(value, T)
             Return obj

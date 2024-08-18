@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bca0d86dd22bc409d262feb73d47f50b, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::bca0d86dd22bc409d262feb73d47f50b, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 10 (76.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (23.08%)
     '     File Size: 302 B
 
 

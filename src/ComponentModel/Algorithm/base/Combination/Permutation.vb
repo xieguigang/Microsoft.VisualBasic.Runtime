@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8fadaea1b911ab51551b88c631c608f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
+﻿#Region "Microsoft.VisualBasic::35b219b31e619b294a88d8c972a67094, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 64
-    ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 2.04 KB
+    '   Total Lines: 105
+    '    Code Lines: 83 (79.05%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (20.95%)
+    '     File Size: 2.99 KB
 
 
     '     Class Permutation
@@ -46,6 +48,9 @@
     '         Properties: CanPermute, Data
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) allPermutations
+    ' 
     '         Sub: FindIndices, Permutate, Reverse, Swap
     ' 
     ' 
@@ -131,5 +136,30 @@ Namespace ComponentModel.Algorithm.base
             Reverse(K + 1, dataField.Length - 1)
             FindIndices()
         End Sub
+
+        Public Shared Function allPermutations(l As IList(Of tT)) As IEnumerable(Of List(Of tT))
+            Return allPermutations(l, 0)
+        End Function
+
+        Public Shared Iterator Function allPermutations(l As IList(Of tT), pos As Integer) As IEnumerable(Of List(Of tT))
+            If pos = l.Count - 1 Then
+                Yield New List(Of tT)() From {l(pos)}
+            Else
+                Dim basePermutations = allPermutations(l, pos + 1).ToArray
+
+                For Each tmp As List(Of tT) In basePermutations
+                    Dim basePermutation = tmp
+
+                    For i = 0 To basePermutation.Count + 1 - 1
+                        Dim perm As New List(Of tT)()
+
+                        Call perm.AddRange(basePermutation)
+                        Call perm.Insert(i, l(pos))
+
+                        Yield perm
+                    Next
+                Next
+            End If
+        End Function
     End Class
 End Namespace

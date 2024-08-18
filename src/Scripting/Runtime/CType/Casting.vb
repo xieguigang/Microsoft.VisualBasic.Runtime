@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04c542b49ebc18d0b49f2352173fd754, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::9680813d07cb520c34c4fde5cdda4f1d, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 415
-    '    Code Lines: 245
-    ' Comment Lines: 126
-    '   Blank Lines: 44
-    '     File Size: 15.97 KB
+    '   Total Lines: 420
+    '    Code Lines: 250 (59.52%)
+    ' Comment Lines: 126 (30.00%)
+    '    - Xml Docs: 86.51%
+    ' 
+    '   Blank Lines: 44 (10.48%)
+    '     File Size: 16.13 KB
 
 
     '     Module Casting
@@ -206,7 +208,8 @@ Namespace Scripting.Runtime
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        <Extension> Public Function SizeParser(pt$) As Size
+        <Extension>
+        Public Function SizeParser(pt$) As Size
             Return pt.FloatSizeParser.ToSize
         End Function
 
@@ -253,7 +256,8 @@ Namespace Scripting.Runtime
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="list">在这里使用向量而非使用通用接口是因为和单个元素的As转换有冲突</param>
         ''' <returns></returns>
-        <Extension> Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As IEnumerable(Of TOut)
+        <Extension>
+        Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As IEnumerable(Of TOut)
             If list Is Nothing Then
                 Return {}
             Else
@@ -278,7 +282,8 @@ Namespace Scripting.Runtime
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Double.Match")>
-        <Extension> Public Function RegexParseDouble(s As String) As Double
+        <Extension>
+        Public Function RegexParseDouble(s As String) As Double
             Return Val(s.Match(RegexpFloat))
         End Function
 
@@ -301,11 +306,13 @@ Namespace Scripting.Runtime
 
             If String.IsNullOrEmpty(s) Then
                 Return 0R
-            ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) OrElse
-                String.Equals(s, "NA", StringComparison.Ordinal) Then
+            ElseIf String.Equals(s, "NaN", StringComparison.OrdinalIgnoreCase) OrElse
+                String.Equals(s, "NA", StringComparison.OrdinalIgnoreCase) Then
 
                 ' R 语言之中是使用NA，.NET语言是使用NaN
                 Return Double.NaN
+            ElseIf String.Equals(s, "NULL", StringComparison.OrdinalIgnoreCase) Then
+                Return 0.0
             Else
                 ' ,表示1000，需要删掉这个间隔符
                 ' 才可以被正常的val出来
@@ -368,7 +375,7 @@ Namespace Scripting.Runtime
             If obj.StringEmpty OrElse obj = "0000-00-00 00:00:00" OrElse obj.ToUpper = "NULL" OrElse obj.ToUpper = "NA" Then
                 Return New Date
             ElseIf obj.IsPattern("\d+") Then
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
                 ' unix timestamp
                 Return CLng(Val(obj)).FromUnixTimeStamp
 #Else

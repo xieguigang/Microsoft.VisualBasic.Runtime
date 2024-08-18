@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5ba19c67abf11edf0e3844aef51abf, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::ed5ba19c67abf11edf0e3844aef51abf, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\LineValue.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 22
-    '    Code Lines: 17
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 17 (77.27%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (22.73%)
     '     File Size: 719 B
 
 

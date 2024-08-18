@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3867cbcd4d2eab164c6dc8bf8eee0f3, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::f188cc6afd336bb164d2cbe12134d5c8, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4870
-    '    Code Lines: 679
-    ' Comment Lines: 4017
-    '   Blank Lines: 174
-    '     File Size: 211.06 KB
+    '   Total Lines: 4873
+    '    Code Lines: 684 (14.04%)
+    ' Comment Lines: 4015 (82.39%)
+    '    - Xml Docs: 6.77%
+    ' 
+    '   Blank Lines: 174 (3.57%)
+    '     File Size: 211.29 KB
 
 
     '     Class GDICanvas
     ' 
-    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, Font
-    '                     Graphics, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale
-    '                     PageUnit, PixelOffsetMode, RenderingOrigin, SmoothingMode, Stroke
-    '                     TextContrast, TextRenderingHint
+    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, Graphics
+    '                     InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit
+    '                     PixelOffsetMode, RenderingOrigin, SmoothingMode, TextContrast, TextRenderingHint
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -61,8 +62,8 @@
     '              EndContainer, (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse
     '              FillPath, (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion
     '              Finalize, (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip
-    '              ResetTransform, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints
-    '              (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    '              ResetTransform, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, SetTransformMatrix
+    '              (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/
@@ -82,6 +83,7 @@ Namespace Imaging
     ''' <summary>
     ''' 这个对象是<see cref="Graphics2D"/>以及<see cref="Wmf"/>公用的基础类型
     ''' </summary>
+    ''' <remarks>the gdi+ graphics canvas base model</remarks>
     Public MustInherit Class GDICanvas : Inherits IGraphics
         Implements IDisposable
 
@@ -121,19 +123,6 @@ Namespace Imaging
 
         Sub New()
         End Sub
-
-#Region "Default canvas style values"
-        ''' <summary>
-        ''' Default pen for drawing
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Stroke As Pen
-        ''' <summary>
-        ''' Default font value for text drawing
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Font As Font
-#End Region
 
 #Region "Implements Class Graphics"
 
@@ -2457,7 +2446,7 @@ Namespace Imaging
         ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
         ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
         ''' text.</param>
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
             Call Graphics.DrawString(s, font, brush, point)
         End Sub
         '
@@ -4186,6 +4175,8 @@ Namespace Imaging
         ''' <summary>
         ''' Resets the clip region of this System.Drawing.Graphics to an infinite region.
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub ResetClip()
             Call Graphics.ResetClip()
         End Sub
@@ -4194,14 +4185,23 @@ Namespace Imaging
         ''' Resets the world transformation matrix of this System.Drawing.Graphics to the
         ''' identity matrix.
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub ResetTransform()
             Call Graphics.ResetTransform()
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetTransformMatrix(m As Matrix)
+            Graphics.Transform = m
         End Sub
 
         ''' <summary>
         ''' Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics.
         ''' </summary>
         ''' <param name="angle">Angle of rotation in degrees.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub RotateTransform(angle As Single)
             Call Graphics.RotateTransform(angle)
         End Sub
@@ -4213,6 +4213,8 @@ Namespace Imaging
         ''' <param name="angle">Angle of rotation in degrees.</param>
         ''' <param name="order">Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         ''' whether the rotation is appended or prepended to the matrix transformation.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
             Call Graphics.RotateTransform(angle, order)
         End Sub
@@ -4223,6 +4225,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="sx">Scale factor in the x direction.</param>
         ''' <param name="sy">Scale factor in the y direction.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
             Call Graphics.ScaleTransform(sx, sy)
         End Sub
@@ -4586,9 +4590,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point specified by the point parameter is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(point As PointF) As Boolean
-            Return Graphics.IsVisible(point)
-        End Function
+        'Public Overrides Function IsVisible(point As PointF) As Boolean
+        '    Return Graphics.IsVisible(point)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the specified System.Drawing.Point structure is contained within
@@ -4601,9 +4605,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point specified by the point parameter is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(point As Point) As Boolean
-            Return Graphics.IsVisible(point)
-        End Function
+        'Public Overrides Function IsVisible(point As Point) As Boolean
+        '    Return Graphics.IsVisible(point)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the point specified by a pair of coordinates is contained within
@@ -4619,9 +4623,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(x As Single, y As Single) As Boolean
-            Return Graphics.IsVisible(x, y)
-        End Function
+        'Public Overrides Function IsVisible(x As Single, y As Single) As Boolean
+        '    Return Graphics.IsVisible(x, y)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the point specified by a pair of coordinates is contained within
@@ -4637,9 +4641,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(x As Integer, y As Integer) As Boolean
-            Return Graphics.IsVisible(x, y)
-        End Function
+        'Public Overrides Function IsVisible(x As Integer, y As Integer) As Boolean
+        '    Return Graphics.IsVisible(x, y)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a pair of coordinates, a width,

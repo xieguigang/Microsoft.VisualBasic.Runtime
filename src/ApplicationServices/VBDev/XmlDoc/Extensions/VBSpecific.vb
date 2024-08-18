@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2762ad3badc4447e689aa531abc5415, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb"
+﻿#Region "Microsoft.VisualBasic::c2762ad3badc4447e689aa531abc5415, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 10 (76.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (23.08%)
     '     File Size: 422 B
 
 

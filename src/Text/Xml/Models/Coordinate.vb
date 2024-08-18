@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e437f1e97ae03e2ffad19a618184450d, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\Coordinate.vb"
+﻿#Region "Microsoft.VisualBasic::e437f1e97ae03e2ffad19a618184450d, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Coordinate.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 69
-    '    Code Lines: 50
-    ' Comment Lines: 6
-    '   Blank Lines: 13
+    '    Code Lines: 50 (72.46%)
+    ' Comment Lines: 6 (8.70%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 13 (18.84%)
     '     File Size: 2.45 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a533c58b8a26ecb2e234987b65f9c5d9, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::dd59be2778a89d6ea7a7027072d322f2, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 316
-    '    Code Lines: 203
-    ' Comment Lines: 68
-    '   Blank Lines: 45
-    '     File Size: 12.78 KB
+    '   Total Lines: 329
+    '    Code Lines: 213 (64.74%)
+    ' Comment Lines: 68 (20.67%)
+    '    - Xml Docs: 63.24%
+    ' 
+    '   Blank Lines: 48 (14.59%)
+    '     File Size: 13.41 KB
 
 
     '     Class ConfigEngine
@@ -48,7 +50,7 @@
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) [Set], ExistsNode, GetName, GetSettings, GetSettingsNode
-    '                   Load, (+2 Overloads) Prints, (+2 Overloads) Save, ToString, View
+    '                   Load, (+2 Overloads) Prints, (+3 Overloads) Save, ToString, View
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 
@@ -57,6 +59,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -124,7 +127,7 @@ Namespace ComponentModel.Settings
 
         Protected Friend Shared Function Load(Of EntityType)(type As Type, obj As EntityType) As NamedValue(Of BindMapping)()
             Dim LQuery As IEnumerable(Of BindMapping) =
- _
+                                                       _
                 From [Property] As PropertyInfo
                 In type.GetProperties
                 Let attributes = [Property].GetCustomAttributes(attributeType:=ProfileItemType, inherit:=False)
@@ -134,7 +137,7 @@ Namespace ComponentModel.Settings
 
             Dim out As List(Of NamedValue(Of BindMapping)) =
                 LinqAPI.MakeList(Of NamedValue(Of BindMapping)) <=
- _
+                                                                  _
                     From ProfileItem As BindMapping
                     In LQuery
                     Let name As String = GetName(ProfileItem, ProfileItem.BindProperty)
@@ -256,7 +259,7 @@ Namespace ComponentModel.Settings
         Public Shared Function Prints(data As IEnumerable(Of BindMapping)) As String
             Dim source As NamedValue(Of String)() =
                 LinqAPI.Exec(Of NamedValue(Of String)) <=
- _
+                                                         _
                 From x As BindMapping
                 In data
                 Let value As String =
@@ -315,6 +318,12 @@ Namespace ComponentModel.Settings
         ''' <returns></returns>
         <ExportAPI("Save")>
         Public Function Save(FilePath$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Using file As Stream = (FilePath Or Me.FilePath.When(FilePath.StringEmpty)).Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Return Save(file, Encoding)
+            End Using
+        End Function
+
+        Public Function Save(file As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             ' 20221022
             '
             ' due to the reason of profilesData object is 
@@ -323,7 +332,13 @@ Namespace ComponentModel.Settings
             ' to the object general function to fix 
             ' this error
             Dim xml As String = XmlExtensions.GetXml(profilesData, profilesData.GetType(), throwEx:=False)
-            Return Xml.SaveTo(FilePath Or Me.FilePath.When(FilePath.StringEmpty), Encoding)
+
+            Using wr As New StreamWriter(file, encoding)
+                Call wr.WriteLine(xml)
+                Call wr.Flush()
+            End Using
+
+            Return True
         End Function
 
         Protected Friend Shared ReadOnly Property ProfileItemType As Type = GetType(ProfileItem)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7df676ea198508f698deedff360a1a1, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::b7df676ea198508f698deedff360a1a1, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\StreamReader.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 50
-    ' Comment Lines: 16
-    '   Blank Lines: 10
+    '    Code Lines: 50 (65.79%)
+    ' Comment Lines: 16 (21.05%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 10 (13.16%)
     '     File Size: 3.05 KB
 
 

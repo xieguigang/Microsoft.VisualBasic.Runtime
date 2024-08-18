@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::660db393f8470245514f78d33a79b651, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::a709b6220a899fd757fd88fbc0ca2460, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 75
-    ' Comment Lines: 31
-    '   Blank Lines: 19
-    '     File Size: 5.25 KB
+    '   Total Lines: 135
+    '    Code Lines: 83 (61.48%)
+    ' Comment Lines: 31 (22.96%)
+    '    - Xml Docs: 90.32%
+    ' 
+    '   Blank Lines: 21 (15.56%)
+    '     File Size: 5.75 KB
 
 
     '     Class FontFace
@@ -46,7 +48,7 @@
     '         Properties: InstalledFontFamilies
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetFontName, IsInstalled, MeasureString, PointSizeScale
+    '         Function: GetFontName, IsInstalled, MeasureString, PointSizeScale, (+2 Overloads) SVGPointSize
     ' 
     '     Module DefaultFontValues
     ' 
@@ -132,6 +134,16 @@ Namespace Imaging
             Else
                 Return pointSize
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function SVGPointSize(pointSize As Single, dpiResolution As Single) As Single
+            Return pointSize * dpiResolution / 96
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function SVGPointSize(size As SizeF, dpi As Single) As SizeF
+            Return New SizeF(SVGPointSize(size.Width, dpi), SVGPointSize(size.Height, dpi))
         End Function
 
         ''' <summary>

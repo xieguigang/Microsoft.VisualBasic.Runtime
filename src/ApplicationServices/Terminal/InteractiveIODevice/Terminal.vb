@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86da936a4731fb4542a289a6f7bf6b99, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::128194f05d6e03b61d02480ee6ef8a80, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 1083
-    '    Code Lines: 366
-    ' Comment Lines: 626
-    '   Blank Lines: 91
-    '     File Size: 60.15 KB
+    '    Code Lines: 366 (33.80%)
+    ' Comment Lines: 626 (57.80%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 91 (8.40%)
+    '     File Size: 60.22 KB
 
 
     '     Class Terminal
@@ -71,7 +73,7 @@ Namespace ApplicationServices.Terminal
     ''' (交互式的命令行终端)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Terminal : Implements STDIO__.IConsole
+    Public Class Terminal : Implements STDIO__.IConsole, IShellDevice
 
 #Region "Console Member Inherits Details"
 
@@ -330,7 +332,7 @@ Namespace ApplicationServices.Terminal
         ''' <param name="value">The value to write.</param>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub Write(value As String) Implements STDIO__.IConsole.Write
+        Public Sub Write(value As String) Implements STDIO__.IConsole.Write, IShellDevice.SetPrompt
             Call Console.Write(value)
         End Sub
 
@@ -706,7 +708,7 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
         ''' <exception cref="System.OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string.</exception>
         ''' <exception cref="System.ArgumentOutOfRangeException">The number of characters in the next line of characters is greater than System.Int32.MaxValue.</exception>
-        Public Overridable Function ReadLine() As String Implements STDIO__.IConsole.ReadLine
+        Public Overridable Function ReadLine() As String Implements STDIO__.IConsole.ReadLine, IShellDevice.ReadLine
             Return Console.ReadLine
         End Function
 #End Region

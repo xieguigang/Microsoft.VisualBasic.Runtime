@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730e50db90928fe89e59df24de395b5c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\ValueReader.vb"
+﻿#Region "Microsoft.VisualBasic::730e50db90928fe89e59df24de395b5c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\ValueReader.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 93
-    '    Code Lines: 60
-    ' Comment Lines: 21
-    '   Blank Lines: 12
+    '    Code Lines: 60 (64.52%)
+    ' Comment Lines: 21 (22.58%)
+    '    - Xml Docs: 95.24%
+    ' 
+    '   Blank Lines: 12 (12.90%)
     '     File Size: 3.37 KB
 
 

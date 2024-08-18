@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::042edf4b849718f1c0444d96f054ab03, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::042edf4b849718f1c0444d96f054ab03, Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 77
-    '    Code Lines: 51
-    ' Comment Lines: 17
-    '   Blank Lines: 9
+    '    Code Lines: 51 (66.23%)
+    ' Comment Lines: 17 (22.08%)
+    '    - Xml Docs: 82.35%
+    ' 
+    '   Blank Lines: 9 (11.69%)
     '     File Size: 3.15 KB
 
 

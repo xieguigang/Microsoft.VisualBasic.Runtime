@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4a2cb7f4b9de8f2e45090c24c7089f6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\ChildrenNoCollapseExample.vb"
+﻿#Region "Microsoft.VisualBasic::e4a2cb7f4b9de8f2e45090c24c7089f6, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\ChildrenNoCollapseExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 27 (93.10%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (6.90%)
     '     File Size: 1.27 KB
 
 

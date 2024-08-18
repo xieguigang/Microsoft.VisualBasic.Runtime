@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::896e5dda413887dee58058b336d85210, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::c114df43db2c8678d0033d7ec616146b, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 83
-    ' Comment Lines: 29
-    '   Blank Lines: 18
-    '     File Size: 4.53 KB
+    '   Total Lines: 139
+    '    Code Lines: 83 (59.71%)
+    ' Comment Lines: 38 (27.34%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 18 (12.95%)
+    '     File Size: 4.77 KB
 
 
     '     Class DataURI
@@ -126,7 +128,9 @@ Namespace Net.Http
         ''' <summary>
         ''' <see cref="Convert.FromBase64String"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a <see cref="MemoryStream"/>
+        ''' </returns>
         Public Function ToStream() As Stream
             Return New MemoryStream(Convert.FromBase64String(base64))
         End Function
@@ -136,6 +140,13 @@ Namespace Net.Http
             Return New DataURI(file)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="svg">
+        ''' the svg xml document text
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SVGImage(svg As String) As DataURI
             Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mime:="image/svg+xml")

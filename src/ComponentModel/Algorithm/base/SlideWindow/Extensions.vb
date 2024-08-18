@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b94e72bbce38acfe2b38197e5bf7e9e, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\SlideWindow\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2b94e72bbce38acfe2b38197e5bf7e9e, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\SlideWindow\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 141
-    '    Code Lines: 93
-    ' Comment Lines: 27
-    '   Blank Lines: 21
+    '    Code Lines: 93 (65.96%)
+    ' Comment Lines: 27 (19.15%)
+    '    - Xml Docs: 85.19%
+    ' 
+    '   Blank Lines: 21 (14.89%)
     '     File Size: 6.42 KB
 
 

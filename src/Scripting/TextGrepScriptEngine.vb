@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1638c8d0a9809a6ca8d8c8d05667af4, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::c1638c8d0a9809a6ca8d8c8d05667af4, Microsoft.VisualBasic.Core\src\Scripting\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 299
-    '    Code Lines: 184
-    ' Comment Lines: 82
-    '   Blank Lines: 33
+    '    Code Lines: 184 (61.54%)
+    ' Comment Lines: 82 (27.42%)
+    '    - Xml Docs: 89.02%
+    ' 
+    '   Blank Lines: 33 (11.04%)
     '     File Size: 12.16 KB
 
 

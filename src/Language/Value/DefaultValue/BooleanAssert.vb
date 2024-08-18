@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d239073c2fbc6b9a91ef3df001b58e, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\BooleanAssert.vb"
+﻿#Region "Microsoft.VisualBasic::58d239073c2fbc6b9a91ef3df001b58e, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\BooleanAssert.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 59
-    '    Code Lines: 46
-    ' Comment Lines: 0
-    '   Blank Lines: 13
+    '    Code Lines: 46 (77.97%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (22.03%)
     '     File Size: 2.15 KB
 
 

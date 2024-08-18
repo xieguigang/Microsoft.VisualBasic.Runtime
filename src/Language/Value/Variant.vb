@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8caf1d295046ae2bf88c32ac737c1423, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
+﻿#Region "Microsoft.VisualBasic::2043b8d04dba52ac16ef96b02f499c69, Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 208
-    '    Code Lines: 138
-    ' Comment Lines: 44
-    '   Blank Lines: 26
-    '     File Size: 7.42 KB
+    '   Total Lines: 227
+    '    Code Lines: 142 (62.56%)
+    ' Comment Lines: 59 (25.99%)
+    '    - Xml Docs: 71.19%
+    ' 
+    '   Blank Lines: 26 (11.45%)
+    '     File Size: 8.36 KB
 
 
     '     Class [Variant]
@@ -89,6 +91,9 @@ Namespace Language
         ''' TryCast to <typeparamref name="A"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' direct cast of <see cref="Value"/> to <typeparamref name="A"/>
+        ''' </remarks>
         Public ReadOnly Property VA As A
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -104,6 +109,9 @@ Namespace Language
         ''' TryCast to <typeparamref name="B"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' direct cast of <see cref="Value"/> to <typeparamref name="B"/>
+        ''' </remarks>
         Public ReadOnly Property VB As B
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -228,6 +236,9 @@ Namespace Language
         ''' </param>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this operator deal with the null reference error safely
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B), type As Type) As Boolean

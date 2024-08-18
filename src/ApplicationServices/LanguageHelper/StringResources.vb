@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba85f5e7914cccfad1a4a2adcb3d9fac, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\LanguageHelper\StringResources.vb"
+﻿#Region "Microsoft.VisualBasic::ba85f5e7914cccfad1a4a2adcb3d9fac, Microsoft.VisualBasic.Core\src\ApplicationServices\LanguageHelper\StringResources.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 63
-    '    Code Lines: 47
-    ' Comment Lines: 4
-    '   Blank Lines: 12
+    '    Code Lines: 47 (74.60%)
+    ' Comment Lines: 4 (6.35%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (19.05%)
     '     File Size: 2.40 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3596bb305a11d1630b4a5182304e5eb, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\JavaMath.vb"
+﻿#Region "Microsoft.VisualBasic::3f7bcb6306bcd8e9843770240b6e4549, Microsoft.VisualBasic.Core\src\Language\Language\Java\JavaMath.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2219
-    '    Code Lines: 194
-    ' Comment Lines: 1909
-    '   Blank Lines: 116
-    '     File Size: 110.59 KB
+    '   Total Lines: 2216
+    '    Code Lines: 192 (8.66%)
+    ' Comment Lines: 1909 (86.15%)
+    '    - Xml Docs: 41.38%
+    ' 
+    '   Blank Lines: 115 (5.19%)
+    '     File Size: 110.45 KB
 
 
     '     Module JavaMath
@@ -50,11 +52,6 @@
     '                   (+2 Overloads) max, (+2 Overloads) min, (+2 Overloads) multiplyExact, (+2 Overloads) negateExact, pow
     '                   random, sin, sinh, sqrt, (+2 Overloads) subtractExact
     '                   tan, tanh, toDegrees, toIntExact, toRadians
-    '         Class RandomNumberGeneratorHolder
-    ' 
-    ' 
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -62,6 +59,7 @@
 #End Region
 
 Imports sys = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 '
 ' * Copyright (c) 1994, 2013, Oracle and/or its affiliates. All rights reserved.
@@ -765,10 +763,6 @@ Namespace Language.Java
         '    End If
         'End Function
 
-        Private NotInheritable Class RandomNumberGeneratorHolder
-            Friend Shared ReadOnly randomNumberGenerator As New Random
-        End Class
-
         ''' <summary>
         ''' Returns a {@code double} value with a positive sign, greater
         ''' than or equal to {@code 0.0} and less than {@code 1.0}.
@@ -791,7 +785,7 @@ Namespace Language.Java
         ''' <returns>  a pseudorandom {@code double} greater than or equal
         ''' to {@code 0.0} and less than {@code 1.0}. </returns>
         Public Function random() As Double
-            Return RandomNumberGeneratorHolder.randomNumberGenerator.NextDouble()
+            Return randf.NextDouble()
         End Function
 
         ''' <summary>

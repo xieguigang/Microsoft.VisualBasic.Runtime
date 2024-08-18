@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d9a446d64c69c485ac3eddcf2d1e1c6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQueryModule.vb"
+﻿#Region "Microsoft.VisualBasic::b1ee04b67b0e34a0d5f73e3634ce0467, Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQueryModule.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 31
-    ' Comment Lines: 16
-    '   Blank Lines: 14
-    '     File Size: 2.04 KB
+    '   Total Lines: 70
+    '    Code Lines: 31 (44.29%)
+    ' Comment Lines: 25 (35.71%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 14 (20.00%)
+    '     File Size: 2.35 KB
 
 
     '     Interface IHttpGet
@@ -61,6 +63,9 @@ Imports Microsoft.VisualBasic.FileIO
 
 Namespace Net.Http
 
+    ''' <summary>
+    ''' the abstract model for the http proxy get request
+    ''' </summary>
     Public Interface IHttpGet
 
         Function GetText(url As String) As String

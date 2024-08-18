@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f1da4bbdab232fd4266416cc2c8d6e4, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\Validator.vb"
+﻿#Region "Microsoft.VisualBasic::8f1da4bbdab232fd4266416cc2c8d6e4, Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\Validator.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 4
-    ' Comment Lines: 5
-    '   Blank Lines: 1
+    '    Code Lines: 4 (40.00%)
+    ' Comment Lines: 5 (50.00%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 1 (10.00%)
     '     File Size: 255 B
 
 

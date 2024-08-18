@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::859e1ea42ae49a54d9e74cf8ebb92a16, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::d8db0a7ee800255f64486642b63ffb37, Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 437
-    '    Code Lines: 272
-    ' Comment Lines: 109
-    '   Blank Lines: 56
-    '     File Size: 19.54 KB
+    '   Total Lines: 489
+    '    Code Lines: 305 (62.37%)
+    ' Comment Lines: 120 (24.54%)
+    '    - Xml Docs: 95.83%
+    ' 
+    '   Blank Lines: 64 (13.09%)
+    '     File Size: 21.71 KB
 
 
     '     Module DataFramework
@@ -50,7 +52,8 @@
     '                   ParseSchemaInternal, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
-    '             Function: IsIntegerType, IsNullable, IsNumericType, IsPrimitive, valueToString
+    '             Function: GetPrimitiveTypes, IsCollection, IsIntegerType, IsNullable, IsNumericCollection
+    '                       IsNumericType, IsPrimitive, valueToString
     '         Enum EnumCastTo
     ' 
     '             [integer], [string], none
@@ -314,6 +317,11 @@ Namespace ComponentModel.DataSourceModel
             Return StringBuilders.ContainsKey(type)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetPrimitiveTypes() As IEnumerable(Of Type)
+            Return StringBuilders.Keys
+        End Function
+
         Public Function IsNullable(type As Type) As Boolean
             Return False
         End Function
@@ -322,6 +330,27 @@ Namespace ComponentModel.DataSourceModel
             GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
             GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
         }
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T">the data type of the element inside a data collection</typeparam>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Function IsCollection(Of T)(type As Type) As Boolean
+            If type.IsArray Then
+                Return type.GetElementType Is GetType(T)
+            Else
+                If type _
+                    .ImplementInterface(GetType(IEnumerable(Of )) _
+                    .MakeGenericType(GetType(T))) Then
+
+                    Return True
+                End If
+            End If
+
+            Return False
+        End Function
 
         ''' <summary>
         ''' Does the given type is any kind of numeric collection type?

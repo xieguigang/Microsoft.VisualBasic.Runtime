@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3e1a767693c9801bd4defc97d917df, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\FixedDurationExample.vb"
+﻿#Region "Microsoft.VisualBasic::7a3e1a767693c9801bd4defc97d917df, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\FixedDurationExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 30 (85.71%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (14.29%)
     '     File Size: 1.27 KB
 
 

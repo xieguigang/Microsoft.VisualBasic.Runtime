@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e6a85756b8c22b42bc9fa0cfce08b6b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::8e6a85756b8c22b42bc9fa0cfce08b6b, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Abstract.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 22
-    '    Code Lines: 13
-    ' Comment Lines: 4
-    '   Blank Lines: 5
+    '    Code Lines: 13 (59.09%)
+    ' Comment Lines: 4 (18.18%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (22.73%)
     '     File Size: 543 B
 
 

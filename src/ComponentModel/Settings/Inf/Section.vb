@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21e0ecc5295458f0b1869c321c3475b4, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Section.vb"
+﻿#Region "Microsoft.VisualBasic::21e0ecc5295458f0b1869c321c3475b4, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Section.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 136
-    '    Code Lines: 85
-    ' Comment Lines: 30
-    '   Blank Lines: 21
+    '    Code Lines: 85 (62.50%)
+    ' Comment Lines: 30 (22.06%)
+    '    - Xml Docs: 93.33%
+    ' 
+    '   Blank Lines: 21 (15.44%)
     '     File Size: 4.49 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b371e321a291f68cf2a6122ea0811b7, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\SaveGdiBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::85ff52b930792292c57c53f4bc57554b, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\SaveGdiBitmap.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 15
-    '    Code Lines: 7
-    ' Comment Lines: 5
-    '   Blank Lines: 3
-    '     File Size: 410 B
+    '   Total Lines: 22
+    '    Code Lines: 13 (59.09%)
+    ' Comment Lines: 5 (22.73%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (18.18%)
+    '     File Size: 544 B
 
 
     '     Interface SaveGdiBitmap
     ' 
     '         Function: Save
+    ' 
+    '     Enum BitsPerPixel
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -64,4 +73,11 @@ Namespace Imaging.BitmapImage
         ''' <param name="format"></param>
         Function Save(stream As IO.Stream, format As ImageFormat) As Boolean
     End Interface
+
+    Public Enum BitsPerPixel As Int16
+        One = 1
+        Four = 4
+        Eight = 8
+        TwentyFour = 24
+    End Enum
 End Namespace

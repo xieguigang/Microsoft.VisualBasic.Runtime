@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d71ca32d87ad43f48387876e292baab6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::d2a635716b040094980c94ae6df53e55, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 116
-    ' Comment Lines: 53
-    '   Blank Lines: 28
-    '     File Size: 7.35 KB
+    '   Total Lines: 206
+    '    Code Lines: 119 (57.77%)
+    ' Comment Lines: 58 (28.16%)
+    '    - Xml Docs: 87.93%
+    ' 
+    '   Blank Lines: 29 (14.08%)
+    '     File Size: 7.60 KB
 
 
     '     Module Base64Codec
@@ -87,8 +89,11 @@ Namespace Net.Http
         ''' <summary>
         ''' 将普通文本进行base64编码
         ''' </summary>
-        ''' <param name="text$"></param>
+        ''' <param name="text"></param>
         ''' <param name="encoding"></param>
+        ''' <param name="gzip">
+        ''' do gzip compression and then encoded as base64 string?
+        ''' </param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -246,7 +251,10 @@ Namespace Net.Http
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function __toBase64String(image As Image, format As ImageFormat) As String
-            Return Convert.ToBase64String(image.ToStream(format).ToArray)
+            Dim s = image.ToStream(format)
+            Dim buffer = s.ToArray
+
+            Return Convert.ToBase64String(buffer)
         End Function
 #End Region
     End Module

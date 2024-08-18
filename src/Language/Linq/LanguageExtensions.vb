@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2a9f627ada43b81f3631c70fde96537, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\LanguageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a2a9f627ada43b81f3631c70fde96537, Microsoft.VisualBasic.Core\src\Language\Linq\LanguageExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 41
-    ' Comment Lines: 17
-    '   Blank Lines: 7
+    '    Code Lines: 41 (63.08%)
+    ' Comment Lines: 17 (26.15%)
+    '    - Xml Docs: 82.35%
+    ' 
+    '   Blank Lines: 7 (10.77%)
     '     File Size: 2.19 KB
 
 

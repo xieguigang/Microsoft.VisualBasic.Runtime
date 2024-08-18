@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb497ff03dedbdde88190d1619339ad6, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\GB2312.vb"
+﻿#Region "Microsoft.VisualBasic::6d249c6e81f400f17d4416ff85e05a49, Microsoft.VisualBasic.Core\src\Text\IO\GB2312.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1310
-    '    Code Lines: 1227
-    ' Comment Lines: 69
-    '   Blank Lines: 14
-    '     File Size: 69.84 KB
+    '   Total Lines: 1363
+    '    Code Lines: 1269 (93.10%)
+    ' Comment Lines: 68 (4.99%)
+    '    - Xml Docs: 61.76%
+    ' 
+    '   Blank Lines: 26 (1.91%)
+    '     File Size: 71.48 KB
 
 
     '     Module GB2312
     ' 
     '         Properties: a, otherChinese, otherPinYin, pyName, pyValue
     ' 
-    '         Function: (+2 Overloads) [Get], (+2 Overloads) GetFirst
+    '         Function: (+2 Overloads) GetFirst, GetZhFlags, PinYin, SplitZhChars, TranscriptPinYin
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,7 +57,6 @@
 ' http://www.tuicool.com/articles/3MbAJv
 ' C# 汉字转拼音(支持GB2312字符集中所有汉字)
 
-Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Namespace Text
@@ -1235,12 +1236,7 @@ Namespace Text
         ''' ``啊``
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property a As Integer
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return AscW("啊")
-            End Get
-        End Property
+        Public ReadOnly Property a As Integer = AscW("啊")
 
         ' 配置中文字符
         'static Regex regex = new Regex("[\u4e00-\u9fa5]$");
@@ -1251,8 +1247,8 @@ Namespace Text
         ''' </summary>        
         ''' <param name="ch"></param>        
         ''' <returns></returns>        
-        Public Function GetFirst(ch As [Char]) As String
-            Dim rs = [Get](ch)
+        Public Function GetFirst(ch As Char) As String
+            Dim rs = PinYin(ch)
             If Not String.IsNullOrEmpty(rs) Then
                 rs = rs.Substring(0, 1)
             End If
@@ -1281,35 +1277,45 @@ Namespace Text
         ''' </summary>
         ''' <param name="ch"></param>
         ''' <returns></returns>
-        Public Function [Get](ch As [Char]) As String
+        Public Function PinYin(ch As Char, Optional ByRef isZhChar As Boolean = False) As String
+            Static gb2312 As Encoding = Encodings.GB2312.CodePage
+
             ' 拉丁字符            
             If ch <= "ÿ"c Then
+                isZhChar = False
                 Return ch.ToString()
             End If
             ' 标点符号、分隔符            
             If [Char].IsPunctuation(ch) OrElse [Char].IsSeparator(ch) Then
+                isZhChar = False
                 Return ch.ToString()
             End If
             ' 非中文字符            
             If ch < "一"c OrElse ch > "龥"c Then
+                isZhChar = False
                 Return ch.ToString()
             End If
-            Dim arr = Encoding.GetEncoding("gb2312").GetBytes(ch.ToString())
+            Dim arr As Byte() = gb2312.GetBytes(ch.ToString())
             'Encoding.Default默认在中文环境里虽是GB2312，但在多变的环境可能是其它
             'var arr = Encoding.Default.GetBytes(ch.ToString()); 
             Dim chr = CType(arr(0), Int16) * 256 + CType(arr(1), Int16) - 65536
             '***// 单字符--英文或半角字符  
             If chr > 0 AndAlso chr < 160 Then
+                isZhChar = False
                 Return ch.ToString()
             End If
-            '#Region "中文字符处理"
+
+#Region "中文字符处理"
             ' 判断是否超过GB2312-80标准中的汉字范围
             If chr > lastChCode OrElse chr < firstChCode Then
+                isZhChar = False
                 Return ch.ToString()
+            Else
+                isZhChar = True
+            End If
 
-
-                ' 如果是在一级汉字中
-            ElseIf chr <= lastOfOneLevelChCode Then
+            ' 如果是在一级汉字中
+            If chr <= lastOfOneLevelChCode Then
                 ' 将一级汉字分为12块,每块33个汉字.
                 For aPos As Integer = 11 To 0 Step -1
                     Dim aboutPos As Integer = aPos * 33
@@ -1330,18 +1336,63 @@ Namespace Text
             Else
                 ' 如果是在二级汉字中
                 Dim pos As Integer = Array.IndexOf(otherChinese, ch.ToString())
+
                 If pos <> Decimal.MinusOne Then
                     Return otherPinYin(pos)
                 End If
             End If
-            '#End Region
+#End Region
             'if (chr < -20319 || chr > -10247) { // 不知道的字符  
             '    return null;  
             'for (var i = pyValue.Length - 1; i >= 0; i--)
             '{                
             '    if (pyValue[i] <= chr) return pyName[i];//这只能对应数组已经定义的           
             '}             
+            isZhChar = False
+
             Return String.Empty
+        End Function
+
+        Public Function GetZhFlags(str As String) As Boolean()
+            Dim b As Boolean() = New Boolean(str.Length - 1) {}
+            Dim test As Boolean = False
+
+            For i As Integer = 0 To str.Length - 1
+                test = False
+                PinYin(str(i), isZhChar:=test)
+                b(i) = test
+            Next
+
+            Return b
+        End Function
+
+        Public Iterator Function SplitZhChars(str As String) As IEnumerable(Of String)
+            Dim tmp As New List(Of Char)
+            Dim zero As Char = Chr(0)
+            Dim max As Char = Chr(255)
+
+            If str Is Nothing OrElse str = "" Then
+                Return
+            End If
+
+            For Each c As Char In str
+                If c > zero AndAlso c <= max Then
+                    ' is ascii char
+                    Call tmp.Add(c)
+                ElseIf c = ASCII.TAB OrElse c = " "c Then
+                    If tmp.Count > 0 Then
+                        Yield New String(tmp.ToArray)
+                        Call tmp.Clear()
+                    End If
+                Else
+                    If tmp.Count > 0 Then
+                        Yield New String(tmp.ToArray)
+                        Call tmp.Clear()
+                    End If
+
+                    Yield c.ToString
+                End If
+            Next
         End Function
 
         ''' <summary>
@@ -1349,16 +1400,20 @@ Namespace Text
         ''' </summary>
         ''' <param name="str">汉字字符串</param>
         ''' <returns>转换后的拼音(全拼)字符串</returns>
-        Public Function [Get](str As String) As String
-            If String.IsNullOrEmpty(str) Then
-                Return String.Empty
-            End If
-            Dim sb = New StringBuilder(str.Length * 10)
-            Dim chs = str.ToCharArray()
-            For j As Integer = 0 To chs.Length - 1
-                sb.Append([Get](chs(j)))
+        Public Function TranscriptPinYin(str As String, Optional sep As String = " ") As String
+            Dim sb As New List(Of String)
+
+            For Each t As String In SplitZhChars(str)
+                If t.Length > 0 Then
+                    If t.Length = 1 Then
+                        Call sb.Add(PinYin(t(0)))
+                    Else
+                        Call sb.Add(t)
+                    End If
+                End If
             Next
-            Return sb.ToString()
+
+            Return sb.JoinBy(sep)
         End Function
     End Module
 End Namespace

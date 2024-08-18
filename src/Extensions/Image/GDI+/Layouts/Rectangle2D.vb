@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e1f348ec80fb51b47194ee7efff9e6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::90e1f348ec80fb51b47194ee7efff9e6, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 396
-    '    Code Lines: 215
-    ' Comment Lines: 133
-    '   Blank Lines: 48
+    '    Code Lines: 215 (54.29%)
+    ' Comment Lines: 133 (33.59%)
+    '    - Xml Docs: 90.23%
+    ' 
+    '   Blank Lines: 48 (12.12%)
     '     File Size: 15.96 KB
 
 

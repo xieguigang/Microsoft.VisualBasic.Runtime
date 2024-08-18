@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4beb05938dc3624f5359ae6cd372f0a, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IndeterminateChildProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::6a8691de4a332f834ee84e2e5f4c0452, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IndeterminateChildProgressBar.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 46
-    '    Code Lines: 40
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 40 (86.96%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (13.04%)
     '     File Size: 1.72 KB
 
 
@@ -97,4 +99,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         End Sub
     End Class
 End Namespace
-

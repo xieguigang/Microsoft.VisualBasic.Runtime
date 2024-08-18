@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ae888f626a3b818319faa9b836de1a0, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BinaryHeap.vb"
+﻿#Region "Microsoft.VisualBasic::3ae888f626a3b818319faa9b836de1a0, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BinaryHeap.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 178
-    '    Code Lines: 118
-    ' Comment Lines: 32
-    '   Blank Lines: 28
+    '    Code Lines: 118 (66.29%)
+    ' Comment Lines: 32 (17.98%)
+    '    - Xml Docs: 15.62%
+    ' 
+    '   Blank Lines: 28 (15.73%)
     '     File Size: 6.05 KB
 
 

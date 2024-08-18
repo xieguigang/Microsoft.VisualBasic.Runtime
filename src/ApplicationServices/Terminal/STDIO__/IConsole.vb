@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33f4c89111a4c28b5f50942fe28215fc, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\IConsole.vb"
+﻿#Region "Microsoft.VisualBasic::33f4c89111a4c28b5f50942fe28215fc, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\IConsole.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 22
-    ' Comment Lines: 44
-    '   Blank Lines: 10
+    '    Code Lines: 22 (28.95%)
+    ' Comment Lines: 44 (57.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (13.16%)
     '     File Size: 2.87 KB
 
 

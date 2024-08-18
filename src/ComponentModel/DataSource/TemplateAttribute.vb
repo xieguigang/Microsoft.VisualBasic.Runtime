@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0442cf63a9796676bc934dac75b3a7f0, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\TemplateAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::0442cf63a9796676bc934dac75b3a7f0, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\TemplateAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 12 (70.59%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (29.41%)
     '     File Size: 375 B
 
 

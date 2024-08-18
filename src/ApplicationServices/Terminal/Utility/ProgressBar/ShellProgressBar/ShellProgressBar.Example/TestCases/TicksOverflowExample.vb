@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a33c3ad70464427eafa4e5228f103f9, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\TicksOverflowExample.vb"
+﻿#Region "Microsoft.VisualBasic::1a33c3ad70464427eafa4e5228f103f9, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\TicksOverflowExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 18
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 18 (94.74%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (5.26%)
     '     File Size: 708 B
 
 

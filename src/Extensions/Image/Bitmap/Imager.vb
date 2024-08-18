@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33c1b5f3952ca82393e2dacea44edd94, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Imager.vb"
+﻿#Region "Microsoft.VisualBasic::b96b1e2a603e3c2a2514c3187a47eb74, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Imager.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 52
-    ' Comment Lines: 43
-    '   Blank Lines: 14
-    '     File Size: 4.50 KB
+    '   Total Lines: 137
+    '    Code Lines: 65 (47.45%)
+    ' Comment Lines: 55 (40.15%)
+    '    - Xml Docs: 96.36%
+    ' 
+    '   Blank Lines: 17 (12.41%)
+    '     File Size: 5.86 KB
 
 
     '     Module Imager
     ' 
     '         Function: GetEncoderInfo, ImageCrop, PutOnCanvas, PutOnWhiteCanvas, Resize
+    '                   (+2 Overloads) ResizeScaled
     ' 
     ' 
     ' /********************************************************************************/
@@ -53,7 +56,6 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Namespace Imaging.BitmapImage
@@ -104,6 +106,32 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         Public Function PutOnWhiteCanvas(image As Image, width As Integer, height As Integer) As Image
             Return PutOnCanvas(image, width, height, Color.White)
+        End Function
+
+        ''' <summary>
+        ''' resize image based on the <see cref="Graphics.DrawImage(Image, Rectangle)"/>
+        ''' </summary>
+        ''' <param name="image"></param>
+        ''' <param name="newSize"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this aspect ratio of the given <paramref name="image"/> will not be keeped.
+        ''' </remarks>
+        <Extension>
+        Public Function ResizeScaled(image As Image, newSize As Size, Optional interpolate As InterpolationMode = InterpolationMode.HighQualityBilinear) As Image
+            Using g As Graphics2D = newSize.CreateGDIDevice
+                g.CompositingQuality = CompositingQuality.HighQuality
+                g.InterpolationMode = interpolate
+                g.DrawImage(image, New RectangleF(New PointF, g.Size))
+
+                Return g.ImageResource
+            End Using
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ResizeScaled(image As Image, newSize As Integer()) As Image
+            Return image.ResizeScaled(New Size(newSize(0), newSize(1)))
         End Function
 
         ''' <summary>

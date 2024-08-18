@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fb832b65d9795c1516ba07ab1530009, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
+﻿#Region "Microsoft.VisualBasic::13260cf48c897457c85e670782fa5ccf, Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 97
-    ' Comment Lines: 17
-    '   Blank Lines: 20
-    '     File Size: 4.88 KB
+    '   Total Lines: 135
+    '    Code Lines: 98 (72.59%)
+    ' Comment Lines: 17 (12.59%)
+    '    - Xml Docs: 29.41%
+    ' 
+    '   Blank Lines: 20 (14.81%)
+    '     File Size: 4.92 KB
 
 
     '     Class Config
@@ -56,11 +58,12 @@
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-#If netcore5 = 1 Then
-Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
-#End If
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+
+#If NETCOREAPP Then
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
+#End If
 
 Namespace My.FrameworkInternal
 
@@ -149,12 +152,12 @@ Namespace My.FrameworkInternal
 
         Private Shared Sub fetchConfig(config As Config, file$)
             Dim assembly As Assembly = Assembly.LoadFile(file)
-
-#If netcore5 = 1 Then
-            Call deps.TryHandleNetCore5AssemblyBugs(package:=assembly)
-#End If
-
             Dim configNames As FrameworkConfigAttribute()
+
+#If NETCOREAPP Then
+            Call deps.TryHandleNetCore5AssemblyBugs(
+                package:=assembly, external_libloc:=Nothing)
+#End If
 
             Try
                 ' 20221006

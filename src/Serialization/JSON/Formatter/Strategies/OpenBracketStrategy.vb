@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62911fb29da7d1bdb416d84f3f84045c, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::62911fb29da7d1bdb416d84f3f84045c, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 38
-    '    Code Lines: 27
-    ' Comment Lines: 3
-    '   Blank Lines: 8
+    '    Code Lines: 27 (71.05%)
+    ' Comment Lines: 3 (7.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (21.05%)
     '     File Size: 1.26 KB
 
 

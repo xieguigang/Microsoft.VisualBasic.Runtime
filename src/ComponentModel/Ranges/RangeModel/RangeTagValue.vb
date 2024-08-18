@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a3f49b2ca0dc87c7d54e6e5185b6903, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\RangeTagValue.vb"
+﻿#Region "Microsoft.VisualBasic::8a3f49b2ca0dc87c7d54e6e5185b6903, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\RangeTagValue.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 22
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 16 (72.73%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (27.27%)
     '     File Size: 576 B
 
 

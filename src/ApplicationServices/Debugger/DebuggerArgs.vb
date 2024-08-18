@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81c8f5665b46a54623e729b250316f07, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::62c220eb4d5efb98e794884ce4ac51b7, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 202
-    '    Code Lines: 102
-    ' Comment Lines: 74
-    '   Blank Lines: 26
+    '    Code Lines: 102 (50.50%)
+    ' Comment Lines: 74 (36.63%)
+    '    - Xml Docs: 28.38%
+    ' 
+    '   Blank Lines: 26 (12.87%)
     '     File Size: 12.53 KB
 
 
@@ -241,10 +243,10 @@ Namespace ApplicationServices.Debugging
                 End Select
             End If
 
-            _AutoPaused = args.GetBoolean("/auto-paused")
+            _AutoPaused = args.IsTrue("/auto-paused")
             VBDebugger.m_inDebugMode = args.IsTrue("--debug")
 
-            If args.GetBoolean("/mute") Then
+            If args.IsTrue("/mute") Then
                 VBDebugger.Mute = True
             Else
                 VBDebugger.Mute = config.mute

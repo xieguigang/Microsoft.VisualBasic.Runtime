@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca8f970cd2596664119fd3e393d3bb94, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\TextSegment.vb"
+﻿#Region "Microsoft.VisualBasic::ca8f970cd2596664119fd3e393d3bb94, Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\TextSegment.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 40
-    ' Comment Lines: 15
-    '   Blank Lines: 10
+    '    Code Lines: 40 (61.54%)
+    ' Comment Lines: 15 (23.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (15.38%)
     '     File Size: 2.01 KB
 
 

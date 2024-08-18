@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcb3322ee4e391d22a4a9c2180c661fa, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::6266b53f6242a8f568431e952e963008, Microsoft.VisualBasic.Core\src\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 173
-    '    Code Lines: 120
-    ' Comment Lines: 26
-    '   Blank Lines: 27
-    '     File Size: 6.04 KB
+    '    Code Lines: 120 (69.36%)
+    ' Comment Lines: 26 (15.03%)
+    '    - Xml Docs: 88.46%
+    ' 
+    '   Blank Lines: 27 (15.61%)
+    '     File Size: 6.05 KB
 
 
     '     Class ArgumentReference
@@ -156,7 +158,7 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET48_OR_GREATER Or NETCOREAPP Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)

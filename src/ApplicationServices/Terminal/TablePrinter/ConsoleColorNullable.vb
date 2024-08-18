@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee360feb76cb8d6958eafb4643ab55c5, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb"
+﻿#Region "Microsoft.VisualBasic::a31be0a5f92283a5ee87e5bc6608bad9, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 20
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 857 B
+    '   Total Lines: 20
+    '    Code Lines: 15 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (25.00%)
+    '     File Size: 620 B
 
 
     '     Class ConsoleColorNullable
@@ -55,24 +57,20 @@
 Namespace ApplicationServices.Terminal.TablePrinter
 
     Public Class ConsoleColorNullable
+
+        Public Property ForegroundColor As ConsoleColor?
+        Public Property BackgroundColor As ConsoleColor?
+
         Public Sub New()
         End Sub
 
         Public Sub New(foregroundColor As ConsoleColor)
             Me.ForegroundColor = foregroundColor
-            IsForegroundColorNull = False
         End Sub
 
         Public Sub New(foregroundColor As ConsoleColor, backgroundColor As ConsoleColor)
             Me.ForegroundColor = foregroundColor
             Me.BackgroundColor = backgroundColor
-            IsForegroundColorNull = False
-            IsBackgroundColorNull = False
         End Sub
-
-        Public IsForegroundColorNull As Boolean = True
-        Public IsBackgroundColorNull As Boolean = True
-        Public Property ForegroundColor As ConsoleColor
-        Public Property BackgroundColor As ConsoleColor
     End Class
 End Namespace

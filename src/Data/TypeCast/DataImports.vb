@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dee39e2541a900622895ded4fbdbb174, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::6b34b2b584e8a1743bdbb092ba006eaa, Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 62
-    ' Comment Lines: 0
-    '   Blank Lines: 11
-    '     File Size: 2.69 KB
+    '   Total Lines: 123
+    '    Code Lines: 83 (67.48%)
+    ' Comment Lines: 24 (19.51%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 16 (13.01%)
+    '     File Size: 4.53 KB
 
 
     '     Module DataImports
     ' 
-    '         Function: (+2 Overloads) ParseVector, SampleForType
+    '         Function: IsPossibleEnumFactor, (+2 Overloads) ParseVector, SampleForType
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,23 +53,23 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataSourceModel.TypeCast
 
     Public Module DataImports
 
+        ''' <summary>
+        ''' Sampling column data for test data type
+        ''' </summary>
+        ''' <param name="column"></param>
+        ''' <returns></returns>
         Public Function SampleForType(column As IReadOnlyCollection(Of String)) As Type
-            Dim typeHits As New Dictionary(Of Type, Integer)
-
-            For Each type As Type In New Type() {
-                GetType(Integer),
-                GetType(Double),
-                GetType(Boolean),
-                GetType(Date),
-                GetType(String)
-            }
-                typeHits(type) = 0
-            Next
+            Dim integers As Integer = 0,
+                doubles As Integer = 0,
+                booleans As Integer = 0,
+                dates As Integer = 0,
+                strings As Integer = 0
 
             For Each r As String In column
                 If String.IsNullOrEmpty(r) Then
@@ -75,33 +77,82 @@ Namespace ComponentModel.DataSourceModel.TypeCast
                 End If
 
                 If r.IsInteger Then
-                    typeHits(GetType(Integer)) += 1
-                ElseIf IsBooleanFactor(r) Then
-                    typeHits(GetType(Boolean)) += 1
+                    integers += 1
+
+                    ' 20230613 we should disable the boolean extenede literal
+                    ' at here, or some enum string factor example like yes/no/right/wrong
+                    ' will be get confused with the string or enum type
+                    '
+                    ' just check for the true/false at here
+                    '
+                ElseIf IsBooleanFactor(r, extendedLiteral:=False) Then
+                    booleans += 1
                 ElseIf r.IsNumeric(includesNaNFactor:=True) Then
-                    typeHits(GetType(Double)) += 1
+                    doubles += 1
                 ElseIf Date.TryParse(r, Nothing) Then
-                    typeHits(GetType(Date)) += 1
+                    dates += 1
                 Else
-                    typeHits(GetType(String)) += 1
+                    strings += 1
                 End If
             Next
 
-            If typeHits(GetType(String)) > 0 OrElse
-                typeHits.Values.All(Function(x) x = 0) OrElse
-                typeHits.Values.All(Function(x) x > 0) Then
-
+            If strings > 0 Then
                 Return GetType(String)
-            ElseIf typeHits(GetType(Double)) > 0 Then
-                Return GetType(Double)
             End If
 
-            Return typeHits _
-                .OrderByDescending(Function(a) a.Value) _
-                .First _
-                .Key
+            If {integers, doubles, booleans, dates}.All(Function(x) x = 0) Then
+                Return GetType(String)
+            End If
+
+            If {integers, doubles, booleans, dates}.All(Function(x) x > 0) Then
+                Return GetType(String)
+            End If
+
+            Dim multiples As Integer = {integers, doubles, booleans, dates} _
+                .Where(Function(a) a > 0) _
+                .Count
+
+            If multiples > 1 Then
+                If integers > 0 AndAlso doubles > 0 Then
+                    Return GetType(Double)
+                Else
+                    Return GetType(String)
+                End If
+            End If
+
+            If doubles > 0 Then
+                Return GetType(Double)
+            End If
+            If integers > 0 Then
+                Return GetType(Integer)
+            End If
+            If booleans > 0 Then
+                Return GetType(Boolean)
+            End If
+            If dates > 0 Then
+                Return GetType(Date)
+            End If
+
+            Return GetType(String)
         End Function
 
+        ''' <summary>
+        ''' Check the given string collection is a possible enum factor type?
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsPossibleEnumFactor(v As IReadOnlyCollection(Of String)) As Boolean
+            Return v.Distinct.Count <= CInt(v.Count * 0.9)
+        End Function
+
+        ''' <summary>
+        ''' Measuring the data type automatically, and then try to parse the given
+        ''' string vector as the array of result data type
+        ''' </summary>
+        ''' <param name="column"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ParseVector(column As String()) As Array
             Return ParseVector(column, SampleForType(column))
@@ -118,6 +169,7 @@ Namespace ComponentModel.DataSourceModel.TypeCast
                 Case GetType(Date)
                     Return column.Select(Function(str) str.ParseDate).ToArray
                 Case Else
+                    ' do nothing for string vector type
                     Return column
             End Select
         End Function

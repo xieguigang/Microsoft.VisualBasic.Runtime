@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1586eae08de218790350d3185ca1749c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::797e35f5d33be65d1a641714d25bc818, Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 40
-    ' Comment Lines: 17
-    '   Blank Lines: 12
-    '     File Size: 2.20 KB
+    '   Total Lines: 133
+    '    Code Lines: 58 (43.61%)
+    ' Comment Lines: 60 (45.11%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (11.28%)
+    '     File Size: 5.54 KB
 
 
     '     Module FormatHelpers
     ' 
-    '         Function: StringFormat, Trim, xFormat
+    '         Function: (+2 Overloads) Split, StringFormat, Trim, xFormat
     ' 
     '     Structure FormatHelper
     ' 
@@ -57,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Language.[Default]
 
 Namespace Language
 
@@ -84,6 +87,56 @@ Namespace Language
                 Return ""
             Else
                 Return str.Value.Trim(c)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Returns a zero-based, one-dimensional array containing a specified number of
+        ''' substrings.
+        ''' </summary>
+        ''' <param name="str">Required. String expression containing substrings And delimiters.</param>
+        ''' <param name="deli">
+        ''' Optional. Any single character used to identify substring limits. If Delimiter
+        ''' Is omitted, the space character (" ") Is assumed to be the delimiter.
+        ''' </param>
+        ''' <param name="ignoreCase"></param>
+        ''' <param name="regexp"></param>
+        ''' <returns>
+        ''' String array. If Expression Is a zero-length string (""), 
+        ''' Split returns a single-element array containing a zero-length 
+        ''' string. If Delimiter Is a zero-length string, Or if it does 
+        ''' Not appear anywhere in Expression, Split returns a single-element
+        ''' array containing the entire Expression string.
+        ''' </returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Split(str As Value(Of String),
+                              Optional deli$ = " ",
+                              Optional ignoreCase As Boolean = False,
+                              Optional regexp As Boolean = False) As String()
+
+            Return New DefaultString(str.Value).Split(deli, ignoreCase, regexp)
+        End Function
+
+        ''' <summary>
+        ''' Splits a string into substrings based on a specified delimiting character and,
+        ''' optionally, options.
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="deli">A character that delimits the substrings in this string.</param>
+        ''' <param name="options">
+        ''' A bitwise combination of the enumeration values that specifies whether to trim
+        ''' substrings and include empty substrings.
+        ''' </param>
+        ''' <returns>An array whose elements contain the substrings from this instance that are delimited
+        ''' by separator.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Split(str As Value(Of String), deli As Char, Optional options As StringSplitOptions = StringSplitOptions.None) As String()
+            If str.Value Is Nothing Then
+                Return {}
+            Else
+                Return str.Value.Split(deli)
             End If
         End Function
 

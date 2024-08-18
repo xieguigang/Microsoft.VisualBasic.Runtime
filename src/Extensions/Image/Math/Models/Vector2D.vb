@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81cf1477165f2fcafd76324ce2b58abf, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::c0234e585d330d78da76bae1ab1d0765, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Vector2D.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 47
-    ' Comment Lines: 20
-    '   Blank Lines: 13
-    '     File Size: 2.30 KB
+    '   Total Lines: 107
+    '    Code Lines: 56 (52.34%)
+    ' Comment Lines: 35 (32.71%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (14.95%)
+    '     File Size: 3.20 KB
 
 
     '     Class Vector2D
@@ -46,7 +48,7 @@
     '         Properties: Length, x, y
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
+    '         Function: GetDistance, ToString
     '         Operators: (+2 Overloads) -, (+2 Overloads) *, +
     ' 
     ' 
@@ -54,21 +56,39 @@
 
 #End Region
 
-Imports stdNum = System.Math
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
     ''' <summary>
-    ''' <see cref="Drawing.PointF"/>
+    ''' <see cref="Drawing.PointF"/>, basic model for physical simulator
     ''' </summary>
+    ''' <remarks>
+    ''' this vector model could be cast to gdi+ <see cref="Drawing.PointF"/> object directly.
+    ''' </remarks>
     Public Class Vector2D : Implements Layout2D
 
+        ''' <summary>
+        ''' position x
+        ''' </summary>
+        ''' <returns></returns>
         Public Property x As Double Implements Layout2D.X
+
+        ''' <summary>
+        ''' position y
+        ''' </summary>
+        ''' <returns></returns>
         Public Property y As Double Implements Layout2D.Y
 
+        ''' <summary>
+        ''' distance to zero [0,0]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Length As Double
             Get
-                Return stdNum.Sqrt(x ^ 2 + y ^ 2)
+                Return std.Sqrt(x ^ 2 + y ^ 2)
             End Get
         End Property
 
@@ -132,5 +152,14 @@ Namespace Imaging.Math2D
                 Return New Vector2D(scale * .x, scale * .y)
             End With
         End Operator
+
+        Public Shared Narrowing Operator CType(v As Vector2D) As PointF
+            Return New PointF(v.x, v.y)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetDistance(v As Layout2D) As Double
+            Return GeomTransform.Distance(x, y, v.X, v.Y)
+        End Function
     End Class
 End Namespace

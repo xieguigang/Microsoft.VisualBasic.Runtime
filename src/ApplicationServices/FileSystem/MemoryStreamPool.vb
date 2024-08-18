@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e95aea8bbe05df02d4cd6816f12446e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
+﻿#Region "Microsoft.VisualBasic::cea9c0f0d6afb12c884c2ba6cd238ee4, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 185
-    '    Code Lines: 120
-    ' Comment Lines: 35
-    '   Blank Lines: 30
-    '     File Size: 6.70 KB
+    '    Code Lines: 120 (64.86%)
+    ' Comment Lines: 35 (18.92%)
+    '    - Xml Docs: 77.14%
+    ' 
+    '   Blank Lines: 30 (16.22%)
+    '     File Size: 6.87 KB
 
 
     '     Class MemoryStreamPool
@@ -58,7 +60,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ApplicationServices
 
@@ -188,7 +190,7 @@ Namespace ApplicationServices
                     ' from scan0, no transform
             End Select
 
-            block = stdNum.Floor(offset / buffer_size)
+            block = std.Floor(offset / buffer_size)
             p = offset
             offset = offset - buffer_size * block
 

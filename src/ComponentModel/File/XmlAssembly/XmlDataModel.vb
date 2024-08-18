@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c3f1ceef48c007c13d4e4ff9e6446f6, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::a5580a43e00a52df2259ad8c4cd685b3, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 96
-    '    Code Lines: 57
-    ' Comment Lines: 28
-    '   Blank Lines: 11
-    '     File Size: 3.75 KB
+    '    Code Lines: 57 (59.38%)
+    ' Comment Lines: 28 (29.17%)
+    '    - Xml Docs: 89.29%
+    ' 
+    '   Blank Lines: 11 (11.46%)
+    '     File Size: 3.74 KB
 
 
     '     Class XmlDataModel
@@ -59,7 +61,7 @@
 
 #End Region
 
-#If netcore5 = 0 Then
+#If NET48 Then
 Imports System.Web.Script.Serialization
 #Else
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel

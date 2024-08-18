@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1af4537af37f767040f7bf53a6a8e7ea, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
+﻿#Region "Microsoft.VisualBasic::f1407dba34b74cb8c935363b1d60d804, Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 32
-    ' Comment Lines: 8
-    '   Blank Lines: 11
-    '     File Size: 1.61 KB
+    '   Total Lines: 73
+    '    Code Lines: 49 (67.12%)
+    ' Comment Lines: 10 (13.70%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (19.18%)
+    '     File Size: 2.51 KB
 
 
     '     Class RectangularArray
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Cubic, (+2 Overloads) Matrix
+    '         Function: Cubic, CubicMatrix, (+2 Overloads) Matrix
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,12 +62,14 @@ Namespace ComponentModel.Collection
 
         ''' <summary>
         ''' Create an empty matrix with m row and n cols.
-        ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="m">m Rows</param>
         ''' <param name="n">n Cols</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
+        ''' </remarks>
         Public Shared Function Matrix(Of T)(m%, n%) As T()()
             Dim x As T()() = New T(m - 1)() {}
 
@@ -99,6 +103,26 @@ Namespace ComponentModel.Collection
             Next
 
             Return newMatrix
+        End Function
+
+        Public Shared Function CubicMatrix(Of T)(size1 As Integer, size2 As Integer, size3 As Integer, size4 As Integer) As T()()()()
+            Dim cm = New T(size1 - 1)()()() {}
+
+            For array1 = 0 To size1 - 1
+                cm(array1) = New T(size2 - 1)()() {}
+                If size3 > -1 Then
+                    For array2 = 0 To size2 - 1
+                        cm(array1)(array2) = New T(size3 - 1)() {}
+                        If size4 > -1 Then
+                            For array3 = 0 To size3 - 1
+                                cm(array1)(array2)(array3) = New T(size4 - 1) {}
+                            Next
+                        End If
+                    Next
+                End If
+            Next
+
+            Return cm
         End Function
     End Class
 End Namespace

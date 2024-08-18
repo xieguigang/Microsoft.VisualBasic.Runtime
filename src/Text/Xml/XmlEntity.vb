@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df2ac1bd84393dc997e8bee1d4255383, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\XmlEntity.vb"
+﻿#Region "Microsoft.VisualBasic::df2ac1bd84393dc997e8bee1d4255383, Microsoft.VisualBasic.Core\src\Text\Xml\XmlEntity.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 146
-    '    Code Lines: 103
-    ' Comment Lines: 25
-    '   Blank Lines: 18
+    '    Code Lines: 103 (70.55%)
+    ' Comment Lines: 25 (17.12%)
+    '    - Xml Docs: 88.00%
+    ' 
+    '   Blank Lines: 18 (12.33%)
     '     File Size: 5.15 KB
 
 

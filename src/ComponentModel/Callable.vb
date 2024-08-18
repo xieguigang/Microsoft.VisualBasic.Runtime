@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21503c8c43601089569559e3ad68c39f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Callable.vb"
+﻿#Region "Microsoft.VisualBasic::21503c8c43601089569559e3ad68c39f, Microsoft.VisualBasic.Core\src\ComponentModel\Callable.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 7
-    '    Code Lines: 5
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 5 (71.43%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (28.57%)
     '     File Size: 155 B
 
 

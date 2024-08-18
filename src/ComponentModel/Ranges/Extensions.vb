@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a43f9f4268d3699fda1e78a07983473d, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ff2d9f205615bc4a164dc1077e830ca2, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 113
-    ' Comment Lines: 42
-    '   Blank Lines: 24
-    '     File Size: 6.56 KB
+    '   Total Lines: 195
+    '    Code Lines: 123 (63.08%)
+    ' Comment Lines: 47 (24.10%)
+    '    - Xml Docs: 82.98%
+    ' 
+    '   Blank Lines: 25 (12.82%)
+    '     File Size: 7.29 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange, Union
+    '         Function: (+2 Overloads) GetScaler, MinMax, (+2 Overloads) RangeTransform, SymmetricalRange, Union
     ' 
     '         Sub: Parser
     ' 
@@ -65,6 +67,22 @@ Imports stdNum = System.Math
 Namespace ComponentModel.Ranges
 
     Public Module Extensions
+
+        ''' <summary>
+        ''' get min and max element value from the given numeric vector
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns>[min,max]</returns>
+        <Extension>
+        Public Function MinMax(v As IEnumerable(Of Double)) As Double()
+            With v.ToArray
+                If .Length = 0 Then
+                    Return New Double() {0, 0}
+                Else
+                    Return New Double() { .Min, .Max}
+                End If
+            End With
+        End Function
 
         ''' <summary>
         ''' 对称的的范围，假若X为正数，那么其为max，而-x为min。假若x为负数，那么-x为max

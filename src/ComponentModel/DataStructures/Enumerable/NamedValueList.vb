@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b28acecbf305e4db101b0452f5ed115e, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\NamedValueList.vb"
+﻿#Region "Microsoft.VisualBasic::b28acecbf305e4db101b0452f5ed115e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\NamedValueList.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 20
-    ' Comment Lines: 6
-    '   Blank Lines: 7
+    '    Code Lines: 20 (60.61%)
+    ' Comment Lines: 6 (18.18%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (21.21%)
     '     File Size: 1.11 KB
 
 

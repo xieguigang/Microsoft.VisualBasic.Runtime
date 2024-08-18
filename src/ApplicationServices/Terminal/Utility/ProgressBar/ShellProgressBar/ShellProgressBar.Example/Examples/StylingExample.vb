@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93392fb120df341bb59d6c0fab4ba0a7, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\StylingExample.vb"
+﻿#Region "Microsoft.VisualBasic::93392fb120df341bb59d6c0fab4ba0a7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\StylingExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 21
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 21 (91.30%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (8.70%)
     '     File Size: 920 B
 
 

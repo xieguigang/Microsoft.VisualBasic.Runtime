@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8db7bb7bf80dda2ac73b5f8a076f13a4, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::c514e4a749d1f065db8dd28d7e850e1b, Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 54
-    ' Comment Lines: 25
-    '   Blank Lines: 9
-    '     File Size: 3.65 KB
+    '   Total Lines: 103
+    '    Code Lines: 67 (65.05%)
+    ' Comment Lines: 25 (24.27%)
+    '    - Xml Docs: 92.00%
+    ' 
+    '   Blank Lines: 11 (10.68%)
+    '     File Size: 4.35 KB
 
 
     '     Module MIME
@@ -46,7 +48,7 @@
     '         Properties: ContentTypes, SuffixTable, UnknownType
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: loadContents
+    '         Function: fetchUniqueContents, loadContents
     ' 
     ' 
     ' /********************************************************************************/
@@ -89,6 +91,8 @@ Namespace Net.Protocols.ContentTypes
         Public Const Png As String = "image/png"
         Public Const Xml As String = "text/xml"
         Public Const Html As String = "text/html"
+        Public Const Text As String = "plain/text"
+        Public Const JSONText As String = "text/json"
 
         ''' <summary>
         ''' ``application/octet-stream``
@@ -101,24 +105,37 @@ Namespace Net.Protocols.ContentTypes
         }
 
         Sub New()
-            SuffixTable = My.Resources _
+            SuffixTable = fetchUniqueContents() _
+                .ToDictionary(Function(x) x.FileExt.ToLower,
+                              Function(x)
+                                  Return x
+                              End Function)
+            ContentTypes = SuffixTable.Values _
+                .GroupBy(Function(f) f.MIMEType.ToLower) _
+                .ToDictionary(Function(x)
+                                  Return x.Key
+                              End Function,
+                              Function(x)
+                                  Return x.First
+                              End Function)
+        End Sub
+
+        Private Iterator Function fetchUniqueContents() As IEnumerable(Of ContentType)
+            Dim uniqs = My.Resources _
                 .List_of_MIME_types___Internet_Media_Types_ _
                 .LineTokens _
                 .loadContents _
                 .Where(Function(x) Not x.IsEmpty) _
                 .GroupBy(Function(x) x.FileExt.ToLower) _
-                .ToDictionary(Function(x) x.Key,
-                              Function(x)
-                                  Return x.First
-                              End Function)
-            ContentTypes = SuffixTable _
-                .Values _
-                .ToDictionary(Function(x)
-                                  Return x.MIMEType.ToLower
-                              End Function)
+                .ToArray
 
-            Call DirectCast(SuffixTable, Dictionary(Of String, ContentType)).Add(".dzi", New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"})
-        End Sub
+            For Each group In uniqs
+                Yield group.First
+            Next
+
+            Yield New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"}
+            Yield New ContentType With {.Details = "Jpeg image", .FileExt = ".jpeg", .MIMEType = "image/jpeg", .Name = "Jpeg image"}
+        End Function
 
         <Extension>
         Private Iterator Function loadContents(lines As IEnumerable(Of String)) As IEnumerable(Of ContentType)
@@ -131,7 +148,7 @@ Namespace Net.Protocols.ContentTypes
                 Try
                     ' 2016-11-28
                     ' Not sure why a bugs happed here, there is no bugs here before!
-                    Yield ContentType.__createObject(line)
+                    Yield ContentType.parseLine(line)
                 Catch ex As Exception
 #If DEBUG Then
                     Call line.Warning

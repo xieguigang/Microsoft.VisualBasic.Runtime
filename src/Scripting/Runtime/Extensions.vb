@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e61b127bee3782c78f65f984f0df102, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::69a29390b6e4d3dc3214a473ebe3aa97, Microsoft.VisualBasic.Core\src\Scripting\Runtime\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 65
-    ' Comment Lines: 5
-    '   Blank Lines: 10
-    '     File Size: 3.05 KB
+    '   Total Lines: 98
+    '    Code Lines: 75 (76.53%)
+    ' Comment Lines: 13 (13.27%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (10.20%)
+    '     File Size: 3.86 KB
 
 
     '     Module Extensions
@@ -124,14 +126,28 @@ Namespace Scripting.Runtime
             Return BinaryOperator.CreateOperator(methods?.ToArray)
         End Function
 
+        ''' <summary>
+        ''' the given <paramref name="type"/> is the array element type
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="type">
+        ''' the element type of the generated target array
+        ''' </param>
+        ''' <returns>a generic type array</returns>
         <Extension>
-        Public Function CreateArray(data As IEnumerable, type As Type) As Object
+        Public Function CreateArray(data As IEnumerable, type As Type, Optional safeCast As Boolean = True) As Object
             Dim src = data.Cast(Of Object).ToArray
             Dim array As Array = Array.CreateInstance(type, src.Length)
 
-            For i As Integer = 0 To src.Length - 1
-                array.SetValue(src(i), i)
-            Next
+            If safeCast Then
+                For i As Integer = 0 To src.Length - 1
+                    Call array.SetValue(Conversion.CTypeDynamic(src(i), type), i)
+                Next
+            Else
+                For i As Integer = 0 To src.Length - 1
+                    Call array.SetValue(src(i), i)
+                Next
+            End If
 
             Return array
         End Function

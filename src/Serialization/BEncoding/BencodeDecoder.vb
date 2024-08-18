@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3c52deda1ef3376a696084d09cc83f9, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodeDecoder.vb"
+﻿#Region "Microsoft.VisualBasic::3c3fafb58c18003f3a50ef9407b792eb, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodeDecoder.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 173
-    '    Code Lines: 110
-    ' Comment Lines: 26
-    '   Blank Lines: 37
-    '     File Size: 5.39 KB
+    '   Total Lines: 179
+    '    Code Lines: 115 (64.25%)
+    ' Comment Lines: 26 (14.53%)
+    '    - Xml Docs: 30.77%
+    ' 
+    '   Blank Lines: 38 (21.23%)
+    '     File Size: 5.67 KB
 
 
     '     Module BencodeDecoder
     ' 
-    '         Function: (+2 Overloads) [Error], Decode, ReadDictionary, ReadElement, ReadInteger
-    '                   ReadList, ReadString
+    '         Function: (+2 Overloads) [Error], Decode, DecodeObject, ReadDictionary, ReadElement
+    '                   ReadInteger, ReadList, ReadString
     ' 
     ' 
     ' /********************************************************************************/
@@ -70,6 +72,7 @@
 '  Originally posted at http://snipplr.com/view/37790/ by SuprDewd.
 '  
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text
 
 Namespace Serialization.Bencoding
@@ -78,6 +81,11 @@ Namespace Serialization.Bencoding
     ''' A class used for decoding Bencoding.
     ''' </summary>
     Public Module BencodeDecoder
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function DecodeObject(bencodedString As String) As BDictionary
+            Return DirectCast(Decode(bencodedString).First, BDictionary)
+        End Function
 
         ''' <summary>
         ''' Decodes the string.

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4f476bccb1fc043519be1073163b50f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\AnonymousTypeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d4f476bccb1fc043519be1073163b50f, Microsoft.VisualBasic.Core\src\Extensions\Collection\AnonymousTypeHelper.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 36
-    '    Code Lines: 14
-    ' Comment Lines: 18
-    '   Blank Lines: 4
+    '    Code Lines: 14 (38.89%)
+    ' Comment Lines: 18 (50.00%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 4 (11.11%)
     '     File Size: 1.53 KB
 
 

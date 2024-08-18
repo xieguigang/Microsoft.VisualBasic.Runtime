@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1396ba92c7a38baee7781ef0e8edcfde, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\RSACrypto.vb"
+﻿#Region "Microsoft.VisualBasic::1396ba92c7a38baee7781ef0e8edcfde, Microsoft.VisualBasic.Core\src\Extensions\Security\RSACrypto.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 31
-    '    Code Lines: 24
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 24 (77.42%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (22.58%)
     '     File Size: 1.20 KB
 
 

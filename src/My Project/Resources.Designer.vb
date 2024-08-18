@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d522db53eac7aca3559f3aeb53b7610, sciBASIC#\Microsoft.VisualBasic.Core\src\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::937fdc310cd6c7ec5c03cc0bbe3cfd85, Microsoft.VisualBasic.Core\src\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 181
-    '    Code Lines: 76
-    ' Comment Lines: 89
-    '   Blank Lines: 16
-    '     File Size: 8.06 KB
+    '    Code Lines: 76 (41.99%)
+    ' Comment Lines: 89 (49.17%)
+    '    - Xml Docs: 21.35%
+    ' 
+    '   Blank Lines: 16 (8.84%)
+    '     File Size: 8.24 KB
 
 
     '     Module Resources

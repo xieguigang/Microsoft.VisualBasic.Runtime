@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d778ee5d576e999a44c42696c94281f5, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\ES6\Map.vb"
+﻿#Region "Microsoft.VisualBasic::d778ee5d576e999a44c42696c94281f5, Microsoft.VisualBasic.Core\src\My\JavaScript\ES6\Map.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 46
-    ' Comment Lines: 6
-    '   Blank Lines: 13
+    '    Code Lines: 46 (70.77%)
+    ' Comment Lines: 6 (9.23%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 13 (20.00%)
     '     File Size: 1.93 KB
 
 

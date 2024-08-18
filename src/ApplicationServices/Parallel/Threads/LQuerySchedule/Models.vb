@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be5c17214536ce52cfb48a329ec834f, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb"
+﻿#Region "Microsoft.VisualBasic::3be5c17214536ce52cfb48a329ec834f, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 14
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 14 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (22.22%)
     '     File Size: 445 B
 
 

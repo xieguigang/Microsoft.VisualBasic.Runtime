@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c83077b820e815beb51f98ccce359a44, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
+﻿#Region "Microsoft.VisualBasic::d85db7629e4e1843b9ee61506ab5f0ac, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 36
-    ' Comment Lines: 15
-    '   Blank Lines: 8
-    '     File Size: 2.57 KB
+    '   Total Lines: 91
+    '    Code Lines: 58 (63.74%)
+    ' Comment Lines: 20 (21.98%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 13 (14.29%)
+    '     File Size: 3.71 KB
 
 
     '     Interface ILocalSearchHandle
@@ -47,7 +49,7 @@
     ' 
     '     Module SearchFramework
     ' 
-    '         Function: MultipleQuery, Query
+    '         Function: MultipleQuery, Query, UniqueNames
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace ComponentModel.DataSourceModel.Repository
@@ -110,6 +113,37 @@ Namespace ComponentModel.DataSourceModel.Repository
         <Extension>
         Public Function Query(Of T, Term)(source As IEnumerable(Of T), queries As IEnumerable(Of Term), assert As Func(Of T, Term, Boolean)) As IEnumerable(Of Map(Of Term, T))
             Return source.MultipleQuery({New NamedValue(Of Term())("null", queries.ToArray)}, assert).Values
+        End Function
+
+        ''' <summary>
+        ''' makes the name string unique by adding an additional numeric suffix
+        ''' </summary>
+        ''' <param name="names"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function UniqueNames(names As IEnumerable(Of String), <Out> Optional ByRef duplicated As String() = Nothing) As String()
+            Dim nameUniques As New Dictionary(Of String, Counter)
+            Dim duplicates As New List(Of String)
+
+            For Each name As String In names
+RE0:
+                If nameUniques.ContainsKey(name) Then
+                    nameUniques(name).Hit()
+                    duplicates.Add(name)
+                    name = name & "_" & nameUniques(name).Value
+                    GoTo RE0
+                Else
+                    nameUniques.Add(name, Scan0)
+                End If
+            Next
+
+            Erase duplicated
+
+            If duplicates.Any Then
+                duplicated = duplicates.ToArray
+            End If
+
+            Return nameUniques.Keys.ToArray
         End Function
     End Module
 End Namespace

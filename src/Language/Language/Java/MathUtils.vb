@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32808061d6b51f10776fcb0704568a2c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::32808061d6b51f10776fcb0704568a2c, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 387
-    '    Code Lines: 194
-    ' Comment Lines: 148
-    '   Blank Lines: 45
+    '    Code Lines: 194 (50.13%)
+    ' Comment Lines: 148 (38.24%)
+    '    - Xml Docs: 72.30%
+    ' 
+    '   Blank Lines: 45 (11.63%)
     '     File Size: 14.16 KB
 
 

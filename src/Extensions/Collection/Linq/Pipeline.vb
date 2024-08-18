@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cbadd7b88a66bbf48adbb098c5e4da6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::5cbadd7b88a66bbf48adbb098c5e4da6, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Pipeline.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 42
-    '    Code Lines: 23
-    ' Comment Lines: 14
-    '   Blank Lines: 5
+    '    Code Lines: 23 (54.76%)
+    ' Comment Lines: 14 (33.33%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (11.90%)
     '     File Size: 1.43 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::602ba58a0f9b41e3b4d78bd903b088c3, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBaseData.vb"
+﻿#Region "Microsoft.VisualBasic::627cca4c7461fb25529cef9b73b1af8a, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBaseData.vb"
 
     ' Author:
     ' 
@@ -34,34 +34,87 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 417 B
+    '   Total Lines: 63
+    '    Code Lines: 43 (68.25%)
+    ' Comment Lines: 5 (7.94%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (23.81%)
+    '     File Size: 2.02 KB
 
 
     '     Class ConsoleTableBaseData
     ' 
     '         Properties: Column, Rows
     ' 
-    '         Function: AppendLine
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: (+2 Overloads) AppendLine, FromColumnHeaders, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace ApplicationServices.Terminal.TablePrinter
 
     Public Class ConsoleTableBaseData
 
         Public Property Column As List(Of Object)
-        Public Property Rows As List(Of List(Of Object))
+        Public Property Rows As List(Of Object())
 
+        Sub New()
+        End Sub
+
+        Sub New(ParamArray headers As String())
+            Column = headers.Select(Function(si) CObj(si)).AsList
+        End Sub
+
+        Sub New(headers As String(), rows As IEnumerable(Of String()))
+            Call Me.New(headers)
+
+            Me.Rows = New List(Of Object())
+
+            For Each row As String() In rows.SafeQuery
+                Call AppendLine(DirectCast(row, IEnumerable))
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' append one row data
+        ''' </summary>
+        ''' <param name="line">the row data collection, general data</param>
+        ''' <returns></returns>
         Public Function AppendLine(line As IEnumerable) As ConsoleTableBaseData
-            Rows.Add((From x In line Select x).ToList)
+            Rows.Add((From x As Object In line Select x).ToArray)
             Return Me
         End Function
+
+        Public Function AppendLine(ParamArray row As Object()) As ConsoleTableBaseData
+            Rows.Add(row)
+            Return Me
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return Column.ToStringArray.GetJson
+        End Function
+
+        Public Shared Function FromColumnHeaders(ParamArray headers As String()) As ConsoleTableBaseData
+            Dim empty As New ConsoleTableBaseData With {
+                .Column = New List(Of Object),
+                .Rows = New List(Of Object())
+            }
+
+            For Each name As String In headers
+                Call empty.Column.Add(name)
+            Next
+
+            Return empty
+        End Function
+
     End Class
 End Namespace

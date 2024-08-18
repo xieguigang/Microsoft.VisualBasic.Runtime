@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Flags.vb"
+﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Flags.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 10
-    ' Comment Lines: 6
-    '   Blank Lines: 3
+    '    Code Lines: 10 (52.63%)
+    ' Comment Lines: 6 (31.58%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 3 (15.79%)
     '     File Size: 583 B
 
 

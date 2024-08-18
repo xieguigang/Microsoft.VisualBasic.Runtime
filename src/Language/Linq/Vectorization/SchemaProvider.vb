@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::677f5ea9fa56622501543cf8692e9b93, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::7f486ad9602dcee63dc9d2ae7876cb7d, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 317
-    '    Code Lines: 227
-    ' Comment Lines: 46
-    '   Blank Lines: 44
-    '     File Size: 12.26 KB
+    '   Total Lines: 325
+    '    Code Lines: 233 (71.69%)
+    ' Comment Lines: 46 (14.15%)
+    '    - Xml Docs: 86.96%
+    ' 
+    '   Blank Lines: 46 (14.15%)
+    '     File Size: 12.55 KB
 
 
     '     Class VectorSchemaProvider
@@ -49,6 +51,7 @@
     '         Function: [Concatenate], [IntegerDivision], [Like], binaryOperatorSelfLeft, CreateSchema
     '                   GetDynamicMemberNames, ToString, TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember
     '                   TrySetMember, TryUnaryOperation
+    '         Operators: <>, =
     ' 
     ' 
     ' /********************************************************************************/
@@ -370,5 +373,13 @@ Namespace Language.Vectorization
             Return Nothing
         End Function
 #End Region
+
+        Public Shared Operator =(a As VectorSchemaProvider, b As Type) As Boolean
+            Return a.Type Is b
+        End Operator
+
+        Public Shared Operator <>(a As VectorSchemaProvider, b As Type) As Boolean
+            Return Not a.Type Is b
+        End Operator
     End Class
 End Namespace

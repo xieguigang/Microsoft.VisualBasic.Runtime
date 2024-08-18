@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::a0b776c56ffb0ac35627e275d69f63ba, Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
 
     ' Author:
     ' 
@@ -34,14 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 11
-    ' Comment Lines: 3
-    '   Blank Lines: 4
-    '     File Size: 442 B
+    '   Total Lines: 118
+    '    Code Lines: 48 (40.68%)
+    ' Comment Lines: 47 (39.83%)
+    '    - Xml Docs: 95.74%
+    ' 
+    '   Blank Lines: 23 (19.49%)
+    '     File Size: 3.03 KB
 
 
     '     Interface PointF3D
+    ' 
+    '         Properties: Z
+    ' 
+    '     Interface IPoint3D
+    ' 
+    '         Properties: Z
+    ' 
+    '     Structure SpatialIndex3D
     ' 
     '         Properties: X, Y, Z
     ' 
@@ -49,26 +59,138 @@
     ' 
     '         Properties: X, Y
     ' 
+    '     Interface RasterPixel
+    ' 
+    '         Properties: X, Y
+    ' 
+    '     Interface Pixel
+    ' 
+    '         Properties: Scale
+    ' 
+    '     Module PixelExtensions
+    ' 
+    '         Function: X, Y
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace Imaging
 
     ''' <summary>
+    ''' [x,y,z]
+    ''' 
     ''' 这个接口是为了实现Imaging模块的Point3D对象和数学函数模块的3D插值模块的兼容
     ''' </summary>
-    Public Interface PointF3D
-        Property X As Double
-        Property Y As Double
+    ''' <remarks>
+    ''' 
+    ''' </remarks>
+    Public Interface PointF3D : Inherits Layout2D
+
         Property Z As Double
+
     End Interface
 
+    Public Interface IPoint3D : Inherits RasterPixel
+
+        Property Z As Integer
+
+    End Interface
+
+    ''' <summary>
+    ''' a index point in 3d spatial geometry space
+    ''' </summary>
+    Public Structure SpatialIndex3D : Implements IPoint3D
+
+        Public Property X As Integer Implements IPoint3D.X
+        Public Property Y As Integer Implements IPoint3D.Y
+        ''' <summary>
+        ''' the z axis index data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Z As Integer Implements IPoint3D.Z
+
+    End Structure
+
+    ''' <summary>
+    ''' a float 2d point
+    ''' </summary>
     Public Interface Layout2D
 
+        ''' <summary>
+        ''' the x axis data
+        ''' </summary>
+        ''' <returns></returns>
         Property X As Double
+        ''' <summary>
+        ''' the y axis data
+        ''' </summary>
+        ''' <returns></returns>
         Property Y As Double
 
     End Interface
+
+    ''' <summary>
+    ''' [x,y] tuple
+    ''' </summary>
+    Public Interface RasterPixel
+
+        ''' <summary>
+        ''' the x axis data
+        ''' </summary>
+        ''' <returns></returns>
+        Property X As Integer
+        ''' <summary>
+        ''' the y axis data
+        ''' </summary>
+        ''' <returns></returns>
+        Property Y As Integer
+
+    End Interface
+
+    ''' <summary>
+    ''' a generic data model for HeatMap raster: [x,y,scale]
+    ''' </summary>
+    ''' <remarks>
+    ''' the layout information comes from the base <see cref="RasterPixel"/> model
+    ''' </remarks>
+    Public Interface Pixel : Inherits Imaging.RasterPixel
+
+        ''' <summary>
+        ''' the color scale data
+        ''' </summary>
+        ''' <returns></returns>
+        Property Scale As Double
+
+    End Interface
+
+    <HideModuleName>
+    Public Module PixelExtensions
+
+        <Extension>
+        Public Iterator Function X(Of T As RasterPixel)(shape As IEnumerable(Of T)) As IEnumerable(Of Integer)
+            If shape Is Nothing Then
+                Return
+            Else
+                For Each pi As T In shape
+                    Yield pi.X
+                Next
+            End If
+        End Function
+
+        <Extension>
+        Public Iterator Function Y(Of T As RasterPixel)(shape As IEnumerable(Of T)) As IEnumerable(Of Integer)
+            If shape Is Nothing Then
+                Return
+            Else
+                For Each pi As T In shape
+                    Yield pi.Y
+                Next
+            End If
+        End Function
+
+    End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7349ed8a280f9c2257cbc7d637d3d2dc, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb"
+﻿#Region "Microsoft.VisualBasic::a1db17a1dd6ff68dfd1cc962313bf941, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 60
-    ' Comment Lines: 15
-    '   Blank Lines: 16
-    '     File Size: 2.57 KB
+    '   Total Lines: 101
+    '    Code Lines: 61 (60.40%)
+    ' Comment Lines: 23 (22.77%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 17 (16.83%)
+    '     File Size: 2.82 KB
 
 
     '     Class member
@@ -156,7 +158,17 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     Public Class param : Implements IMember
 
-        <XmlAttribute> Public Property name As String Implements IMember.name
+        ''' <summary>
+        ''' the parameter name
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute>
+        Public Property name As String Implements IMember.name
+
+        ''' <summary>
+        ''' the parameter description text
+        ''' </summary>
+        ''' <returns></returns>
         <XmlText> Public Property text As String
 
         Public Overrides Function ToString() As String

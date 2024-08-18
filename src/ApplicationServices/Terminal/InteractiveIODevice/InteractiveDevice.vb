@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1ac3c193e69bd4687c3dfbe2d1a4930, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::b73335fbe4c50f645bf3d4d90f43db4c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 211
-    '    Code Lines: 114
-    ' Comment Lines: 62
-    '   Blank Lines: 35
-    '     File Size: 8.45 KB
+    '   Total Lines: 216
+    '    Code Lines: 118 (54.63%)
+    ' Comment Lines: 62 (28.70%)
+    '    - Xml Docs: 30.65%
+    ' 
+    '   Blank Lines: 36 (16.67%)
+    '     File Size: 8.66 KB
 
 
     '     Class InteractiveDevice
@@ -47,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: ReadKey, ReadLine, (+2 Overloads) Save
+    '         Function: ReadKey, ReadLine, (+3 Overloads) Save
     ' 
     '         Sub: (+2 Overloads) Dispose, InternalClearLine, PrintPrompted
     ' 
@@ -56,6 +58,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text
@@ -260,6 +263,10 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
         ''' <remarks></remarks>
         Public Function Save(Path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Return _cmdsHistory.Save(Path, encoding)
+        End Function
+
+        Public Function Save(file As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Return _cmdsHistory.Save(file, encoding)
         End Function
 
         Public Function Save(Path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save

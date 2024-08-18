@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d3d1d04a1aa244b9b8318273a109441, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb"
+﻿#Region "Microsoft.VisualBasic::5d3d1d04a1aa244b9b8318273a109441, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 19
-    ' Comment Lines: 3
-    '   Blank Lines: 7
+    '    Code Lines: 19 (65.52%)
+    ' Comment Lines: 3 (10.34%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (24.14%)
     '     File Size: 795 B
 
 

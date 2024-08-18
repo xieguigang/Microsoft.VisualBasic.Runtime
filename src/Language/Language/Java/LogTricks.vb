@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b5bb278e9cc7e9e483c1e377eaae6ea, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\LogTricks.vb"
+﻿#Region "Microsoft.VisualBasic::9b5bb278e9cc7e9e483c1e377eaae6ea, Microsoft.VisualBasic.Core\src\Language\Language\Java\LogTricks.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 85
-    '    Code Lines: 47
-    ' Comment Lines: 27
-    '   Blank Lines: 11
+    '    Code Lines: 47 (55.29%)
+    ' Comment Lines: 27 (31.76%)
+    '    - Xml Docs: 11.11%
+    ' 
+    '   Blank Lines: 11 (12.94%)
     '     File Size: 3.18 KB
 
 

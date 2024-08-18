@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d04e821c6beb24a5aa6bb3f5d9ec50dc, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\FileSystem\File.vb"
+﻿#Region "Microsoft.VisualBasic::2278cd6ae606296e6eaeb24c12fa3fd4, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\FileSystem\File.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 46
-    ' Comment Lines: 10
-    '   Blank Lines: 12
-    '     File Size: 2.19 KB
+    '   Total Lines: 71
+    '    Code Lines: 47 (66.20%)
+    ' Comment Lines: 10 (14.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (19.72%)
+    '     File Size: 2.31 KB
 
 
     '     Class File
@@ -88,6 +90,9 @@ Namespace Language.UnixBash.FileSystem
             Dim handle As FileHandle = My.File.GetHandle(path)
             Return file.Save(handle.FileName, handle.encoding)
         End Operator
+
+        Public MustOverride Function Save(file As IO.Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+
     End Class
 
     ''' <summary>

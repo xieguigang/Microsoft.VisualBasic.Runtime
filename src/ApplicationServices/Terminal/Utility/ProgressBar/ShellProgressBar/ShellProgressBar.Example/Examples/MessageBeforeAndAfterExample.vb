@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afe346561b74ae28bc678e1f1a38030f, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\MessageBeforeAndAfterExample.vb"
+﻿#Region "Microsoft.VisualBasic::afe346561b74ae28bc678e1f1a38030f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\MessageBeforeAndAfterExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 24
-    '    Code Lines: 22
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 22 (91.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (8.33%)
     '     File Size: 978 B
 
 

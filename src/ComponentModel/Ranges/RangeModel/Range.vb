@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c2421304db1ca234e1160091b9ed5b7, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\Range.vb"
+﻿#Region "Microsoft.VisualBasic::4c2421304db1ca234e1160091b9ed5b7, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\Range.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 24
-    ' Comment Lines: 0
-    '   Blank Lines: 9
+    '    Code Lines: 24 (72.73%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (27.27%)
     '     File Size: 1.22 KB
 
 

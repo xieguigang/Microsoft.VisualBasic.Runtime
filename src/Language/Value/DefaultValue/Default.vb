@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed3f4b544815f9f29a412d328d9af56d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::d3753a739d8821df26dad91fc2759cd0, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 227
-    '    Code Lines: 128
-    ' Comment Lines: 71
-    '   Blank Lines: 28
-    '     File Size: 8.83 KB
+    '   Total Lines: 233
+    '    Code Lines: 128 (54.94%)
+    ' Comment Lines: 75 (32.19%)
+    '    - Xml Docs: 92.00%
+    ' 
+    '   Blank Lines: 30 (12.88%)
+    '     File Size: 8.97 KB
 
 
     '     Delegate Function
@@ -89,7 +91,13 @@ Namespace Language.Default
     ''' Apply on the structure type that assert the object is null or not.
     ''' </summary>
     Public Interface IsEmpty
+
+        ''' <summary>
+        ''' Does current object has any value inside?
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property IsEmpty As Boolean
+
     End Interface
 
     ''' <summary>

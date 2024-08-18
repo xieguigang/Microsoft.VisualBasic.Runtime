@@ -1,63 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::eb357249dc56432f5f04e838312e9825, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::c9492e12360a6fadcf25c670f9477a27, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 174
-'    Code Lines: 112
-' Comment Lines: 31
-'   Blank Lines: 31
-'     File Size: 5.16 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CharBuffer
-' 
-'         Properties: isInteger, Last, Size
-' 
-'         Function: Add, GetLastOrDefault, Pop, PopAllChars, ToString
-' 
-'         Sub: Clear
-' 
-'         Operators: *, (+3 Overloads) +, <, (+2 Overloads) <>, (+2 Overloads) =
-'                    >, (+2 Overloads) Like
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 350
+    '    Code Lines: 201 (57.43%)
+    ' Comment Lines: 104 (29.71%)
+    '    - Xml Docs: 93.27%
+    ' 
+    '   Blank Lines: 45 (12.86%)
+    '     File Size: 11.43 KB
+
+
+    '     Class CharBuffer
+    ' 
+    '         Properties: isInteger, Last, Size
+    ' 
+    '         Function: (+2 Overloads) Add, AsEnumerable, GetLastOrDefault, Pop, PopAllChars
+    '                   (+3 Overloads) StartsWith, ToArray, ToString
+    ' 
+    '         Sub: Clear
+    ' 
+    '         Operators: *, (+3 Overloads) +, <, (+3 Overloads) <>, (+3 Overloads) =
+    '                    >, (+2 Overloads) Like
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Parser
@@ -121,12 +125,55 @@ Namespace Text.Parser
         ''' test if current chars is like the integer string pattern
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the negative value not works here, just test for the integer chars pattern
+        ''' </remarks>
         Public ReadOnly Property isInteger As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.All(Function(c) Char.IsDigit(c))
             End Get
         End Property
+
+        Public Function StartsWith(c As Char) As Boolean
+            If Size = 0 Then
+                Return False
+            Else
+                Return buffer(Scan0) = c
+            End If
+        End Function
+
+        ''' <summary>
+        ''' test if current char buffer is starts with a specific prefix string
+        ''' </summary>
+        ''' <param name="prefix"></param>
+        ''' <returns></returns>
+        Public Function StartsWith(prefix As String) As Boolean
+            If Me.Size < prefix Then
+                Return False
+            Else
+                For i As Integer = 0 To prefix.Length - 1
+                    If buffer(i) <> prefix(i) Then
+                        Return False
+                    End If
+                Next
+
+                Return True
+            End If
+        End Function
+
+        Public Function StartsWith(r As Regex) As Boolean
+            Dim s As New String(buffer.ToArray)
+            Dim m As String = r.Match(s).Value
+
+            If m.StringEmpty Then
+                Return False
+            ElseIf s.StartsWith(m) Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
 
         ''' <summary>
         ''' add a char into current buffer data list
@@ -135,6 +182,16 @@ Namespace Text.Parser
         ''' <returns></returns>
         Public Function Add(c As Char) As CharBuffer
             Call buffer.Add(c)
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' add a collection of char into current buffer data list
+        ''' </summary>
+        ''' <param name="chars"></param>
+        ''' <returns></returns>
+        Public Function Add(chars As String) As CharBuffer
+            Call buffer.AddRange(chars)
             Return Me
         End Function
 
@@ -181,6 +238,14 @@ Namespace Text.Parser
             Return buffer.PopAll
         End Function
 
+        Public Function AsEnumerable() As IEnumerable(Of Char)
+            Return buffer
+        End Function
+
+        Public Function ToArray() As Char()
+            Return buffer.ToArray
+        End Function
+
         ''' <summary>
         ''' text
         ''' </summary>
@@ -194,6 +259,23 @@ Namespace Text.Parser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(c As Char) As CharBuffer
             Return New CharBuffer + c
+        End Operator
+
+        ''' <summary>
+        ''' Convert a string object to a char buffer
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        Public Shared Widening Operator CType(str As String) As CharBuffer
+            Dim buf As New CharBuffer
+
+            If Not str Is Nothing Then
+                For Each c As Char In str
+                    Call buf.buffer.Add(c)
+                Next
+            End If
+
+            Return buf
         End Operator
 
         Public Shared Operator +(buf As CharBuffer, c As Char) As CharBuffer
@@ -258,11 +340,15 @@ Namespace Text.Parser
         End Operator
 
         ''' <summary>
-        ''' test current char buffer is equals to the given char?
+        ''' test current char buffer size is 1 and also is equals to the given char?
         ''' </summary>
         ''' <param name="buf"></param>
         ''' <param name="test"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns false if the buffer size is not equals to 1
+        ''' if the single char in the given buffer is not equals to the given 
+        ''' <paramref name="test"/> char, then returns false.
+        ''' </returns>
         Public Shared Operator =(buf As CharBuffer, test As Char) As Boolean
             If buf.Size <> 1 Then
                 Return False
@@ -277,22 +363,38 @@ Namespace Text.Parser
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count = size
+            If buf Is Nothing Then
+                Return 0 = size
+            Else
+                Return buf.buffer.Count = size
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count <> size
+            If buf Is Nothing Then
+                Return 0 = size
+            Else
+                Return buf.buffer.Count <> size
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count > size
+            If buf Is Nothing Then
+                Return 0 > size
+            Else
+                Return buf.buffer.Count > size
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count < size
+            If buf Is Nothing Then
+                Return 0 < size
+            Else
+                Return buf.buffer.Count < size
+            End If
         End Operator
 
         Public Shared Operator Like(buf As CharBuffer, any As String()) As Boolean

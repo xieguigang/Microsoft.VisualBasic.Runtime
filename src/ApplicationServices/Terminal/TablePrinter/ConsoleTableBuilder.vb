@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a3ca3e86cad38606e0ffad4ad992449, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::5122faa1c50741a39d7b302b4d946f26, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 677
-    '    Code Lines: 508
-    ' Comment Lines: 43
-    '   Blank Lines: 126
-    '     File Size: 38.87 KB
+    '   Total Lines: 669
+    '    Code Lines: 500 (74.74%)
+    ' Comment Lines: 43 (6.43%)
+    '    - Xml Docs: 25.58%
+    ' 
+    '   Blank Lines: 126 (18.83%)
+    '     File Size: 38.40 KB
 
 
     '     Class ConsoleTableBuilder
@@ -76,13 +78,13 @@ Namespace ApplicationServices.Terminal.TablePrinter
     Public Class ConsoleTableBuilder
         Friend Property Column As List(Of Object)
         Friend Property FormattedColumns As List(Of String)
-        Friend Property Rows As List(Of List(Of Object))
+        Friend Property Rows As List(Of Object())
         Friend Property FormattedRows As List(Of List(Of Object))
         Friend Property TableFormat As ConsoleTableBuilderFormat
         Friend Property CharMapPositionStore As Dictionary(Of CharMapPositions, Char) = Nothing
         Friend Property HeaderCharMapPositionStore As Dictionary(Of HeaderCharMapPositions, Char) = Nothing
-        Friend TopMetadataRows As List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String))) = New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
-        Friend BottomMetadataRows As List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String))) = New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
+        Friend TopMetadataRows As New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
+        Friend BottomMetadataRows As New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
         Friend TextAligmentData As Dictionary(Of Integer, TextAligntment) = New Dictionary(Of Integer, TextAligntment)()
         Friend HeaderTextAligmentData As Dictionary(Of Integer, TextAligntment) = New Dictionary(Of Integer, TextAligntment)()
         Friend MinLengthData As Dictionary(Of Integer, Integer) = New Dictionary(Of Integer, Integer)()
@@ -99,7 +101,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
 
         Private Sub New()
             Column = New List(Of Object)()
-            Rows = New List(Of List(Of Object))()
+            Rows = New List(Of Object())()
             TableFormat = ConsoleTableBuilderFormat.Default
         End Sub
 
@@ -137,9 +139,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim builder = New ConsoleTableBuilder()
 
             For Each value In list
-                builder.Rows.Add(New List(Of Object) From {
-                    value
-                })
+                builder.Rows.Add({value})
             Next
 
             Return builder
@@ -149,9 +149,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim builder = New ConsoleTableBuilder()
 
             For Each value In list
-                builder.Rows.Add(New List(Of Object) From {
-                    value
-                })
+                builder.Rows.Add({value})
             Next
 
             Return builder
@@ -161,9 +159,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim builder = New ConsoleTableBuilder()
 
             For Each value In list
-                builder.Rows.Add(New List(Of Object) From {
-                    value
-                })
+                builder.Rows.Add({value})
             Next
 
             Return builder
@@ -180,7 +176,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             builder.Column = New List(Of Object)(columnNames)
 
             For Each row As DataRow In dt.Rows
-                builder.Rows.Add(New List(Of Object)(row.ItemArray))
+                builder.Rows.Add(row.ItemArray)
             Next
 
             Return builder
@@ -233,11 +229,9 @@ Namespace ApplicationServices.Terminal.TablePrinter
                         itemPropValues.Add(objValue)
                     Next
 
-                    builder.Rows.Add(itemPropValues)
+                    builder.Rows.Add(itemPropValues.ToArray)
                 Else
-                    builder.Rows.Add(New List(Of Object) From {
-                        item
-                    })
+                    builder.Rows.Add({item})
                 End If
             Next
 
@@ -252,7 +246,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             End If
 
             For Each row In rows
-                builder.Rows.Add(New List(Of Object)(row))
+                builder.Rows.Add(row)
             Next
 
             Return builder
@@ -266,7 +260,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             End If
 
             For Each row In rows
-                builder.Rows.Add(row)
+                builder.Rows.Add(row.ToArray)
             Next
 
             Return builder
@@ -285,13 +279,13 @@ Namespace ApplicationServices.Terminal.TablePrinter
             For i = 0 To Rows.Count - 1
                 Dim index = i
 
-                FormattedRows.Add(Enumerable.Range(0, Rows(i).Count).[Select](Function(idx)
-                                                                                  If FormatterStore.ContainsKey(idx) Then
-                                                                                      Return FormatterStore(idx)(If(Rows(index)(idx) Is Nothing, String.Empty, Rows(index)(idx).ToString()))
-                                                                                  Else
-                                                                                      Return Rows(index)(idx)
-                                                                                  End If
-                                                                              End Function).ToList())
+                FormattedRows.Add(Enumerable.Range(0, Rows(i).Length).[Select](Function(idx)
+                                                                                   If FormatterStore.ContainsKey(idx) Then
+                                                                                       Return FormatterStore(idx)(If(Rows(index)(idx) Is Nothing, String.Empty, Rows(index)(idx).ToString()))
+                                                                                   Else
+                                                                                       Return Rows(index)(idx)
+                                                                                   End If
+                                                                               End Function).ToList())
             Next
         End Sub
 

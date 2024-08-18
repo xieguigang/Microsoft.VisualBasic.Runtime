@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef3317fb5e61d1d32694c9f58aec294d, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\BindMapping.vb"
+﻿#Region "Microsoft.VisualBasic::ef3317fb5e61d1d32694c9f58aec294d, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\BindMapping.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 89
-    '    Code Lines: 68
-    ' Comment Lines: 9
-    '   Blank Lines: 12
+    '    Code Lines: 68 (76.40%)
+    ' Comment Lines: 9 (10.11%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (13.48%)
     '     File Size: 2.99 KB
 
 

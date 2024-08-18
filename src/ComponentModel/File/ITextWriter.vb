@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0b636574e2ea60742b329b13e62b244, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\ITextWriter.vb"
+﻿#Region "Microsoft.VisualBasic::c0b636574e2ea60742b329b13e62b244, Microsoft.VisualBasic.Core\src\ComponentModel\File\ITextWriter.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 14
-    '    Code Lines: 7
-    ' Comment Lines: 3
-    '   Blank Lines: 4
+    '    Code Lines: 7 (50.00%)
+    ' Comment Lines: 3 (21.43%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (28.57%)
     '     File Size: 310 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::813c516d5a093dbc9b6a6e40cb8f72be, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\Text\Grep.vb"
+﻿#Region "Microsoft.VisualBasic::813c516d5a093dbc9b6a6e40cb8f72be, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\Text\Grep.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 158
-    '    Code Lines: 105
-    ' Comment Lines: 29
-    '   Blank Lines: 24
+    '    Code Lines: 105 (66.46%)
+    ' Comment Lines: 29 (18.35%)
+    '    - Xml Docs: 93.10%
+    ' 
+    '   Blank Lines: 24 (15.19%)
     '     File Size: 5.39 KB
 
 

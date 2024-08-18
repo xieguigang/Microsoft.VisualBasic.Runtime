@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b81e01e9c623c899fd4b059707b72cb1, sciBASIC#\Microsoft.VisualBasic.Core\src\My\UNIX\PathMapper.vb"
+﻿#Region "Microsoft.VisualBasic::b81e01e9c623c899fd4b059707b72cb1, Microsoft.VisualBasic.Core\src\My\UNIX\PathMapper.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 112
-    '    Code Lines: 50
-    ' Comment Lines: 47
-    '   Blank Lines: 15
+    '    Code Lines: 50 (44.64%)
+    ' Comment Lines: 47 (41.96%)
+    '    - Xml Docs: 48.94%
+    ' 
+    '   Blank Lines: 15 (13.39%)
     '     File Size: 5.46 KB
 
 

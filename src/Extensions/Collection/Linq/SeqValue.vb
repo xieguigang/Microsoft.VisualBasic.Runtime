@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e8d035772684a3580f4b6a1953bfc94, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::a37bfc757fb6f061005df1bf260389fc, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 87
-    ' Comment Lines: 73
-    '   Blank Lines: 21
-    '     File Size: 6.19 KB
+    '   Total Lines: 198
+    '    Code Lines: 97 (48.99%)
+    ' Comment Lines: 77 (38.89%)
+    '    - Xml Docs: 94.81%
+    ' 
+    '   Blank Lines: 24 (12.12%)
+    '     File Size: 6.71 KB
 
 
     '     Structure SeqValue
     ' 
     '         Properties: i, IsEmpty, value
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) CompareTo, ToString
     ' 
     '         Sub: Assign
     ' 
-    '         Operators: (+2 Overloads) -, (+3 Overloads) +, <>, =, (+2 Overloads) Mod
+    '         Operators: (+2 Overloads) -, (+3 Overloads) +, (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) Mod
     ' 
     ' 
     ' /********************************************************************************/
@@ -105,6 +107,15 @@ Namespace Linq
             value = x
         End Sub
 
+        ''' <summary>
+        ''' create index value with default index zero
+        ''' </summary>
+        ''' <param name="value"></param>
+        Sub New(value As T)
+            Me.i = 0
+            Me.value = value
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overrides Function ToString() As String
@@ -155,6 +166,14 @@ Namespace Linq
         ''' <returns></returns>
         Public Shared Operator =(v As SeqValue(Of T), i%) As Boolean
             Return v.i = i
+        End Operator
+
+        Public Shared Operator =(v As SeqValue(Of T), x As T) As Boolean
+            Return v.value.Equals(x)
+        End Operator
+
+        Public Shared Operator <>(v As SeqValue(Of T), x As T) As Boolean
+            Return Not v.value.Equals(x)
         End Operator
 
         ''' <summary>

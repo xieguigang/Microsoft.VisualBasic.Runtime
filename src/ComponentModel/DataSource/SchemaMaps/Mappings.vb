@@ -1,53 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::46919f9cf92212593ddc4d150ab1e293, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::0ffe7734572ed00c0c1613b759265e8b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 192
-'    Code Lines: 122
-' Comment Lines: 46
-'   Blank Lines: 24
-'     File Size: 7.87 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Mappings
-' 
-'         Function: (+2 Overloads) FieldNameMappings, GetAliasNames, GetColumnName, (+2 Overloads) GetFields, GetSchema
-'                   GetSchemaName
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 243
+    '    Code Lines: 142 (58.44%)
+    ' Comment Lines: 68 (27.98%)
+    '    - Xml Docs: 91.18%
+    ' 
+    '   Blank Lines: 33 (13.58%)
+    '     File Size: 9.86 KB
+
+
+    '     Module Mappings
+    ' 
+    '         Function: (+2 Overloads) FieldNameMappings, GetAliasName, GetAliasNames, GetColumnName, (+2 Overloads) GetFields
+    '                   GetSchema, GetSchemaName
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +60,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     Public Module Mappings
 
+        ''' <summary>
+        ''' get alias name of a specific type class
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="type"></param>
+        ''' <param name="getName">get name from the attribute <typeparamref name="T"/> object</param>
+        ''' <param name="explict"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetSchemaName(Of T As Attribute)(
                                      type As Type,
@@ -168,6 +178,51 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                     Next
                 End If
             End If
+        End Function
+
+        ''' <summary>
+        ''' try to get the alias name for the specific property object
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <returns>
+        ''' this function will returns nothing if no alias name mapping attribute could be found
+        ''' </returns>
+        ''' <remarks>
+        ''' the alias name could be tagged with attributes:
+        ''' 
+        ''' 1. <see cref="ColumnAttribute"/>
+        ''' 2. <see cref="Field"/>
+        ''' 3. <see cref="DataFrameColumnAttribute"/>
+        ''' </remarks>
+        <Extension>
+        Public Function GetAliasName(p As PropertyInfo) As String
+            Dim a1 As ColumnAttribute = p.GetCustomAttribute(Of ColumnAttribute)
+
+            If Not a1 Is Nothing Then
+                Return a1.Name
+            End If
+
+            Dim a2 As Field = p.GetCustomAttribute(Of Field)
+
+            If Not a2 Is Nothing Then
+                Return a2.Name
+            End If
+
+            Dim a3 As DataFrameColumnAttribute = p.GetCustomAttribute(Of DataFrameColumnAttribute)
+
+            If Not a3 Is Nothing Then
+                Return a3.Name
+            End If
+
+#If NETCOREAPP Then
+            Dim a4 As System.ComponentModel.DataAnnotations.Schema.ColumnAttribute = p.GetCustomAttribute(Of System.ComponentModel.DataAnnotations.Schema.ColumnAttribute)
+
+            If Not a4 Is Nothing Then
+                Return a4.Name
+            End If
+#End If
+
+            Return Nothing
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92cd1e9d62c2894f83fd807be2e68a70, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomRange.vb"
+﻿#Region "Microsoft.VisualBasic::92cd1e9d62c2894f83fd807be2e68a70, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomRange.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 122
-    '    Code Lines: 95
-    ' Comment Lines: 14
-    '   Blank Lines: 13
+    '    Code Lines: 95 (77.87%)
+    ' Comment Lines: 14 (11.48%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 13 (10.66%)
     '     File Size: 5.73 KB
 
 

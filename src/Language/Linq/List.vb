@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ed604f08606c59ec093c670b1a15e9, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
+﻿#Region "Microsoft.VisualBasic::7259ea32fe5b455da300874f169c3e56, Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 684
-    '    Code Lines: 367
-    ' Comment Lines: 253
-    '   Blank Lines: 64
-    '     File Size: 26.34 KB
+    '   Total Lines: 685
+    '    Code Lines: 367 (53.58%)
+    ' Comment Lines: 254 (37.08%)
+    '    - Xml Docs: 89.37%
+    ' 
+    '   Blank Lines: 64 (9.34%)
+    '     File Size: 26.37 KB
 
 
     '     Class List
@@ -229,7 +231,7 @@ Namespace Language
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
+                Return New List(Of T)(Me.Skip(range.Min).Take(range.Interval))
             End Get
             Set(value As List(Of T))
                 Dim indices As Integer() = range.ToArray
@@ -283,10 +285,11 @@ Namespace Language
         ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
-        ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
         ''' </summary>
         ''' <param name="source">The collection whose elements are copied to the new list.</param>
-        ''' 
+        ''' <remarks>
+        ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
+        ''' </remarks>
         <DebuggerStepThrough>
         Sub New(source As IEnumerable(Of T))
             Call MyBase.New(If(source Is Nothing, {}, source.ToArray))

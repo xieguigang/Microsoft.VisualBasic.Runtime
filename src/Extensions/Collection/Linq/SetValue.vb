@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 151
-    '    Code Lines: 91
-    ' Comment Lines: 39
-    '   Blank Lines: 21
+    '    Code Lines: 91 (60.26%)
+    ' Comment Lines: 39 (25.83%)
+    '    - Xml Docs: 97.44%
+    ' 
+    '   Blank Lines: 21 (13.91%)
     '     File Size: 6.42 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70fd68fd2eafbadf80da2922e0ec0b7d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerLevels.vb"
+﻿#Region "Microsoft.VisualBasic::70fd68fd2eafbadf80da2922e0ec0b7d, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerLevels.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 28
-    '    Code Lines: 9
-    ' Comment Lines: 18
-    '   Blank Lines: 1
+    '    Code Lines: 9 (32.14%)
+    ' Comment Lines: 18 (64.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (3.57%)
     '     File Size: 837 B
 
 

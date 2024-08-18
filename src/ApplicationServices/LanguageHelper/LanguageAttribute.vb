@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25e743ee7591c1e71fdaa2fd2db4d63, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\LanguageHelper\LanguageAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b25e743ee7591c1e71fdaa2fd2db4d63, Microsoft.VisualBasic.Core\src\ApplicationServices\LanguageHelper\LanguageAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 26
-    ' Comment Lines: 7
-    '   Blank Lines: 6
+    '    Code Lines: 26 (66.67%)
+    ' Comment Lines: 7 (17.95%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 6 (15.38%)
     '     File Size: 1.41 KB
 
 

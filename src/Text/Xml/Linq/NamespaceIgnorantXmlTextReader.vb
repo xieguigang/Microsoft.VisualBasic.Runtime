@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dd2d81772c9463a25d2615ef944eb6f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb"
+﻿#Region "Microsoft.VisualBasic::1dd2d81772c9463a25d2615ef944eb6f, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 26
-    '    Code Lines: 18
-    ' Comment Lines: 3
-    '   Blank Lines: 5
+    '    Code Lines: 18 (69.23%)
+    ' Comment Lines: 3 (11.54%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (19.23%)
     '     File Size: 664 B
 
 

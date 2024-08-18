@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\EntryPointMetaData.vb"
+﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, Microsoft.VisualBasic.Core\src\Scripting\MetaData\EntryPointMetaData.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 78
-    '    Code Lines: 45
-    ' Comment Lines: 15
-    '   Blank Lines: 18
+    '    Code Lines: 45 (57.69%)
+    ' Comment Lines: 15 (19.23%)
+    '    - Xml Docs: 93.33%
+    ' 
+    '   Blank Lines: 18 (23.08%)
     '     File Size: 2.78 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621eabfe57bd52ef167a5dc0ece568d4, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\StringVector.vb"
+﻿#Region "Microsoft.VisualBasic::621eabfe57bd52ef167a5dc0ece568d4, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\StringVector.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 97
-    '    Code Lines: 63
-    ' Comment Lines: 17
-    '   Blank Lines: 17
+    '    Code Lines: 63 (64.95%)
+    ' Comment Lines: 17 (17.53%)
+    '    - Xml Docs: 88.24%
+    ' 
+    '   Blank Lines: 17 (17.53%)
     '     File Size: 3.83 KB
 
 

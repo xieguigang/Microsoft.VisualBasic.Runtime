@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::445673a59c27b0978bcb6564318abffe, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\JoinElement.vb"
+﻿#Region "Microsoft.VisualBasic::445673a59c27b0978bcb6564318abffe, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\JoinElement.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 25
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 25 (86.21%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (13.79%)
     '     File Size: 1.10 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dbf0912373c3b74eceee73fcdfb29bb, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::826a36c440bdd1fc8bd797127bef65fe, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\ColorCube.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 286
-    '    Code Lines: 179
-    ' Comment Lines: 81
-    '   Blank Lines: 26
-    '     File Size: 13.92 KB
+    '   Total Lines: 273
+    '    Code Lines: 174 (63.74%)
+    ' Comment Lines: 73 (26.74%)
+    '    - Xml Docs: 90.41%
+    ' 
+    '   Blank Lines: 26 (9.52%)
+    '     File Size: 13.23 KB
 
 
     '     Module ColorCube
     ' 
     '         Function: Compare, CompareGreater, CompareLess, DegreesToRadians, GetAzimuthTo
     '                   GetBrightness, (+2 Overloads) GetColorFrom, GetColorsAround, GetColorSequence, GetColorSpectrum
-    '                   GetDistance, GetElevationTo, RadiansToDegrees, WrapAngle
+    '                   GetElevationTo, RadiansToDegrees, WrapAngle
     ' 
     ' 
     ' /********************************************************************************/
@@ -86,8 +88,8 @@ While any number of complex code solutions could be created to attempt to addres
         ''' 
         <ExportAPI("Compare")>
         Public Function Compare(source As Color, target As Color) As Integer
-            Dim delta1 As Double = GetDistance(Color.Black, source)
-            Dim delta2 As Double = GetDistance(Color.Black, target)
+            Dim delta1 As Double = Color.Black.EuclideanDistance(source)
+            Dim delta2 As Double = Color.Black.EuclideanDistance(target)
             Return delta1.CompareTo(delta2)
         End Function
 
@@ -139,7 +141,13 @@ While any number of complex code solutions could be created to attempt to addres
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("CreateColor")>
-        Public Function GetColorFrom(source As Color, azimuth As Double, elevation As Double, distance As Double, Optional isRadians As Boolean = False, Optional alpha% = 255) As Color
+        Public Function GetColorFrom(source As Color,
+                                     azimuth As Double,
+                                     elevation As Double,
+                                     distance As Double,
+                                     Optional isRadians As Boolean = False,
+                                     Optional alpha% = 255) As Color
+
             If azimuth < 0 OrElse azimuth > 90 Then
                 Throw New ArgumentException("azimuth", InvalidRange)
             End If
@@ -209,7 +217,7 @@ While any number of complex code solutions could be created to attempt to addres
         Public Function GetColorSequence(source As Color, target As Color, increment As Integer, Optional alpha% = 255) As Color()
             Dim a As Double = GetAzimuthTo(source, target)
             Dim e As Double = GetElevationTo(source, target)
-            Dim d As Double = GetDistance(source, target)
+            Dim d As Double = source.EuclideanDistance(target)
             Dim result As New List(Of Color)
 
             For i As Integer = 0 To d Step increment
@@ -275,25 +283,6 @@ While any number of complex code solutions could be created to attempt to addres
             Loop
             result.Add(Color.FromArgb(rgb(0), rgb(1), rgb(2)))
             Return result.ToArray
-        End Function
-
-        ''' <summary>
-        ''' Gets the distance between two colors within the cube.
-        ''' </summary>
-        ''' <param name="source">The source color in the cube.</param>
-        ''' <param name="target">The target color in the cube.</param>
-        ''' <returns>The distance between the source and target colors.</returns>
-        ''' <remarks></remarks>
-        ''' 
-        <ExportAPI("Distance")>
-        Public Function GetDistance(source As Color, target As Color) As Double
-            Dim squareR As Double = CDbl(target.R) - CDbl(source.R)
-            squareR *= squareR
-            Dim squareG As Double = CDbl(target.G) - CDbl(source.G)
-            squareG *= squareG
-            Dim squareB As Double = CDbl(target.B) - CDbl(source.B)
-            squareB *= squareB
-            Return System.Math.Sqrt(squareR + squareG + squareB)
         End Function
 
         <ExportAPI("CompareLess")>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea2c286f5c5ebd639fa5d65e593dbd7a, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::e48160e763c9ee3426c19da22e2763f7, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 326
-    '    Code Lines: 216
-    ' Comment Lines: 59
-    '   Blank Lines: 51
-    '     File Size: 11.64 KB
+    '   Total Lines: 418
+    '    Code Lines: 256 (61.24%)
+    ' Comment Lines: 102 (24.40%)
+    '    - Xml Docs: 86.27%
+    ' 
+    '   Blank Lines: 60 (14.35%)
+    '     File Size: 15.15 KB
 
 
     '     Class Polygon2D
     ' 
     '         Properties: height, length, width, xpoints, ypoints
     ' 
-    '         Constructor: (+8 Overloads) Sub New
+    '         Constructor: (+10 Overloads) Sub New
     ' 
-    '         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetEnumerator
-    '                   GetRandomPoint, GetRectangle, GetShoelaceArea, (+4 Overloads) inside
+    '         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetDimension
+    '                   GetRandomPoint, GetRectangle, GetShoelaceArea, GetSize, GetSizeF
+    '                   (+4 Overloads) inside
     ' 
     '         Sub: calculateBounds
+    ' 
+    '         Operators: -, +
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,8 +65,9 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -84,7 +90,12 @@ Namespace Imaging.Math2D
         ''' </summary>
         Protected Friend bounds2 As Vector2D = Nothing
 
+        ''' <summary>
+        ''' max y - min y
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property height As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If ypoints.Length = 0 Then
                     Return 0
@@ -94,7 +105,12 @@ Namespace Imaging.Math2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' max x - min x
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property width As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If xpoints.Length = 0 Then
                     Return 0
@@ -135,6 +151,7 @@ Namespace Imaging.Math2D
             Me.xpoints = New Double(length - 1) {}
             Me.ypoints = New Double(length - 1) {}
 
+            ' try to break the clr class object reference at here
             Array.Copy(x, 0, Me.xpoints, 0, length)
             Array.Copy(y, 0, Me.ypoints, 0, length)
 
@@ -158,6 +175,14 @@ Namespace Imaging.Math2D
             )
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(pixels As RasterPixel())
+            Call Me.New(
+                x:=pixels.Select(Function(p) CDbl(p.X)).ToArray,
+                y:=pixels.Select(Function(p) CDbl(p.Y)).ToArray
+            )
+        End Sub
+
         ''' <summary>
         ''' union multiple polygon
         ''' </summary>
@@ -171,6 +196,10 @@ Namespace Imaging.Math2D
             )
         End Sub
 
+        ''' <summary>
+        ''' Construct a polygon 2d shape object from a point collection
+        ''' </summary>
+        ''' <param name="points"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(points As IEnumerable(Of Point))
             Call Me.New(points.Select(Function(p) New PointF(p.X, p.Y)).ToArray)
@@ -227,12 +256,12 @@ Namespace Imaging.Math2D
 
             For i As Integer = 0 To n - 1
                 Dim d5 As Double = x(i)
-                d1 = stdNum.Min(d1, d5)
-                d3 = stdNum.Max(d3, d5)
+                d1 = std.Min(d1, d5)
+                d3 = std.Max(d3, d5)
 
                 Dim d6 As Double = y(i)
-                d2 = stdNum.Min(d2, d6)
-                d4 = stdNum.Max(d4, d6)
+                d2 = std.Min(d2, d6)
+                d4 = std.Max(d4, d6)
             Next
 
             Me.bounds1 = New Vector2D(d1, d2)
@@ -327,6 +356,7 @@ Namespace Imaging.Math2D
             If length = 0 Then
                 Return False
             End If
+
             If Not boundingInside(x, y) Then
                 Return False
             Else
@@ -346,8 +376,42 @@ Namespace Imaging.Math2D
             Return GetShoelaceArea(xpoints, ypoints)
         End Function
 
+        ''' <summary>
+        ''' Get the layout rectangle of current polygon object
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRectangle() As RectangleF
             Return New RectangleF(xpoints.Min, ypoints.Min, width, height)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSizeF() As SizeF
+            Return New SizeF(width, height)
+        End Function
+
+        ''' <summary>
+        ''' get the polygon rectangle size
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' width and height is generated from the rectangle width and height
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSize() As Size
+            ' delta value between the max - min from the x,y
+            Return New Size(width, height)
+        End Function
+
+        ''' <summary>
+        ''' get the dimension size via the max x and max y
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the meaning of <see cref="GetDimension()"/> is different with <see cref="GetSize()"/>
+        ''' </remarks>
+        Public Function GetDimension() As Size
+            Return New Size(xpoints.Max, ypoints.Max)
         End Function
 
         ''' <summary>
@@ -377,7 +441,7 @@ Namespace Imaging.Math2D
             End If
 
             ' Finally, calculate the polygon area.
-            area = stdNum.Abs(area / 2)
+            area = std.Abs(area / 2)
 
             Return area
         End Function
@@ -388,13 +452,29 @@ Namespace Imaging.Math2D
             Next
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of PointF).GetEnumerator
-            Yield GenericEnumerator()
-        End Function
-
         Public Shared Widening Operator CType(points As PointF()) As Polygon2D
             Dim x As Double() = points.Select(Function(p) CDbl(p.X)).ToArray
             Dim y As Double() = points.Select(Function(p) CDbl(p.Y)).ToArray
+
+            Return New Polygon2D(x, y)
+        End Operator
+
+        ''' <summary>
+        ''' move current polygon object by a given offset
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Public Shared Operator +(p As Polygon2D, offset As PointF) As Polygon2D
+            Dim x = SIMD.Add.f64_op_add_f64_scalar(p.xpoints, offset.X)
+            Dim y = SIMD.Add.f64_op_add_f64_scalar(p.ypoints, offset.Y)
+
+            Return New Polygon2D(x, y)
+        End Operator
+
+        Public Shared Operator -(p As Polygon2D, offset As PointF) As Polygon2D
+            Dim x = SIMD.Subtract.f64_op_subtract_f64_scalar(p.xpoints, offset.X)
+            Dim y = SIMD.Subtract.f64_op_subtract_f64_scalar(p.ypoints, offset.Y)
 
             Return New Polygon2D(x, y)
         End Operator

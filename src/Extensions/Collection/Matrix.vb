@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fe5cf94dad7ab2a4913d654e6e4210b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::58f4ab51943fb0027d75627444edaecb, Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 251
-    '    Code Lines: 147
-    ' Comment Lines: 64
-    '   Blank Lines: 40
-    '     File Size: 9.09 KB
+    '   Total Lines: 252
+    '    Code Lines: 148 (58.73%)
+    ' Comment Lines: 64 (25.40%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 40 (15.87%)
+    '     File Size: 9.10 KB
 
 
     '     Module MatrixExtensions
@@ -99,7 +101,8 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="table">A System.Data.DataTable containing data to cluster</param>
         ''' <returns>A 2-dimensional array containing data to cluster</returns>
-        <Extension> Public Function ToFloatMatrix(table As DataTable) As Double(,)
+        <Extension>
+        Public Function ToFloatMatrix(table As DataTable) As Double(,)
             Dim rowCount As Integer = table.Rows.Count
             Dim fieldCount As Integer = table.Columns.Count
             Dim dataPoints As Double(,)

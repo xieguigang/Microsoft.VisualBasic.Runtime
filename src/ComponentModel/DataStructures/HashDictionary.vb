@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abb1f44460101a4c04d6f44e10d206a9, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\HashDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::abb1f44460101a4c04d6f44e10d206a9, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\HashDictionary.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 236
-    '    Code Lines: 164
-    ' Comment Lines: 38
-    '   Blank Lines: 34
+    '    Code Lines: 164 (69.49%)
+    ' Comment Lines: 38 (16.10%)
+    '    - Xml Docs: 60.53%
+    ' 
+    '   Blank Lines: 34 (14.41%)
     '     File Size: 9.36 KB
 
 

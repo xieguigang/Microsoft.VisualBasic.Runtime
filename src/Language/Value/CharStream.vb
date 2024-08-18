@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b13cc75929d945706caddec5b92b1f, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\CharStream.vb"
+﻿#Region "Microsoft.VisualBasic::3536dad55eb892311701f9e5e94f0c76, Microsoft.VisualBasic.Core\src\Language\Value\CharStream.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 31
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 1.47 KB
+    '   Total Lines: 44
+    '    Code Lines: 34 (77.27%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (22.73%)
+    '     File Size: 1.60 KB
 
 
     '     Class CharStream
     ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Add
     ' 
@@ -64,6 +66,10 @@ Namespace Language
         Public Sub Add(c As Char)
             chars.Add(c)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return New String(chars.ToArray)
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(chars As CharStream) As SByte()

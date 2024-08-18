@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55be13f3c8d0809bcc427b49cb1e3ca, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\StringSimilarity\IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::858bde950215379f8c5d5eac77a0e4f5, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\IEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 43
-    ' Comment Lines: 19
-    '   Blank Lines: 9
-    '     File Size: 2.51 KB
+    '   Total Lines: 72
+    '    Code Lines: 44 (61.11%)
+    ' Comment Lines: 19 (26.39%)
+    '    - Xml Docs: 89.47%
+    ' 
+    '   Blank Lines: 9 (12.50%)
+    '     File Size: 2.58 KB
 
 
     '     Class StringEqualityHelper
@@ -55,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
 Namespace Text.Similarity
 

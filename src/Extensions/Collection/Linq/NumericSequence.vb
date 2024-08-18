@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95155070099b2ba9b2814538e446dacd, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\NumericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::95155070099b2ba9b2814538e446dacd, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\NumericSequence.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 85
-    '    Code Lines: 64
-    ' Comment Lines: 8
-    '   Blank Lines: 13
+    '    Code Lines: 64 (75.29%)
+    ' Comment Lines: 8 (9.41%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 13 (15.29%)
     '     File Size: 3.29 KB
 
 

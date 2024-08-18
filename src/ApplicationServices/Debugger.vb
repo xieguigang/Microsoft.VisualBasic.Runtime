@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97a8ba1406ac068eed28744e54a57846, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::4ea02042b52c8ba1d4a6eb26327adbba, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 440
-    '    Code Lines: 252
-    ' Comment Lines: 143
-    '   Blank Lines: 45
-    '     File Size: 18.32 KB
+    '   Total Lines: 480
+    '    Code Lines: 274 (57.08%)
+    ' Comment Lines: 159 (33.12%)
+    '    - Xml Docs: 94.97%
+    ' 
+    '   Blank Lines: 47 (9.79%)
+    '     File Size: 19.66 KB
 
 
     ' Module VBDebugger
@@ -53,7 +55,7 @@
     '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
     ' 
     '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
-    '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+    '              (+4 Overloads) Echo, EchoLine, WaitOutput, WriteLine
     ' 
     ' 
     ' 
@@ -61,6 +63,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -74,6 +77,7 @@ Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text
 
 <Assembly: InternalsVisibleTo("REnv")>
 <Assembly: InternalsVisibleTo("R#")>
@@ -327,6 +331,8 @@ Public Module VBDebugger
     ''' So i make this function access level from public to 
     ''' friend.
     ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub WaitOutput()
         Call My.InnerQueue.WaitQueue()
     End Sub
@@ -500,11 +506,25 @@ Public Module VBDebugger
         End If
     End Sub
 
+    Public Sub Echo(str As String)
+        If Not Mute Then
+            Call My.InnerQueue.AddToQueue(
+                Sub()
+                    If Not My.redirectInfo Is Nothing Then
+                        My.Log4VB.redirectInfo(Now.ToString, str & vbBack, MSG_TYPES.INF)
+                    Else
+                        My.Log4VB.Print(str, ConsoleColor.White)
+                    End If
+                End Sub)
+        End If
+    End Sub
+
     ''' <summary>
     ''' Alias for <see cref="Console.Write"/>
     ''' </summary>
     ''' <param name="c"></param>
-    <Extension> Public Sub Echo(c As Char)
+    <Extension>
+    Public Sub Echo(c As Char)
         If Not Mute Then
             Call Console.Write(c)
         End If

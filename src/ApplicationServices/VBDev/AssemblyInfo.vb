@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6a929b5c8c3773280f44496b75bc3d2, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::1214c13abb73537fe02547de8c216c1f, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 28
-    ' Comment Lines: 31
-    '   Blank Lines: 16
-    '     File Size: 2.65 KB
+    '   Total Lines: 104
+    '    Code Lines: 47 (45.19%)
+    ' Comment Lines: 36 (34.62%)
+    '    - Xml Docs: 58.33%
+    ' 
+    '   Blank Lines: 21 (20.19%)
+    '     File Size: 3.78 KB
 
 
     '     Class AssemblyInfo
@@ -48,13 +50,14 @@
     '                     BuiltTime, ComVisible, Guid, Name, TargetFramework
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: [GetType], ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
@@ -127,6 +130,34 @@ Namespace ApplicationServices.Development
 
         Public Overrides Function ToString() As String
             Return AssemblyTitle
+        End Function
+
+        ''' <summary>
+        ''' Gets the <see cref="Type"/> object with the specified name in the assembly instance.
+        ''' </summary>
+        ''' <param name="fullName">The full name of the type.</param>
+        ''' <returns>An object that represents the specified class, or null if the class is not found.</returns>
+        Public Overloads Shared Function [GetType](fullName As String) As Type
+            Static cache As New Dictionary(Of String, Type)
+
+            SyncLock cache
+                If Not cache.ContainsKey(fullName) Then
+                    Dim t As Type
+
+                    For Each a As Assembly In AppDomain.CurrentDomain.GetAssemblies
+                        t = a.GetType(fullName)
+
+                        If Not t Is Nothing Then
+                            cache(fullName) = t
+                            Return t
+                        End If
+                    Next
+
+                    Return Nothing
+                Else
+                    Return cache(fullName)
+                End If
+            End SyncLock
         End Function
     End Class
 End Namespace

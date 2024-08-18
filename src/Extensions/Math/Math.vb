@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd94312966b591733bcb90904e663a53, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::22afda678fd59053646f9b62ab1cd3b3, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 678
-    '    Code Lines: 392
-    ' Comment Lines: 212
-    '   Blank Lines: 74
-    '     File Size: 23.73 KB
+    '   Total Lines: 732
+    '    Code Lines: 418 (57.10%)
+    ' Comment Lines: 237 (32.38%)
+    '    - Xml Docs: 85.65%
+    ' 
+    '   Blank Lines: 77 (10.52%)
+    '     File Size: 25.76 KB
 
 
     '     Module VBMath
     ' 
-    '         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
-    '                   Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2, LogN, Max
-    '                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
-    '                   RMS, RMSE, (+2 Overloads) RSD, (+4 Overloads) SD, (+2 Overloads) seq
-    '                   (+5 Overloads) Sum, WeighedAverage
+    '         Function: Clamp, Clip, ClipUpper, Covariance, CumSum
+    '                   Factorial, FactorialSequence, Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2
+    '                   LogN, (+2 Overloads) Max, Permut, PoissonPDF, Pow2
+    '                   (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE, (+2 Overloads) RSD
+    '                   (+4 Overloads) SD, (+2 Overloads) seq, (+5 Overloads) Sum, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/
@@ -61,7 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math
 
@@ -72,6 +74,59 @@ Namespace Math
     ''' </summary>
     <Package("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMath
+
+        ''' <summary>
+        ''' Standard clamping of a value into a fixed range
+        ''' </summary>
+        Public Function Clip(x As Double, clipValue As Double) As Double
+            If x > clipValue Then
+                Return clipValue
+            ElseIf x < -clipValue Then
+                Return -clipValue
+            Else
+                Return x
+            End If
+        End Function
+
+        <Extension>
+        Public Iterator Function ClipUpper(x As IEnumerable(Of Double), clipValue As Double) As IEnumerable(Of Double)
+            For Each xi As Double In x
+                If xi > clipValue Then
+                    Yield clipValue
+                Else
+                    Yield xi
+                End If
+            Next
+        End Function
+
+#If NET48 Then
+
+        ' Clamp function is missing in .NET 4.8 
+
+        ''' <summary>
+        ''' 返回范围内的一个数值。可以使用 clamp 函数将不断增加、减小或随机变化的数值限制在一系列的值中。
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="min"></param>
+        ''' <param name="max"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 最小数值和最大数值指定返回值的范围。
+        ''' 参数是值要钳制在范围内的属性或变量。
+        ''' 如果参数位于最小数值和最大数值之间的数值范围内，则该函数将返回参数值。
+        ''' 如果参数大于范围，该函数将返回最大数值。
+        ''' 如果参数小于范围，该函数将返回最小数值。
+        ''' </remarks>
+        Public Function Clamp(x As Single, min As Single, max As Single) As Single
+            If x < min Then
+                Return min
+            ElseIf x > max Then
+                Return max
+            Else
+                Return x
+            End If
+        End Function
+#End If
 
         Public Function Permut(k As Integer, n As Integer) As Long
             Dim nfactors As Integer() = (n - 1).SeqIterator(offset:=1).ToArray
@@ -111,7 +166,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Log2(x#) As Double
-            Return stdNum.Log(x, newBase:=2)
+            Return std.Log(x, newBase:=2)
         End Function
 
         <Extension>
@@ -183,13 +238,9 @@ Namespace Math
         ''' <returns></returns>
         <Extension>
         Public Function WeighedAverage(data As IEnumerable(Of Double), ParamArray weights As Double()) As Double
-            Dim avg#
-
-            For Each x As SeqValue(Of Double) In data.SeqIterator
-                avg += (x.value * weights(x))
-            Next
-
-            Return avg
+            Dim product_sum As Double = SIMD.Multiply.f64_op_multiply_f64(data.ToArray, weights).Sum
+            Dim weighted As Double = product_sum / weights.Sum
+            Return weighted
         End Function
 
         ''' <summary>
@@ -236,7 +287,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LogN(x As Double, N As Double) As Double
-            Return stdNum.Log(x) / stdNum.Log(N)
+            Return std.Log(x) / std.Log(N)
         End Function
 
         ''' <summary>
@@ -248,7 +299,19 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
-            Return stdNum.Max(a, stdNum.Max(b, c))
+            Return std.Max(a, std.Max(b, c))
+        End Function
+
+        ''' <summary>
+        ''' return the maximum of a, b and c </summary>
+        ''' <param name="a"> </param>
+        ''' <param name="b"> </param>
+        ''' <param name="c">
+        ''' @return </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Max(a As Double, b As Double, c As Double) As Double
+            Return std.Max(a, std.Max(b, c))
         End Function
 
         ''' <summary>
@@ -261,12 +324,12 @@ Namespace Math
         Public Function Hypot(a As Double, b As Double) As Double
             Dim r As Double
 
-            If stdNum.Abs(a) > stdNum.Abs(b) Then
+            If std.Abs(a) > std.Abs(b) Then
                 r = b / a
-                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(a) * std.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(b) * std.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
@@ -555,9 +618,9 @@ Namespace Math
             Dim var As Double = x.Variance
 
             If isSample Then
-                Return stdNum.Sqrt(var / (n - 1))
+                Return std.Sqrt(var / (n - 1))
             Else
-                Return stdNum.Sqrt(var / n)
+                Return std.Sqrt(var / n)
             End If
         End Function
 
@@ -624,7 +687,7 @@ Namespace Math
         <Extension>
         Public Function RMS(data As IEnumerable(Of Double)) As Double
             With (From n In data Select n ^ 2).ToArray
-                Return stdNum.Sqrt(.Sum / .Length)
+                Return std.Sqrt(.Sum / .Length)
             End With
         End Function
 
@@ -636,7 +699,7 @@ Namespace Math
                 sum += (a(i) - b(i)) ^ 2
             Next
 
-            Return stdNum.Sqrt(sum)
+            Return std.Sqrt(sum)
         End Function
 
         ''' <summary>
@@ -712,9 +775,8 @@ Namespace Math
         ''' Poisson distribution.
         ''' </summary>
         ''' 
-        <ExportAPI("Poisson.PDF")>
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
-            Dim result As Double = stdNum.Exp(-lambda)
+            Dim result As Double = std.Exp(-lambda)
             Dim k As Integer = x
 
             While k >= 1
@@ -723,12 +785,6 @@ Namespace Math
             End While
 
             Return result
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
-            Return v.Select(Function(x) x.ToString("F" & digitals)).ToArray
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b52376daf79aae8c0cb98fb81784054e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NeverCompletesExample.vb"
+﻿#Region "Microsoft.VisualBasic::b52376daf79aae8c0cb98fb81784054e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NeverCompletesExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 17
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 17 (94.44%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (5.56%)
     '     File Size: 638 B
 
 

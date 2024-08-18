@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f5dc2d2723bf368ee62ccf0148ba17d, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DefaultAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::8f5dc2d2723bf368ee62ccf0148ba17d, Microsoft.VisualBasic.Core\src\Data\DefaultAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 38
-    '    Code Lines: 29
-    ' Comment Lines: 3
-    '   Blank Lines: 6
+    '    Code Lines: 29 (76.32%)
+    ' Comment Lines: 3 (7.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (15.79%)
     '     File Size: 1.52 KB
 
 

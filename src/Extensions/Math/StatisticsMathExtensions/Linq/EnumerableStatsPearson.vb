@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33ddd112518feac3782c507780f5417b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsPearson.vb"
+﻿#Region "Microsoft.VisualBasic::33ddd112518feac3782c507780f5417b, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsPearson.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 531
-    '    Code Lines: 108
-    ' Comment Lines: 413
-    '   Blank Lines: 10
+    '    Code Lines: 108 (20.34%)
+    ' Comment Lines: 413 (77.78%)
+    '    - Xml Docs: 3.15%
+    ' 
+    '   Blank Lines: 10 (1.88%)
     '     File Size: 21.38 KB
 
 

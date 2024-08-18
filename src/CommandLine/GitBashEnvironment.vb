@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::054bd1f8370bf193d5254fd978ad2c5d, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\GitBashEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::054bd1f8370bf193d5254fd978ad2c5d, Microsoft.VisualBasic.Core\src\CommandLine\GitBashEnvironment.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 86
-    '    Code Lines: 47
-    ' Comment Lines: 29
-    '   Blank Lines: 10
+    '    Code Lines: 47 (54.65%)
+    ' Comment Lines: 29 (33.72%)
+    '    - Xml Docs: 65.52%
+    ' 
+    '   Blank Lines: 10 (11.63%)
     '     File Size: 3.62 KB
 
 

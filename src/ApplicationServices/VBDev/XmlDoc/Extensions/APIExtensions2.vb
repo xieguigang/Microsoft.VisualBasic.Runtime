@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3783fe2a91209660cae73e35e945cfb3, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb"
+﻿#Region "Microsoft.VisualBasic::3783fe2a91209660cae73e35e945cfb3, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 93
-    '    Code Lines: 77
-    ' Comment Lines: 0
-    '   Blank Lines: 16
+    '    Code Lines: 77 (82.80%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (17.20%)
     '     File Size: 3.76 KB
 
 

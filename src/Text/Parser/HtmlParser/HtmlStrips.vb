@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbb02d80e95ae87e727150f71f9da47b, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::e0c26003e1109f4c23cbf3d4cbbedbba, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 366
-    '    Code Lines: 236
-    ' Comment Lines: 81
-    '   Blank Lines: 49
-    '     File Size: 13.65 KB
+    '    Code Lines: 236 (64.48%)
+    ' Comment Lines: 81 (22.13%)
+    '    - Xml Docs: 83.95%
+    ' 
+    '   Blank Lines: 49 (13.39%)
+    '     File Size: 13.66 KB
 
 
     '     Module HtmlStrips
@@ -296,7 +298,7 @@ Namespace Text.Parser.HtmlParser
         ''' <summary>
         ''' The line break html tag in the html document. 
         ''' </summary>
-        Const LineFeed$ = "(<br>)|(<br\s*/>)"
+        Const LineFeed$ = "(<br>)|(<br\s*/>)|(<br\s+>)"
 
         ''' <summary>
         ''' Split the html text into lines by tags: ``&lt;br>`` or ``&lt;br/>``

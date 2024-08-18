@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f27f3c35f9395cb49638b2c882b0ec3, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::c769dd28bad939004cff74eb554f3b86, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
-    '    Code Lines: 96
-    ' Comment Lines: 59
-    '   Blank Lines: 17
-    '     File Size: 7.56 KB
+    '   Total Lines: 171
+    '    Code Lines: 95 (55.56%)
+    ' Comment Lines: 59 (34.50%)
+    '    - Xml Docs: 86.44%
+    ' 
+    '   Blank Lines: 17 (9.94%)
+    '     File Size: 7.51 KB
 
 
     '     Module INIProfile
@@ -53,7 +55,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Xml.Models

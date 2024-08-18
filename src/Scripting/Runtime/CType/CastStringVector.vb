@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78ce6888d0297aee881b7a06c43bd2d1, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::6f6a9bfaf369f461e79b2db686aa4dea, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 85
-    ' Comment Lines: 60
-    '   Blank Lines: 16
-    '     File Size: 6.73 KB
+    '   Total Lines: 174
+    '    Code Lines: 89 (51.15%)
+    ' Comment Lines: 68 (39.08%)
+    '    - Xml Docs: 98.53%
+    ' 
+    '   Blank Lines: 17 (9.77%)
+    '     File Size: 7.24 KB
 
 
     '     Module CastStringVector
     ' 
-    '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
-    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
+    '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, AsDateTime, (+2 Overloads) AsDouble
+    '                   AsGeneric, AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
     ' 
     ' 
     ' /********************************************************************************/
@@ -138,11 +140,14 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' 批量的将一个字符串集合解析转换为目标类型<typeparamref name="T"/>的对象的集合
+        ''' string array parser helper. 
         ''' </summary>
-        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="T">get parser for current type from <see cref="InputHandler.CasterString"/>.</typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 批量的将一个字符串集合解析转换为目标类型<typeparamref name="T"/>的对象的集合
+        ''' </remarks>
         <Extension>
         Public Function AsType(Of T)(source As IEnumerable(Of String)) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
@@ -163,6 +168,11 @@ Namespace Scripting.Runtime
             Return source.AsType(Of Double).ToArray
         End Function
 
+        ''' <summary>
+        ''' cast single float to double in batch
+        ''' </summary>
+        ''' <param name="singles"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsDouble(singles As IEnumerable(Of Single)) As Double()
             Return singles _
@@ -209,6 +219,11 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsColor(source As IEnumerable(Of String)) As Color()
             Return source.AsType(Of Color).ToArray
+        End Function
+
+        <Extension>
+        Public Function AsDateTime(source As IEnumerable(Of String)) As Date()
+            Return source.AsType(Of Date).ToArray
         End Function
     End Module
 End Namespace

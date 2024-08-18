@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d1b1bbe2fe22e965762bfdd046306b8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4cb4c3920e0d873d8c6c07e5bd582f3b, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 346
-    '    Code Lines: 165
-    ' Comment Lines: 143
-    '   Blank Lines: 38
-    '     File Size: 13.26 KB
+    '   Total Lines: 405
+    '    Code Lines: 181 (44.69%)
+    ' Comment Lines: 182 (44.94%)
+    '    - Xml Docs: 92.86%
+    ' 
+    '   Blank Lines: 42 (10.37%)
+    '     File Size: 16.43 KB
 
 
     '     Delegate Function
@@ -51,8 +53,8 @@
     ' 
     '         Properties: seeds
     ' 
-    '         Function: (+2 Overloads) [Next], GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble
-    '                   (+2 Overloads) NextGaussian, NextInteger, NextNumber, NextTriangular, Permutation
+    '         Function: (+4 Overloads) [Next], (+2 Overloads) GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble
+    '                   (+2 Overloads) NextGaussian, (+2 Overloads) NextInteger, NextNumber, NextTriangular, Permutation
     '                   randf, RandomSingle, Seed
     ' 
     '         Sub: SetSeed, (+3 Overloads) Shuffle
@@ -69,7 +71,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math
 
@@ -102,6 +104,26 @@ Namespace Math
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
+        Public Function [Next](Of T)(list As ISet(Of T)) As T
+            Return list(seeds.Next(0, list.Count))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function [Next](Of T)(list As IList(Of T)) As T
+            Return list(seeds.Next(0, list.Count))
+        End Function
+
+        ''' <summary>
+        ''' Returns a non-negative random integer that is less than the specified maximum.
+        ''' </summary>
+        ''' <param name="upbound">The exclusive upper bound of the random number to be generated. maxValue must
+        ''' be greater than or equal to 0.</param>
+        ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
+        ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
+        ''' if maxValue equals 0, maxValue is returned.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function [Next](upbound As Integer) As Integer
             Return seeds.Next(upbound)
         End Function
@@ -112,6 +134,9 @@ Namespace Math
         ''' <returns>
         ''' A 32-bit signed integer that is greater than or equal to 0 and less than <see cref="Int32.MaxValue"/>.
         ''' </returns>
+        ''' <remarks>
+        ''' <see cref="System.Random.Next()"/>
+        ''' </remarks>
         Public Function NextNumber() As Integer
             If seeds Is Nothing Then
                 Call SetSeed(Seed)
@@ -129,7 +154,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function Seed() As Integer
-            Return stdNum.Abs(CInt(stdNum.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
+            Return std.Abs(CInt(std.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
         ''' <summary>
@@ -208,9 +233,22 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function NextInteger(upper As Integer) As Integer
-            SyncLock seeds
-                Return seeds.Next(upper)
-            End SyncLock
+            Return seeds.Next(upper)
+        End Function
+
+        ''' <summary>
+        ''' Returns a random integer that is within a specified range.
+        ''' </summary>
+        ''' <param name="min">The inclusive lower bound of the random number returned.</param>
+        ''' <param name="max">The exclusive upper bound of the random number returned. maxValue must be greater
+        ''' than or equal to minValue.</param>
+        ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue;
+        ''' that is, the range of return values includes minValue but not maxValue. If minValue
+        ''' equals maxValue, minValue is returned.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function NextInteger(min As Integer, max As Integer) As Integer
+            Return seeds.Next(min, max)
         End Function
 
         ''' <summary>
@@ -225,6 +263,12 @@ Namespace Math
         <Extension>
         Public Function GetNextBetween(r As Random, min#, max#) As Double
             Return (max - min) * r.NextDouble + min
+        End Function
+
+        Public Function GetNextBetween(range As IntRange) As Integer
+            SyncLock seeds
+                Return GetNextBetween(seeds, range.Min, range.Max)
+            End SyncLock
         End Function
 
         ''' <summary>
@@ -275,7 +319,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
-            Return rng.Length * seeds.NextDouble + rng.Min
+            Return rng.Interval * seeds.NextDouble + rng.Min
         End Function
 
         ''' <summary>
@@ -289,19 +333,18 @@ Namespace Math
         ''' <param name = "sigma">Standard deviation</param>
         ''' <returns></returns>
         ''' 
-        <ExportAPI("NextGaussian")>
-        <Extension> Public Function NextGaussian(r As Random, Optional mu As Double = 0, Optional sigma As Double = 1) As Double
+        <Extension>
+        Public Function NextGaussian(r As Random, Optional mu As Double = 0, Optional sigma As Double = 1) As Double
             Dim u1 As Double = r.NextDouble()
             Dim u2 As Double = r.NextDouble()
 
-            Dim rand_std_normal = stdNum.Sqrt(-2.0 * stdNum.Log(u1)) * stdNum.Sin(2.0 * stdNum.PI * u2)
+            Dim rand_std_normal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
             Dim rand_normal = mu + sigma * rand_std_normal
 
             Return rand_normal
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("NextGaussian")>
         Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
             Return seeds.NextGaussian(mu, sigma)
         End Function
@@ -322,7 +365,7 @@ Namespace Math
         <ExportAPI("NextTriangular")>
         <Extension> Public Function NextTriangular(r As Random, a As Double, b As Double, c As Double) As Double
             Dim u As Double = r.NextDouble()
-            Return If(u < (c - a) / (b - a), a + stdNum.Sqrt(u * (b - a) * (c - a)), b - stdNum.Sqrt((1 - u) * (b - a) * (b - c)))
+            Return If(u < (c - a) / (b - a), a + std.Sqrt(u * (b - a) * (c - a)), b - std.Sqrt((1 - u) * (b - a) * (b - c)))
         End Function
 
         ''' <summary>
@@ -365,6 +408,11 @@ Namespace Math
             Next
         End Sub
 
+        ''' <summary>
+        ''' makes the element inside the input list random orders
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="list"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Shuffle(Of T)(ByRef list As List(Of T))
@@ -379,7 +427,6 @@ Namespace Math
         ''' <param name="r"></param>
         ''' <param name = "list"></param>
         ''' 
-        <ExportAPI("Shuffle")>
         Public Sub Shuffle(r As Random, ByRef list As IList)
             Dim j As Integer
             Dim temp As Object

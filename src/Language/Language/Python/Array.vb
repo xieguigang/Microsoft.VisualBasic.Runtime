@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::446508712398d6c99193d23c063b824e, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Python\Array.vb"
+﻿#Region "Microsoft.VisualBasic::446508712398d6c99193d23c063b824e, Microsoft.VisualBasic.Core\src\Language\Language\Python\Array.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 27 (81.82%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (18.18%)
     '     File Size: 846 B
 
 

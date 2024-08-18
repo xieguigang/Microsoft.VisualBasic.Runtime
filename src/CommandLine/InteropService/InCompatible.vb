@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3381a220021d85959f81ad7dab17afc, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\InCompatible.vb"
+﻿#Region "Microsoft.VisualBasic::d3381a220021d85959f81ad7dab17afc, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\InCompatible.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 17
-    ' Comment Lines: 8
-    '   Blank Lines: 5
+    '    Code Lines: 17 (56.67%)
+    ' Comment Lines: 8 (26.67%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (16.67%)
     '     File Size: 1017 B
 
 

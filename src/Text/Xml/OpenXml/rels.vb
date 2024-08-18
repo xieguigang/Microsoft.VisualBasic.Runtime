@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::358d0b937047a4a3c67bb252f2ff148f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\OpenXml\rels.vb"
+﻿#Region "Microsoft.VisualBasic::358d0b937047a4a3c67bb252f2ff148f, Microsoft.VisualBasic.Core\src\Text\Xml\OpenXml\rels.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 44
-    '    Code Lines: 36
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 36 (81.82%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (18.18%)
     '     File Size: 1.51 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3766486796e655ba5505b2d6ae0cfcd6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::3766486796e655ba5505b2d6ae0cfcd6, Microsoft.VisualBasic.Core\src\Net\Abstract.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 51
-    '    Code Lines: 14
-    ' Comment Lines: 30
-    '   Blank Lines: 7
+    '    Code Lines: 14 (27.45%)
+    ' Comment Lines: 30 (58.82%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (13.73%)
     '     File Size: 2.36 KB
 
 

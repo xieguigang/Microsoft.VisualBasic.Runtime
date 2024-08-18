@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4eb4ad1c0619509032235140d87e3c1, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\UsageAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::e4eb4ad1c0619509032235140d87e3c1, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\UsageAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 12 (70.59%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (29.41%)
     '     File Size: 444 B
 
 

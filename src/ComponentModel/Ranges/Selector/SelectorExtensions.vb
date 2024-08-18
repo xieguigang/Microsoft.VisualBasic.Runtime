@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b69e81435087deddd22021c4849209c7, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\SelectorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b69e81435087deddd22021c4849209c7, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\SelectorExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 20
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 16 (80.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (20.00%)
     '     File Size: 737 B
 
 

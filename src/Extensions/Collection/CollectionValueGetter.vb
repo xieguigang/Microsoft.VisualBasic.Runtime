@@ -1,62 +1,87 @@
-﻿#Region "Microsoft.VisualBasic::85416f604365f35081f85959489d2a61, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
+﻿#Region "Microsoft.VisualBasic::336f530462890a925dcf75e8cb3c73b5, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 271
-'    Code Lines: 170
-' Comment Lines: 75
-'   Blank Lines: 26
-'     File Size: 9.65 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module CollectionValueGetter
-' 
-'     Function: [Get], ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, (+2 Overloads) GetItem
-'               GetValueOrNull, NotNull, (+3 Overloads) TryGetValue, TryPopOut
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 364
+    '    Code Lines: 202 (55.49%)
+    ' Comment Lines: 128 (35.16%)
+    '    - Xml Docs: 92.97%
+    ' 
+    '   Blank Lines: 34 (9.34%)
+    '     File Size: 13.13 KB
+
+
+    ' Module CollectionValueGetter
+    ' 
+    '     Function: [Get], AsEnumerable, ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty
+    '               GetItem, GetValueOrDefault, GetValueOrNull, NotNull, (+3 Overloads) TryGetValue
+    '               (+2 Overloads) TryPopOut, Values
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Language
+
+#If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
+#End If
 
 Public Module CollectionValueGetter
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="value"></param>
+    ''' <returns>
+    ''' this function returns empty collection if the given <paramref name="value"/> is nothing
+    ''' </returns>
+    <Extension>
+    Public Iterator Function AsEnumerable(Of T)(value As Value(Of T())) As IEnumerable(Of T)
+        If value Is Nothing OrElse value.IsNothing Then
+            Return
+        End If
+
+        For Each item As T In CType(value, T())
+            Yield item
+        Next
+    End Function
 
     ''' <summary>
     ''' Returns the first not nothing object.
@@ -106,7 +131,7 @@ Public Module CollectionValueGetter
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for invalid index is nothing.</param>
+    ''' <param name="default">Default value for invalid index is nothing.</param>
     ''' <returns></returns>
     <Extension>
     Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
@@ -125,19 +150,20 @@ Public Module CollectionValueGetter
     ''' <summary>
     ''' This is a safely method for gets the value in a array, if the index was 
     ''' outside of the boundary, then the default value will be return.
-    ''' (假若下标越界的话会返回默认值)
     ''' </summary>
     ''' <typeparam name="T">The generic type of current array object</typeparam>
     ''' <param name="array"></param>
     ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
     ''' get.</param>
-    ''' <param name="[default]">
+    ''' <param name="default">
     ''' Default value for return when the array object is nothing or index outside of the boundary.
     ''' </param>
     ''' <returns>
     ''' The value at the specified position in the one-dimensional System.Array.
     ''' </returns>
-    ''' 
+    ''' <remarks>
+    ''' (假若下标越界的话会返回默认值)
+    ''' </remarks> 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
@@ -168,7 +194,7 @@ Public Module CollectionValueGetter
     ''' <param name="array"></param>
     ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
     ''' get.</param>
-    ''' <param name="[default]">
+    ''' <param name="default">
     ''' The default value if index is outside the range of valid indexes for the current System.Array.
     ''' </param>
     ''' <returns>
@@ -198,13 +224,8 @@ Public Module CollectionValueGetter
     ''' <param name="source"></param>
     ''' <param name="index"></param>
     ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Get.Item")>
     <Extension>
     Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#Else
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#End If
         If source Is Nothing Then
             Return Nothing
         Else
@@ -227,7 +248,7 @@ Public Module CollectionValueGetter
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="key"></param>
-    ''' <param name="[default]"></param>
+    ''' <param name="default"></param>
     ''' <returns></returns>
     <Extension>
     Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue), key As TKey, Optional [default] As TValue = Nothing) As TValue
@@ -243,13 +264,42 @@ Public Module CollectionValueGetter
     End Function
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="synonyms"></param>
+    ''' <param name="default"></param>
+    ''' <returns>the default value will be returns if all synonym key is missing
+    ''' from the given table object.</returns>
+    <Extension>
+    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+                                               synonyms As IEnumerable(Of TKey),
+                                               Optional [default] As TValue = Nothing) As TValue
+        If table Is Nothing Then
+            Return [default]
+        End If
+
+        For Each key As TKey In synonyms
+            If table.ContainsKey(key) Then
+                Dim val As TValue = table(key)
+                table.Remove(key)
+                Return val
+            End If
+        Next
+
+        Return [default]
+    End Function
+
+    ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="keys"></param>
-    ''' <param name="[default]"></param>
+    ''' <param name="default"></param>
     ''' <returns></returns>
     <Extension>
     Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
@@ -294,12 +344,12 @@ Public Module CollectionValueGetter
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="index">这个函数会自动处理空键名的情况</param>
-    ''' <param name="[default]"></param>
+    ''' <param name="default"></param>
     ''' <returns></returns>
     ''' 
     <DebuggerStepThrough>
     <Extension>
-    Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+    Public Function TryGetValue(Of TKey, TValue)(table As IDictionary(Of TKey, TValue),
                                                  index As TKey,
                                                  Optional [default] As TValue = Nothing,
                                                  Optional mute As Boolean = False,
@@ -330,16 +380,16 @@ Public Module CollectionValueGetter
     End Function
 
     <Extension>
-    Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
-        If hash Is Nothing Then
+    Public Function TryGetValue(Of TKey, TValue, TProp)(dict As Dictionary(Of TKey, TValue), index As TKey, prop As String) As TProp
+        If dict Is Nothing Then
             Return Nothing
         End If
 
-        If Not hash.ContainsKey(Index) Then
+        If Not dict.ContainsKey(index) Then
             Return Nothing
         End If
 
-        Dim obj As TValue = hash(Index)
+        Dim obj As TValue = dict(index)
         Dim propertyInfo As PropertyInfo = obj.GetType.GetProperty(prop)
 
         If propertyInfo Is Nothing Then
@@ -348,5 +398,22 @@ Public Module CollectionValueGetter
 
         Dim value As Object = propertyInfo.GetValue(obj, Nothing)
         Return DirectCast(value, TProp)
+    End Function
+
+    ''' <summary>
+    ''' get value set
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="x">a collection of the value wrapper</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function Values(Of T)(x As IEnumerable(Of Value(Of T).IValueOf)) As IEnumerable(Of T)
+        If x Is Nothing Then
+            Return
+        End If
+
+        For Each item As Value(Of T).IValueOf In x
+            Yield item.Value
+        Next
     End Function
 End Module

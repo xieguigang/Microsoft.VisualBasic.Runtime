@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9d09948c3fba99a8386bc3484bf175c, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBarBase.vb"
+﻿#Region "Microsoft.VisualBasic::9e7550ea939f1318766c5aa328dcac9a, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBarBase.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 176
-    '    Code Lines: 141
-    ' Comment Lines: 3
-    '   Blank Lines: 32
+    '    Code Lines: 141 (80.11%)
+    ' Comment Lines: 3 (1.70%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 32 (18.18%)
     '     File Size: 6.49 KB
 
 
@@ -234,4 +236,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 		End Function
 	End Class
 End Namespace
-

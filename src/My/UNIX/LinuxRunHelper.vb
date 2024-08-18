@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1001930f9c4b17a4eb8503d1592fbf6, sciBASIC#\Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b1001930f9c4b17a4eb8503d1592fbf6, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 126
-    '    Code Lines: 77
-    ' Comment Lines: 31
-    '   Blank Lines: 18
+    '    Code Lines: 77 (61.11%)
+    ' Comment Lines: 31 (24.60%)
+    '    - Xml Docs: 77.42%
+    ' 
+    '   Blank Lines: 18 (14.29%)
     '     File Size: 4.49 KB
 
 

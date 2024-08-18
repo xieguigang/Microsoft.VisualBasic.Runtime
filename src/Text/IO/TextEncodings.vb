@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f84888c84b9d4838ac4fe8aa2fd5dd20, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::5570e8ead7dba840e30030ee81edcc02, Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 254
-    '    Code Lines: 127
-    ' Comment Lines: 99
-    '   Blank Lines: 28
-    '     File Size: 12.52 KB
+    '   Total Lines: 274
+    '    Code Lines: 141 (51.46%)
+    ' Comment Lines: 102 (37.23%)
+    '    - Xml Docs: 85.29%
+    ' 
+    '   Blank Lines: 31 (11.31%)
+    '     File Size: 13.43 KB
 
 
     '     Module TextEncodings
@@ -56,6 +58,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports defaultEncoding = Microsoft.VisualBasic.Language.Default.Default(Of System.Text.Encoding)
 
@@ -99,6 +102,11 @@ Namespace Text
         Public ReadOnly Property TextEncodings As IReadOnlyDictionary(Of Encodings, Encoding) = codePageTable()
 
         ''' <summary>
+        ''' use for parse encoding flags from string
+        ''' </summary>
+        ReadOnly encodingFlags As Dictionary(Of String, Encodings)
+
+        ''' <summary>
         ''' 在这个函数之中会根据当前所运行的平台对utf8编码进行一下额外的处理
         ''' </summary>
         ''' <returns></returns>
@@ -115,7 +123,7 @@ Namespace Text
             End If
 
             Return New Dictionary(Of Encodings, Encoding) From {
- _
+                                                                _
                 {Encodings.ASCII, Encoding.ASCII},
                 {Encodings.GB2312, __gbk2312_encoding()},
                 {Encodings.Unicode, Encoding.Unicode},
@@ -173,6 +181,20 @@ Namespace Text
                 }.JoinBy(ASCII.LF) _
                  .Warning
             End If
+
+            encodingFlags = Enums(Of Encodings) _
+                .Select(Iterator Function(b) As IEnumerable(Of (str As String, flag As Encodings))
+                            Yield (b.ToString, b)
+                            Yield (b.Description, b)
+                        End Function) _
+                .IteratesALL _
+                .GroupBy(Function(t) t.str) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.First.flag
+                              End Function)
+
+            encodingFlags("utf-8") = Encodings.UTF8WithoutBOM
         End Sub
 
         Const gb2312_not_enable$ = "It seems that your Linux server didn't enable the gbk2312 text encoding, sciBASIC# will using the default utf8 encoding mapping to the gb2312 encoding."
@@ -204,7 +226,7 @@ Namespace Text
         ''' </remarks>
         Private Function __gbk2312_encoding() As Encoding
             Try
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
                 ' 注册Nuget包System.Text.Encoding.CodePages中的编码到.NET Core
                 ' https://www.cnblogs.com/OpenCoder/p/10386540.html
                 Call Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
@@ -246,13 +268,13 @@ Namespace Text
         ''' <returns></returns>
         <Extension>
         Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
-            For Each key In TextEncodings.Keys
-                If encoding.TextEquals(key.ToString) Then
-                    Return key
-                End If
-            Next
+            encoding = LCase(encoding)
 
-            Return onFailure
+            If encodingFlags.ContainsKey(encoding) Then
+                Return encodingFlags(encoding)
+            Else
+                Return onFailure
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

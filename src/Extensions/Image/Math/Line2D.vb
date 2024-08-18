@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d649efe90cf7f5b52773f852d0b7130, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Line2D.vb"
+﻿#Region "Microsoft.VisualBasic::1c86d7d9ce2bd6a4484c65e7684c3a90, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Line2D.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 356
-    '    Code Lines: 88
-    ' Comment Lines: 253
-    '   Blank Lines: 15
-    '     File Size: 20.56 KB
+    '    Code Lines: 88 (24.72%)
+    ' Comment Lines: 253 (71.07%)
+    '    - Xml Docs: 75.49%
+    ' 
+    '   Blank Lines: 15 (4.21%)
+    '     File Size: 20.55 KB
 
 
     '     Module Line2D
@@ -56,7 +58,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * Copyright (c) 1997, 2013, Oracle and/or its affiliates. All rights reserved.
@@ -280,7 +282,7 @@ Namespace Imaging.Math2D
         ''' <returns> a double value that is the distance from the specified point
         '''                          to the specified line segment. </returns>
         Public Function ptSegDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
-            Return stdNum.Sqrt(ptSegDistSq(x1, y1, x2, y2, px, py))
+            Return std.Sqrt(ptSegDistSq(x1, y1, x2, y2, px, py))
         End Function
 
         ''' <summary>
@@ -338,7 +340,7 @@ Namespace Imaging.Math2D
         ''' <returns> a double value that is the distance from the specified
         '''                   point to the specified line. </returns>
         Public Function ptLineDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
-            Return stdNum.Sqrt(ptLineDistSq(x1, y1, x2, y2, px, py))
+            Return std.Sqrt(ptLineDistSq(x1, y1, x2, y2, px, py))
         End Function
     End Module
 
@@ -402,7 +404,7 @@ Namespace Imaging.Math2D
         ''' <returns> a double value that is the distance from the specified
         '''                   point to the specified line. </returns>
         Public Function ptLineDist(x1 As Double, y1 As Double, z1 As Double, x2 As Double, y2 As Double, z2 As Double, px As Double, py As Double, pz As Double) As Double
-            Return stdNum.Sqrt(ptLineDistSq(x1, y1, z1, x2, y2, z2, px, py, pz))
+            Return std.Sqrt(ptLineDistSq(x1, y1, z1, x2, y2, z2, px, py, pz))
         End Function
 
         <Extension>

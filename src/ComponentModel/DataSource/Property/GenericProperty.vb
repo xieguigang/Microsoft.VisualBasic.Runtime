@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1ba12dcf5aca3e001a103fa66263760, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\GenericProperty.vb"
+﻿#Region "Microsoft.VisualBasic::c1ba12dcf5aca3e001a103fa66263760, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\GenericProperty.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 33
-    ' Comment Lines: 13
-    '   Blank Lines: 8
+    '    Code Lines: 33 (61.11%)
+    ' Comment Lines: 13 (24.07%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 8 (14.81%)
     '     File Size: 1.83 KB
 
 

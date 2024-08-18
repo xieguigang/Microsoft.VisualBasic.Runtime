@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d263314bbddb400c829da18e7d03947, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::55649f61e2394134b968349a0730de90, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 139
-    ' Comment Lines: 15
-    '   Blank Lines: 22
-    '     File Size: 6.61 KB
+    '   Total Lines: 187
+    '    Code Lines: 148 (79.14%)
+    ' Comment Lines: 15 (8.02%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 24 (12.83%)
+    '     File Size: 7.03 KB
 
 
     '     Module NumberConversionRoutines
     ' 
-    '         Function: CDblSafe, (+2 Overloads) CIntSafe, (+2 Overloads) CShortSafe, CStrInternal, CStrSafe
-    '                   IsNumber
+    '         Function: (+2 Overloads) AsInteger, CDblSafe, (+2 Overloads) CIntSafe, (+2 Overloads) CShortSafe, CStrInternal
+    '                   CStrSafe, IsNumber
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -224,6 +227,16 @@ Namespace Scripting.Runtime
             Catch ex As Exception
                 Return False
             End Try
+        End Function
+
+        <Extension>
+        Public Function AsInteger(source As IEnumerable(Of Single)) As Integer()
+            Return source.Select(Function(d) CInt(d)).ToArray
+        End Function
+
+        <Extension>
+        Public Function AsInteger(source As IEnumerable(Of Double)) As Integer()
+            Return source.Select(Function(d) CInt(d)).ToArray
         End Function
     End Module
 End Namespace

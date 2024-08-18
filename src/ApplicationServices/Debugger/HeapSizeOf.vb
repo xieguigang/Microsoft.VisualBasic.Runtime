@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fc737e272e77ae07237e66f8bf98aab, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\HeapSizeOf.vb"
+﻿#Region "Microsoft.VisualBasic::5c5ae74ed858393dad793f130f81490b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\HeapSizeOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 95
-    ' Comment Lines: 30
-    '   Blank Lines: 11
-    '     File Size: 5.02 KB
+    '   Total Lines: 163
+    '    Code Lines: 110 (67.48%)
+    ' Comment Lines: 39 (23.93%)
+    '    - Xml Docs: 43.59%
+    ' 
+    '   Blank Lines: 14 (8.59%)
+    '     File Size: 6.23 KB
 
 
     '     Class HeapSizeOf
@@ -65,7 +67,32 @@ Namespace ApplicationServices.Debugging
     ''' <summary>
     ''' How to get object size in memory
     ''' </summary>
+    ''' <remarks>
+    ''' sizeof operator - determine the memory needs for a given type
+    ''' </remarks>
     Public Class HeapSizeOf
+
+        ' The sizeof operator returns the number of bytes occupied by a variable of a given type.
+        ' The argument to the sizeof operator must be the name of an unmanaged type or a type
+        ' parameter that is constrained to be an unmanaged type.
+
+        ' The sizeof Operator requires an unsafe context. However, the expressions presented In
+        ' the following table are evaluated In compile time To the corresponding constant values
+        ' And don't require an unsafe context:
+
+        Public Const [sbyte] = 1
+        Public Const [byte] = 1
+        Public Const [short] = 2
+        Public Const [ushort] = 2
+        Public Const int = 4
+        Public Const uint = 4
+        Public Const [long] = 8
+        Public Const [ulong] = 8
+        Public Const [char] = 2
+        Public Const float = 4
+        Public Const [double] = 8
+        Public Const [decimal] = 16
+        Public Const bool = 1
 
         Public ReadOnly Property sizeOf As Long
             Get

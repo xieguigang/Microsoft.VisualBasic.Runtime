@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45680fe9e31e32490cf2457623c108a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::a7b4c7ae20c7814aa028f18efca3317f, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 841
-    '    Code Lines: 504
-    ' Comment Lines: 221
-    '   Blank Lines: 116
-    '     File Size: 29.86 KB
+    '   Total Lines: 944
+    '    Code Lines: 574 (60.81%)
+    ' Comment Lines: 238 (25.21%)
+    '    - Xml Docs: 89.50%
+    ' 
+    '   Blank Lines: 132 (13.98%)
+    '     File Size: 34.03 KB
 
 
     ' Module WebServiceUtils
@@ -50,14 +52,27 @@
     '     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, DownloadFile
     '               GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy, (+2 Overloads) GetRequest
     '               GetRequestRaw, isFilePath, IsSocketPortOccupied, isURL, IsURLPattern
-    '               ParseUrlQueryParameters, (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser
-    '               QueryStringParameters, UrlDecode, UrlEncode, UrlPathEncode
+    '               ParseUrlQueryParameters, (+2 Overloads) POST, POSTFile, PostMultipartForm, (+2 Overloads) PostRequest
+    '               PostUrlDataParser, QueryStringParameters, readStreamText, UrlDecode, UrlEncode
+    '               UrlPathEncode
     ' 
     '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+    '     Class WebClient
+    ' 
+    '         Properties: timeout
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetWebRequest
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+#If NET_48 Or NETCOREAPP Then
+Imports Microsoft.VisualBasic.Net
+#End If
 
 Imports System.Collections.Specialized
 Imports System.IO
@@ -73,26 +88,19 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports r = System.Text.RegularExpressions.Regex
-Imports System.Threading
-
-#If NET_48 Or NETCOREAPP Then
-Imports Microsoft.VisualBasic.Net
-#End If
+Imports System.Net.Sockets
 
 ''' <summary>
 ''' The extension module for web services works.
 ''' </summary>
 '''
-<Package("Utils.WebServices",
-                  Description:="The extension module for web services programming in your scripting.",
-                  Category:=APICategories.UtilityTools,
-                  Publisher:="<a href=""mailto://xie.guigang@gmail.com"">xie.guigang@gmail.com</a>")>
 Public Module WebServiceUtils
 
     ''' <summary>
@@ -102,7 +110,14 @@ Public Module WebServiceUtils
     Public ReadOnly Property Protocols As IReadOnlyCollection(Of String) = {"http://", "https://", "ftp://", "sftp://"}
 
     Public Const UnixPathPattern$ = "([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+    ''' <summary>
+    ''' regex pattern for http url
+    ''' </summary>
     Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+" & UnixPathPattern
+    ''' <summary>
+    ''' regex pattern for any kind of url protocol
+    ''' </summary>
+    Public Const UrlLinkPattern$ = "[a-z\-_0-9]+://([\w+?\.\w+])+" & UnixPathPattern
 
     ''' <summary>
     ''' Determine that is this uri string is a network location?
@@ -130,6 +145,10 @@ Public Module WebServiceUtils
         If url.IndexOfAny({ASCII.LF, ASCII.CR}) > -1 Then
             Return False
         End If
+
+        ' "magic_number('E:/PlantMAT_v1.0.xlsm')"
+        ' is a valid file path on unix filesystem
+
         If url.IsPattern(UnixPathPattern) Then
             Return True
         ElseIf Not includeWindowsFs Then
@@ -175,7 +194,7 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function BuildReqparm(data As IEnumerable(Of KeyValuePair(Of String, String))) As Specialized.NameValueCollection
-        Dim reqparm As New Specialized.NameValueCollection
+        Dim reqparm As New NameValueCollection
         For Each Value As KeyValuePair(Of String, String) In data
             Call reqparm.Add(Value.Key, Value.Value)
         Next
@@ -191,7 +210,7 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function IsSocketPortOccupied(ex As Exception) As Boolean
-        If TypeOf ex Is System.Net.Sockets.SocketException AndAlso
+        If TypeOf ex Is SocketException AndAlso
             InStr(ex.ToString, PortOccupied, CompareMethod.Text) Then
             Return True
         Else
@@ -239,8 +258,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="url">URL parameters</param>
     ''' <returns></returns>
-    <ExportAPI("Request.Parser")>
-    <Extension> Public Function QueryStringParameters(url$, Optional transLower As Boolean = True) As NameValueCollection
+    <Extension>
+    Public Function QueryStringParameters(url$, Optional transLower As Boolean = True) As NameValueCollection
         Dim tokens$()
 
         With InStr(url, "://")
@@ -265,9 +284,10 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)),
-                                             Optional escaping As Boolean = False,
-                                             Optional stripNull As Boolean = True) As String
+    <Extension>
+    Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)),
+                                 Optional escaping As Boolean = False,
+                                 Optional stripNull As Boolean = True) As String
         If stripNull Then
             data = data _
                 .Where(Function(a)
@@ -283,7 +303,11 @@ Public Module WebServiceUtils
             .JoinBy("&")
     End Function
 
-    <ExportAPI("Build.Args")>
+    ''' <summary>
+    ''' Build the url query arguments string
+    ''' </summary>
+    ''' <param name="params"></param>
+    ''' <returns></returns>
     Public Function BuildArgs(ParamArray params As String()()) As String
         If params.IsNullOrEmpty Then
             Return ""
@@ -307,7 +331,6 @@ Public Module WebServiceUtils
         End If
     End Function
 
-    <ExportAPI("URL.Decode")>
     Public Sub UrlDecode(s As String, ByRef output As TextWriter)
         If s IsNot Nothing Then
             output.Write(UrlDecode(s))
@@ -326,7 +349,6 @@ Public Module WebServiceUtils
     ''' A extension method wrapper for <see cref="WebUtility.UrlEncode"/>
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("URL.Encode")>
     <Extension>
     Public Function UrlEncode(s As String, Optional jswhitespace As Boolean = False) As String
         Dim component As String = WebUtility.UrlEncode(s)
@@ -340,7 +362,6 @@ Public Module WebServiceUtils
         Return component
     End Function
 
-    <ExportAPI("URL.Encode")>
     Public Sub UrlEncode(s As String, ByRef output As TextWriter)
         If s IsNot Nothing Then
             output.Write(UrlEncode(s))
@@ -352,7 +373,6 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
-    <ExportAPI("URL.PathEncode")>
     <Extension>
     Public Function UrlPathEncode(s As String) As String
         If s Is Nothing Then
@@ -378,8 +398,8 @@ Public Module WebServiceUtils
     ''' <param name="data">转义的时候大小写无关</param>
     ''' <returns></returns>
     '''
-    <ExportAPI("PostRequest.Parsing")>
-    <Extension> Public Function PostUrlDataParser(data$, Optional toLower As Boolean = True) As NameValueCollection
+    <Extension>
+    Public Function PostUrlDataParser(data$, Optional toLower As Boolean = True) As NameValueCollection
         If String.IsNullOrEmpty(data) Then
             Return New NameValueCollection
         End If
@@ -511,8 +531,13 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <param name="params"></param>
     ''' <returns></returns>
-    Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As WebResponseResult
-        Return url.POST(params.BuildReqparm)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function PostRequest(url As String,
+                                Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing,
+                                Optional throw_httpErr As Boolean = False) As WebResponseResult
+
+        Return url.POST(params.BuildReqparm, strict:=throw_httpErr)
     End Function
 
     ''' <summary>
@@ -558,10 +583,22 @@ Public Module WebServiceUtils
 
     End Class
 
+    <Extension>
+    Public Function PostMultipartForm(url$, data As Dictionary(Of String, String)) As WebResponseResult
+        Dim form As New MultipartForm
+
+        For Each payload In data
+            Call form.Add(payload.Key, payload.Value)
+        Next
+
+        Dim result = form.POST(url)
+        Return result
+    End Function
+
     ''' <summary>
     ''' POST http request for get html.
     ''' (请注意，假若<paramref name="params"/>之中含有字符串数组的话，则会出错，这个时候需要使用
-    ''' <see cref="Post(String, Dictionary(Of String, String()), String, String, String)"/>方法)
+    ''' <see cref="Post"/>方法)
     ''' </summary>
     ''' <param name="url$"></param>
     ''' <param name="params"></param>
@@ -577,7 +614,8 @@ Public Module WebServiceUtils
                          Optional proxy$ = Nothing,
                          Optional contentEncoding As Encodings = Encodings.UTF8,
                          Optional retry As Integer = 5,
-                         Optional timeout As Integer = 1000 * 60 * 30) As WebResponseResult
+                         Optional timeout As Integer = 1000 * 60 * 30,
+                         Optional strict As Boolean = False) As WebResponseResult
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
             .value = New NameValueCollection,
@@ -603,29 +641,48 @@ Public Module WebServiceUtils
                 Call request.SetProxy(proxy)
             End If
 
-            Call $"[POST] {url}....".__DEBUG_ECHO
+            Call VBDebugger.EchoLine($"[POST] {url}....")
 
             Dim timer As Stopwatch = Stopwatch.StartNew
             Dim response As Byte() = Nothing
             Dim str$
+            Dim err As Exception = Nothing
 
-            For i As Integer = 0 To retry
-                Try
-                    response = request.UploadValues(url, "POST", params Or emptyBody)
-                    Exit For
-                Catch ex As Exception
-                    Call App.LogException(ex)
-                End Try
-            Next
+            If strict Then
+                response = request.UploadValues(url, "POST", params Or emptyBody)
+            Else
+                For i As Integer = 0 To retry
+                    Try
+                        response = request.UploadValues(url, "POST", params Or emptyBody)
+                        Exit For
+                    Catch ex As Exception
+                        err = ex
+                        Call App.LogException(ex)
+                    End Try
+                Next
+            End If
 
             If response Is Nothing Then
-                Return Nothing
+                If Not TypeOf err Is WebException Then
+                    Return New WebResponseResult With {
+                        .headers = ResponseHeaders.HttpRequestError(err.Message.Match("\d+").DoCall(AddressOf Integer.Parse)),
+                        .html = err.Message,
+                        .timespan = 0,
+                        .url = url
+                    }
+                Else
+                    Dim webEx As WebException = err
+                    Dim s = webEx.Response.GetResponseStream
+                    Dim error_s As String = readStreamText(s)
+
+                    str = error_s
+                End If
             Else
                 str = contentEncoding _
                     .CodePage _
                     .GetString(response)
 
-                Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
+                Call VBDebugger.EchoLine($"[GET] {response.Length} bytes...")
             End If
 
             Dim rtvlHeaders As New ResponseHeaders(request.ResponseHeaders)
@@ -701,9 +758,11 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function POST(url$, data As Dictionary(Of String, String()),
-                        Optional Referer$ = "",
-                        Optional proxy$ = Nothing,
-                        Optional ua As String = UserAgent.GoogleChrome) As String
+                         Optional Referer$ = "",
+                         Optional proxy$ = Nothing,
+                         Optional ua As String = UserAgent.GoogleChrome,
+                         Optional unsafe As Boolean = True,
+                         Optional ByRef error$ = Nothing) As String
 
         Dim postString As New List(Of String)
 
@@ -733,17 +792,44 @@ Public Module WebServiceUtils
             sender.Write(postData)
         End Using
 
-        ' returned values are returned as a stream, then read into a string
-        Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
-        Using responseStream As New StreamReader(response.GetResponseStream())
+        Dim page_stream As Stream = Nothing
+        Dim err As Exception = Nothing
+
+        Try
+            ' returned values are returned as a stream, then read into a string
+            Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
+            page_stream = response.GetResponseStream
+        Catch ex As Exception When TypeOf ex Is WebException
+            err = ex
+            page_stream = DirectCast(ex, WebException).Response.GetResponseStream
+        Catch ex As Exception
+            err = ex
+        End Try
+
+        If page_stream Is Nothing Then
+            If unsafe Then
+                Throw err
+            Else
+                [error] = err.Message
+                Return Nothing
+            End If
+        End If
+
+        If err IsNot Nothing Then
+            [error] = err.Message
+        End If
+
+        Return readStreamText(page_stream)
+    End Function
+
+    Friend Function readStreamText(page_stream As Stream) As String
+        Using responseStream As New StreamReader(page_stream)
             Dim html As New StringBuilder
             Dim s As New Value(Of String)
 
             Do While Not (s = responseStream.ReadLine) Is Nothing
                 Call html.AppendLine(+s)
             Loop
-
-            Call $"[GET] {html.Length} bytes...".__DEBUG_ECHO
 
             Return html.ToString
         End Using
@@ -790,6 +876,7 @@ Public Module WebServiceUtils
                                  Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
                                  Optional refer$ = Nothing,
                                  Optional timeout As Integer = 1000 * 60 * 30,
+                                 Optional silent As Boolean = True,
                                  <CallerMemberName>
                                  Optional trace$ = Nothing) As Boolean
 RE0:
@@ -808,7 +895,11 @@ RE0:
                 strUrl = NetFile.MapGithubRawUrl(strUrl)
 
                 Call browser.Headers.Add(UserAgent.UAheader, ua Or DefaultUA)
-                Call $"{strUrl} --> {save}".__DEBUG_ECHO
+
+                If Not silent Then
+                    Call $"{strUrl} --> {save}".__DEBUG_ECHO
+                End If
+
                 Call save.ParentPath.MakeDir
                 Call browser.DownloadFile(strUrl, save)
             End Using
@@ -827,10 +918,12 @@ RE0:
 
             Return False
         Finally
-            If save.FileExists Then
-                Call $"[{FileIO.FileSystem.GetFileInfo(save).Length} Bytes]".__DEBUG_ECHO
-            Else
-                Call $"Download failure!".__DEBUG_ECHO
+            If Not silent Then
+                If save.FileExists Then
+                    Call $"[{FileIO.FileSystem.GetFileInfo(save).Length} Bytes]".__DEBUG_ECHO
+                Else
+                    Call $"Download failure!".__DEBUG_ECHO
+                End If
             End If
         End Try
     End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf1bbc5a8c6eae30a57c602fcfc64f69, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
+﻿#Region "Microsoft.VisualBasic::88a94ddc4ab08095870dcfe7cbb68784, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 218
-    '    Code Lines: 111
-    ' Comment Lines: 84
-    '   Blank Lines: 23
+    '    Code Lines: 111 (50.92%)
+    ' Comment Lines: 84 (38.53%)
+    '    - Xml Docs: 72.62%
+    ' 
+    '   Blank Lines: 23 (10.55%)
     '     File Size: 10.84 KB
 
 
@@ -206,7 +208,7 @@ Namespace ApplicationServices.Zip
                                               Optional extractToFlat As Boolean = False,
                                               Optional rootDir As String = Nothing)
             Using file As Stream = zip.ToStream
-                Call zip.ImprovedExtractToDirectory(
+                Call file.ImprovedExtractToDirectory(
                     destinationDirectoryName:=destinationDirectoryName,
                     overwriteMethod:=overwriteMethod,
                     extractToFlat:=extractToFlat,

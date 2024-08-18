@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f102d5b8bfab1c9bab600e58f1abd72e, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::f102d5b8bfab1c9bab600e58f1abd72e, Microsoft.VisualBasic.Core\src\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 161
-    '    Code Lines: 108
-    ' Comment Lines: 29
-    '   Blank Lines: 24
+    '    Code Lines: 108 (67.08%)
+    ' Comment Lines: 29 (18.01%)
+    '    - Xml Docs: 96.55%
+    ' 
+    '   Blank Lines: 24 (14.91%)
     '     File Size: 6.00 KB
 
 

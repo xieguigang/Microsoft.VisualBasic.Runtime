@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf604f709a0ada068726574cd3cccdda, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::cf604f709a0ada068726574cd3cccdda, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 12 (70.59%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (29.41%)
     '     File Size: 620 B
 
 

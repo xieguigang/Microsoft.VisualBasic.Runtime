@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1771c61acba8743dfc6cd73f25951ffe, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::1771c61acba8743dfc6cd73f25951ffe, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Abstract.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 6
-    ' Comment Lines: 13
-    '   Blank Lines: 4
+    '    Code Lines: 6 (26.09%)
+    ' Comment Lines: 13 (56.52%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (17.39%)
     '     File Size: 667 B
 
 

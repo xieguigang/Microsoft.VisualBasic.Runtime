@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8519c474dae0675eaed9795c2967db95, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\ParserValue.vb"
+﻿#Region "Microsoft.VisualBasic::8519c474dae0675eaed9795c2967db95, Microsoft.VisualBasic.Core\src\Text\Parser\ParserValue.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 11
-    ' Comment Lines: 5
-    '   Blank Lines: 3
+    '    Code Lines: 11 (57.89%)
+    ' Comment Lines: 5 (26.32%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 3 (15.79%)
     '     File Size: 634 B
 
 

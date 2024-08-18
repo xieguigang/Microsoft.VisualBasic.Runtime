@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0088f67676cdf50f1c7a64b1d22c91f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::63efba3466a045cf8176d20d774ac203, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 34
-    ' Comment Lines: 31
-    '   Blank Lines: 7
-    '     File Size: 2.74 KB
+    '   Total Lines: 86
+    '    Code Lines: 45 (52.33%)
+    ' Comment Lines: 31 (36.05%)
+    '    - Xml Docs: 96.77%
+    ' 
+    '   Blank Lines: 10 (11.63%)
+    '     File Size: 3.15 KB
 
 
     '     Module Enumerable
     ' 
-    '         Function: PopulateNodes, PopulateSequence, (+2 Overloads) Values
+    '         Function: GetNodeCounts, PopulateNodes, PopulateSequence, (+2 Overloads) Values
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,6 +57,20 @@ Imports System.Runtime.CompilerServices
 Namespace ComponentModel.Algorithm.BinaryTree
 
     Public Module Enumerable
+
+        <Extension>
+        Public Function GetNodeCounts(Of K, V)(tree As BinaryTree(Of K, V)) As Integer
+            Dim n As Integer = 1
+
+            If tree.Left IsNot Nothing Then
+                n += tree.Left.GetNodeCounts
+            End If
+            If tree.Right IsNot Nothing Then
+                n += tree.Right.GetNodeCounts
+            End If
+
+            Return n
+        End Function
 
         ''' <summary>
         ''' Populate an ASC sortted sequence from this binary tree 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34772121fa5dae00b402fe80c9a84c16, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\SchemaProvider\VisualBasicCode.vb"
+﻿#Region "Microsoft.VisualBasic::34772121fa5dae00b402fe80c9a84c16, Microsoft.VisualBasic.Core\src\Serialization\JSON\SchemaProvider\VisualBasicCode.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 4
-    ' Comment Lines: 3
-    '   Blank Lines: 4
+    '    Code Lines: 4 (36.36%)
+    ' Comment Lines: 3 (27.27%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (36.36%)
     '     File Size: 203 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66246ecfcb788370cee68475bb8589c9, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::86136ca9f92d22eebacf2c2a4ac55d23, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 114
-    '    Code Lines: 76
-    ' Comment Lines: 20
-    '   Blank Lines: 18
-    '     File Size: 4.21 KB
+    '   Total Lines: 106
+    '    Code Lines: 70 (66.04%)
+    ' Comment Lines: 20 (18.87%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (15.09%)
+    '     File Size: 3.85 KB
 
 
     '     Class NumericVector
     ' 
     '         Properties: Length, name, vector
     ' 
-    '         Function: GenericEnumerator, GetEnumerator, SequenceEqual, ToString
+    '         Function: GenericEnumerator, SequenceEqual, ToString
     ' 
     '     Class TermsVector
     ' 
     '         Properties: terms
     ' 
-    '         Function: GenericEnumerator, GetEnumerator, ToString
+    '         Function: GenericEnumerator, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -148,10 +150,6 @@ Namespace Text.Xml.Models
         Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
             Return vector.AsEnumerable.GetEnumerator
         End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
-            Yield GenericEnumerator()
-        End Function
     End Class
 
     Public Class TermsVector : Implements Enumeration(Of Double)
@@ -165,10 +163,6 @@ Namespace Text.Xml.Models
 
         Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
             Return terms.AsEnumerable.GetEnumerator
-        End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
-            Yield GenericEnumerator()
         End Function
     End Class
 End Namespace

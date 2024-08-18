@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3b63c32dc1b1c327f70d3e42f9d6b29, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
+﻿#Region "Microsoft.VisualBasic::e6fe9d9e2b2d107a453725d007366f22, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 307
-    '    Code Lines: 171
-    ' Comment Lines: 90
-    '   Blank Lines: 46
-    '     File Size: 11.87 KB
+    '   Total Lines: 318
+    '    Code Lines: 173 (54.40%)
+    ' Comment Lines: 99 (31.13%)
+    '    - Xml Docs: 87.88%
+    ' 
+    '   Blank Lines: 46 (14.47%)
+    '     File Size: 12.33 KB
 
 
     '     Module PipelineProcess
@@ -173,7 +175,9 @@ Namespace CommandLine
                 Dim writer As StreamWriter = p.StandardInput
 
                 Call writer.WriteLine([in])
+                Call writer.WriteLine()
                 Call writer.Flush()
+                Call writer.Close()
             End If
 
             If Not async Then
@@ -248,6 +252,15 @@ Namespace CommandLine
             Return p
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="app$"></param>
+        ''' <param name="args$"></param>
+        ''' <param name="in$"></param>
+        ''' <returns>The standard output of the target <paramref name="app"/>, the 
+        ''' data inside this stream object may contains text or image or other
+        ''' binary data.</returns>
         Public Function ExecSub(app$, args$, Optional in$ = "") As MemoryStream
             Dim p As Process = CreatePipeline(app, args)
             Dim reader As Stream = p.StandardOutput.BaseStream

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84a5c8a6df5b7d04181144da60fd5ed5, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\IOWorkModes.vb"
+﻿#Region "Microsoft.VisualBasic::84a5c8a6df5b7d04181144da60fd5ed5, Microsoft.VisualBasic.Core\src\ComponentModel\File\IOWorkModes.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 6
-    ' Comment Lines: 3
-    '   Blank Lines: 1
+    '    Code Lines: 6 (60.00%)
+    ' Comment Lines: 3 (30.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (10.00%)
     '     File Size: 282 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98e776edd36166a7d24bce7c75e57f27, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Information\Entropy.vb"
+﻿#Region "Microsoft.VisualBasic::c928f81255f4f5e4d7061e1ecf88de0c, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\Entropy.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 104
-    '    Code Lines: 28
-    ' Comment Lines: 70
-    '   Blank Lines: 6
-    '     File Size: 4.73 KB
+    '   Total Lines: 105
+    '    Code Lines: 28 (26.67%)
+    ' Comment Lines: 71 (67.62%)
+    '    - Xml Docs: 85.92%
+    ' 
+    '   Blank Lines: 6 (5.71%)
+    '     File Size: 4.75 KB
 
 
     '     Module Entropy
@@ -51,7 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math.Information
 
@@ -130,7 +132,7 @@ Namespace Math.Information
             Dim entropy# = Aggregate prob As Double
                            In probs
                            Where prob > 0  ' 因为是求和，所以prob等于零的时候，乘上ln应该也是零的，因为零对求和无影响，所以在这里直接使用where跳过零了
-                           Let ln = stdNum.Log(prob, newBase:=2)
+                           Let ln = std.Log(prob, newBase:=2)
                            Into Sum(prob * ln)
             ' 和的负数，注意在这里最后的结果还需要乘以-1
             ' 有一个负号

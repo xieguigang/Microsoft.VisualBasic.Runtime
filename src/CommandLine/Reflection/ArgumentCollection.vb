@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3a948fb061036548bb8c87a27764b1f, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ArgumentCollection.vb"
+﻿#Region "Microsoft.VisualBasic::a3a948fb061036548bb8c87a27764b1f, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ArgumentCollection.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 156
-    '    Code Lines: 108
-    ' Comment Lines: 28
-    '   Blank Lines: 20
+    '    Code Lines: 108 (69.23%)
+    ' Comment Lines: 28 (17.95%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (12.82%)
     '     File Size: 6.19 KB
 
 

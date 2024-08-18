@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::760f40fe4f1ed74133d713b3ee081bf1, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::1b23cf52efd0141cd36f6ea0b382c2d4, Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 81
-    ' Comment Lines: 54
-    '   Blank Lines: 20
-    '     File Size: 5.74 KB
+    '   Total Lines: 165
+    '    Code Lines: 89 (53.94%)
+    ' Comment Lines: 54 (32.73%)
+    '    - Xml Docs: 92.59%
+    ' 
+    '   Blank Lines: 22 (13.33%)
+    '     File Size: 6.08 KB
 
 
     '     Class ScriptBuilder
@@ -46,7 +48,7 @@
     '         Properties: Preview, script
     ' 
     '         Constructor: (+6 Overloads) Sub New
-    '         Function: AppendLine, Replace, (+2 Overloads) Save, ToString
+    '         Function: AppendLine, Replace, (+3 Overloads) Save, ToString
     '         Operators: +
     ' 
     ' 
@@ -54,6 +56,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
@@ -206,6 +209,15 @@ Namespace Scripting.SymbolBuilder
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return script.ToString.SaveTo(path, encoding.CodePage)
+        End Function
+
+        Public Function Save(file As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Using wr As New StreamWriter(file, encoding)
+                Call wr.WriteLine(script.ToString)
+                Call wr.Flush()
+            End Using
+
+            Return True
         End Function
     End Class
 End Namespace

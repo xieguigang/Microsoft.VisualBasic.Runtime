@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::932825e5c1eb6ad73400b6e76e6ae9d6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\ContentTypeAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::932825e5c1eb6ad73400b6e76e6ae9d6, Microsoft.VisualBasic.Core\src\Net\MIME\ContentTypeAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 49
-    '    Code Lines: 14
-    ' Comment Lines: 30
-    '   Blank Lines: 5
+    '    Code Lines: 14 (28.57%)
+    ' Comment Lines: 30 (61.22%)
+    '    - Xml Docs: 93.33%
+    ' 
+    '   Blank Lines: 5 (10.20%)
     '     File Size: 2.33 KB
 
 

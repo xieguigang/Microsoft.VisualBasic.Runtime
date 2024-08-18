@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8ac78a1e8eb3ffd77efd86c89cf9fc8, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::268424d38819f93bbf2f9309bbffa09d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 259
-    '    Code Lines: 145
-    ' Comment Lines: 80
-    '   Blank Lines: 34
-    '     File Size: 10.48 KB
+    '   Total Lines: 264
+    '    Code Lines: 148 (56.06%)
+    ' Comment Lines: 80 (30.30%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 36 (13.64%)
+    '     File Size: 10.83 KB
 
 
     '     Class ColumnAttribute
@@ -50,7 +52,7 @@
     ' 
     '     Class Field
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class DataFrameColumnAttribute
     ' 
@@ -113,6 +115,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public Sub New(FieldName As String)
             Call MyBase.New(FieldName)
         End Sub
+
+        Sub New(ordinal As Integer)
+            Call MyBase.New(ordinal)
+        End Sub
     End Class
 
     ''' <summary>
@@ -131,7 +137,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' Gets the index.
         ''' </summary>
-        Public ReadOnly Property Index() As Integer
+        Public ReadOnly Property Index As Integer
 
         ''' <summary>
         ''' Gets the name.
@@ -160,6 +166,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             If index < 0 Then
                 Throw New ArgumentOutOfRangeException(NameOf(index))
             End If
+
             Me._Name = Nothing
             Me._Index = index
         End Sub

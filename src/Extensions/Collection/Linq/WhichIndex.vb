@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8010d2a75b0505934abab58b936643f3, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\WhichIndex.vb"
+﻿#Region "Microsoft.VisualBasic::8010d2a75b0505934abab58b936643f3, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\WhichIndex.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 229
-    '    Code Lines: 109
-    ' Comment Lines: 94
-    '   Blank Lines: 26
+    '    Code Lines: 109 (47.60%)
+    ' Comment Lines: 94 (41.05%)
+    '    - Xml Docs: 91.49%
+    ' 
+    '   Blank Lines: 26 (11.35%)
     '     File Size: 9.17 KB
 
 

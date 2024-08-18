@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f0216b5b134d5aed34e3232612cf070, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::34fba8a07a7025d9d94f7c1cfedb9723, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 356
-    '    Code Lines: 188
-    ' Comment Lines: 119
-    '   Blank Lines: 49
-    '     File Size: 15.43 KB
+    '    Code Lines: 188 (52.81%)
+    ' Comment Lines: 119 (33.43%)
+    '    - Xml Docs: 64.71%
+    ' 
+    '   Blank Lines: 49 (13.76%)
+    '     File Size: 15.47 KB
 
 
     '     Module ZipLib
@@ -299,7 +301,7 @@ Namespace ApplicationServices.Zip
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' add files into the zip file archive object
         ''' </summary>
         ''' <param name="zipFile"></param>
         ''' <param name="files">

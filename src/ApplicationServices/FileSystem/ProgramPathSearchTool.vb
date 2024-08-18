@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73200b0b04d79b85d99a5aada40c5a6a, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\ProgramPathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::3027b843c983021fe8daff25ac82e847, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\ProgramPathSearchTool.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 243
-    '    Code Lines: 156
-    ' Comment Lines: 50
-    '   Blank Lines: 37
-    '     File Size: 10.16 KB
+    '    Code Lines: 156 (64.20%)
+    ' Comment Lines: 50 (20.58%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 37 (15.23%)
+    '     File Size: 10.25 KB
 
 
     '     Class ProgramPathSearchTool
@@ -70,7 +72,7 @@ Imports SearchOption = Microsoft.VisualBasic.FileIO.SearchOption
 Namespace ApplicationServices
 
     ''' <summary>
-    ''' 
+    ''' Program helper for search dir like ``C:\Program Files`` or ``C:\Program Files(x86)``
     ''' </summary>
     ''' <remarks>
     ''' Works on windows, have not test on Linux/Mac yet.

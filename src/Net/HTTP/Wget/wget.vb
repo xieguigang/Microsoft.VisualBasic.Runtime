@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97358dafb82e6ad9135eeadfc71e5eb2, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wget.vb"
+﻿#Region "Microsoft.VisualBasic::6b252aef4e7935a26809d277b8277e41, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wget.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 185
-    '    Code Lines: 115
-    ' Comment Lines: 33
-    '   Blank Lines: 37
-    '     File Size: 7.14 KB
+    '    Code Lines: 115 (62.16%)
+    ' Comment Lines: 33 (17.84%)
+    '    - Xml Docs: 69.70%
+    ' 
+    '   Blank Lines: 37 (20.00%)
+    '     File Size: 7.04 KB
 
 
     '     Class wget
@@ -174,7 +176,7 @@ Namespace Net.Http
 
         ''' <summary>
         ''' 执行有详细进度信息显示的文件下载操作, 如果只需要调用一个单纯的文件下载函数, 
-        ''' 请使用<see cref="DownloadFile(String, String, String, String, Integer, DownloadProgressChangedEventHandler, String, Integer, String)"/>拓展函数
+        ''' 请使用<see cref="DownloadFile"/>拓展函数
         ''' </summary>
         ''' <param name="url$"></param>
         ''' <param name="save$"></param>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bad7ca9a2534978375ad2e9f04b5d307, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::5cd9430d658431c8d0ed76605c87dd77, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 66
-    '    Code Lines: 50
-    ' Comment Lines: 10
-    '   Blank Lines: 6
+    '    Code Lines: 50 (75.76%)
+    ' Comment Lines: 10 (15.15%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 6 (9.09%)
     '     File Size: 2.90 KB
 
 
@@ -112,7 +114,7 @@ Namespace Imaging
         Public Function OLE(c As String) As Color
             c = Strings.Replace(c, "#", "")
             c = "&H" & c
-            ColorTranslator.FromOle(c)
+            Return ColorTranslator.FromOle(c)
         End Function
     End Module
 End Namespace

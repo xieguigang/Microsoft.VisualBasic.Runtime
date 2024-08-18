@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf50accd923ab11048ea99ebb369101f, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\String.vb"
+﻿#Region "Microsoft.VisualBasic::bf50accd923ab11048ea99ebb369101f, Microsoft.VisualBasic.Core\src\My\JavaScript\String.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 70
-    '    Code Lines: 58
-    ' Comment Lines: 0
-    '   Blank Lines: 12
+    '    Code Lines: 58 (82.86%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (17.14%)
     '     File Size: 2.41 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd30cfe09e28baa6bc1a76150bae8a36, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cd30cfe09e28baa6bc1a76150bae8a36, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 68
-    '    Code Lines: 20
-    ' Comment Lines: 42
-    '   Blank Lines: 6
+    '    Code Lines: 20 (29.41%)
+    ' Comment Lines: 42 (61.76%)
+    '    - Xml Docs: 97.62%
+    ' 
+    '   Blank Lines: 6 (8.82%)
     '     File Size: 2.75 KB
 
 

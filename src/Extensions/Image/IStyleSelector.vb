@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ef590590551a27f0a9b66df7eb0264b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\IStyleSelector.vb"
+﻿#Region "Microsoft.VisualBasic::041e07b82200679bb38dc8b50a8d27a4, Microsoft.VisualBasic.Core\src\Extensions\Image\IStyleSelector.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 280 B
+    '    Code Lines: 7 (70.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (30.00%)
+    '     File Size: 294 B
 
 
     '     Interface IStyleSelector
@@ -55,7 +57,7 @@ Namespace Imaging
     Public Interface IStyleSelector(Of T)
 
         Function GetElementById(id As String) As T
-        Function GetElementsByClassName(classname As String) As T()
+        Function GetElementsByClassName(classname As String) As IEnumerable(Of T)
         Function GetElementsByName(name As String) As T()
 
     End Interface

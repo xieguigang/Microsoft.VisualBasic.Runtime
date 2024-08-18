@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2199bafccf8bae252e8f875bc0add26, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::692e8c1db19d67b8478dd7cd71fe29d9, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 922
-    '    Code Lines: 539
-    ' Comment Lines: 278
-    '   Blank Lines: 105
-    '     File Size: 38.08 KB
+    '   Total Lines: 942
+    '    Code Lines: 542 (57.54%)
+    ' Comment Lines: 296 (31.42%)
+    '    - Xml Docs: 94.26%
+    ' 
+    '   Blank Lines: 104 (11.04%)
+    '     File Size: 40.09 KB
 
 
     '     Module KeyValuePairExtensions
@@ -50,10 +52,10 @@
     '                   KeyItem, (+3 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
     '                   Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
     '                   (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
-    '                   ToUpper, Tsv, Tuple, TupleTable, (+2 Overloads) Values
+    '                   ToUpper, Tsv, Tuple, TupleTable, (+3 Overloads) Values
     '                   XMLModel
     ' 
-    '         Sub: SortByKey, SortByValue
+    '         Sub: Add, SortByKey, SortByValue
     ' 
     ' 
     ' /********************************************************************************/
@@ -82,6 +84,13 @@ Namespace ComponentModel.Collection
     <HideModuleName>
     Public Module KeyValuePairExtensions
 
+        <Extension>
+        Public Iterator Function Values(Of T)(pool As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of T)
+            For Each item As SeqValue(Of T) In pool.SafeQuery
+                Yield item.value
+            Next
+        End Function
+
         ''' <summary>
         ''' 从目标字典中按照给定的键名称获取值然后删除给定的键名称对应的数据
         ''' </summary>
@@ -101,8 +110,6 @@ Namespace ComponentModel.Collection
             End If
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
-
         <Extension>
         Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
             Dim table As New Dictionary(Of String, String)
@@ -113,7 +120,6 @@ Namespace ComponentModel.Collection
 
             Return table
         End Function
-#End If
 
         ''' <summary>
         ''' transform the hash key string to lower case characters
@@ -431,6 +437,11 @@ Namespace ComponentModel.Collection
             Return source.Select(Function(c) c.value).IteratesALL.ToArray
         End Function
 
+        <Extension>
+        Public Sub Add(Of T)(ByRef list As System.Collections.Generic.List(Of NamedCollection(Of T)), name As String, data As IEnumerable(Of T))
+            Call list.Add(New NamedCollection(Of T)(name, data))
+        End Sub
+
         ''' <summary>
         ''' Groups source by <see cref="INamedValue.Key"/>
         ''' </summary>
@@ -465,6 +476,13 @@ Namespace ComponentModel.Collection
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' get values from the key-value paires
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="V">the tuple value type</typeparam>
+        ''' <param name="src"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Values(Of T, V)(src As IEnumerable(Of KeyValuePair(Of T, V))) As V()
@@ -478,7 +496,11 @@ Namespace ComponentModel.Collection
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="distinct">是否还进行去重操作？默认不做去重</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A collection list of the index key name values which is extract from the <paramref name="source"/>,
+        ''' the label key orders keeps the same with the elements inside the input <paramref name="source"/>
+        ''' sequence.
+        ''' </returns>
         <Extension>
         Public Function Keys(Of T As INamedValue)(source As IEnumerable(Of T), Optional distinct As Boolean = False) As List(Of String)
             Dim list As IEnumerable(Of String) = source.Select(Function(o) o.Key)
@@ -493,6 +515,13 @@ Namespace ComponentModel.Collection
             Return source.AsEnumerable.Keys
         End Function
 
+        ''' <summary>
+        ''' get group keys
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Keys(Of K, V)(source As IEnumerable(Of IGrouping(Of K, V))) As K()

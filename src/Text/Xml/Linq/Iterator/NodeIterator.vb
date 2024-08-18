@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::782686d8aab9014878ffe863400e4aa4, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\NodeIterator.vb"
+﻿#Region "Microsoft.VisualBasic::782686d8aab9014878ffe863400e4aa4, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\NodeIterator.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 50
-    '    Code Lines: 28
-    ' Comment Lines: 13
-    '   Blank Lines: 9
+    '    Code Lines: 28 (56.00%)
+    ' Comment Lines: 13 (26.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (18.00%)
     '     File Size: 2.30 KB
 
 

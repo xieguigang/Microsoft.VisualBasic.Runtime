@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02f4b68bb91d551787fdf4c80b75f129, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::a66b4c80cf86b9f30f260e85fba2fd19, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 647
-    '    Code Lines: 366
-    ' Comment Lines: 206
-    '   Blank Lines: 75
-    '     File Size: 23.68 KB
+    '   Total Lines: 698
+    '    Code Lines: 398 (57.02%)
+    ' Comment Lines: 218 (31.23%)
+    '    - Xml Docs: 91.74%
+    ' 
+    '   Blank Lines: 82 (11.75%)
+    '     File Size: 25.32 KB
 
 
     ' Module VectorExtensions
     ' 
-    '     Function: (+2 Overloads) After, All, Append, Coalesce, (+3 Overloads) Delete
-    '               (+2 Overloads) Fill, GetRange, IndexOf, Last, LoadAsNumericVector
-    '               MappingData, Midv, PadLeft, RepeatCalls, Replicate
-    '               SetValue, (+3 Overloads) Sort, Split, VectorShadows
+    '     Function: (+2 Overloads) After, All, Append, Coalesce, Construct
+    '               (+2 Overloads) CopyOf, (+3 Overloads) Delete, (+2 Overloads) Fill, GetRange, IndexOf
+    '               Last, LoadAsNumericVector, MappingData, Midv, PadLeft
+    '               RepeatCalls, Replicate, SetValue, (+3 Overloads) Sort, Split
+    '               VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset, RotateLeft, RotateRight
     ' 
@@ -65,6 +68,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 Imports Microsoft.VisualBasic.My.JavaScript.Linq
+Imports std = System.Math
 
 ''' <summary>
 ''' Extension methods for the .NET object sequence
@@ -176,6 +180,16 @@ Public Module VectorExtensions
         For i As Integer = 0 To n - 1
             Yield template
         Next
+    End Function
+
+    Public Function Construct(Of T As New)(length As Integer) As T()
+        Dim array = New T(length - 1) {}
+
+        For i = 0 To length - 1
+            array(i) = New T()
+        Next
+
+        Return array
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -420,7 +434,7 @@ Public Module VectorExtensions
     Public Function Sort(Of T)(source As IEnumerable(Of NamedValue(Of T)), by As Index(Of String), Optional throwNoOrder As Boolean = False) As NamedValue(Of T)()
         Dim out As NamedValue(Of T)() = New NamedValue(Of T)(by.Count - 1) {}
 
-        For Each x In source
+        For Each x As NamedValue(Of T) In source
             Dim i% = by(x.Name)
 
             If i = -1 Then
@@ -702,5 +716,42 @@ Public Module VectorExtensions
         If Not tmp = 0 Then
             Yield tmp.ToArray
         End If
+    End Function
+
+    <Extension>
+    Public Function CopyOf(Of T)(a As T(), newLen As Integer) As T()
+        Dim newVec As T() = New T(newLen - 1) {}
+        Dim copy_size As Integer = std.Min(a.Length, newLen)
+        Array.ConstrainedCopy(a, Scan0, newVec, Scan0, copy_size)
+        Return newVec
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="v"></param>
+    ''' <param name="ordinals"></param>
+    ''' <param name="base1"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' default index ordinals offset value is zero-based.
+    ''' </remarks>
+    <Extension>
+    Public Function CopyOf(Of T)(v As T(), ordinals As Integer(), Optional base1 As Boolean = False) As T()
+        Dim newVec As T() = New T(ordinals.Length - 1) {}
+
+        If base1 Then
+            ' the index is 1-based, needs -1
+            For i As Integer = 0 To ordinals.Length - 1
+                newVec(i) = v(ordinals(i) - 1)
+            Next
+        Else
+            For i As Integer = 0 To ordinals.Length - 1
+                newVec(i) = v(ordinals(i))
+            Next
+        End If
+
+        Return newVec
     End Function
 End Module

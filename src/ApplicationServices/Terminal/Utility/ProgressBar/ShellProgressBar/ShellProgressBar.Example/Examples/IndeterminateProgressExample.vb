@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16ebe1a3f6e49a08abb0f9f9fdd3b180, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IndeterminateProgressExample.vb"
+﻿#Region "Microsoft.VisualBasic::16ebe1a3f6e49a08abb0f9f9fdd3b180, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IndeterminateProgressExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 26
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 26 (89.66%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (10.34%)
     '     File Size: 1.14 KB
 
 

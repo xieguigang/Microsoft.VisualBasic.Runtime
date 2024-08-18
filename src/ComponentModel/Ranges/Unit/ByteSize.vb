@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c731ac798c808c1feac3177c81413d5, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\ByteSize.vb"
+﻿#Region "Microsoft.VisualBasic::3d9cd202001758e90f5bb8a732d149ce, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\ByteSize.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 9
-    ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 207 B
+    '   Total Lines: 53
+    '    Code Lines: 36 (67.92%)
+    ' Comment Lines: 10 (18.87%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (13.21%)
+    '     File Size: 1.65 KB
 
 
     '     Enum ByteSize
@@ -47,6 +49,10 @@
     '  
     ' 
     ' 
+    ' 
+    '     Module ParserExtensions
+    ' 
+    '         Function: ParseByteSize, ParseByteUnit
     ' 
     ' 
     ' /********************************************************************************/
@@ -62,4 +68,47 @@ Namespace ComponentModel.Ranges.Unit
         GB = MB * 1024
         TB = GB * 1024
     End Enum
+
+    <HideModuleName>
+    Public Module ParserExtensions
+
+        ''' <summary>
+        ''' Parse the byte size in bytes
+        ''' </summary>
+        ''' <param name="desc">
+        ''' 1111B means 1111 byte
+        ''' 1KB means 1024 byte
+        ''' 1MB means 1024*1024 byte
+        ''' etc
+        ''' </param>
+        ''' <returns></returns>
+        Public Function ParseByteSize(desc As String) As Long
+            desc = Strings.Trim(desc)
+
+            If desc = "" Then
+                Return 0
+            ElseIf desc.IsSimpleNumber Then
+                Return CLng(Val(desc))
+            End If
+
+            Dim num As String = desc.Match(SimpleNumberPattern)
+            Dim unit As String = desc.Replace(num, "").Trim.ToUpper
+            Dim unitFlag As ByteSize = ParseByteUnit(unit)
+            Dim bytes As Long = CLng(Val(num) * CLng(unitFlag))
+
+            Return bytes
+        End Function
+
+        Public Function ParseByteUnit(desc As String) As ByteSize
+            Select Case Strings.Trim(desc).ToLower
+                Case "" : Return ByteSize.B
+                Case "k", "kb" : Return ByteSize.KB
+                Case "m", "mb" : Return ByteSize.MB
+                Case "g", "gb" : Return ByteSize.GB
+                Case "t", "tb" : Return ByteSize.TB
+                Case Else
+                    Return ByteSize.B
+            End Select
+        End Function
+    End Module
 End Namespace

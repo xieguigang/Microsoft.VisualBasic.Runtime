@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::466091d693617e1e941716a2c1fa5628, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::466091d693617e1e941716a2c1fa5628, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IndexSelector.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 48
-    '    Code Lines: 27
-    ' Comment Lines: 14
-    '   Blank Lines: 7
+    '    Code Lines: 27 (56.25%)
+    ' Comment Lines: 14 (29.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (14.58%)
     '     File Size: 2.04 KB
 
 

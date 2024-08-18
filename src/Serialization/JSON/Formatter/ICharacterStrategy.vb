@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5af56f2dc28939b61c9be6a21c70e9ab, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\ICharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::5af56f2dc28939b61c9be6a21c70e9ab, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\ICharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 8
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 6 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (25.00%)
     '     File Size: 244 B
 
 

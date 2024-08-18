@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e36552f21fdff10a54a50f9e5800a15, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
+﻿#Region "Microsoft.VisualBasic::b5e45dc8e792775a8c3ccd9cddf5409b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 200
-    '    Code Lines: 124
-    ' Comment Lines: 50
-    '   Blank Lines: 26
-    '     File Size: 7.74 KB
+    '   Total Lines: 218
+    '    Code Lines: 140 (64.22%)
+    ' Comment Lines: 50 (22.94%)
+    '    - Xml Docs: 88.00%
+    ' 
+    '   Blank Lines: 28 (12.84%)
+    '     File Size: 8.42 KB
 
 
     '     Structure NamedValue
@@ -46,7 +48,7 @@
     '         Properties: Description, IsEmpty, Name, Value, ValueType
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: FixValue, ToString
+    '         Function: FixValue, getValueStr, ToString
     '         Operators: (+2 Overloads) +, <>, =
     ' 
     ' 
@@ -63,6 +65,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.DataSourceModel
 
@@ -172,13 +176,28 @@ Namespace ComponentModel.DataSourceModel
                 ' 用户来通过重写ToString方法来自定义显示，而非强制使用GetJson方法
                 ' 将全部的对象都显示出来，对于属性很多的对象GetJson方法显示的效果不是太好
                 If Description.StringEmpty Then
-                    Return $"{Name} --> {Value.ToString}"
+                    Return $"{Name} -> {getValueStr()}"
                 Else
-                    Return $"{Name} --> {Value.ToString} ({Description})"
+                    Return $"{Name} -> {getValueStr()} ({Description.TrimNewLine})"
                 End If
             Catch ex As Exception
                 Return Name
             End Try
+        End Function
+
+        Private Function getValueStr() As String
+            If Value Is Nothing Then
+                Return "null"
+            End If
+
+            If DataFramework.IsPrimitive(ValueType) OrElse Not ValueType.IsArray Then
+                Return Value.ToString
+            Else
+                Return DirectCast(CObj(Value), Array) _
+                    .AsObjectEnumerator _
+                    .Select(Function(o) any.ToString(o)) _
+                    .JoinBy("; ")
+            End If
         End Function
 
         Public Function FixValue(h As Func(Of T, T)) As NamedValue(Of T)

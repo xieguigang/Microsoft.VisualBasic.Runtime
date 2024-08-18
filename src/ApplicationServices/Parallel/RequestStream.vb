@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac9c5ba3e4dc18d267ea6828bd22b37, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::3ade930a7cdbe44cfa1d0283fd4d0ccf, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 443
-    '    Code Lines: 232
-    ' Comment Lines: 155
-    '   Blank Lines: 56
-    '     File Size: 17.87 KB
+    '   Total Lines: 457
+    '    Code Lines: 232 (50.77%)
+    ' Comment Lines: 168 (36.76%)
+    '    - Xml Docs: 94.05%
+    ' 
+    '   Blank Lines: 57 (12.47%)
+    '     File Size: 18.45 KB
 
 
     '     Delegate Function
@@ -235,7 +237,7 @@ Namespace Parallel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUTF8String() As String
-            Return If(UTF8WithoutBOM.GetString(ChunkBuffer), "")
+            Return GetString(UTF8WithoutBOM)
         End Function
 
         ''' <summary>
@@ -245,9 +247,18 @@ Namespace Parallel
         ''' <returns>
         ''' 这个函数总是返回一个不为空值的字符串
         ''' </returns>
+        ''' <remarks>
+        ''' 20240620
+        ''' 
+        ''' the string may contains may zero byte after the string data,
+        ''' so we needs to trim such zero bytes for avoid the possible 
+        ''' string parser error.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(encoding As Encoding) As String
-            Return If(encoding.GetString(ChunkBuffer), "")
+            ' removes null bytes padding for avoid the possible text parser error,
+            ' example as json parser error 'Encountered unexpected character NIL' may happends.
+            Return If(encoding.GetString(ChunkBuffer), "").Trim(ASCII.NUL)
         End Function
 
         Public Function GetIntegers() As Integer()

@@ -1,57 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::bb8325b9f34cd3cbd83e4fa625d59ab9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5fba9a427b01afaa7f167b302570e75c, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1016
-'    Code Lines: 604
-' Comment Lines: 301
-'   Blank Lines: 111
-'     File Size: 39.77 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module PathExtensions
-' 
-'     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-'               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
-'               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-'               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
-'               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-'               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
-'               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1058
+    '    Code Lines: 617 (58.32%)
+    ' Comment Lines: 327 (30.91%)
+    '    - Xml Docs: 85.32%
+    ' 
+    '   Blank Lines: 114 (10.78%)
+    '     File Size: 41.55 KB
+
+
+    ' Module PathExtensions
+    ' 
+    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
+    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
+    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -295,6 +297,12 @@ Public Module PathExtensions
             Call $"Directory {dir} is not valid on your file system!".Warning
             Return New String() {}
         Else
+            For i As Integer = 0 To keyword.Length - 1
+                If keyword(i) = "*" Then
+                    keyword(i) = "*.*"
+                End If
+            Next
+
             Return FileIO.FileSystem.GetFiles(dir, top, keyword Or allKinds)
         End If
     End Function
@@ -308,12 +316,17 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="directory"></param>
     ''' <param name="pattern">
+    ''' default filter is ``*.*``, which means select all files. 
     ''' 如果匹配的模式字符串是带有文件后缀名的，那么文件夹之中所有没有后缀名的文件都可能会被忽略掉
     ''' </param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ListFiles(directory$, Optional pattern$ = "*.*") As IEnumerable(Of String)
+    Public Function ListFiles(directory$, ParamArray pattern$()) As IEnumerable(Of String)
+        If pattern.IsNullOrEmpty Then
+            pattern = {"*.*"}
+        End If
+
         Return ls - l - r - pattern <= directory
     End Function
 
@@ -421,16 +434,22 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    ''' Gets the URL type file path.(获取URL类型的文件路径)
+    ''' Gets the URL type file path.
     ''' </summary>
     ''' <param name="Path"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(获取URL类型的文件路径)</remarks>
     '''
     <ExportAPI("Path2Url")>
     <Extension> Public Function ToFileURL(path As String) As String
         If String.IsNullOrEmpty(path) Then
             Return ""
+        ElseIf path.EndsWith("/"c) OrElse path.EndsWith("\"c) Then
+            ' is a directory?
+            ' ArgumentException: The given file path ends with a directory separator character. (Parameter 'file')
+            Dim dir = path.GetDirectoryFullPath
+            Call VBDebugger.EchoLine($"The given file path ends with a directory separator character. ({path})")
+            Return String.Format("file:///{0}", dir.Replace("\", "/"))
         Else
             path = FileIO.FileSystem.GetFileInfo(path).FullName
             Return String.Format("file:///{0}", path.Replace("\", "/"))
@@ -652,7 +671,13 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="ZERO_Nonexists">将0长度的文件也作为不存在</param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' returns the file path check result:
+    ''' 
+    ''' 1. <paramref name="path"/> string is null or empty string: false
+    ''' 2. file not exists: false
+    ''' 3. file is zero length andalso <paramref name="ZERO_Nonexists"/> is config as true: false
+    ''' </returns>
     ''' <remarks></remarks>
     <Extension>
     Public Function FileExists(path$, Optional ZERO_Nonexists As Boolean = False) As Boolean
@@ -686,12 +711,14 @@ Public Module PathExtensions
     ''' Determine that the target directory is exists on the file system or not?(判断文件夹是否存在)
     ''' </summary>
     ''' <param name="DIR"></param>
-    ''' <returns></returns>
-    <ExportAPI("DIR.Exists")>
+    ''' <returns>
+    ''' 1. for directory parameter <paramref name="DIR"/> is nothing or empty string: return false
+    ''' 2. for directory not exists: return false
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DirectoryExists(DIR As String) As Boolean
-        Return Not String.IsNullOrEmpty(DIR) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
+        Return (Not String.IsNullOrEmpty(DIR)) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
     End Function
 
     ''' <summary>
@@ -794,24 +821,33 @@ Public Module PathExtensions
     ''' 因为系统的底层API对于过长的文件名会出错)
     ''' </summary>
     ''' <param name="file"></param>
+    ''' <param name="full">
+    ''' http url should turn this parameter to false?
+    ''' </param>
     ''' <returns></returns>
-    ''' <remarks>这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
+    ''' <remarks>this function also could be used for handling of the http url location.
+    ''' 这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
     <ExportAPI(NameOf(ParentPath))>
     <Extension>
     Public Function ParentPath(file$, Optional full As Boolean = True) As String
         Dim UNCprefix As String = file.Match("\\\\\d+(\.\d+)+")
         Dim isUNCpath As Boolean = (Not String.IsNullOrEmpty(UNCprefix)) AndAlso file.StartsWith(UNCprefix)
+        Dim isHttpUrl As Boolean = file.IsURLPattern
 
         ' Console.WriteLine(UNCprefix)
 
-        file = file _
-            .Replace("\", "/") _
-            .StringReplace("/{2,}", "/")
+        file = file.Replace("\", "/")
+
+        If Not isHttpUrl Then
+            ' keeps the http url 
+            file = file.StringReplace("/{2,}", "/")
+        End If
 
         Dim parent As String = ""
         Dim t As String() = file.TrimEnd("/"c).Split("/"c)
 
         If full Then
+            ' generates the full path
             If InStr(file, "../") = 1 Then
                 parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
                 t = t.Skip(1).ToArray
@@ -824,11 +860,7 @@ Public Module PathExtensions
 
             End If
 
-            If file.Last = "/"c Then ' 是一个文件夹
-                parent &= String.Join("/", t.Take(t.Length - 2).ToArray)
-            Else
-                parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
-            End If
+            parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
 
             If parent.StringEmpty Then
                 ' 用户直接输入了一个文件名，没有包含文件夹部分，则默认是当前的文件夹

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68cd2215a0190dd396794899d2ff0a68, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
+﻿#Region "Microsoft.VisualBasic::68cd2215a0190dd396794899d2ff0a68, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 166
-    '    Code Lines: 127
-    ' Comment Lines: 18
-    '   Blank Lines: 21
+    '    Code Lines: 127 (76.51%)
+    ' Comment Lines: 18 (10.84%)
+    '    - Xml Docs: 94.44%
+    ' 
+    '   Blank Lines: 21 (12.65%)
     '     File Size: 6.00 KB
 
 

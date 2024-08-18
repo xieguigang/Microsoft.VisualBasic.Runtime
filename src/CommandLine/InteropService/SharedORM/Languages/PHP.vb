@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0288d0bb5b1e1276578f59b45c3a32af, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\PHP.vb"
+﻿#Region "Microsoft.VisualBasic::0288d0bb5b1e1276578f59b45c3a32af, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\PHP.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 10 (76.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (23.08%)
     '     File Size: 344 B
 
 

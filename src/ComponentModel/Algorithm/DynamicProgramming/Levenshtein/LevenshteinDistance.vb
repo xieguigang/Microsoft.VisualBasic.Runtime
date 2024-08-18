@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba79766148957cdc9e1bd68420f7c4b2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::0528ea67e6f5a84bd443e29df91223d4, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 321
-    '    Code Lines: 202
-    ' Comment Lines: 72
-    '   Blank Lines: 47
+    '    Code Lines: 202 (62.93%)
+    ' Comment Lines: 72 (22.43%)
+    '    - Xml Docs: 91.67%
+    ' 
+    '   Blank Lines: 47 (14.64%)
     '     File Size: 14.56 KB
 
 
@@ -218,7 +220,7 @@ Vladimir I",
             Return computeRouteImpl(hypotheses, result, i, j, distTable)
         End Function
 
-        Const a As Integer = Asc("a"c)
+        Const a As Integer = AscW("a"c)
 
         Public Function Similarity(Of T)(query As T(), subject As T(), Optional penalty As Double = 0.75) As Double
             If query.IsNullOrEmpty OrElse subject.IsNullOrEmpty Then

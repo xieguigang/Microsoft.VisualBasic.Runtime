@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20f8d7e33a5b0f2acb925e85090f2a01, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f17af4f5e6c17eb7842f13a607157478, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 77
-    ' Comment Lines: 48
-    '   Blank Lines: 20
-    '     File Size: 5.78 KB
+    '   Total Lines: 157
+    '    Code Lines: 88 (56.05%)
+    ' Comment Lines: 48 (30.57%)
+    '    - Xml Docs: 85.42%
+    ' 
+    '   Blank Lines: 21 (13.38%)
+    '     File Size: 6.31 KB
 
 
     '     Module BencodingExtensions
     ' 
-    '         Function: BDecode, encodeList, encodeObject, theSameObject, ToBEncode
-    '                   ToBEncodeString, ToList
+    '         Function: BDecode, encodeList, encodeObject, encodePrimitive, theSameObject
+    '                   ToBEncode, ToBEncodeString, ToList
     ' 
     ' 
     ' /********************************************************************************/
@@ -53,6 +55,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language.Default
 
@@ -156,15 +159,26 @@ Namespace Serialization.Bencoding
                 Next
 
                 Return table
-            ElseIf type Is GetType(String) OrElse type Is GetType(Double) OrElse type Is GetType(Boolean) OrElse type Is GetType(Date) Then
-                Return New BString(obj.ToString)
-            ElseIf type Is GetType(Integer) OrElse type Is GetType(Long) OrElse type Is GetType(Short) OrElse type Is GetType(Byte) Then
-                Return New BInteger(obj)
             ElseIf type.ImplementInterface(GetType(IList)) Then
                 Return DirectCast(obj, IList).encodeList(digest)
+            ElseIf DataFramework.IsPrimitive(type) Then
+                Return encodePrimitive(obj, type)
             Else
                 Return encodeObject(obj, digest)
             End If
+        End Function
+
+        Private Function encodePrimitive(value As Object, type As Type) As BElement
+            Select Case type
+                Case GetType(String), GetType(Double), GetType(Boolean), GetType(Date), GetType(Single)
+                    Return New BString(value.ToString)
+                Case GetType(Integer), GetType(Short), GetType(UShort), GetType(Byte), GetType(SByte)
+                    Return New BInteger(CInt(value))
+                Case GetType(Long), GetType(UInteger), GetType(ULong)
+                    Return New BInteger(CLng(value))
+                Case Else
+                    Throw New NotImplementedException(type.FullName & ": " & value.ToString)
+            End Select
         End Function
 
         Private Function encodeObject(obj As Object, digest As Func(Of Object, Object)) As BElement

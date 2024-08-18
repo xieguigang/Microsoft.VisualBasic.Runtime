@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::355521fa366a3970b84bce97f90be7c7, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::b928ec5cb5ce058d9ccb119a3d091aea, Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 48
-    ' Comment Lines: 16
-    '   Blank Lines: 10
-    '     File Size: 3.18 KB
+    '   Total Lines: 122
+    '    Code Lines: 75 (61.48%)
+    ' Comment Lines: 30 (24.59%)
+    '    - Xml Docs: 40.00%
+    ' 
+    '   Blank Lines: 17 (13.93%)
+    '     File Size: 4.81 KB
 
 
     '     Module DoConfiguration
     ' 
-    '         Function: ConfigMemory
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ConfigMemory, InternalPlatformID
     ' 
     '         Sub: ConfigFrameworkRuntime
     ' 
@@ -64,11 +68,59 @@ Namespace My.FrameworkInternal
     ''' </summary>
     Public Module DoConfiguration
 
+        ''' <summary>
+        ''' --unix
+        ''' </summary>
+        Public ReadOnly unix_debug_flag As Boolean
+
+        ''' <summary>
+        ''' --verbose
+        ''' </summary>
+        Public ReadOnly verbose_flag As Boolean
+
+        ''' <summary>
+        ''' should be vanilla code
+        ''' </summary>
+        Sub New()
+            Dim args As String() = Environment.GetCommandLineArgs
+
+            If Not args Is Nothing Then
+                For Each s As String In args.Select(Function(si) si.ToLower)
+                    Select Case s
+                        Case "--unix" : unix_debug_flag = True
+                        Case "--verbose" : verbose_flag = True
+                    End Select
+                Next
+            End If
+        End Sub
+
+        Friend Function InternalPlatformID() As PlatformID
+            If unix_debug_flag Then
+                Return PlatformID.Unix
+            Else
+                Return Environment.OSVersion.Platform
+            End If
+        End Function
+
         <Extension>
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
             Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
-            Dim disableLoadOptions As Boolean = args.GetBoolean("--load_options.disable")
+            Dim disableLoadOptions As Boolean = args.IsTrue("--load_options.disable")
+            Dim max_stack_size As String = args.Tokens _
+                .SafeQuery _
+                .Where(Function(t) Strings.LCase(t).StartsWith("/stack:")) _
+                .FirstOrDefault
             Dim name$
+
+            ' initial before call app module
+            'If args.GetBoolean("--unix") OrElse args.Name.TextEquals("--unix") Then
+            '    unix_debug_flag = True
+            'End If
+
+            ' call app module later
+            If Not max_stack_size.StringEmpty Then
+                Call App.JoinVariable("max_stack_size", max_stack_size.Split(":"c).Last)
+            End If
 
             ' load config from config file.
             For Each config In configuration.environment.SafeQuery

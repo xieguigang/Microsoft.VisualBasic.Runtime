@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa256efcdb8b080b4bf8bef21b08fe77, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BString.vb"
+﻿#Region "Microsoft.VisualBasic::6539cde7a18b82192a2c1cd61a54ced9, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BString.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 40
-    ' Comment Lines: 30
-    '   Blank Lines: 12
-    '     File Size: 2.77 KB
+    '   Total Lines: 109
+    '    Code Lines: 62 (56.88%)
+    ' Comment Lines: 30 (27.52%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 17 (15.60%)
+    '     File Size: 3.57 KB
 
 
     '     Class BString
@@ -131,6 +133,34 @@ Namespace Serialization.Bencoding
         ''' <returns></returns>
         Public Overloads Shared Widening Operator CType(s As String) As BString
             Return New BString(value:=s)
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(s As BString) As String
+            If s Is Nothing Then
+                Return Nothing
+            Else
+                Return s.Value
+            End If
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(s As BString) As UInteger
+            Dim str As String = s
+
+            If str Is Nothing Then
+                Return 0
+            Else
+                Return UInteger.Parse(str)
+            End If
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(s As BString) As Integer
+            Dim str As String = s
+
+            If str Is Nothing Then
+                Return 0
+            Else
+                Return Integer.Parse(str)
+            End If
         End Operator
     End Class
 End Namespace

@@ -1,56 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::11c9f35abdc04da13695ed40a5eb5e6d, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a25347672374ea1825af8b654ae45f90, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 304
-'    Code Lines: 162
-' Comment Lines: 101
-'   Blank Lines: 41
-'     File Size: 13.08 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class APIEntryPoint
-' 
-'         Properties: Arguments, EntryPoint, IsInstanceMethod, target
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
-'                   InvokeCLI, tryInvoke
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 308
+    '    Code Lines: 164 (53.25%)
+    ' Comment Lines: 101 (32.79%)
+    '    - Xml Docs: 94.06%
+    ' 
+    '   Blank Lines: 43 (13.96%)
+    '     File Size: 13.09 KB
+
+
+    '     Class APIEntryPoint
+    ' 
+    '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
+    '                   InvokeCLI, logError, tryInvoke
+    ' 
+    '         Sub: argumentNote
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -278,6 +283,11 @@ Namespace CommandLine.Reflection.EntryPoints
             Dim source As Exception = ex
             Dim trace$ = MethodBase.GetCurrentMethod.GetFullName
 
+            Call "".EchoLine
+            Call ManView.ExceptionHandler.Print(source, EntryPoint)
+            Call "".EchoLine
+            Call VBDebugger.WaitOutput()
+
             ex = New Exception(paramTrace, ex)
             ex = New VisualBasicAppException(ex, EntryPoint.GetFullName(True))
 
@@ -288,17 +298,7 @@ Namespace CommandLine.Reflection.EntryPoints
             Call DebuggerArgs.SaveErrorLog(ErrorLog.BugsFormatter(ex))
             Call VBDebugger.WaitOutput()
 
-            If [throw] Then
-                Throw ex
-            Else
-                Call "".EchoLine
-                Call ManView.ExceptionHandler.Print(source, EntryPoint)
-                Call "".EchoLine
-                Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
-                Call VBDebugger.WaitOutput()
-
-                Return -100
-            End If
+            Return 500
         End Function
 
         ''' <summary>

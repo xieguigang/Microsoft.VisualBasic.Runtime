@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06ebe6c2a787aa84c54cd4013a123993, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\DontDisplayInRealTimeExample.vb"
+﻿#Region "Microsoft.VisualBasic::06ebe6c2a787aa84c54cd4013a123993, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\DontDisplayInRealTimeExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 16 (88.89%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (11.11%)
     '     File Size: 617 B
 
 

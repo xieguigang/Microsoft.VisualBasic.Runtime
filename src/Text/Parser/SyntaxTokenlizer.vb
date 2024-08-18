@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d19a5f7569f61e05f1f50ae2de9c97a, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\SyntaxTokenlizer.vb"
+﻿#Region "Microsoft.VisualBasic::8d19a5f7569f61e05f1f50ae2de9c97a, Microsoft.VisualBasic.Core\src\Text\Parser\SyntaxTokenlizer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 45
-    ' Comment Lines: 0
-    '   Blank Lines: 9
+    '    Code Lines: 45 (83.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (16.67%)
     '     File Size: 1.83 KB
 
 

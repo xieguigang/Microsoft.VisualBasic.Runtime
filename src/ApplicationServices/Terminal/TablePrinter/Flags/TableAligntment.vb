@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e75c13de1e9b384f532d8594af4514b, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb"
+﻿#Region "Microsoft.VisualBasic::2e75c13de1e9b384f532d8594af4514b, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 7
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 0
+    '    Code Lines: 7 (100.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 176 B
 
 

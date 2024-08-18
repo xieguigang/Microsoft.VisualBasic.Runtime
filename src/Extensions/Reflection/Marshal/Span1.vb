@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::853134c9b8f16567c71f1478ebe03ad9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
+﻿#Region "Microsoft.VisualBasic::e0edd21a496943541d9f5950948fa921, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 51
-    ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 2.24 KB
+    '   Total Lines: 80
+    '    Code Lines: 55 (68.75%)
+    ' Comment Lines: 12 (15.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (16.25%)
+    '     File Size: 2.39 KB
 
 
     '     Class Span
@@ -46,14 +48,12 @@
     '         Properties: ArrayLength, Length, SpanView
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Slice, ToString
+    '         Function: Slice, SpanCopy, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Language.Python
 
 Namespace Emit.Marshal
 
@@ -79,7 +79,7 @@ Namespace Emit.Marshal
 
         Public ReadOnly Property SpanView As T()
             Get
-                Return buffer.SpanSlice(start, span_size)
+                Return SpanCopy()
             End Get
         End Property
 
@@ -111,6 +111,12 @@ Namespace Emit.Marshal
             Me.start = start
             Me.span_size = length
         End Sub
+
+        Public Function SpanCopy() As T()
+            Dim v As T() = New T(span_size - 1) {}
+            Call Array.ConstrainedCopy(buffer, start, v, Scan0, span_size)
+            Return v
+        End Function
 
         Public Function Slice(start As Integer, length As Integer) As Span(Of T)
             Return New Span(Of T)(buffer, start, length)

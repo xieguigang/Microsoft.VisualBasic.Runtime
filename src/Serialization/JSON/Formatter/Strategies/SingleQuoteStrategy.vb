@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5499279945bfc4639c1313a474eebe5c, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::5499279945bfc4639c1313a474eebe5c, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 16 (88.89%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (11.11%)
     '     File Size: 805 B
 
 

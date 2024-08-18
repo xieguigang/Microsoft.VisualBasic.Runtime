@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::129b1f547a88240045919827921939cc, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BElement.vb"
+﻿#Region "Microsoft.VisualBasic::129b1f547a88240045919827921939cc, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BElement.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 7
-    ' Comment Lines: 12
-    '   Blank Lines: 4
+    '    Code Lines: 7 (30.43%)
+    ' Comment Lines: 12 (52.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (17.39%)
     '     File Size: 763 B
 
 

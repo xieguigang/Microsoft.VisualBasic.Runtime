@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3b660b18a72451cf24352426afbf80a, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExampleAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::c3b660b18a72451cf24352426afbf80a, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExampleAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 12 (70.59%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (29.41%)
     '     File Size: 450 B
 
 

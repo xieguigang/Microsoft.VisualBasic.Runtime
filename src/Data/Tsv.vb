@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f64e58f8c379ac5d5e872027beeaadd4, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::1fdb0a6b31b45946f6afd70be2932d2f, Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 175
-    '    Code Lines: 112
-    ' Comment Lines: 44
-    '   Blank Lines: 19
-    '     File Size: 7.77 KB
+    '   Total Lines: 176
+    '    Code Lines: 112 (63.64%)
+    ' Comment Lines: 45 (25.57%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 19 (10.80%)
+    '     File Size: 7.95 KB
 
 
     '     Module TsvFileIO
@@ -172,12 +174,12 @@ Namespace ComponentModel.DataSourceModel
         ReadOnly withoutProcess As New [Default](Of Func(Of String, String))(Function(str) str)
 
         ''' <summary>
-        ''' 
+        ''' Just read the first line and parse as the data headers
         ''' </summary>
-        ''' <param name="stream"></param>
+        ''' <param name="stream">A stream connection to the target text file</param>
         ''' <param name="lower"></param>
         ''' <param name="process"></param>
-        ''' <returns></returns>
+        ''' <returns>A data headers collection</returns>
         ''' <remarks>
         ''' Linux平台上面的mono这里有bug，为什么<see cref="StreamReader.ReadLine()"/>一直都输出空值？
         ''' </remarks>
@@ -186,6 +188,7 @@ Namespace ComponentModel.DataSourceModel
                                      Optional lower As Boolean = False,
                                      Optional process As Func(Of String, String) = Nothing) As Index(Of String)
 
+            ' just read the first line in the text file
             Dim line$ = stream.ReadLine
             Dim headers$() = line _
                 .Split(ASCII.TAB) _

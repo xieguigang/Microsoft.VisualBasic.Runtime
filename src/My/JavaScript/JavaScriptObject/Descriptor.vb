@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ca01658c138269fabd962dfa0556cd8, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\Descriptor.vb"
+﻿#Region "Microsoft.VisualBasic::2ca01658c138269fabd962dfa0556cd8, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\Descriptor.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 8
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 8 (72.73%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (27.27%)
     '     File Size: 270 B
 
 

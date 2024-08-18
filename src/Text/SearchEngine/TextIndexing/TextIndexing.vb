@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::291906b7da015c19f17d87f0bca9bbac, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::291906b7da015c19f17d87f0bca9bbac, Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\TextIndexing.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 204
-    '    Code Lines: 131
-    ' Comment Lines: 43
-    '   Blank Lines: 30
+    '    Code Lines: 131 (64.22%)
+    ' Comment Lines: 43 (21.08%)
+    '    - Xml Docs: 86.05%
+    ' 
+    '   Blank Lines: 30 (14.71%)
     '     File Size: 8.59 KB
 
 

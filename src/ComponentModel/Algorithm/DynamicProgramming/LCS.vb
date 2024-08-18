@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2a3a9e19f456d476893db6513570097, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
+﻿#Region "Microsoft.VisualBasic::c2a3a9e19f456d476893db6513570097, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 75
-    '    Code Lines: 51
-    ' Comment Lines: 9
-    '   Blank Lines: 15
+    '    Code Lines: 51 (68.00%)
+    ' Comment Lines: 9 (12.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (20.00%)
     '     File Size: 2.60 KB
 
 

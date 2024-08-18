@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a81909f72bcb2869129761dbd5078445, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::f52aed324c5cf8e1b3472a84009f6172, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\ls.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 277
-    '    Code Lines: 185
-    ' Comment Lines: 57
-    '   Blank Lines: 35
-    '     File Size: 10.15 KB
+    '   Total Lines: 290
+    '    Code Lines: 189 (65.17%)
+    ' Comment Lines: 64 (22.07%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 37 (12.76%)
+    '     File Size: 10.64 KB
 
 
     '     Class Search
     ' 
     '         Properties: SearchType, wildcards
     ' 
-    '         Function: Clone, DoFileNameGreps, ToString
+    '         Function: Clone, DoFileNameGreps, MakeFilter, ToString
     '         Operators: (+3 Overloads) -, <, <<, (+2 Overloads) <=, >
     '                    (+2 Overloads) >=
     ' 
@@ -215,13 +217,25 @@ Namespace Language.UnixBash
             End If
         End Operator
 
-        Public Shared Function DoFileNameGreps(ls As Search, files As IEnumerable(Of String)) As IEnumerable(Of String)
-            Dim l As Boolean = ls.opts.ContainsKey(SearchOpt.Options.LongName)
-            Dim wc$() = ls.wildcards
+        Public Function MakeFilter() As Func(Of String, Boolean)
+            Dim wc$() = wildcards
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
                     .regexp = If(wc.IsNullOrEmpty, {"*"}, wc)
                 }.IsMatch
+
+            Return isMatch
+        End Function
+
+        ''' <summary>
+        ''' make file path list filtering
+        ''' </summary>
+        ''' <param name="ls">the filter options</param>
+        ''' <param name="files">a collection of the file path</param>
+        ''' <returns></returns>
+        Public Shared Function DoFileNameGreps(ls As Search, files As IEnumerable(Of String)) As IEnumerable(Of String)
+            Dim l As Boolean = ls.opts.ContainsKey(SearchOpt.Options.LongName)
+            Dim isMatch = ls.MakeFilter
 
             With ls
                 If .opts.ContainsKey(SearchOpt.Options.Directory) Then
@@ -237,6 +251,7 @@ Namespace Language.UnixBash
                     If l Then
                         Return files.Where(isMatch)
                     Else
+                        ' just get file name if not long file name(full path name)
                         Return From path As String
                                In files
                                Where isMatch(path)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da06393bffe69bbe757e33a122958bdb, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Clones.vb"
+﻿#Region "Microsoft.VisualBasic::da06393bffe69bbe757e33a122958bdb, Microsoft.VisualBasic.Core\src\Language\Value\Clones.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 23
-    ' Comment Lines: 10
-    '   Blank Lines: 8
+    '    Code Lines: 23 (56.10%)
+    ' Comment Lines: 10 (24.39%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (19.51%)
     '     File Size: 1.34 KB
 
 

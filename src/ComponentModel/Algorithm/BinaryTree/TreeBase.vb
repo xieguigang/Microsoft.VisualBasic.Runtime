@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cbb33942790924b29c741e8ceaf2528, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
+﻿#Region "Microsoft.VisualBasic::0cbb33942790924b29c741e8ceaf2528, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 56
-    '    Code Lines: 27
-    ' Comment Lines: 21
-    '   Blank Lines: 8
+    '    Code Lines: 27 (48.21%)
+    ' Comment Lines: 21 (37.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (14.29%)
     '     File Size: 1.88 KB
 
 

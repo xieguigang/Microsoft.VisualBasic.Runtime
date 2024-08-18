@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63c9989b77b6b1b04de901c0e5f438ac, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\Loader.vb"
+﻿#Region "Microsoft.VisualBasic::63c9989b77b6b1b04de901c0e5f438ac, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\Loader.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 27
-    ' Comment Lines: 6
-    '   Blank Lines: 6
+    '    Code Lines: 27 (69.23%)
+    ' Comment Lines: 6 (15.38%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (15.38%)
     '     File Size: 1.61 KB
 
 

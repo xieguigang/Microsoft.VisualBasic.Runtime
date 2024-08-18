@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1b561eacee5b3ca179344ef4286cc5c, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\AlternateFinishedColorExample.vb"
+﻿#Region "Microsoft.VisualBasic::f1b561eacee5b3ca179344ef4286cc5c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\AlternateFinishedColorExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 25
-    ' Comment Lines: 1
-    '   Blank Lines: 4
+    '    Code Lines: 25 (83.33%)
+    ' Comment Lines: 1 (3.33%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (13.33%)
     '     File Size: 1.16 KB
 
 

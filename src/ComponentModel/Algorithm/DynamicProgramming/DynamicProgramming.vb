@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f506608694faa5f51d75c94347722b9, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::061d36ff5fc3e423317674c6b1abba4c, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 21
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1004 B
+    '   Total Lines: 35
+    '    Code Lines: 25 (71.43%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (28.57%)
+    '     File Size: 1.19 KB
 
 
     '     Class Cost
@@ -51,6 +53,11 @@
     '     Delegate Function
     ' 
     ' 
+    '     Interface IScore
+    ' 
+    '         Function: GetSimilarityScore
+    ' 
+    ' 
     ' 
     ' 
     ' 
@@ -58,6 +65,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language.Default
 
 Namespace ComponentModel.Algorithm.DynamicProgramming

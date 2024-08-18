@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d74a5a24d8a1d7da6fe7b5324892b56f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::d74a5a24d8a1d7da6fe7b5324892b56f, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 170
-    '    Code Lines: 147
-    ' Comment Lines: 4
-    '   Blank Lines: 19
+    '    Code Lines: 147 (86.47%)
+    ' Comment Lines: 4 (2.35%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 19 (11.18%)
     '     File Size: 6.60 KB
 
 

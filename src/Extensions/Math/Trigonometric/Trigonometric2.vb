@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a1cbb35698e8e1a743edec282f77569, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Trigonometric2.vb"
+﻿#Region "Microsoft.VisualBasic::5a1cbb35698e8e1a743edec282f77569, Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Trigonometric2.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 187
-    '    Code Lines: 65
-    ' Comment Lines: 100
-    '   Blank Lines: 22
+    '    Code Lines: 65 (34.76%)
+    ' Comment Lines: 100 (53.48%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 22 (11.76%)
     '     File Size: 7.18 KB
 
 

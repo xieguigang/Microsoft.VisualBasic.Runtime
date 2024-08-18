@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10cd986be3fd926160839206cb975118, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\ScriptMeta.vb"
+﻿#Region "Microsoft.VisualBasic::45bccd6cfe407ec3ef9d88cc49906018, Microsoft.VisualBasic.Core\src\Extensions\Reflection\ScriptMeta.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 130
-    '    Code Lines: 87
-    ' Comment Lines: 28
-    '   Blank Lines: 15
-    '     File Size: 4.21 KB
+    '    Code Lines: 87 (66.92%)
+    ' Comment Lines: 28 (21.54%)
+    '    - Xml Docs: 92.86%
+    ' 
+    '   Blank Lines: 15 (11.54%)
+    '     File Size: 4.22 KB
 
 
     ' Module ScriptMeta
@@ -99,7 +101,7 @@ NULL:       If Not strict Then
     ''' <param name="default$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Description(m As MemberInfo, Optional default$ = Nothing) As String
+    Public Function Description(Of T As MemberInfo)(m As T, Optional default$ = Nothing) As String
         Dim customAttrs() = m.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
 
         If Not customAttrs.IsNullOrEmpty Then

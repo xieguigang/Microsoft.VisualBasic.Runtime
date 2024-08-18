@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e6fb82ef646f86895796c2c71d0f124, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::8ae3c7b5310b2519bd94e37439e5f69e, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,30 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 129
-    ' Comment Lines: 18
-    '   Blank Lines: 40
-    '     File Size: 7.16 KB
+    '   Total Lines: 226
+    '    Code Lines: 141 (62.39%)
+    ' Comment Lines: 42 (18.58%)
+    '    - Xml Docs: 90.48%
+    ' 
+    '   Blank Lines: 43 (19.03%)
+    '     File Size: 8.71 KB
 
 
-    '     Class ProjectType
+    '     Class XmlDocs
     ' 
-    '         Properties: [Namespace], Name, Remarks, Summary
+    '         Properties: Keywords, Name, Remarks, Summary
     ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: EnsureEvent, EnsureField, EnsureMethod, EnsureProperty, GetEvent
-    '                   GetField, getInternal, GetMethods, GetProperties, ToString
+    '         Function: readFieldText
     ' 
     '         Sub: LoadFromNode
+    ' 
+    '     Class ProjectType
+    ' 
+    '         Properties: [Namespace]
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: EnsureEvent, EnsureField, EnsureMethod, EnsureProperty, GetEvent
+    '                   GetField, getInternal, GetMethods, GetProperties, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -71,10 +78,51 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     Public MustInherit Class XmlDocs
 
+        ''' <summary>
+        ''' the member name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
-        Public Property Summary As String
-        Public Property Remarks As String
 
+        ''' <summary>
+        ''' Specifies the summary of the member. Use the &lt;summary> tag to describe a type or 
+        ''' a type member. Use &lt;remarks> to add supplemental information to a type description.
+        ''' 
+        ''' The text For the &lt;summary> tag Is the only source Of information about the type 
+        ''' In IntelliSense, And Is also displayed In the Object Browser. 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Summary As String
+        ''' <summary>
+        ''' Use the &lt;remarks> tag to add information about a type, supplementing the information specified with &lt;summary>.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Remarks As String
+        Public Property Keywords As String
+
+        ''' <summary>
+        ''' a unify method for read content data from xml
+        ''' </summary>
+        ''' <param name="xn"></param>
+        ''' <remarks>
+        ''' summary, remarks, keywords
+        ''' </remarks>
+        Friend Overridable Sub LoadFromNode(xn As XmlNode)
+            ' Name = readFieldText(xn, "name")
+            Summary = readFieldText(xn, "summary")
+            Remarks = readFieldText(xn, "remarks")
+            Keywords = readFieldText(xn, "keywords")
+        End Sub
+
+        Protected Shared Function readFieldText(xn As XmlNode, nodeKey As String) As String
+            Dim textNode As XmlNode = xn.SelectSingleNode(nodeKey)
+
+            If textNode IsNot Nothing Then
+                Return textNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
+            Else
+                Return Nothing
+            End If
+        End Function
     End Class
 
     ''' <summary>
@@ -110,7 +158,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             End Get
         End Property
 
-        Friend Sub New()
+        Sub New()
             properties = New Dictionary(Of String, List(Of ProjectMember))
             methods = New Dictionary(Of String, List(Of ProjectMember))
         End Sub
@@ -164,6 +212,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Private Shared Function getInternal(ByRef table As Dictionary(Of String, List(Of ProjectMember)), name$) As List(Of ProjectMember)
+            If table Is Nothing Then
+                table = New Dictionary(Of String, List(Of ProjectMember))
+            End If
+
             If table.ContainsKey(name) Then
                 Return table(name)
             Else
@@ -190,6 +242,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Public Function GetField(fieldName As String) As ProjectMember
+            If Me.fields Is Nothing Then
+                Me.fields = New Dictionary(Of String, ProjectMember)
+            End If
+
             If Me.fields.ContainsKey(fieldName.ToLower()) Then
                 Return Me.fields(fieldName.ToLower())
             End If
@@ -232,19 +288,5 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
             Return pm
         End Function
-
-        Friend Sub LoadFromNode(xn As XmlNode)
-            Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
-
-            If summaryNode IsNot Nothing Then
-                Me.Summary = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
-            End If
-
-            summaryNode = xn.SelectSingleNode("remarks")
-
-            If Not summaryNode Is Nothing Then
-                Remarks = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
-            End If
-        End Sub
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::431114117a6ab98b8e4e5ca7b9fbaf71, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::66e00524b0cde6831fc58bf50fef4fc9, Microsoft.VisualBasic.Core\src\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 48
-    ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 2.41 KB
+    '   Total Lines: 97
+    '    Code Lines: 68 (70.10%)
+    ' Comment Lines: 12 (12.37%)
+    '    - Xml Docs: 91.67%
+    ' 
+    '   Blank Lines: 17 (17.53%)
+    '     File Size: 3.21 KB
 
 
     '     Class CharPtr
@@ -47,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: PeekNext, PopNext, ToString
-    '         Operators: (+2 Overloads) Not
+    '         Operators: <>, =, (+2 Overloads) Like, (+2 Overloads) Not
     ' 
     ' 
     ' /********************************************************************************/
@@ -118,12 +120,36 @@ Namespace Text.Parser
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As String) As CharPtr
+            If str Is Nothing Then
+                Return Nothing
+            End If
+
             Return New CharPtr(str)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As StringBuilder) As CharPtr
             Return New CharPtr(str.ToString)
+        End Operator
+
+        Public Overloads Shared Operator =(str As CharPtr, text As String) As Boolean
+            If str Is Nothing Then
+                Return text Is Nothing
+            Else
+                Return New String(str.buffer) = text
+            End If
+        End Operator
+
+        Public Overloads Shared Operator <>(str As CharPtr, text As String) As Boolean
+            Return Not str = text
+        End Operator
+
+        Public Shared Operator Like(str As CharPtr, text As String) As Boolean
+            If str Is Nothing Then
+                Return text Is Nothing
+            Else
+                Return New String(str.buffer).TextEquals(text)
+            End If
         End Operator
     End Class
 End Namespace

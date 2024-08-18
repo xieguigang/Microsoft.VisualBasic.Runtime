@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b754aeb6cf72d6c69ce7aefe287edd35, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\UpdatesMaxTicksExample.vb"
+﻿#Region "Microsoft.VisualBasic::b754aeb6cf72d6c69ce7aefe287edd35, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\UpdatesMaxTicksExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 25
-    '    Code Lines: 24
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 24 (96.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (4.00%)
     '     File Size: 935 B
 
 

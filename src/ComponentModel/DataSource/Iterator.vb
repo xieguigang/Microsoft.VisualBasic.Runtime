@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bac56438c6394f3ad3d004ef53f5677, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::6bac56438c6394f3ad3d004ef53f5677, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Iterator.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 172
-    '    Code Lines: 92
-    ' Comment Lines: 52
-    '   Blank Lines: 28
+    '    Code Lines: 92 (53.49%)
+    ' Comment Lines: 52 (30.23%)
+    '    - Xml Docs: 65.38%
+    ' 
+    '   Blank Lines: 28 (16.28%)
     '     File Size: 6.22 KB
 
 

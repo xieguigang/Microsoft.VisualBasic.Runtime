@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b08dac12e35da1eb1e24ab1746fb57d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\PolarPoint.vb"
+﻿#Region "Microsoft.VisualBasic::5b08dac12e35da1eb1e24ab1746fb57d, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\PolarPoint.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 58
-    '    Code Lines: 32
-    ' Comment Lines: 18
-    '   Blank Lines: 8
+    '    Code Lines: 32 (55.17%)
+    ' Comment Lines: 18 (31.03%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (13.79%)
     '     File Size: 1.90 KB
 
 

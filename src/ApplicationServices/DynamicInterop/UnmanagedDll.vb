@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621fac823c2f87d127ece9f31559d0d4, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::bf25cd6bf0af9a8c7b231fbb21e7ff96, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 309
-    '    Code Lines: 140
-    ' Comment Lines: 126
-    '   Blank Lines: 43
-    '     File Size: 15.62 KB
+    '   Total Lines: 341
+    '    Code Lines: 157 (46.04%)
+    ' Comment Lines: 140 (41.06%)
+    '    - Xml Docs: 82.86%
+    ' 
+    '   Blank Lines: 44 (12.90%)
+    '     File Size: 16.71 KB
 
 
     '     Class UnmanagedDll
     ' 
-    '         Properties: FileName
+    '         Properties: FileName, LibraryHandle
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: checkedGetSymbolHandle, createLdLibPathMsg, DangerousGetHandle, GetAnsiString, GetByte
-    '                   (+3 Overloads) GetFunction, GetFunctionAddress, GetInt32, GetInt64, GetIntPtr
+    '         Function: checkedGetSymbolHandle, CheckHandleInvalid, createLdLibPathMsg, DangerousGetHandle, GetAnsiString
+    '                   GetByte, (+3 Overloads) GetFunction, GetFunctionAddress, GetInt32, GetInt64
+    '                   GetIntPtr, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose, ReportLoadLibError, ThrowFailedLibraryLoad, WriteByte, WriteInt32
     '              WriteInt64, WriteIntPtr
@@ -60,6 +63,7 @@
 
 Imports System.Collections.Concurrent
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
@@ -78,25 +82,27 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         Public Property FileName As String
 
-        ' /// <summary>
-        ' /// Gets whether the current handle is equal to the invalid handle
-        ' /// </summary>
-        ' public override bool IsInvalid
-        ' {
-        '     get { return handle == IntPtr.Zero; }
-        ' }
+        ''' <summary>
+        ''' get the library handle which is load via the ``LoadLibrary`` function.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property LibraryHandle As IntPtr
+            Get
+                Return handle.LibraryHandle
+            End Get
+        End Property
 
         ''' <summary>
         ''' Creates a proxy for the specified dll.
         ''' </summary>
         ''' <param name="dllName">The DLL's name.</param>
-        Public Sub New(dllName As String)
+        Public Sub New(dllName As String, Optional unix_dl_open_flag As Integer = UnixLibraryLoader.RTLD_LAZY)
             If dllName Is Nothing Then
                 Throw New ArgumentNullException("dllName", "The name of the library to load is a null reference")
             ElseIf dllName.StringEmpty Then
                 Throw New ArgumentException("The name of the library to load is an empty string", "dllName")
             Else
-                handle = New SafeHandleUnmanagedDll(dllName)
+                handle = New SafeHandleUnmanagedDll(dllName, unix_dl_open_flag)
             End If
 
             If handle.IsInvalid Then
@@ -111,13 +117,24 @@ Namespace ApplicationServices.DynamicInterop
             FileName = dllName
         End Sub
 
+        ''' <summary>
+        ''' Gets whether the current handle is equal to the invalid handle
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' public override bool IsInvalid
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckHandleInvalid() As Boolean
+            Return handle.LibraryHandle = IntPtr.Zero
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{handle} {FileName}"
         End Function
 
         Private Sub ReportLoadLibError(dllName As String, nativeError As String)
-            ' ThrowFailedLibraryLoad(dllName, nativeError)
-            ' 
             Dim dllFullName As String = dllName.GetFullPath
 
             If (File.Exists(dllFullName)) Then
@@ -165,7 +182,9 @@ Namespace ApplicationServices.DynamicInterop
         End Function
 
         Private Sub ThrowFailedLibraryLoad(dllFullName As String, nativeError As String)
-            Dim strMsg = String.Format("This {0}-bit process failed to load the library {1}", If(Environment.Is64BitProcess, "64", "32"), dllFullName)
+            Dim strMsg = String.Format("This {0}-bit process failed to load the library {1}",
+                                       If(Environment.Is64BitProcess, "64", "32"),
+                                       dllFullName)
 
             If Not String.IsNullOrEmpty(nativeError) Then
                 strMsg = strMsg & String.Format(". Native error message is '{0}'", nativeError)
@@ -184,7 +203,8 @@ Namespace ApplicationServices.DynamicInterop
         ''' <summary>
         ''' Creates the delegate function for the specified function defined in the DLL.
         ''' </summary>
-        ''' <typeparam name="TDelegate">The type of delegate. The name of the native function is assumed to be the same as the delegate type name.</typeparam>
+        ''' <typeparam name="TDelegate">The type of delegate. The name of the native 
+        ''' function is assumed to be the same as the delegate type name.</typeparam>
         ''' <returns>The delegate.</returns>
         Public Function GetFunction(Of TDelegate As Class)() As TDelegate
             Return GetFunction(Of TDelegate)(GetType(TDelegate).Name)
@@ -235,6 +255,8 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <returns>The function address.</returns>
         ''' <param name="lpProcName">name of the function in the native library</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFunctionAddress(lpProcName As String) As IntPtr
             Return handle.GetFunctionAddress(lpProcName)
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a264db899a6d8a4593d19152ce56b610, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::1342c2e8f0012bfb8993cefd8d13a37c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IProgressBar.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 17
-    ' Comment Lines: 5
-    '   Blank Lines: 8
+    '    Code Lines: 17 (56.67%)
+    ' Comment Lines: 5 (16.67%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (26.67%)
     '     File Size: 1.27 KB
 
 
@@ -84,4 +86,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         Function AsProgress(Of T)(Optional message As Func(Of T, String) = Nothing, Optional percentage As Func(Of T, Double?) = Nothing) As IProgress(Of T)
     End Interface
 End Namespace
-

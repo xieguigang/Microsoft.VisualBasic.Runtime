@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ba07e347942f1b505de3c4900f780fd, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\MarshalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8ba07e347942f1b505de3c4900f780fd, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\MarshalExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 69
-    '    Code Lines: 34
-    ' Comment Lines: 30
-    '   Blank Lines: 5
+    '    Code Lines: 34 (49.28%)
+    ' Comment Lines: 30 (43.48%)
+    '    - Xml Docs: 96.67%
+    ' 
+    '   Blank Lines: 5 (7.25%)
     '     File Size: 3.81 KB
 
 

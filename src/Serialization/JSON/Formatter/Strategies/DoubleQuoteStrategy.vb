@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d813ef73df179417ef25e8c374add697, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::d813ef73df179417ef25e8c374add697, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 16 (88.89%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (11.11%)
     '     File Size: 806 B
 
 

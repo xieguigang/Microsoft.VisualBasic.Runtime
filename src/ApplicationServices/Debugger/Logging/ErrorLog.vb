@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44e8eb229134ed89af21286977335729, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\ErrorLog.vb"
+﻿#Region "Microsoft.VisualBasic::28e4191721c5a14d8f5a2c58f81bf29c, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\ErrorLog.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
-    '    Code Lines: 65
-    ' Comment Lines: 7
-    '   Blank Lines: 5
-    '     File Size: 3.23 KB
+    '   Total Lines: 83
+    '    Code Lines: 70 (84.34%)
+    ' Comment Lines: 7 (8.43%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 6 (7.23%)
+    '     File Size: 3.43 KB
 
 
     '     Module ErrorLog
     ' 
-    '         Function: BugsFormatter, GetErrorLines
+    '         Function: BugsFormatter, EnvironmentInfo, GetErrorLines
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,7 +60,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Logging
 
-    Module ErrorLog
+    Public Module ErrorLog
 
         <Extension>
         Private Function GetErrorLines(ex As Exception) As String()
@@ -67,6 +69,18 @@ Namespace ApplicationServices.Debugging.Logging
             Else
                 Return ex.ToString.LineTokens
             End If
+        End Function
+
+        Public Function EnvironmentInfo() As String
+            Return New StringBuilder() _
+                .AppendLine(New String("=", 120)) _
+                .Append(LogFile.SystemInfo) _
+                .AppendLine(New String("=", 120)) _
+                .AppendLine() _
+                .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
+                .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
+                .AppendLine(New String("=", 120)) _
+                .ToString
         End Function
 
         ''' <summary>
@@ -97,13 +111,7 @@ Namespace ApplicationServices.Debugging.Logging
             Return New StringBuilder() _
                 .AppendLine("TIME:  " & Now.ToString) _
                 .AppendLine("TRACE: " & trace) _
-                .AppendLine(New String("=", 120)) _
-                .Append(LogFile.SystemInfo) _
-                .AppendLine(New String("=", 120)) _
-                .AppendLine() _
-                .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
-                .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
-                .AppendLine(New String("=", 120)) _
+                .AppendLine(EnvironmentInfo) _
                 .AppendLine() _
                 .AppendLine(errorName & ":") _
                 .AppendLine() _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85adef4378964ac99939700574f2504d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Numeric\f64.vb"
+﻿#Region "Microsoft.VisualBasic::85adef4378964ac99939700574f2504d, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\f64.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 231
-    '    Code Lines: 163
-    ' Comment Lines: 19
-    '   Blank Lines: 49
+    '    Code Lines: 163 (70.56%)
+    ' Comment Lines: 19 (8.23%)
+    '    - Xml Docs: 84.21%
+    ' 
+    '   Blank Lines: 49 (21.21%)
     '     File Size: 8.10 KB
 
 

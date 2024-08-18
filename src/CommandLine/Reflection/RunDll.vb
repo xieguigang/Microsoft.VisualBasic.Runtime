@@ -1,53 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::e89d959e6a8a1b5bfde7cb4d9886656c, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\RunDll.vb"
+﻿#Region "Microsoft.VisualBasic::c28059f86a578d80a1dcd736f65960ff, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\RunDll.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 71
-'    Code Lines: 41
-' Comment Lines: 20
-'   Blank Lines: 10
-'     File Size: 2.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class RunDllEntryPoint
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetDllMethod, GetPoint
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 44 (51.76%)
+    ' Comment Lines: 30 (35.29%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 11 (12.94%)
+    '     File Size: 2.98 KB
+
+
+    '     Class RunDllEntryPoint
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetDllMainFunc, GetDllMethod, GetPoint
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -66,8 +68,8 @@ Namespace CommandLine.Reflection
         ''' rundll namespace::api
         ''' </summary>
         ''' <param name="Name"></param>
-        Sub New(Name As String)
-            Call MyBase.New(Name, "")
+        Sub New(Optional name As String = "")
+            Call MyBase.New(name, "")
         End Sub
 
         ''' <summary>

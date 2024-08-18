@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1366ca43f296eec72ebc35aba9119389, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::67923b6d4f723dd77f4b92a417d25a24, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 466
-    '    Code Lines: 256
-    ' Comment Lines: 156
-    '   Blank Lines: 54
-    '     File Size: 23.31 KB
+    '   Total Lines: 492
+    '    Code Lines: 268 (54.47%)
+    ' Comment Lines: 167 (33.94%)
+    '    - Xml Docs: 59.88%
+    ' 
+    '   Blank Lines: 57 (11.59%)
+    '     File Size: 24.78 KB
 
 
     '     Module GDIColors
@@ -46,9 +48,10 @@
     '         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
     ' 
     '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
-    '                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale
-    '                   HTMLColors, IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten
-    '                   Middle, RGBExpression, ToColor, TranslateColor
+    '                   Blue, ColorTranslatorInternal, Darken, Equals, EuclideanDistance
+    '                   Green, Greyscale, HTMLColors, IsColorExpression, IsNullOrEmpty
+    '                   IsTransparent, Lighten, Middle, Red, RGBExpression
+    '                   ToColor, TranslateColor
     ' 
     ' 
     ' /********************************************************************************/
@@ -72,6 +75,21 @@ Namespace Imaging
     ''' Extensions function for the gdi+ color type.
     ''' </summary>
     Public Module GDIColors
+
+        <Extension>
+        Public Function Red(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.R))
+        End Function
+
+        <Extension>
+        Public Function Green(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.G))
+        End Function
+
+        <Extension>
+        Public Function Blue(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.B))
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -520,6 +538,12 @@ Namespace Imaging
             Return True
         End Function
 
+        ''' <summary>
+        ''' Evaluate the color distance via euclidean distance
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function EuclideanDistance(a As Color, b As Color) As Double
             Return DistanceMethods.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})

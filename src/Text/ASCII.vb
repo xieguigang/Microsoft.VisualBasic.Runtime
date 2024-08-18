@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfa58c152a11a1dd0fc953a8304239a8, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::5c5588d156e26f21214475fb22789317, Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 471
-    '    Code Lines: 190
-    ' Comment Lines: 252
-    '   Blank Lines: 29
-    '     File Size: 18.02 KB
+    '   Total Lines: 474
+    '    Code Lines: 193 (40.72%)
+    ' Comment Lines: 252 (53.16%)
+    '    - Xml Docs: 99.21%
+    ' 
+    '   Blank Lines: 29 (6.12%)
+    '     File Size: 18.21 KB
 
 
     '     Class ASCII
@@ -268,34 +270,37 @@ Namespace Text
         ''' <summary>
         ''' 双引号``"``
         ''' </summary>
-        Public Const Quot As Char = Strings.Chr(34)
+        Public Const Quot As Char = """"c ' Strings.Chr(34)
         Public Shared ReadOnly QuotBegin_ZHCN As Char = Convert.ToChar(8220)
         Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
         Public Const QuotUnknown As Char = "″"c
 
-        Public Const A As Integer = Asc("A"c)
-        Public Const Z As Integer = Asc("Z"c)
-        Public Const al% = Asc("a"c)
-        Public Const zl% = Asc("z"c)
+        Public Const A As Integer = 65 ' Asc("A"c)
+        Public Const Z As Integer = 90 ' Asc("Z"c)
+        Public Const al% = 97 'Asc("a"c)
+        Public Const zl% = 122 'Asc("z"c)
 
-        Public Const N As Integer = Asc("N"c)
+        Public Const N As Integer = 78 'Asc("N"c)
 
         ''' <summary>
         ''' ASCII code for number ``0``
         ''' </summary>
-        Public Const n0% = Asc("0"c)
+        Public Const n0% = 48 ' Asc("0"c)
         ''' <summary>
         ''' ASCII code for number ``9``
         ''' </summary>
-        Public Const n9% = Asc("9"c)
+        Public Const n9% = 57 ' Asc("9"c)
 
         ''' <summary>
         ''' 单引号
         ''' </summary>
         Public Const Mark As Char = "'"c
 
+        Shared ReadOnly asciiEncoding As Encoding = Encoding.ASCII
         Shared ReadOnly nonPrintingBytes As Index(Of Byte) = Nonprintings _
-            .Select(Function(c) CByte(Asc(c))) _
+            .Select(Function(c)
+                        Return asciiEncoding.GetBytes(c)(Scan0)
+                    End Function) _
             .ToArray
 
         Public Shared Function TrimNonPrintings(s$) As String
@@ -335,7 +340,7 @@ Namespace Text
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsASCIIString(str As String) As Boolean
-            Return Not str.Any(Function(c) Asc(c) > 128)
+            Return Not str.Any(Function(c) AscW(c) > 128)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -352,7 +357,7 @@ Namespace Text
         ''' Symbols without white space.(可以印刷的ASCII符号列表)
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Strings.Chr).ToArray
+        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Strings.ChrW).ToArray
         Public Shared ReadOnly Property AlphaNumericTable As New Dictionary(Of Char, Integer)() From {
             {"0"c, 0}, {"1"c, 1}, {"2"c, 2}, {"3"c, 3}, {"4"c, 4},
             {"5"c, 5}, {"6"c, 6}, {"7"c, 7}, {"8"c, 8}, {"9"c, 9},
@@ -522,9 +527,9 @@ Namespace Text
             ''' <summary>
             ''' <see cref="vbTab"/>
             ''' </summary>
-            Public Const TAB As Integer = Asc(vbTab)
+            Public Const TAB As Integer = AscW(vbTab)
 
-            Public Const Hyphen As Integer = Asc("-"c)
+            Public Const Hyphen As Integer = AscW("-"c)
         End Class
     End Class
 End Namespace

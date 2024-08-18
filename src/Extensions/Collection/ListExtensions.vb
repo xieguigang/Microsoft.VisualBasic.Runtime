@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34a59bb2beb26834f7b92d78fe833793, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::92e7ae451f5137bec3edd27f09c82709, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 282
-    '    Code Lines: 153
-    ' Comment Lines: 97
-    '   Blank Lines: 32
-    '     File Size: 10.57 KB
+    '   Total Lines: 327
+    '    Code Lines: 176 (53.82%)
+    ' Comment Lines: 115 (35.17%)
+    '    - Xml Docs: 81.74%
+    ' 
+    '   Blank Lines: 36 (11.01%)
+    '     File Size: 12.16 KB
 
 
     ' Module ListExtensions
     ' 
     '     Function: AppendAfter, AsHashList, AsHashSet, AsList, AsLoop
-    '               Count, HasKey, Indexing, Random, ReorderByKeys
-    '               (+2 Overloads) ToList, TopMostFrequent
+    '               Count, HasKey, Indexing, Pop, PopAt
+    '               Random, ReorderByKeys, (+2 Overloads) ToList, TopMostFrequent
     ' 
-    '     Sub: DoEach, ForEach, Swap
+    '     Sub: DoEach, ForEach, RemoveAll, Swap
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
@@ -70,19 +71,19 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Public Module ListExtensions
 
     ''' <summary>
-    ''' 将<paramref name="join"/>加入到<paramref name="list"/>序列后面
+    ''' append the <paramref name="list"/> after the collection <paramref name="first"/>.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="join"></param>
+    ''' <param name="first"></param>
     ''' <param name="list"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function AppendAfter(Of T)(join As IEnumerable(Of T), list As IEnumerable(Of T)) As IEnumerable(Of T)
-        For Each x In list.SafeQuery
-            Yield x
+    Public Iterator Function AppendAfter(Of T)(first As IEnumerable(Of T), ParamArray list As T()) As IEnumerable(Of T)
+        For Each xi As T In first.SafeQuery
+            Yield xi
         Next
-        For Each x In join.SafeQuery
-            Yield x
+        For Each xi As T In list
+            Yield xi
         Next
     End Function
 
@@ -98,6 +99,19 @@ Public Module ListExtensions
 
         Return i
     End Function
+
+    ' this count method has already been defined in the .netcore base framework
+    '''' <summary>
+    '''' Get the element count which matched with the given <paramref name="predicate"/> expression
+    '''' </summary>
+    '''' <typeparam name="T"></typeparam>
+    '''' <param name="list"></param>
+    '''' <param name="predicate"></param>
+    '''' <returns></returns>
+    '<Extension>
+    'Public Function Count(Of T)(list As IEnumerable(Of T), predicate As Predicate(Of T)) As Integer
+    '    Return list.Where(AddressOf predicate.Invoke).Count
+    'End Function
 
     '<Extension>
     'Public Function Count(Of T As IComparable(Of T))(list As IEnumerable(Of T), item As T) As Integer
@@ -334,4 +348,37 @@ Public Module ListExtensions
     <Extension> Public Function ToList(Of T)(linq As ParallelQuery(Of T)) As List(Of T)
         Return New List(Of T)(linq)
     End Function
+
+    <Extension>
+    Public Function PopAt(Of T)(list As System.Collections.Generic.List(Of T), index As Integer) As T
+        Dim getAt As T = list(index)
+        list.RemoveAt(index)
+        Return getAt
+    End Function
+
+    ''' <summary>
+    ''' removes the last element inside the list and then returns it
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Pop(Of T)(list As System.Collections.Generic.List(Of T)) As T
+        If list.Count > 0 Then
+            Dim last As T = list.Last
+            list.RemoveAt(list.Count - 1)
+            Return last
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    <Extension>
+    Public Sub RemoveAll(Of T)(list As System.Collections.Generic.List(Of T), all As IEnumerable(Of T))
+        If Not all Is Nothing Then
+            For Each item As T In all
+                Call list.Remove(item)
+            Next
+        End If
+    End Sub
 End Module

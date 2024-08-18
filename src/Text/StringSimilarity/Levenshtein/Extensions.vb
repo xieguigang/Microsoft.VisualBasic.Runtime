@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91fdbd5ab073e0638d3ad0552d11a05c, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::91fdbd5ab073e0638d3ad0552d11a05c, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 58
-    '    Code Lines: 40
-    ' Comment Lines: 7
-    '   Blank Lines: 11
+    '    Code Lines: 40 (68.97%)
+    ' Comment Lines: 7 (12.07%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (18.97%)
     '     File Size: 2.19 KB
 
 

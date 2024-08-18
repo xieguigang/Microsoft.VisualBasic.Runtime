@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ff12d46f6eedf0a985981d2f895d376, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\SubStream.vb"
+﻿#Region "Microsoft.VisualBasic::31eb86a7637c09f1430e22e544021c95, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\SubStream.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 132
-    ' Comment Lines: 11
-    '   Blank Lines: 36
-    '     File Size: 5.00 KB
+    '   Total Lines: 187
+    '    Code Lines: 132 (70.59%)
+    ' Comment Lines: 19 (10.16%)
+    '    - Xml Docs: 68.42%
+    ' 
+    '   Blank Lines: 36 (19.25%)
+    '     File Size: 5.59 KB
 
 
     '     Class SubStream

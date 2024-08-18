@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::214f37c3c933ee27546c1dfdd46ac7e3, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::3d46eebdac23d0c2a0018bdc4f224af7, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\SDKManual.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 310
-    '    Code Lines: 231
-    ' Comment Lines: 30
-    '   Blank Lines: 49
-    '     File Size: 14.06 KB
+    '   Total Lines: 311
+    '    Code Lines: 232 (74.60%)
+    ' Comment Lines: 30 (9.65%)
+    '    - Xml Docs: 86.67%
+    ' 
+    '   Blank Lines: 49 (15.76%)
+    '     File Size: 14.22 KB
 
 
     '     Module SDKManual
@@ -354,6 +356,7 @@ Namespace CommandLine.ManView
                 Call sb.AppendLine("   " & $"1. You can using ""{AssemblyName} ??<commandName>"" for getting more details command help.")
                 Call sb.AppendLine("   " & $"2. Using command ""{AssemblyName} /CLI.dev [---echo]"" for CLI pipeline development.")
                 Call sb.AppendLine("   " & $"3. Using command ""{AssemblyName} /i"" for enter interactive console mode.")
+                Call sb.AppendLine("   " & $"4. Using command ""{AssemblyName} /STACK:xxMB"" for adjust the application stack size, example as '/STACK:64MB'.")
             End If
 
             Return sb.ToString.TrimEnd(ASCII.CR, ASCII.LF, " "c)

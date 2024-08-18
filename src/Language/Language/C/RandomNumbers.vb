@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a46c9d81b6a0aedcaf5e4655df1c051a, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\C\RandomNumbers.vb"
+﻿#Region "Microsoft.VisualBasic::a46c9d81b6a0aedcaf5e4655df1c051a, Microsoft.VisualBasic.Core\src\Language\Language\C\RandomNumbers.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 27
-    ' Comment Lines: 29
-    '   Blank Lines: 9
+    '    Code Lines: 27 (41.54%)
+    ' Comment Lines: 29 (44.62%)
+    '    - Xml Docs: 41.38%
+    ' 
+    '   Blank Lines: 9 (13.85%)
     '     File Size: 2.51 KB
 
 

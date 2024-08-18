@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1db8a2fd33e57b40930e8575c88f1870, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HSLColor.vb"
+﻿#Region "Microsoft.VisualBasic::3963edb49d23d59932d98b0a8d97f127, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HSLColor.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 88
-    ' Comment Lines: 33
-    '   Blank Lines: 21
-    '     File Size: 4.68 KB
+    '   Total Lines: 147
+    '    Code Lines: 88 (59.86%)
+    ' Comment Lines: 38 (25.85%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 21 (14.29%)
+    '     File Size: 4.92 KB
 
 
     '     Structure HSLColor
@@ -61,6 +63,11 @@ Namespace Imaging
 
     ''' <summary>
     ''' Describes a RGB color in Hue, Saturation, and Luminance values.
+    ''' 
+    ''' HSL (hue, saturation, lightness)
+    ''' SL (hue, saturation, lightness) and HSV (hue, saturation, value) 
+    ''' are alternative representations of the RGB color model
+    ''' https://en.wikipedia.org/wiki/HSL_and_HSV
     ''' </summary>
     ''' <remarks></remarks>
     Public Structure HSLColor

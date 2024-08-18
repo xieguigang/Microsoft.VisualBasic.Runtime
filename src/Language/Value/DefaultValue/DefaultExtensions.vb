@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::441610f0aca2e5e816c9c303b18c4490, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::441610f0aca2e5e816c9c303b18c4490, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 86
-    '    Code Lines: 59
-    ' Comment Lines: 18
-    '   Blank Lines: 9
+    '    Code Lines: 59 (68.60%)
+    ' Comment Lines: 18 (20.93%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (10.47%)
     '     File Size: 3.64 KB
 
 

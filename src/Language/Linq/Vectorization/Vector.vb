@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6af8b4c3829a1a100a6f914014f0d2e5, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::0631a83b30393e8fddc62c429ce88104, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 398
-    '    Code Lines: 237
-    ' Comment Lines: 122
-    '   Blank Lines: 39
-    '     File Size: 14.73 KB
+    '   Total Lines: 407
+    '    Code Lines: 237 (58.23%)
+    ' Comment Lines: 131 (32.19%)
+    '    - Xml Docs: 79.39%
+    ' 
+    '   Blank Lines: 39 (9.58%)
+    '     File Size: 15.05 KB
 
 
     '     Class Vector
     ' 
-    '         Properties: Array, First, IsSingle, Last, Length
+    '         Properties: Array, First, IsScalar, Last, Length
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: Copy, GetEnumerator, IEnumerable_GetEnumerator, Subset, ToString
@@ -90,10 +92,14 @@ Namespace Language.Vectorization
             End Get
         End Property
 
+        ''' <summary>
+        ''' current vector size is one element?
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
-        Public ReadOnly Property IsSingle As Boolean
+        Public ReadOnly Property IsScalar As Boolean
             Get
-                Return Length = 1
+                Return buffer.Length = 1
             End Get
         End Property
 
@@ -275,7 +281,7 @@ Namespace Language.Vectorization
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
+                Return New List(Of T)(Me.Skip(range.Min).Take(range.Interval))
             End Get
             Set(value As List(Of T))
                 Dim indices As Integer() = range.ToArray
@@ -286,7 +292,7 @@ Namespace Language.Vectorization
             End Set
         End Property
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
         Default Public Overloads Property Item(range As (start%, ends%)) As List(Of T)
             Get
                 Return New List(Of T)(Me.Skip(range.start).Take(count:=range.ends - range.start))
@@ -413,6 +419,11 @@ Namespace Language.Vectorization
             Yield GetEnumerator()
         End Function
 
+        ''' <summary>
+        ''' get the index vector where the element test assert success
+        ''' </summary>
+        ''' <param name="assert"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Which(assert As Func(Of T, Boolean)) As Integer()
             Return Linq.which(Me.Select(assert))

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43d91a17e98f66766b91d1e098b525ea, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4ad1fccf9461fe862e3256ae7bdb890b, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 65
-    ' Comment Lines: 6
-    '   Blank Lines: 14
-    '     File Size: 3.01 KB
+    '   Total Lines: 98
+    '    Code Lines: 68 (69.39%)
+    ' Comment Lines: 14 (14.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (16.33%)
+    '     File Size: 3.60 KB
 
 
     '     Module TerminalEvents
@@ -46,9 +48,19 @@
     ' 
     '         Delegate Sub
     ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
     '             Properties: ConsoleHandleInvalid, CurrentSize
     ' 
     '             Sub: doEvents
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' 
@@ -58,6 +70,7 @@
 
 Imports System.Drawing
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.LineEdit
 Imports Microsoft.VisualBasic.Language
 
 Namespace ApplicationServices.Terminal
@@ -68,6 +81,18 @@ Namespace ApplicationServices.Terminal
     Public Module TerminalEvents
 
         Public Delegate Sub ResizeEventHandle(size As Size, oldSize As Size)
+        Public Delegate Sub KeyHandler()
+
+        ''' <summary>
+        ''' Method signature for auto completion handlers.
+        ''' </summary>
+        ''' <remarks>
+        ''' The completion handler receives the text as it is being edited as
+        ''' well as the position of the cursor in that line.   The method
+        ''' must return an instance of Completion with the possible completions.
+        ''' </remarks>
+        Public Delegate Function AutoCompleteHandler(text As String, pos As Integer) As Completion
+
 
         Dim resizeHandles As New List(Of ResizeEventHandle)
         Dim oldSize As Size
@@ -119,7 +144,7 @@ Namespace ApplicationServices.Terminal
                 End If
 
                 If resizeHandles.Count = 0 Then
-#If netcore5 = 0 Then
+#If NET48 Then
                     eventThread.Abort()
                     eventThread = Nothing
 #End If

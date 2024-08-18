@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeb358e8499bbd9140c6456c36fa2915, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::aeb358e8499bbd9140c6456c36fa2915, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 380
-    '    Code Lines: 248
-    ' Comment Lines: 72
-    '   Blank Lines: 60
+    '    Code Lines: 248 (65.26%)
+    ' Comment Lines: 72 (18.95%)
+    '    - Xml Docs: 54.17%
+    ' 
+    '   Blank Lines: 60 (15.79%)
     '     File Size: 16.81 KB
 
 

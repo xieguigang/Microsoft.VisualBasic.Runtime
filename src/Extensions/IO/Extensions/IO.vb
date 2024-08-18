@@ -1,54 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::553b66cf925ef44b2d0a8c1c6b36478f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::98af00cf9b7e0a37998f7ab398b99b6f, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 280
-'    Code Lines: 141
-' Comment Lines: 113
-'   Blank Lines: 26
-'     File Size: 11.40 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module IOExtensions
-' 
-'     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-'               OpenTextWriter, ReadBinary, ReadVector
-' 
-'     Sub: ClearFileBytes, FlushTo
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 344
+    '    Code Lines: 185 (53.78%)
+    ' Comment Lines: 125 (36.34%)
+    '    - Xml Docs: 78.40%
+    ' 
+    '   Blank Lines: 34 (9.88%)
+    '     File Size: 13.51 KB
+
+
+    ' Module IOExtensions
+    ' 
+    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+    '               OpenReadonly, OpenTextWriter, ReadBinary, ReadVector
+    ' 
+    '     Sub: ClearFileBytes, FlushTo
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -66,8 +68,11 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
-''' The extension API for system file io.(IO函数拓展)
+''' The extension API for system file io.
 ''' </summary>
+''' <remarks>
+''' (IO函数拓展)
+''' </remarks>
 <Package("IO")>
 Public Module IOExtensions
 
@@ -106,6 +111,8 @@ Public Module IOExtensions
             Call writer.Flush()
             Call writer.Close()
         End Using
+
+        Return True
     End Function
 
     ''' <summary>
@@ -162,6 +169,13 @@ Public Module IOExtensions
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' <see cref="Open"/> file with readonly parameter set to TRUE
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="retryOpen"></param>
+    ''' <param name="verbose"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function OpenReadonly(path As String,
@@ -195,6 +209,8 @@ Public Module IOExtensions
             )
         End If
     End Function
+
+    Public Const size_2GB As Long = 1024& * 1024& * 1024& * 2&
 
     ''' <summary>
     ''' Safe open a local file handle. Warning: this function is set to write mode by default, 
@@ -252,16 +268,15 @@ Public Module IOExtensions
             App.MemoryLoad > My.FrameworkInternal.MemoryLoads.Light Then
 
             ' should reads all data into memory!
-            If path.FileLength < 1024& * 1024& * 1024& * 2& Then
+            If path.FileLength < size_2GB Then
                 If verbose Then
-                    Call VBDebugger.EchoLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
-                    Call VBDebugger.EchoLine($"loads all binary data into memory for max performance!")
+                    Call VBDebugger.EchoLine($"read all binary data into memory for max performance! (size={StringFormats.Lanudry(path.FileLength)}) {path}")
                 End If
 
                 ' use a single memorystream object when file size 
                 ' is smaller than 2GB
                 Return New MemoryStream(path.ReadBinary)
-            Else
+            ElseIf App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Max Then
                 ' 20221101
                 '
                 ' use a memorystream pool object when the file size
@@ -271,6 +286,7 @@ Public Module IOExtensions
             End If
         End If
 
+        ' light memory usage
         Return New FileStream(path, mode, access, shares, App.BufferSize)
     End Function
 
@@ -321,8 +337,14 @@ Public Module IOExtensions
             '
             ' Return IO.File.ReadAllBytes(path)
             Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, App.BufferSize)
-                Dim buffer_size As Integer = file.Length
-                Dim buffer As Byte() = New Byte(buffer_size - 1) {}
+                Dim buffer_size As Long = file.Length
+                Dim buffer As Byte()
+
+                If buffer_size >= size_2GB Then
+                    Throw New InvalidProgramException($"can not read all binary into memory: the file size({StringFormats.Lanudry(buffer_size)}) of target file '{path}' is greater than 2GB!")
+                Else
+                    buffer = New Byte(buffer_size - 1) {}
+                End If
 
                 Call file.Read(buffer, Scan0, buffer_size)
 
@@ -347,17 +369,17 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' Save the binary data into the filesystem.(保存二进制数据包值文件系统)
+    ''' Save the binary data into the filesystem.
     ''' </summary>
     ''' <param name="buf">The binary bytes data of the target package's data.(目标二进制数据)</param>
     ''' <param name="path">The saved file path of the target binary data chunk.(目标二进制数据包所要进行保存的文件名路径)</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(保存二进制数据包值文件系统)</remarks>
     '''
     <ExportAPI("FlushStream")>
     <Extension>
     Public Function FlushStream(buf As IEnumerable(Of Byte), path$) As Boolean
-        Using write As New BinaryWriter(path.Open)
+        Using write As New BinaryWriter(path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
             For Each b As Byte In buf
                 Call write.Write(b)
             Next

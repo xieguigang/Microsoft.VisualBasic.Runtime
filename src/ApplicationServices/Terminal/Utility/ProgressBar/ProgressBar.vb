@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37420063ea459f8543e5d052146392c4, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::37420063ea459f8543e5d052146392c4, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 427
-    '    Code Lines: 223
-    ' Comment Lines: 136
-    '   Blank Lines: 68
+    '    Code Lines: 223 (52.22%)
+    ' Comment Lines: 136 (31.85%)
+    '    - Xml Docs: 64.71%
+    ' 
+    '   Blank Lines: 68 (15.93%)
     '     File Size: 16.25 KB
 
 

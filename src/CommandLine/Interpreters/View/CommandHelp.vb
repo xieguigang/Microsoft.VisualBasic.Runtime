@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45f2345daa33dd6572b9e0b68af236f0, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\CommandHelp.vb"
+﻿#Region "Microsoft.VisualBasic::45f2345daa33dd6572b9e0b68af236f0, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\CommandHelp.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 67
-    '    Code Lines: 49
-    ' Comment Lines: 3
-    '   Blank Lines: 15
+    '    Code Lines: 49 (73.13%)
+    ' Comment Lines: 3 (4.48%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (22.39%)
     '     File Size: 2.52 KB
 
 

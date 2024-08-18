@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d104bb84812e274d5eda9f4107e46b28, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d81a74c352036e75044a38eb2a027291, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 618
-    '    Code Lines: 479
-    ' Comment Lines: 31
-    '   Blank Lines: 108
-    '     File Size: 28.18 KB
+    '   Total Lines: 639
+    '    Code Lines: 484 (75.74%)
+    ' Comment Lines: 46 (7.20%)
+    '    - Xml Docs: 91.30%
+    ' 
+    '   Blank Lines: 109 (17.06%)
+    '     File Size: 28.91 KB
 
 
     '     Module ConsoleTableBuilderExtensions
@@ -59,6 +61,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Terminal.TablePrinter
 
@@ -100,7 +103,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         <Extension()>
         Public Function AddRow(builder As ConsoleTableBuilder, ParamArray rowValues As Object()) As ConsoleTableBuilder
             If rowValues Is Nothing Then Return builder
-            builder.Rows.Add(New List(Of Object)(rowValues))
+            builder.Rows.Add(rowValues)
             Return builder
         End Function
 
@@ -247,7 +250,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         <Extension()>
         Public Function AddRow(builder As ConsoleTableBuilder, row As List(Of Object)) As ConsoleTableBuilder
             If row Is Nothing Then Return builder
-            builder.Rows.Add(row)
+            builder.Rows.Add(row.ToArray)
             Return builder
         End Function
 
@@ -261,7 +264,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         <Extension()>
         Public Function AddRow(builder As ConsoleTableBuilder, row As DataRow) As ConsoleTableBuilder
             If row Is Nothing Then Return builder
-            builder.Rows.Add(New List(Of Object)(row.ItemArray))
+            builder.Rows.Add(row.ItemArray)
             Return builder
         End Function
 
@@ -362,12 +365,17 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Return builder
         End Function
 
+        ''' <summary>
+        ''' export the table print content string
+        ''' </summary>
+        ''' <param name="builder"></param>
+        ''' <returns></returns>
         <Extension()>
         Public Function Export(builder As ConsoleTableBuilder) As StringBuilder
-            Dim numberOfColumns = 0
+            Dim numberOfColumns As Integer = 0
 
             If builder.Rows.Any() Then
-                numberOfColumns = builder.Rows.Max(Function(x) x.Count)
+                numberOfColumns = builder.Rows.Max(Function(x) x.Length)
             Else
 
                 If builder.Column IsNot Nothing Then
@@ -388,7 +396,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 End If
             End If
 
-            For i = 0 To 1 - 1
+            For i As Integer = 0 To 1 - 1
 
                 If builder.Column IsNot Nothing AndAlso builder.Column.Count < numberOfColumns Then
                     Dim missCount = numberOfColumns - builder.Column.Count
@@ -399,28 +407,32 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 End If
             Next
 
-            For i = 0 To builder.Rows.Count - 1
+            For i As Integer = 0 To builder.Rows.Count - 1
 
-                If builder.Rows(i).Count < numberOfColumns Then
-                    Dim missCount = numberOfColumns - builder.Rows(i).Count
+                If builder.Rows(i).Length < numberOfColumns Then
+                    Dim missCount = numberOfColumns - builder.Rows(i).Length
+                    Dim miss As Object() = New Object(missCount - 1) {}
 
-                    For j = 0 To missCount - 1
-                        builder.Rows(i).Add(Nothing)
-                    Next
+                    builder.Rows(i) = builder.Rows(i).JoinIterates(miss).ToArray
                 End If
             Next
 
             Return CreateTableForCustomFormat(builder)
         End Function
 
+        ''' <summary>
+        ''' export the table content as string and do console write
+        ''' </summary>
+        ''' <param name="builder"></param>
+        ''' <param name="alignment"></param>
         <Extension()>
         Public Sub ExportAndWrite(builder As ConsoleTableBuilder, Optional alignment As TableAligntment = TableAligntment.Left)
             Dim strBuilder = builder.Export()
-            Dim lines = strBuilder.ToString().Split(Microsoft.VisualBasic.Strings.ChrW(10))
-            Dim linesCount = lines.Count()
+            Dim lines = strBuilder.ToString.LineTokens
+            Dim linesCount = lines.Length
             Dim pad As Integer
 
-            For i = 0 To linesCount - 1
+            For i As Integer = 0 To linesCount - 1
                 Dim row = String.Empty
 
                 Select Case alignment
@@ -433,12 +445,18 @@ Namespace ApplicationServices.Terminal.TablePrinter
                         row = New String(" "c, Console.WindowWidth - lines(i).RealLength(True)) & lines(i)
                 End Select
 
-                If i = 0 AndAlso Not String.IsNullOrEmpty(builder.TableTitle) AndAlso builder.TableTitle.Trim().Length <> 0 AndAlso Not builder.TableTitleColor.IsForegroundColorNull AndAlso builder.TitlePositionStartAt > 0 AndAlso builder.TitlePositionLength > 0 Then
+                If i = 0 AndAlso
+                    Not String.IsNullOrEmpty(builder.TableTitle) AndAlso
+                    builder.TableTitle.Trim().Length <> 0 AndAlso
+                    builder.TableTitleColor.ForegroundColor IsNot Nothing AndAlso
+                    builder.TitlePositionStartAt > 0 AndAlso
+                    builder.TitlePositionLength > 0 Then
+
                     Dim newTitlePositionStartAt = builder.TitlePositionStartAt + (row.Length - lines(i).Length)
                     Console.Write(row.Substring(0, newTitlePositionStartAt))
                     Console.ForegroundColor = builder.TableTitleColor.ForegroundColor
 
-                    If Not builder.TableTitleColor.IsBackgroundColorNull Then
+                    If Not builder.TableTitleColor.BackgroundColor Is Nothing Then
                         Console.BackgroundColor = builder.TableTitleColor.BackgroundColor
                     End If
 
@@ -466,6 +484,11 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Next
         End Sub
 
+        ''' <summary>
+        ''' console write line of the table data
+        ''' </summary>
+        ''' <param name="builder"></param>
+        ''' <param name="alignment"></param>
         <Extension()>
         Public Sub ExportAndWriteLine(builder As ConsoleTableBuilder, Optional alignment As TableAligntment = TableAligntment.Left)
             builder.ExportAndWrite(alignment)

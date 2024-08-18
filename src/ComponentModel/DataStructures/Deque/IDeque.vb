@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::130b099b72134ae9e6244e9048907fc1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\IDeque.vb"
+﻿#Region "Microsoft.VisualBasic::130b099b72134ae9e6244e9048907fc1, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\IDeque.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 11 (84.62%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (15.38%)
     '     File Size: 367 B
 
 

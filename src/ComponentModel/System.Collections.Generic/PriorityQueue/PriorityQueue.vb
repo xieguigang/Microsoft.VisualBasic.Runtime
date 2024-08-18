@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cebe2b568d1eae0cf3b03702280aa9c, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::e0c2dc7b9025bba44357f067ec3e5789, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 66
-    ' Comment Lines: 40
-    '   Blank Lines: 19
-    '     File Size: 3.82 KB
+    '   Total Lines: 127
+    '    Code Lines: 67 (52.76%)
+    ' Comment Lines: 40 (31.50%)
+    '    - Xml Docs: 35.00%
+    ' 
+    '   Blank Lines: 20 (15.75%)
+    '     File Size: 3.86 KB
 
 
     '     Class PriorityQueue
@@ -55,6 +57,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports any = System.Object
@@ -178,5 +181,6 @@ Namespace ComponentModel.Collection
         Public Function count() As Double
             Return Me.root.count()
         End Function
+
     End Class
 End Namespace

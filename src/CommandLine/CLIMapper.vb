@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0bd8ff98c817e8b3ab04032760e6d74, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLIMapper.vb"
+﻿#Region "Microsoft.VisualBasic::d0bd8ff98c817e8b3ab04032760e6d74, Microsoft.VisualBasic.Core\src\CommandLine\CLIMapper.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 73
-    '    Code Lines: 41
-    ' Comment Lines: 22
-    '   Blank Lines: 10
+    '    Code Lines: 41 (56.16%)
+    ' Comment Lines: 22 (30.14%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 10 (13.70%)
     '     File Size: 2.82 KB
 
 

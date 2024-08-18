@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bac3abad158dee19713f863974f75ae, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\GenericAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::6bac3abad158dee19713f863974f75ae, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\GenericAbstract.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 102
-    '    Code Lines: 48
-    ' Comment Lines: 41
-    '   Blank Lines: 13
+    '    Code Lines: 48 (47.06%)
+    ' Comment Lines: 41 (40.20%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (12.75%)
     '     File Size: 3.62 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d00aae1efbc1cf9aa886a8232ce2f78, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ListOf.vb"
+﻿#Region "Microsoft.VisualBasic::eec66f5f52d32b017e8e40c864e31de4, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ListOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 72
-    ' Comment Lines: 23
-    '   Blank Lines: 17
-    '     File Size: 3.59 KB
+    '   Total Lines: 119
+    '    Code Lines: 74 (62.18%)
+    ' Comment Lines: 27 (22.69%)
+    '    - Xml Docs: 81.48%
+    ' 
+    '   Blank Lines: 18 (15.13%)
+    '     File Size: 3.85 KB
 
 
     '     Interface IList
@@ -49,12 +51,13 @@
     ' 
     '         Properties: size
     ' 
-    '         Function: GenericEnumerator, GetEnumerator
+    '         Function: GenericEnumerator
     ' 
     '     Class XmlList
     ' 
     '         Properties: items, TypeComment
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: getCollection, getSize
     ' 
     ' 
@@ -115,15 +118,15 @@ Namespace Text.Xml.Models
             Next
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of T).GetEnumerator
-            Yield GenericEnumerator()
-        End Function
-
         Protected MustOverride Function getSize() As Integer
         Protected MustOverride Function getCollection() As IEnumerable(Of T)
 
     End Class
 
+    ''' <summary>
+    ''' a general list model for export a collection of the clr object to a single xml file
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class XmlList(Of T) : Inherits ListOf(Of T)
         Implements XmlDataModel.IXmlType
 
@@ -151,6 +154,13 @@ Namespace Text.Xml.Models
         End Property
 
         <XmlElement("item")> Public Property items As T()
+
+        Sub New()
+        End Sub
+
+        Sub New(data As IEnumerable(Of T))
+            items = data.SafeQuery.ToArray
+        End Sub
 
         Protected Overrides Function getSize() As Integer
             If items Is Nothing Then

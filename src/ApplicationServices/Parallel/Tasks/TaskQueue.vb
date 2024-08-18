@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3d675575414548526c95ea11808cbe1, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::bb553da908397724f06eb57e88178862, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 257
-    '    Code Lines: 149
-    ' Comment Lines: 66
-    '   Blank Lines: 42
-    '     File Size: 9.06 KB
+    '    Code Lines: 149 (57.98%)
+    ' Comment Lines: 66 (25.68%)
+    '    - Xml Docs: 74.24%
+    ' 
+    '   Blank Lines: 42 (16.34%)
+    '     File Size: 9.31 KB
 
 
     '     Interface ITaskHandle
@@ -218,7 +220,7 @@ Namespace Parallel.Tasks
                     Call __calls()
                 Else
                     ' 当前的线程处于空闲的状态
-                    Call Thread.Sleep(1)
+                    Call Thread.Sleep(3)
                 End If
             Loop
         End Sub

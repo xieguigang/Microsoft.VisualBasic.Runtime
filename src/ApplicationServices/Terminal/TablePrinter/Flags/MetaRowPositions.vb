@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eac45289a98915aaa9f44b9918eaeb91, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb"
+﻿#Region "Microsoft.VisualBasic::eac45289a98915aaa9f44b9918eaeb91, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 6
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 0
+    '    Code Lines: 6 (100.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 157 B
 
 

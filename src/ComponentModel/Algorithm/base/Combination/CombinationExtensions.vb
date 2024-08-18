@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df0b0c1889460db79326c0b1c9812b72, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\CombinationExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::df0b0c1889460db79326c0b1c9812b72, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\CombinationExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 98
-    '    Code Lines: 64
-    ' Comment Lines: 20
-    '   Blank Lines: 14
+    '    Code Lines: 64 (65.31%)
+    ' Comment Lines: 20 (20.41%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 14 (14.29%)
     '     File Size: 3.43 KB
 
 

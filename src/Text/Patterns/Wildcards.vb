@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f5076dcb746ac4e9f915caaf2463983, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Patterns\Wildcards.vb"
+﻿#Region "Microsoft.VisualBasic::4f5076dcb746ac4e9f915caaf2463983, Microsoft.VisualBasic.Core\src\Text\Patterns\Wildcards.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 92
-    '    Code Lines: 47
-    ' Comment Lines: 32
-    '   Blank Lines: 13
+    '    Code Lines: 47 (51.09%)
+    ' Comment Lines: 32 (34.78%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 13 (14.13%)
     '     File Size: 3.62 KB
 
 

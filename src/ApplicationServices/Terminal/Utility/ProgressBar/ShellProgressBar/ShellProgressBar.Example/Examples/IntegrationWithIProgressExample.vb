@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::166a1fd791f6aa3ed5c75ae59b35b7bf, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IntegrationWithIProgressExample.vb"
+﻿#Region "Microsoft.VisualBasic::166a1fd791f6aa3ed5c75ae59b35b7bf, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IntegrationWithIProgressExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 27 (90.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (10.00%)
     '     File Size: 1.19 KB
 
 

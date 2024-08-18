@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ea7aaaac234fa014a66c7f22c8a5347, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::b659f7d97f9bd3b03c366e48f01bf4f6, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 260
-    '    Code Lines: 151
-    ' Comment Lines: 75
-    '   Blank Lines: 34
-    '     File Size: 10.05 KB
+    '   Total Lines: 263
+    '    Code Lines: 150 (57.03%)
+    ' Comment Lines: 79 (30.04%)
+    '    - Xml Docs: 88.61%
+    ' 
+    '   Blank Lines: 34 (12.93%)
+    '     File Size: 10.22 KB
 
 
     '     Module Utils
@@ -60,10 +62,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace ApplicationServices
 
@@ -84,7 +86,7 @@ Namespace ApplicationServices
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Shell(commandLine$, Optional windowStyle As ProcessWindowStyle = ProcessWindowStyle.Normal, Optional waitForExit As Boolean = False) As Integer
-            Dim tokens As String() = CLIParser.GetTokens(commandLine)
+            Dim tokens As String() = DelimiterParser.GetTokens(commandLine)
             Dim command As String = tokens.First
             Dim arguments As String = tokens.Skip(1).Select(AddressOf Utils.CLIToken).JoinBy(" ")
 
@@ -262,12 +264,16 @@ Namespace ApplicationServices
         ''' <returns></returns>
         <Extension>
         Public Function CLIToken(token As String) As String
-            If String.IsNullOrEmpty(token) Then
-                Return """"""
+            If token.StringEmpty Then
+                ' empty string or white space token should be wrapped via the quot symbol
+                ' or it will be ignored in the commandline string
+                Return $"""{token}"""
             ElseIf Not Len(token) > 2 Then
                 Return token
             End If
 
+            ' the current token is already been wrapped via a quote symbol
+            ' no needs for the furthur processing
             If token.First = """"c AndAlso token.Last = """"c Then
                 Return token
             End If
@@ -275,7 +281,7 @@ Namespace ApplicationServices
                 token = $"""{token}"""
             End If
 
-#If netcore5 Then
+#If NETCOREAPP Then
             ' 20210819 fix for docker command on unix platform
             If token.TextEquals("$PWD") Then
                 token = """$PWD"""

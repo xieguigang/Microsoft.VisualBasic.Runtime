@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a8fe9a4285cd09d6e26f9d615f32614, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::1db154de28af2971fb5bb923bb7d27ff, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 676
-    '    Code Lines: 398
-    ' Comment Lines: 216
-    '   Blank Lines: 62
+    '   Total Lines: 675
+    '    Code Lines: 398 (58.96%)
+    ' Comment Lines: 216 (32.00%)
+    '    - Xml Docs: 78.24%
+    ' 
+    '   Blank Lines: 61 (9.04%)
     '     File Size: 24.09 KB
 
 
@@ -96,6 +98,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Module StrUtils
 
@@ -201,8 +204,6 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
-    ReadOnly newRandom As New [Default](Of Random)(Math.seeds)
-
     ''' <summary>
     ''' 32-126
     ''' </summary>
@@ -210,7 +211,7 @@ Public Module StrUtils
     ''' <param name="seed">默认是使用<see cref="Math.seeds"/>来作为随机种子的</param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False, Optional seed As Random = Nothing) As String
-        With seed Or newRandom
+        With If(seed, randf.seeds)
             Return CharString(len, Function() .RandomASCII(skipSymbols))
         End With
     End Function
@@ -239,7 +240,7 @@ Public Module StrUtils
 
     <Extension>
     Public Function RandomCharString(chars As IEnumerable(Of Char), len%) As String
-        With New Random
+        With randf.seeds
             Dim buffer = chars.ToArray
             Return CharString(len, Function() .Next(buffer))
         End With

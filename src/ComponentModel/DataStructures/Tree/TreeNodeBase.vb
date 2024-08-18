@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83acf0710495996b2d0c99f72e5d717f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\TreeNodeBase.vb"
+﻿#Region "Microsoft.VisualBasic::2aaf09dd99cc3280bf048fbcbf2ab306, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\TreeNodeBase.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 185
-    '    Code Lines: 101
-    ' Comment Lines: 55
-    '   Blank Lines: 29
-    '     File Size: 6.32 KB
+    '   Total Lines: 192
+    '    Code Lines: 101 (52.60%)
+    ' Comment Lines: 62 (32.29%)
+    '    - Xml Docs: 91.94%
+    ' 
+    '   Blank Lines: 29 (15.10%)
+    '     File Size: 6.62 KB
 
 
     '     Class TreeNodeBase

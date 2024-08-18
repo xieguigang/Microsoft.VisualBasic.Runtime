@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17c43a61ffc7404600b1be600763ab9c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\Permutator.vb"
+﻿#Region "Microsoft.VisualBasic::17c43a61ffc7404600b1be600763ab9c, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\Permutator.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 25
-    ' Comment Lines: 20
-    '   Blank Lines: 8
+    '    Code Lines: 25 (47.17%)
+    ' Comment Lines: 20 (37.74%)
+    '    - Xml Docs: 55.00%
+    ' 
+    '   Blank Lines: 8 (15.09%)
     '     File Size: 2.25 KB
 
 

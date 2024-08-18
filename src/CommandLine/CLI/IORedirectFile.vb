@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1de438c0a305f76fcc013b664314cd64, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::ab2064be779bfeaa0b3a54e7edc1e579, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 292
-    '    Code Lines: 156
-    ' Comment Lines: 96
-    '   Blank Lines: 40
-    '     File Size: 14.10 KB
+    '    Code Lines: 156 (53.42%)
+    ' Comment Lines: 96 (32.88%)
+    '    - Xml Docs: 59.38%
+    ' 
+    '   Blank Lines: 40 (13.70%)
+    '     File Size: 14.39 KB
 
 
     '     Class IORedirectFile

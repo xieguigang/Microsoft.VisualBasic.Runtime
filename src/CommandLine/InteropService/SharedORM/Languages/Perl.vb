@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b52830da536b47a8c6e0f27c10d6a98b, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\Perl.vb"
+﻿#Region "Microsoft.VisualBasic::b52830da536b47a8c6e0f27c10d6a98b, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\Perl.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 90
-    '    Code Lines: 25
-    ' Comment Lines: 55
-    '   Blank Lines: 10
+    '    Code Lines: 25 (27.78%)
+    ' Comment Lines: 55 (61.11%)
+    '    - Xml Docs: 5.45%
+    ' 
+    '   Blank Lines: 10 (11.11%)
     '     File Size: 2.43 KB
 
 

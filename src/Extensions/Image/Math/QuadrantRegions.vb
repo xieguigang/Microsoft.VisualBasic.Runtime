@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7463f59d14794f842f0e5e46595536c6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\QuadrantRegions.vb"
+﻿#Region "Microsoft.VisualBasic::7463f59d14794f842f0e5e46595536c6, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\QuadrantRegions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 34
-    '    Code Lines: 13
-    ' Comment Lines: 18
-    '   Blank Lines: 3
+    '    Code Lines: 13 (38.24%)
+    ' Comment Lines: 18 (52.94%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 3 (8.82%)
     '     File Size: 861 B
 
 

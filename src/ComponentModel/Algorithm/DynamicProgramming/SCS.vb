@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5db76c6c27cacfb60cc608fc9c5e531d, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
+﻿#Region "Microsoft.VisualBasic::ee7ae9e9c706b6b711041aabcd15093c, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 151
-    '    Code Lines: 106
-    ' Comment Lines: 21
-    '   Blank Lines: 24
-    '     File Size: 5.60 KB
+    '    Code Lines: 106 (70.20%)
+    ' Comment Lines: 21 (13.91%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 24 (15.89%)
+    '     File Size: 5.62 KB
 
 
     '     Module SCS
@@ -119,7 +121,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         ''' 当这个函数遇到完全没有重叠的序列片段的时候，是会直接将这个不重叠的片段接到SCS的最末尾的
         ''' </remarks>
         <Extension>
-        Public Function ShortestCommonSuperString(strs As IEnumerable(Of String)) As String()
+        Public Function ShortestCommonSuperString(strs As IEnumerable(Of String)) As String
             Dim seqs As String() = strs.ToArray
             Dim l As Integer = seqs.Length
             Dim p As Integer
@@ -135,7 +137,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
                 seqs(q) = seqs(l)
             Loop
 
-            Return seqs
+            Return seqs.ElementAtOrDefault(Scan0)
         End Function
 
         Private Function runIteration(l As Integer, seqs As String(), ByRef p%, ByRef q%) As String

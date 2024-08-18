@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01148a853b065b58d06add977936a047, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\ExampleBase.vb"
+﻿#Region "Microsoft.VisualBasic::01148a853b065b58d06add977936a047, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\ExampleBase.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 32
-    '    Code Lines: 26
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 26 (81.25%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (18.75%)
     '     File Size: 1.28 KB
 
 

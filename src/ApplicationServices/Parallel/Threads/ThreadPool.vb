@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acfec142079ea3616f8a852f3ac82332, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::770ded09dc182a6fe5ffc77b0cce8418, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 349
-    '    Code Lines: 200
-    ' Comment Lines: 93
-    '   Blank Lines: 56
-    '     File Size: 12.62 KB
+    '   Total Lines: 353
+    '    Code Lines: 200 (56.66%)
+    ' Comment Lines: 97 (27.48%)
+    '    - Xml Docs: 69.07%
+    ' 
+    '   Blank Lines: 56 (15.86%)
+    '     File Size: 13.14 KB
 
 
     '     Class ThreadPool
@@ -160,9 +162,13 @@ Namespace Parallel.Threads
         End Sub
 
         Sub New(Optional exceptionCallback As Action(Of String, Exception) = Nothing)
-            Me.New(LQuerySchedule.Recommended_NUM_THREADS, exceptionCallback:=exceptionCallback)
+            Me.New(LQuerySchedule.CPU_NUMBER, exceptionCallback:=exceptionCallback)
         End Sub
 
+        ''' <summary>
+        ''' Start the background task, and stop until the <see cref="Dispose()"/> method has been called
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Start() As ThreadPool
             Call ParallelExtension.RunTask(AddressOf allocate)
             Return Me

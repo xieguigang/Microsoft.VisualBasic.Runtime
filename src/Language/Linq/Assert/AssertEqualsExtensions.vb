@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acb3f4c657693f3f83734bd80f7d14ff, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Assert\AssertEqualsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::acb3f4c657693f3f83734bd80f7d14ff, Microsoft.VisualBasic.Core\src\Language\Linq\Assert\AssertEqualsExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 14
-    ' Comment Lines: 12
-    '   Blank Lines: 4
+    '    Code Lines: 14 (46.67%)
+    ' Comment Lines: 12 (40.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (13.33%)
     '     File Size: 1.09 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::150386fe3396050394bd3493fa83f9a4, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\MarshalExtra.vb"
+﻿#Region "Microsoft.VisualBasic::150386fe3396050394bd3493fa83f9a4, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\MarshalExtra.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 87
-    '    Code Lines: 43
-    ' Comment Lines: 33
-    '   Blank Lines: 11
+    '    Code Lines: 43 (49.43%)
+    ' Comment Lines: 33 (37.93%)
+    '    - Xml Docs: 72.73%
+    ' 
+    '   Blank Lines: 11 (12.64%)
     '     File Size: 4.99 KB
 
 

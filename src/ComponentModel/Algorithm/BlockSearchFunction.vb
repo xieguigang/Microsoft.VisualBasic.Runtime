@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce38d213a771b10a6babea9fae11cc3f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::ef88ad8a59bd0d5d1242a548315bf944, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 130
-    ' Comment Lines: 24
-    '   Blank Lines: 27
-    '     File Size: 5.99 KB
+    '   Total Lines: 276
+    '    Code Lines: 173 (62.68%)
+    ' Comment Lines: 64 (23.19%)
+    '    - Xml Docs: 85.94%
+    ' 
+    '   Blank Lines: 39 (14.13%)
+    '     File Size: 9.72 KB
 
 
     '     Structure Block
@@ -52,10 +54,10 @@
     ' 
     '     Class BlockSearchFunction
     ' 
-    '         Properties: Keys
+    '         Properties: Keys, numBlocks, raw, size
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: getOrderSeq, Search
+    '         Function: BuildIndex, GetBlock, GetOffset, getOrderSeq, Search
     ' 
     ' 
     ' /********************************************************************************/
@@ -65,32 +67,51 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Algorithm
 
+    ''' <summary>
+    ''' a data index block with boundary range for matches
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Friend Structure Block(Of T)
 
         Dim min As Double
         Dim max As Double
         Dim block As SequenceTag(Of T)()
 
+        ReadOnly zero As Boolean
+
         Friend Sub New(tmp As SequenceTag(Of T)())
             block = tmp
             min = block.First.tag
             max = block.Last.tag
+            zero = (max - min) = 0.0
         End Sub
 
         Public Overrides Function ToString() As String
             Return $"[{min} ~ {max}] {block.Length} elements"
         End Function
 
-        Friend Shared Function GetComparision() As Comparison(Of Block(Of T))
+        ''' <summary>
+        ''' test two elements theirs comparision relationship
+        ''' </summary>
+        ''' <param name="fuzzy">
+        ''' the tolerance error for matches the index node is equals to the given query value.
+        ''' this options should only works when the target index node contains only one elements
+        ''' and the boundary interval length is zero.
+        ''' </param>
+        ''' <returns></returns>
+        Friend Shared Function GetComparision(fuzzy As Double) As Comparison(Of Block(Of T))
             Return Function(source, target)
                        ' target is the input data to search
                        Dim x As Double = target.min
 
-                       If x > source.min AndAlso x < source.max Then
+                       ' 20240809 fix bug for matches when source block contains only one element
+                       ' needs a tolerance window for make matches!
+                       If (x > source.min AndAlso x < source.max) OrElse
+                            (source.zero AndAlso std.Abs(source.min - x) <= fuzzy) Then
                            Return 0
                        ElseIf source.min < x Then
                            Return -1
@@ -119,6 +140,24 @@ Namespace ComponentModel.Algorithm
         Dim binary As BinarySearchFunction(Of Block(Of T), Block(Of T))
         Dim eval As Func(Of T, Double)
         Dim tolerance As Double
+
+        ''' <summary>
+        ''' the input element pool count
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+
+        Public ReadOnly Property numBlocks As Integer
+            Get
+                Return binary.size
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the raw input sequence data, element order keeps the same with the input sequence.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property raw As T()
 
         ''' <summary>
         ''' get all keys which are evaluated from the input object
@@ -152,13 +191,39 @@ Namespace ComponentModel.Algorithm
                 Optional fuzzy As Boolean = False)
 
             Dim input = getOrderSeq(data, eval).ToArray
+
+            Me.raw = input.Select(Function(i) i.data).ToArray
+            Me.tolerance = tolerance
+            Me.eval = eval
+            Me.size = input.Length
+
+            If size = 0 Then
+                Return
+            Else
+                Me.binary = BuildIndex(input, tolerance, factor, fuzzy)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Create the binary search index
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="factor"></param>
+        ''' <param name="fuzzy"></param>
+        ''' <returns></returns>
+        Private Shared Function BuildIndex(input As SequenceTag(Of T)(),
+                                           tolerance As Double,
+                                           factor As Double,
+                                           fuzzy As Boolean) As BinarySearchFunction(Of Block(Of T), Block(Of T))
+
             Dim blocks As New List(Of Block(Of T))
             Dim block As Block(Of T)
             Dim tmp As New List(Of SequenceTag(Of T))
             Dim min As Double = input.First.tag
             Dim max As Double = input.Last.tag
             Dim delta As Double = tolerance * factor
-            Dim compares = Algorithm.Block(Of T).GetComparision
+            Dim compares = Algorithm.Block(Of T).GetComparision(tolerance / 2)
 
             For Each x In input
                 If x.tag - min <= delta Then
@@ -176,15 +241,13 @@ Namespace ComponentModel.Algorithm
                 blocks.Add(block)
             End If
 
-            Me.tolerance = tolerance
-            Me.eval = eval
-            Me.binary = New BinarySearchFunction(Of Block(Of T), Block(Of T))(
+            Return New BinarySearchFunction(Of Block(Of T), Block(Of T))(
                 source:=blocks,
                 key:=Function(any) any,
                 compares:=compares,
                 allowFuzzy:=fuzzy
             )
-        End Sub
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function getOrderSeq(data As IEnumerable(Of T), eval As Func(Of T, Double)) As IEnumerable(Of SequenceTag(Of T))
@@ -202,13 +265,44 @@ Namespace ComponentModel.Algorithm
         End Function
 
         ''' <summary>
-        ''' query data with a given tolerance value
+        ''' get index offset by target matches
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        Public Function GetOffset(x As T) As Integer
+            ' has no data to query
+            If size = 0 Then
+                Return -1
+            ElseIf size = 1 Then
+                ' compares the first directly
+                Dim min As Double = eval(x)
+                Dim first = binary(0)
+
+                If std.Abs(first.min - min) <= tolerance OrElse std.Abs(first.max - min) <= tolerance Then
+                    Return 0
+                Else
+                    Return -1
+                End If
+            Else
+                Return binary.BinarySearch(target:=New Block(Of T) With {.min = eval(x)})
+            End If
+        End Function
+
+        Public Iterator Function GetBlock(offset As Integer) As IEnumerable(Of T)
+            For Each a As SequenceTag(Of T) In binary(offset).block
+                Yield a.data
+            Next
+        End Function
+
+        ''' <summary>
+        ''' query data with a given tolerance value
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns>
+        ''' this function returns an empty collection if no hits result
+        ''' </returns>
         Public Iterator Function Search(x As T, Optional tolerance As Double? = Nothing) As IEnumerable(Of T)
-            Dim wrap As New Block(Of T) With {.min = eval(x)}
-            Dim i As Integer = binary.BinarySearch(target:=wrap)
+            Dim i As Integer = GetOffset(x)
 
             If i = -1 Then
                 Return
@@ -221,7 +315,10 @@ Namespace ComponentModel.Algorithm
             If i = 0 Then
                 ' 0+1
                 joint.AddRange(binary(0).block)
-                joint.AddRange(binary(1).block)
+
+                If binary.size > 1 Then
+                    Call joint.AddRange(binary(1).block)
+                End If
             ElseIf i = binary.size - 1 Then
                 ' -2 | -1
                 joint.AddRange(binary(-1).block)
@@ -236,7 +333,7 @@ Namespace ComponentModel.Algorithm
             Dim val As Double = eval(x)
 
             For Each a As SequenceTag(Of T) In joint
-                If stdNum.Abs(a.tag - val) <= tolerance Then
+                If std.Abs(a.tag - val) <= tolerance Then
                     Yield a.data
                 End If
             Next

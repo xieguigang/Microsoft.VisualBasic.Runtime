@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0316a6523ff83aff596540db7e435104, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb"
+﻿#Region "Microsoft.VisualBasic::0316a6523ff83aff596540db7e435104, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 15
-    ' Comment Lines: 3
-    '   Blank Lines: 0
+    '    Code Lines: 15 (83.33%)
+    ' Comment Lines: 3 (16.67%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 512 B
 
 

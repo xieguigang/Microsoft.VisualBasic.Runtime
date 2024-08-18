@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::584aaf4fa61d02a3e35c8ff0c57f3e71, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\HtmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::584aaf4fa61d02a3e35c8ff0c57f3e71, Microsoft.VisualBasic.Core\src\Text\Xml\HtmlBuilder.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 47
-    '    Code Lines: 31
-    ' Comment Lines: 10
-    '   Blank Lines: 6
+    '    Code Lines: 31 (65.96%)
+    ' Comment Lines: 10 (21.28%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (12.77%)
     '     File Size: 1.83 KB
 
 

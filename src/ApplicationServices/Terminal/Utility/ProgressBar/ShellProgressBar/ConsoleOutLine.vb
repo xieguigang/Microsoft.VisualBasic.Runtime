@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1ee368a44e0e29e22a1f9bb8724bffc, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ConsoleOutLine.vb"
+﻿#Region "Microsoft.VisualBasic::737810575e1a364b96eaed56c1288eff, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ConsoleOutLine.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 398 B
+    '    Code Lines: 10 (90.91%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (9.09%)
+    '     File Size: 396 B
 
 
     '     Structure ConsoleOutLine
@@ -63,4 +65,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         End Sub
     End Structure
 End Namespace
-

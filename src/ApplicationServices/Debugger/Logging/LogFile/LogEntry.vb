@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dbae4711a9e602a3a9daf2f1771469d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb"
+﻿#Region "Microsoft.VisualBasic::3dbae4711a9e602a3a9daf2f1771469d, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 44
-    '    Code Lines: 28
-    ' Comment Lines: 9
-    '   Blank Lines: 7
+    '    Code Lines: 28 (63.64%)
+    ' Comment Lines: 9 (20.45%)
+    '    - Xml Docs: 77.78%
+    ' 
+    '   Blank Lines: 7 (15.91%)
     '     File Size: 1.46 KB
 
 

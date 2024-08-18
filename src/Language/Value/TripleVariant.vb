@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c6335af5f985a73d4262c05d072226e, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\TripleVariant.vb"
+﻿#Region "Microsoft.VisualBasic::7c6335af5f985a73d4262c05d072226e, Microsoft.VisualBasic.Core\src\Language\Value\TripleVariant.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 60
-    ' Comment Lines: 0
-    '   Blank Lines: 14
+    '    Code Lines: 60 (81.08%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (18.92%)
     '     File Size: 2.47 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39082b16d13e7f3dd13ee54e0cb9c1ce, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
+﻿#Region "Microsoft.VisualBasic::2bff583ba36ecc03ca0f25ac58c4a467, Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 48
-    ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 2.46 KB
+    '   Total Lines: 79
+    '    Code Lines: 56 (70.89%)
+    ' Comment Lines: 5 (6.33%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (22.78%)
+    '     File Size: 3.15 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, ParseObject, ParseVector, ToObject
     ' 
     '         Sub: Add
     ' 
@@ -51,7 +53,7 @@
     ' 
     '         Properties: type
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
     ' 
     '     Class TypeCaster
     ' 
@@ -70,7 +72,9 @@ Namespace ComponentModel.DataSourceModel.TypeCast
     <HideModuleName> Public Module Extensions
 
         ReadOnly typeCaster As New Dictionary(Of Type, ITypeCaster) From {
-            New StringCaster, New IntegerCaster, New DoubleCaster, New DateCaster
+            New StringCaster, New IntegerCaster, New DoubleCaster,
+            New DateCaster,
+            New BooleanCaster
         }
 
         <Extension>
@@ -96,9 +100,19 @@ Namespace ComponentModel.DataSourceModel.TypeCast
             Return AddressOf typeCaster(type).ToObject
         End Function
 
+        ''' <summary>
+        ''' get helper function for parse the string to clr object
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ParseObject(type As Type) As Func(Of String, Object)
+            Return AddressOf typeCaster(type).ParseObject
+        End Function
+
+        <Extension>
+        Public Function ParseVector(type As Type) As Func(Of IEnumerable(Of String), Array)
             Return AddressOf typeCaster(type).ParseObject
         End Function
     End Module
@@ -111,6 +125,8 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         Function GetString(value As Object) As String
         Function ToObject(bytes As Byte()) As Object
         Function ParseObject(str As String) As Object
+        Function ParseObject(strs As IEnumerable(Of String)) As Array
+
     End Interface
 
     Public MustInherit Class TypeCaster(Of T) : Implements ITypeCaster
@@ -122,6 +138,7 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         Public MustOverride Function GetString(value As Object) As String Implements ITypeCaster.GetString
         Public MustOverride Function ToObject(bytes As Byte()) As Object Implements ITypeCaster.ToObject
         Public MustOverride Function ParseObject(str As String) As Object Implements ITypeCaster.ParseObject
+        Public MustOverride Function ParseObject(strs As IEnumerable(Of String)) As Array Implements ITypeCaster.ParseObject
 
     End Class
 

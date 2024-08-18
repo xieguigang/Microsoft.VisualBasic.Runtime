@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0370942fdea2143985cd7a098918c6d4, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\NamedTuple.vb"
+﻿#Region "Microsoft.VisualBasic::0370942fdea2143985cd7a098918c6d4, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\NamedTuple.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 31
-    ' Comment Lines: 0
-    '   Blank Lines: 10
+    '    Code Lines: 31 (75.61%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (24.39%)
     '     File Size: 1.13 KB
 
 

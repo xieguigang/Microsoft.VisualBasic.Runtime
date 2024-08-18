@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81fb0eed5a2e47aa2f57020a9833ef1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\Md5HashProvider.vb"
+﻿#Region "Microsoft.VisualBasic::1e1a84b99b89cee07edd688d982def9d, Microsoft.VisualBasic.Core\src\Extensions\Security\Md5HashProvider.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 52
-    ' Comment Lines: 29
-    '   Blank Lines: 17
-    '     File Size: 3.54 KB
+    '   Total Lines: 103
+    '    Code Lines: 52 (50.49%)
+    ' Comment Lines: 34 (33.01%)
+    '    - Xml Docs: 41.18%
+    ' 
+    '   Blank Lines: 17 (16.50%)
+    '     File Size: 3.75 KB
 
 
     '     Class Md5HashProvider
@@ -96,6 +98,11 @@ Namespace SecurityString
             Return GetMd5Bytes(input).ToLong
         End Function
 
+        ''' <summary>
+        ''' Calculate the md5 hashcode based on the given <paramref name="input"/> data.
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
         Public Function GetMd5Hash(input As Byte()) As String
             If input.IsNullOrEmpty Then
                 Return ""

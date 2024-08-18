@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ab6de94b9be81c46ce96c1a2414f20f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashHandle.vb"
+﻿#Region "Microsoft.VisualBasic::9ab6de94b9be81c46ce96c1a2414f20f, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashHandle.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 212
-    '    Code Lines: 153
-    ' Comment Lines: 15
-    '   Blank Lines: 44
+    '    Code Lines: 153 (72.17%)
+    ' Comment Lines: 15 (7.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 44 (20.75%)
     '     File Size: 6.67 KB
 
 

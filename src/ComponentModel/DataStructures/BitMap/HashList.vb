@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31c09f91738df57827a2a4593e45d627, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashList.vb"
+﻿#Region "Microsoft.VisualBasic::b54c692043e62979349116607e5f7192, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashList.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 139
-    ' Comment Lines: 35
-    '   Blank Lines: 30
-    '     File Size: 7.77 KB
+    '   Total Lines: 200
+    '    Code Lines: 134 (67.00%)
+    ' Comment Lines: 36 (18.00%)
+    '    - Xml Docs: 94.44%
+    ' 
+    '   Blank Lines: 30 (15.00%)
+    '     File Size: 7.61 KB
 
 
     '     Class HashList
@@ -60,7 +62,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel
@@ -114,21 +115,18 @@ Namespace ComponentModel
         End Property
 
         Public Function GetAvailablePos() As Integer
-            With list _
-                .SeqIterator _
-                .Where(Function(x) isNothing(x.value)) _
-                .FirstOrDefault
-
-                If list.Count > 0 And .i = 0 Then
-                    If list(0) Is Nothing Then
-                        Return 0
-                    Else
-                        Return list.Count
-                    End If
-                Else
-                    Return .i
+            For i As Integer = 0 To list.Count - 1
+                If isNothing(list(i)) Then
+                    Return i
                 End If
-            End With
+            Next
+
+            If list.Count = 0 OrElse isNothing(list(0)) Then
+                Return 0
+            Else
+                ' append to last
+                Return list.Count
+            End If
         End Function
 
         ''' <summary>

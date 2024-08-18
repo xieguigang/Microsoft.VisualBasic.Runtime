@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5c63b298fc2b051b5de076932172ae, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\rm.vb"
+﻿#Region "Microsoft.VisualBasic::ed5c63b298fc2b051b5de076932172ae, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\rm.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 24
-    '    Code Lines: 15
-    ' Comment Lines: 3
-    '   Blank Lines: 6
+    '    Code Lines: 15 (62.50%)
+    ' Comment Lines: 3 (12.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (25.00%)
     '     File Size: 585 B
 
 

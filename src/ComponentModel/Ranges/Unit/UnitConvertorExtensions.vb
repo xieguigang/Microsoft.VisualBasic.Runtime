@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9a7dbda05f063fff48836bf78d906ba, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\UnitConvertorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d9a7dbda05f063fff48836bf78d906ba, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\UnitConvertorExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 61
-    '    Code Lines: 50
-    ' Comment Lines: 0
-    '   Blank Lines: 11
+    '    Code Lines: 50 (81.97%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (18.03%)
     '     File Size: 2.30 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8d1b7cc6abe0b21de80d88318447a50, sciBASIC#\Microsoft.VisualBasic.Core\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::41bbfa13fb16fcfed72675d105536398, Microsoft.VisualBasic.Core\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 169 B
+    '   Total Lines: 17
+    '    Code Lines: 13 (76.47%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (23.53%)
+    '     File Size: 398 B
 
 
     ' Module Program
@@ -53,9 +55,16 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+        Call logfiletest.readerTest()
+        Call group_test.RunGroup()
+
+        Call enumeratorTestProgram.Mai2n()
+        Call terminalTest.Main1()
 
         Console.WriteLine("Hello World!")
 
+        Call markdownDisplayTest.Main1()
+        Call SIMDTest.Main1()
         Call streamTest.Main1()
     End Sub
 End Module

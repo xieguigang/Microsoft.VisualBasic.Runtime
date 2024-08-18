@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5111f0c69fb580eeca22b6f2dd77136e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Average.vb"
+﻿#Region "Microsoft.VisualBasic::5111f0c69fb580eeca22b6f2dd77136e, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Average.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 55
-    '    Code Lines: 43
-    ' Comment Lines: 0
-    '   Blank Lines: 12
+    '    Code Lines: 43 (78.18%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (21.82%)
     '     File Size: 1.46 KB
 
 

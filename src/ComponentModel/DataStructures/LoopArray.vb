@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::389ebc5e68795e26088493ec3004cf12, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\LoopArray.vb"
+﻿#Region "Microsoft.VisualBasic::389ebc5e68795e26088493ec3004cf12, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\LoopArray.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 140
-    '    Code Lines: 89
-    ' Comment Lines: 27
-    '   Blank Lines: 24
+    '    Code Lines: 89 (63.57%)
+    ' Comment Lines: 27 (19.29%)
+    '    - Xml Docs: 92.59%
+    ' 
+    '   Blank Lines: 24 (17.14%)
     '     File Size: 4.23 KB
 
 

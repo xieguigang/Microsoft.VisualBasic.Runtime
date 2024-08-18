@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3dd0616a44b1855534d15e5816cfbd9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::948f3ba155bdd0fcb8b81ca73b8afa56, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 364
-    '    Code Lines: 225
-    ' Comment Lines: 94
-    '   Blank Lines: 45
-    '     File Size: 11.00 KB
+    '   Total Lines: 426
+    '    Code Lines: 240 (56.34%)
+    ' Comment Lines: 136 (31.92%)
+    '    - Xml Docs: 80.88%
+    ' 
+    '   Blank Lines: 50 (11.74%)
+    '     File Size: 13.84 KB
 
 
     ' Module PrimitiveParser
@@ -85,6 +87,10 @@ Public Module PrimitiveParser
     ''' 这个表达式并不用于<see cref="IsNumeric"/>, 但是其他的模块的代码可能会需要这个通用的表达式来做一些判断
     ''' </remarks>
     Public Const NumericPattern$ = SimpleNumberPattern & "([eE][+-]?\d*)?"
+
+    ''' <summary>
+    ''' just a pattern for the simple number, without the scientific notation pattern
+    ''' </summary>
     Public Const SimpleNumberPattern$ = "[-]?\d*(\.\d+)?"
 
 #Region "text token pattern assert"
@@ -109,7 +115,7 @@ Public Module PrimitiveParser
     ''' 这个函数相较于<see cref="PrimitiveParser.IsNumeric"/>，仅仅做简单的数值格式判断
     ''' </summary>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>is regex pattern of <see cref="SimpleNumberPattern"/></remarks>
     <Extension>
     Public Function IsSimpleNumber(num As String) As Boolean
         Return num.IsPattern(SimpleNumberPattern)
@@ -192,6 +198,9 @@ Public Module PrimitiveParser
     ''' this function will returns true if all of the char in 
     ''' the <paramref name="num"/> string is number.
     ''' </returns>
+    ''' <remarks>
+    ''' this function also checks for the negative integer/long value
+    ''' </remarks>
     <Extension>
     Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
         Dim c As Char
@@ -242,7 +251,11 @@ Public Module PrimitiveParser
     ''' <see cref="Integer"/> text parser
     ''' </summary>
     ''' <param name="s"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this is a safe function: this function will never throw an exception
+    ''' when the given <paramref name="s"/> is not a valid integer string 
+    ''' value, the zero value will be return in such situation.
+    ''' </returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -299,14 +312,26 @@ Public Module PrimitiveParser
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDate(s As String) As Date
-        Return Date.Parse(Trim(s))
+        Dim d As Date = Nothing
+
+        Static empty_output As Index(Of String) = {"false", "na", "null", "n/a", "nan"}
+
+        If s.ToLower Like empty_output Then
+            Return Nothing
+        End If
+
+        If Date.TryParse(Trim(s), d) Then
+            Return d
+        Else
+            Return Nothing
+        End If
     End Function
 
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
     ''' </summary>
     ReadOnly booleans As New SortedDictionary(Of String, Boolean) From {
- _
+                                                                        _
         {"t", True}, {"true", True},
         {"1", True},
         {"y", True}, {"yes", True}, {"ok", True},
@@ -327,17 +352,35 @@ Public Module PrimitiveParser
     ''' 目标字符串是否可以被解析为一个逻辑值
     ''' </summary>
     ''' <param name="token"></param>
-    ''' <returns></returns>
-    Public Function IsBooleanFactor(token As String) As Boolean
+    ''' <param name="extendedLiteral">
+    ''' something other string factor example like ``yes`` or ``no``
+    ''' will also be interpreted as a valid logical factor string 
+    ''' if this parameter value is set to TRUE. default value of 
+    ''' this parameter is TRUE. 
+    ''' </param>
+    ''' <returns>
+    ''' A boolean logical factor value indicates that the given 
+    ''' string <paramref name="token"/> could be parsed as a boolean
+    ''' value literal or not.
+    ''' </returns>
+    Public Function IsBooleanFactor(token As String, Optional extendedLiteral As Boolean = True) As Boolean
         If String.IsNullOrEmpty(token) Then
             Return False
         Else
-            Return booleans.ContainsKey(token.ToLower)
+            token = token.ToLower
+        End If
+
+        If extendedLiteral Then
+            Return booleans.ContainsKey(token)
+        Else
+            ' just test for true or false literal
+            Return token = "true" OrElse token = "false"
         End If
     End Function
 
     ''' <summary>
-    ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
+    ''' Convert the string value into the boolean value, this is useful 
+    ''' to the text format configuration file into data model.
     ''' (请注意，空值字符串为False，如果字符串不存在与单词表之中，则也是False)
     ''' </summary>
     ''' <param name="str">

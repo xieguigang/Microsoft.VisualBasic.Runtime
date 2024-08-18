@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c6e4bcaf43cd53cf190230a393b776e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::4c6e4bcaf43cd53cf190230a393b776e, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 159
-    '    Code Lines: 89
-    ' Comment Lines: 48
-    '   Blank Lines: 22
+    '    Code Lines: 89 (55.97%)
+    ' Comment Lines: 48 (30.19%)
+    '    - Xml Docs: 95.83%
+    ' 
+    '   Blank Lines: 22 (13.84%)
     '     File Size: 5.67 KB
 
 

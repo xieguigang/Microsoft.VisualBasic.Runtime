@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68c45b6449dc61ed9f624d3fafdd0994, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::29459a51bd13d441b9cf57569025dbca, Microsoft.VisualBasic.Core\src\Net\MIME\ContentType.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 43
-    ' Comment Lines: 26
-    '   Blank Lines: 11
-    '     File Size: 2.46 KB
+    '   Total Lines: 89
+    '    Code Lines: 50 (56.18%)
+    ' Comment Lines: 26 (29.21%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 13 (14.61%)
+    '     File Size: 2.65 KB
 
 
     '     Class ContentType
     ' 
     '         Properties: Details, FileExt, IsEmpty, MIMEType, Name
     ' 
-    '         Function: __createObject, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: parseLine, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -109,11 +112,20 @@ Namespace Net.Protocols.ContentTypes
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(name$, mime$, ext_suffix$)
+            Me.Name = name
+            Me.MIMEType = mime
+            Me.FileExt = ext_suffix
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{MIMEType} (*{FileExt})"
         End Function
 
-        Friend Shared Function __createObject(line As String) As ContentType
+        Friend Shared Function parseLine(line As String) As ContentType
             Dim tokens As String() = line.Split(ASCII.TAB)
 
             If tokens.IsNullOrEmpty OrElse tokens.Length < 3 Then

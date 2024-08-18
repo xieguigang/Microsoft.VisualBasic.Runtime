@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e176dfff2224ee642a4cfd5299a867f1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::9922ea4307eb0104ea3a77a5ed1d1cd7, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 44
-    ' Comment Lines: 34
-    '   Blank Lines: 19
-    '     File Size: 3.21 KB
+    '   Total Lines: 127
+    '    Code Lines: 60 (47.24%)
+    ' Comment Lines: 41 (32.28%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 26 (20.47%)
+    '     File Size: 4.09 KB
 
 
     '     Class TagData
@@ -47,12 +49,18 @@
     ' 
     '     Class IntegerTagged
     ' 
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class DoubleTagged
     ' 
+    '         Properties: Tag
+    ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
+    ' 
+    '     Interface INumericKey
+    ' 
+    '         Properties: key
     ' 
     '     Class LongTagged
     ' 
@@ -71,6 +79,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
@@ -81,7 +90,7 @@ Namespace ComponentModel.TagData
     ''' <summary>
     ''' Target value have a specific tag key.
     ''' </summary>
-    ''' <typeparam name="T">The type of the tag key</typeparam>
+    ''' <typeparam name="T">The type of the <see cref="Tag"/> key</typeparam>
     ''' <typeparam name="V">The type of the value data</typeparam>
     Public Class TagData(Of T, V) : Inherits Value(Of V)
         Implements INamedValue
@@ -103,7 +112,7 @@ Namespace ComponentModel.TagData
         ''' Target value have this specific tag data.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Tag As T
+        Public Overridable Property Tag As T
 
         ''' <summary>
         ''' 默认都有一个字符串类型的标签用于保存其他的数据，但是主要还是使用``<see cref="Tag"/>``属性来进行标记
@@ -131,6 +140,19 @@ Namespace ComponentModel.TagData
     ''' <typeparam name="T"></typeparam>
     Public Class IntegerTagged(Of T) : Inherits TagData(Of Integer, T)
 
+        Sub New()
+        End Sub
+
+        Sub New(i As Integer, val As T)
+            Tag = i
+            Value = val
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(tagged As (Integer, T)) As IntegerTagged(Of T)
+            Return New IntegerTagged(Of T)(tagged.Item1, tagged.Item2)
+        End Operator
+
     End Class
 
     ''' <summary>
@@ -138,6 +160,9 @@ Namespace ComponentModel.TagData
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Class DoubleTagged(Of T) : Inherits TagData(Of Double, T)
+        Implements INumericKey
+
+        Public Overrides Property Tag As Double Implements INumericKey.key
 
         Sub New()
         End Sub
@@ -151,6 +176,19 @@ Namespace ComponentModel.TagData
             Return $"({TagStr}) {Tag.ToString("G3")} - {Value.ToString}"
         End Function
     End Class
+
+    ''' <summary>
+    ''' an object that tagged a number value as its index key
+    ''' </summary>
+    Public Interface INumericKey
+
+        ''' <summary>
+        ''' a number index key
+        ''' </summary>
+        ''' <returns></returns>
+        Property key As Double
+
+    End Interface
 
     ''' <summary>
     ''' 使用一个长整形数作为目标对象值的标签信息

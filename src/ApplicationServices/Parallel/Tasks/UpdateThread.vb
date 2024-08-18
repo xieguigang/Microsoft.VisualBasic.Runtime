@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21b986e18bf8b7ec4eeb0f03f336b3ca, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::3bbcd5999c731c098ef051b1464af64d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 82
-    ' Comment Lines: 52
-    '   Blank Lines: 19
-    '     File Size: 5.67 KB
+    '   Total Lines: 152
+    '    Code Lines: 81 (53.29%)
+    ' Comment Lines: 52 (34.21%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 19 (12.50%)
+    '     File Size: 5.62 KB
 
 
     '     Class UpdateThread
@@ -58,7 +60,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Triggers
 
 Namespace Parallel.Tasks
@@ -73,7 +74,7 @@ Namespace Parallel.Tasks
         Implements ITimer
 
         ''' <summary>
-        ''' Sleeps n **ms** interval
+        ''' The timer interval, sleeps n **ms** interval
         ''' </summary>
         ''' <returns></returns>
         Public Property Periods As Integer Implements ITimer.Interval
@@ -99,13 +100,13 @@ Namespace Parallel.Tasks
         ''' <summary>
         ''' Running a specific action in the background periodically. The time unit of the parameter <paramref name="Periods"/> is ms or Ticks.
         ''' </summary>
-        ''' <param name="Periods">ms for update thread sleeps</param>
+        ''' <param name="periods">ms for update thread sleeps</param>
         ''' <param name="updates"></param>
-        Sub New(Periods As Integer, updates As Action, <CallerMemberName> Optional caller$ = Nothing)
+        Sub New(periods As Integer, updates As Action, <CallerMemberName> Optional caller$ = Nothing)
             Call MyBase.New(updates)
 
             Me.Running = False
-            Me.Periods = Periods
+            Me.Periods = periods
             Me.Caller = caller
         End Sub
 

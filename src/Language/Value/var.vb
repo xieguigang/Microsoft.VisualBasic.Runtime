@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27579ccb20e6051398794740ba47a9a7, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\var.vb"
+﻿#Region "Microsoft.VisualBasic::27579ccb20e6051398794740ba47a9a7, Microsoft.VisualBasic.Core\src\Language\Value\var.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 61
-    '    Code Lines: 42
-    ' Comment Lines: 11
-    '   Blank Lines: 8
+    '    Code Lines: 42 (68.85%)
+    ' Comment Lines: 11 (18.03%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (13.11%)
     '     File Size: 2.05 KB
 
 

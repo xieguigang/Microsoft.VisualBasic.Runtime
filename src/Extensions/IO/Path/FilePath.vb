@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d4fb1468b35cb8c057247866f5532ef, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
+﻿#Region "Microsoft.VisualBasic::70f24d860064c7fe1674eb1c16c23734, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 73
-    ' Comment Lines: 14
-    '   Blank Lines: 14
-    '     File Size: 3.53 KB
+    '   Total Lines: 126
+    '    Code Lines: 90 (71.43%)
+    ' Comment Lines: 17 (13.49%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 19 (15.08%)
+    '     File Size: 4.51 KB
 
 
     '     Class FilePath
@@ -47,7 +49,7 @@
     '                     ParentDirectory
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: combineDirectory, Parse, ToString
+    '         Function: combineDirectory, ExtensionSuffix, Parse, ParseTokens, ToString
     '         Operators: <>, =
     ' 
     ' 
@@ -55,8 +57,13 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace FileIO.Path
 
+    ''' <summary>
+    ''' A file path string component object
+    ''' </summary>
     Public Class FilePath
 
         ''' <summary>
@@ -68,6 +75,7 @@ Namespace FileIO.Path
         Public ReadOnly Property IsAbsolutePath As Boolean = False
 
         Public ReadOnly Property DirectoryPath As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return If(IsAbsolutePath, "/", "") & combineDirectory()
             End Get
@@ -80,6 +88,7 @@ Namespace FileIO.Path
         ''' file name with extension suffix
         ''' </returns>
         Public ReadOnly Property FileName As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Components.Last
             End Get
@@ -111,12 +120,16 @@ Namespace FileIO.Path
                 IsAbsolutePath = True
             End If
 
-            Components = filepath _
+            Components = ParseTokens(filepath)
+        End Sub
+
+        Public Shared Function ParseTokens(filepath As String) As String()
+            Return filepath _
                 .Replace("\", "/") _
                 .Split("/"c) _
                 .Where(Function(t) Not t.StringEmpty) _
                 .ToArray
-        End Sub
+        End Function
 
         Public Function ExtensionSuffix(ParamArray suffix As String()) As Boolean
             Dim ext As String = FileName.ExtensionSuffix
@@ -145,6 +158,7 @@ Namespace FileIO.Path
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Parse(path As String) As FilePath
             Return New FilePath(path)
         End Function
@@ -158,10 +172,12 @@ Namespace FileIO.Path
                 file1.IsDirectory = file2.IsDirectory
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(file1 As FilePath, file2 As FilePath) As Boolean
             Return Not file1 = file2
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(path As FilePath) As String
             Return path.ToString
         End Operator

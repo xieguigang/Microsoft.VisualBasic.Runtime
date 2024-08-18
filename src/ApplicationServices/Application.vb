@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24cc1155d83f61b8e8869ed46dfa86fc, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Application.vb"
+﻿#Region "Microsoft.VisualBasic::8dd42783dfbcd8f329dce6dfa249d7f8, Microsoft.VisualBasic.Core\src\ApplicationServices\Application.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 50
-    ' Comment Lines: 11
-    '   Blank Lines: 10
-    '     File Size: 2.11 KB
+    '   Total Lines: 59
+    '    Code Lines: 39 (66.10%)
+    ' Comment Lines: 11 (18.64%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (15.25%)
+    '     File Size: 1.78 KB
 
 
     '     Class Application
@@ -46,7 +48,6 @@
     '         Properties: ExecutablePath, ProductName, ProductVersion, StartupPath
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: DoEvents
     ' 
     ' 
     ' /********************************************************************************/

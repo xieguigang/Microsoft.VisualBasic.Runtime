@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25116c411d3081067fe2931bf057c3b6, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\ProfileTable.vb"
+﻿#Region "Microsoft.VisualBasic::25116c411d3081067fe2931bf057c3b6, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\ProfileTable.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 89
-    '    Code Lines: 57
-    ' Comment Lines: 15
-    '   Blank Lines: 17
+    '    Code Lines: 57 (64.04%)
+    ' Comment Lines: 15 (16.85%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 17 (19.10%)
     '     File Size: 2.99 KB
 
 

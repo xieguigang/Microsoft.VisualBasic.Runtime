@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2558d37f971711556c19c24ffaed47e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb"
+﻿#Region "Microsoft.VisualBasic::d2558d37f971711556c19c24ffaed47e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 22
-    '    Code Lines: 19
-    ' Comment Lines: 3
-    '   Blank Lines: 0
+    '    Code Lines: 19 (86.36%)
+    ' Comment Lines: 3 (13.64%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 582 B
 
 

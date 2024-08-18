@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5ce6694de32b9b465697962abf84c00, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::21d245e6ba3da707ecc61a36959cedc9, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapScale.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 297
-    '    Code Lines: 165
-    ' Comment Lines: 95
-    '   Blank Lines: 37
-    '     File Size: 11.53 KB
+    '   Total Lines: 330
+    '    Code Lines: 181 (54.85%)
+    ' Comment Lines: 107 (32.42%)
+    '    - Xml Docs: 75.70%
+    ' 
+    '   Blank Lines: 42 (12.73%)
+    '     File Size: 12.92 KB
 
 
     '     Module BitmapScale
@@ -51,7 +53,7 @@
     ' 
     '         Delegate Sub
     ' 
-    '             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale
+    '             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale, GrayScaleF
     ' 
     '             Sub: Adjust, AdjustContrast, Binarization, BitmapPixelScans, (+2 Overloads) scanInternal
     ' 
@@ -65,7 +67,7 @@ Imports System.Drawing.Imaging
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.BitmapImage
 
@@ -109,7 +111,7 @@ Namespace Imaging.BitmapImage
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = stdNum.Abs(bmpData.Stride) * curBitmap.Height
+            Dim bytes As Integer = std.Abs(bmpData.Stride) * curBitmap.Height
 
             Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
                 ' Calls unmanaged memory write when this 
@@ -139,6 +141,11 @@ Namespace Imaging.BitmapImage
             Call curBitmap.BitmapPixelScans(Sub(byts) BitmapScale.scanInternal(byts, style))
         End Sub
 
+        ''' <summary>
+        ''' Binarization: just black and white
+        ''' </summary>
+        ''' <param name="byts"></param>
+        ''' <param name="style"></param>
         Private Sub scanInternal(byts As Marshal.Byte, style As BinarizationStyles)
             Dim iR As Integer = 0 ' Red
             Dim iG As Integer = 0 ' Green
@@ -276,7 +283,11 @@ Namespace Imaging.BitmapImage
         End Function
 
         <Extension>
-        Private Sub scanInternal(byts As Marshal.Byte)
+        Friend Sub scanInternal(byts As Marshal.Byte,
+                                Optional wr As Single = 0.3,
+                                Optional wg As Single = 0.59,
+                                Optional wb As Single = 0.11)
+
             Dim iR As Integer = 0 ' Red
             Dim iG As Integer = 0 ' Green
             Dim iB As Integer = 0 ' Blue
@@ -290,7 +301,7 @@ Namespace Imaging.BitmapImage
                 ' Get the blue channel
                 iB = byts(0)
 
-                Dim luma% = GrayScale(iR, iG, iB)
+                Dim luma% = GrayScale(iR, iG, iB, wr, wg, wb)
                 ' gray pixel
                 byts(2) = luma
                 byts(1) = luma
@@ -306,22 +317,46 @@ Namespace Imaging.BitmapImage
         ''' <param name="R"></param>
         ''' <param name="G"></param>
         ''' <param name="B"></param>
-        ''' <returns></returns>
+        ''' <returns>[0,255]</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GrayScale(R%, G%, B%) As Integer
-            Return CInt(Truncate(R * 0.3 + G * 0.59 + B * 0.11))
+        Public Function GrayScale(R%, G%, B%,
+                                  Optional wr As Single = 0.3,
+                                  Optional wg As Single = 0.59,
+                                  Optional wb As Single = 0.11) As Integer
+
+            Return CInt(Truncate(R * wr + G * wg + B * wb))
+        End Function
+
+        ''' <summary>
+        ''' luma
+        ''' </summary>
+        ''' <param name="R"></param>
+        ''' <param name="G"></param>
+        ''' <param name="B"></param>
+        ''' <returns>[0,255]</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GrayScaleF(R%, G%, B%,
+                                   Optional wr As Single = 0.3,
+                                   Optional wg As Single = 0.59,
+                                   Optional wb As Single = 0.11) As Single
+
+            Return R * wr + G * wg + B * wb
         End Function
 
         ''' <summary>
         ''' Color gray scale
         ''' </summary>
         ''' <param name="c"></param>
-        ''' <returns></returns>
+        ''' <returns>[0,255]</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function GrayScale(c As Color) As Integer
-            Return GrayScale(c.R, c.G, c.B)
+        Public Function GrayScale(c As Color,
+                                  Optional wr As Single = 0.3,
+                                  Optional wg As Single = 0.59,
+                                  Optional wb As Single = 0.11) As Integer
+
+            Return GrayScale(c.R, c.G, c.B, wr, wg, wb)
         End Function
 
         ''' <summary>

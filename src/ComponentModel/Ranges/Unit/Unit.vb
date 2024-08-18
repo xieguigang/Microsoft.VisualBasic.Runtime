@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::496dca90aad261ab581a6785bbb8ebbb, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\Unit.vb"
+﻿#Region "Microsoft.VisualBasic::496dca90aad261ab581a6785bbb8ebbb, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\Unit.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 91
-    '    Code Lines: 38
-    ' Comment Lines: 41
-    '   Blank Lines: 12
+    '    Code Lines: 38 (41.76%)
+    ' Comment Lines: 41 (45.05%)
+    '    - Xml Docs: 92.68%
+    ' 
+    '   Blank Lines: 12 (13.19%)
     '     File Size: 3.02 KB
 
 

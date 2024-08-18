@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99cf6d6a63d0ae5c00fa6b92d0195c38, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\Type.vb"
+﻿#Region "Microsoft.VisualBasic::cd25328abf1e10de5b4ea7f2368e0011, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Type.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 220
-    '    Code Lines: 127
-    ' Comment Lines: 56
-    '   Blank Lines: 37
-    '     File Size: 8.05 KB
+    '   Total Lines: 250
+    '    Code Lines: 132 (52.80%)
+    ' Comment Lines: 80 (32.00%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 38 (15.20%)
+    '     File Size: 9.31 KB
 
 
     '     Class TypeInfo
@@ -47,7 +49,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: [GetType], (+2 Overloads) LoadAssembly, ToString, TryHandleKnownType
+    '         Function: [GetType], (+3 Overloads) LoadAssembly, ToString, TryHandleKnownType
     ' 
     '         Sub: doInfoParser
     ' 
@@ -59,8 +61,9 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -69,27 +72,31 @@ Imports any = Microsoft.VisualBasic.Scripting
 Namespace Scripting.MetaData
 
     ''' <summary>
-    ''' The type reference information.(类型信息)
+    ''' The clr type reference information.
     ''' </summary>
+    ''' <remarks>(类型信息)</remarks>
     Public Class TypeInfo
 
         ''' <summary>
-        ''' The assembly file which contains this type definition.(模块文件)
+        ''' The assembly file which contains this type definition.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>(模块文件)</remarks>
         <XmlAttribute> Public Property assembly As String
         <XmlAttribute> Public Property reference As String
 
         ''' <summary>
-        ''' <see cref="Type.FullName"/>.(类型源)
+        ''' <see cref="Type.FullName"/>.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>(类型源)</remarks>
         <XmlText> Public Property fullName As String
 
         ''' <summary>
-        ''' Is this type object is a known system type?(是否是已知的类型？)
+        ''' Is this type object is a known system type?
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>(是否是已知的类型？)</remarks>
         Public ReadOnly Property isSystemKnownType As Boolean
             Get
                 Return Not any.GetType(fullName) Is Nothing
@@ -143,7 +150,25 @@ Namespace Scripting.MetaData
         ''' <returns>
         ''' nothing for dll not found
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadAssembly(searchPath As String()) As Assembly
+            Return LoadAssembly(assembly, searchPath)
+        End Function
+
+        ''' <summary>
+        ''' Loads the assembly file which contains this type. 
+        ''' </summary>
+        ''' <param name="searchPath">
+        ''' SetDllDirectory
+        ''' </param>
+        ''' <param name="assembly">
+        ''' should be the file name of the assembly dll module file, example as: ``library.dll``
+        ''' </param>
+        ''' <returns>
+        ''' nothing for dll not found
+        ''' </returns>
+        Public Shared Function LoadAssembly(assembly As String, ParamArray searchPath As String()) As Assembly
             Dim path As Value(Of String) = ""
             Dim assm As Assembly = Nothing
 
@@ -155,7 +180,7 @@ Namespace Scripting.MetaData
                 If filepath.FileLength > 0 Then
                     assm = System.Reflection.Assembly.LoadFile(filepath)
                     Exit For
-                ElseIf (path = $"{filepath}/{Me.assembly}").FileExists Then
+                ElseIf (path = $"{filepath}/{assembly}").FileExists Then
                     assm = System.Reflection.Assembly.LoadFile(path)
                     Exit For
                 End If
@@ -236,7 +261,7 @@ Namespace Scripting.MetaData
                     End If
                 Else
 #If NETCOREAPP Then
-                    Call deps.TryHandleNetCore5AssemblyBugs(package:=assm)
+                    Call deps.TryHandleNetCore5AssemblyBugs(package:=assm, external_libloc:=searchPath)
 #End If
                 End If
 

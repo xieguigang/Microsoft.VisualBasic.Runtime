@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11f876578ff4099060a3b739d3998b3b, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb"
+﻿#Region "Microsoft.VisualBasic::11f876578ff4099060a3b739d3998b3b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 37
-    '    Code Lines: 10
-    ' Comment Lines: 23
-    '   Blank Lines: 4
+    '    Code Lines: 10 (27.03%)
+    ' Comment Lines: 23 (62.16%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (10.81%)
     '     File Size: 1.17 KB
 
 

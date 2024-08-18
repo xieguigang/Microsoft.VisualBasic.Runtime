@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ff373be14dc1263b63cdc3e1eb3d107, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Relations.vb"
+﻿#Region "Microsoft.VisualBasic::1ff373be14dc1263b63cdc3e1eb3d107, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Relations.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 22
-    '    Code Lines: 8
-    ' Comment Lines: 12
-    '   Blank Lines: 2
+    '    Code Lines: 8 (36.36%)
+    ' Comment Lines: 12 (54.55%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (9.09%)
     '     File Size: 556 B
 
 

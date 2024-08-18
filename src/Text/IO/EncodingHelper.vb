@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\EncodingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, Microsoft.VisualBasic.Core\src\Text\IO\EncodingHelper.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 95
-    '    Code Lines: 18
-    ' Comment Lines: 68
-    '   Blank Lines: 9
+    '    Code Lines: 18 (18.95%)
+    ' Comment Lines: 68 (71.58%)
+    '    - Xml Docs: 39.71%
+    ' 
+    '   Blank Lines: 9 (9.47%)
     '     File Size: 3.62 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0965289e3eaf0038712d540a7382413e, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\TextFileEncodingDetector.vb"
+﻿#Region "Microsoft.VisualBasic::0965289e3eaf0038712d540a7382413e, Microsoft.VisualBasic.Core\src\Text\IO\TextFileEncodingDetector.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 406
-    '    Code Lines: 224
-    ' Comment Lines: 123
-    '   Blank Lines: 59
+    '    Code Lines: 224 (55.17%)
+    ' Comment Lines: 123 (30.30%)
+    '    - Xml Docs: 8.94%
+    ' 
+    '   Blank Lines: 59 (14.53%)
     '     File Size: 21.10 KB
 
 

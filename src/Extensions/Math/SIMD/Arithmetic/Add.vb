@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b90b7990b6377319dc3d61d743919616, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Add.vb"
+﻿#Region "Microsoft.VisualBasic::f18ce48bcaf54c9d47be3ebf7d98ea47, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Add.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 89
-    ' Comment Lines: 18
-    '   Blank Lines: 19
-    '     File Size: 4.94 KB
+    '   Total Lines: 133
+    '    Code Lines: 89 (66.92%)
+    ' Comment Lines: 25 (18.80%)
+    '    - Xml Docs: 52.00%
+    ' 
+    '   Blank Lines: 19 (14.29%)
+    '     File Size: 5.19 KB
 
 
     '     Class Add
@@ -61,6 +63,13 @@ Namespace Math.SIMD
 
     Public Class Add
 
+        ''' <summary>
+        ''' <paramref name="v1"/> + <paramref name="v2"/> or 
+        ''' <paramref name="v2"/> + <paramref name="v1"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_op_add_f64_scalar(v1 As Double(), v2 As Double) As Double()
             Select Case SIMDEnvironment.config
                 Case SIMDConfiguration.disable
@@ -140,9 +149,9 @@ none:               Dim out As Double() = New Double(v1.Length - 1) {}
                     GoTo legacy
 #Else
                     If Avx2.IsSupported Then
-                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx2.Add)
+                        Return SIMDIntrinsics.VectorAddAvx2(v1, v2)
                     ElseIf Avx.IsSupported Then
-                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx.Add)
+                        Return SIMDIntrinsics.VectorAddAvx(v1, v2)
                     Else
                         GoTo legacy
                     End If

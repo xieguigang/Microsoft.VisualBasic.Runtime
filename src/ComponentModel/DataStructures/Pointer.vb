@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c118f269e92d3295ecf727bc3e30ca3, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::0c118f269e92d3295ecf727bc3e30ca3, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Pointer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 17
-    ' Comment Lines: 10
-    '   Blank Lines: 6
+    '    Code Lines: 17 (51.52%)
+    ' Comment Lines: 10 (30.30%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (18.18%)
     '     File Size: 1.11 KB
 
 

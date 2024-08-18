@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b3b027647d4ae24d667f7ccbde5ac4, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb"
+﻿#Region "Microsoft.VisualBasic::b5b3b027647d4ae24d667f7ccbde5ac4, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 44
-    ' Comment Lines: 5
-    '   Blank Lines: 16
+    '    Code Lines: 44 (67.69%)
+    ' Comment Lines: 5 (7.69%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 16 (24.62%)
     '     File Size: 2.13 KB
 
 

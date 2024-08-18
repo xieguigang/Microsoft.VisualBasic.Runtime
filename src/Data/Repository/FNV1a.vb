@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::276543f25bf457a438df802cb3d06404, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Repository\FNV1a.vb"
+﻿#Region "Microsoft.VisualBasic::f143c3ac5e162b690da25f9ddd694bd0, Microsoft.VisualBasic.Core\src\Data\Repository\FNV1a.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 68
-    ' Comment Lines: 25
-    '   Blank Lines: 16
-    '     File Size: 3.91 KB
+    '   Total Lines: 114
+    '    Code Lines: 72 (63.16%)
+    ' Comment Lines: 25 (21.93%)
+    '    - Xml Docs: 84.00%
+    ' 
+    '   Blank Lines: 17 (14.91%)
+    '     File Size: 4.23 KB
 
 
     '     Module FNV1a
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetDeterministicHashCode, (+4 Overloads) GetHashCode, getHashValue
+    '         Function: GetDeterministicHashCode, (+5 Overloads) GetHashCode, getHashValue
     ' 
     '         Sub: RegisterHashFunction
     ' 
@@ -74,9 +76,9 @@ Namespace Data.Repository
         ''' <param name="str"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetDeterministicHashCode(str As String) As Integer
-            Dim hash1 As Integer = (5381 << 16) + 5381
-            Dim hash2 As Integer = hash1
+        Public Function GetDeterministicHashCode(str As String) As UInteger
+            Dim hash1 As UInteger = (5381 << 16) + 5381
+            Dim hash2 As UInteger = hash1
 
             For i As Integer = 0 To str.Length - 1 Step 2
                 hash1 = (hash1 << 5) + hash1 Xor AscW(str(i))
@@ -114,6 +116,11 @@ Namespace Data.Repository
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetHashCode(str As String) As UInteger
+            Return FNV1a.GetHashCode({str})
+        End Function
+
         Public Function GetHashCode(targets As IEnumerable(Of String)) As UInteger
             Const offset As UInteger = 2166136261
             Const prime As Long = 16777619
@@ -147,13 +154,13 @@ Namespace Data.Repository
         ''' <remarks>
         ''' http://www.isthe.com/chongo/tech/comp/fnv/index.html
         ''' </remarks>
-        Public Function GetHashCode(targets As IEnumerable(Of Object)) As Integer
-            Const offset As Integer = 2166136261
-            Const prime As Integer = 16777619
+        Public Function GetHashCode(targets As IEnumerable(Of Object)) As UInteger
+            Const offset As UInteger = 2166136261
+            Const prime As Long = 16777619
 
             Return targets.Aggregate(
                 seed:=offset,
-                func:=Function(hashCode As Integer, value As Object)
+                func:=Function(hashCode As UInteger, value As Object)
                           If value Is Nothing Then
                               Return (hashCode Xor 0) * prime
                           Else

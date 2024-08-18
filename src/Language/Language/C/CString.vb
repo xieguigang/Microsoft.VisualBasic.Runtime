@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d00cc02e9a1f4843b3a1949b0ed4eee, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\C\CString.vb"
+﻿#Region "Microsoft.VisualBasic::2d00cc02e9a1f4843b3a1949b0ed4eee, Microsoft.VisualBasic.Core\src\Language\Language\C\CString.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 208
-    '    Code Lines: 108
-    ' Comment Lines: 71
-    '   Blank Lines: 29
+    '    Code Lines: 108 (51.92%)
+    ' Comment Lines: 71 (34.13%)
+    '    - Xml Docs: 70.42%
+    ' 
+    '   Blank Lines: 29 (13.94%)
     '     File Size: 8.13 KB
 
 

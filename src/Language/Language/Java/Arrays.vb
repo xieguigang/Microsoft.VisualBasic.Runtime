@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::306f7817ab3bb8be9ab08918f8e5ed21, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::b12fd4bd45ec42d9f26eafdc45f9be8c, Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 35
-    ' Comment Lines: 21
-    '   Blank Lines: 8
-    '     File Size: 2.58 KB
+    '   Total Lines: 68
+    '    Code Lines: 36 (52.94%)
+    ' Comment Lines: 24 (35.29%)
+    '    - Xml Docs: 95.83%
+    ' 
+    '   Blank Lines: 8 (11.76%)
+    '     File Size: 2.79 KB
 
 
     '     Module Arrays
@@ -53,6 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -68,8 +71,11 @@ Namespace Language.Java
         ''' <typeparam name="T"></typeparam>
         ''' <param name="a"></param>
         ''' <param name="val"></param>
+        ''' <remarks>
+        ''' this function will not break the given vector its class reference
+        ''' </remarks>
         <Extension>
-        Public Sub fill(Of T)(ByRef a As T(), val As T)
+        Public Sub fill(Of T)(<Out> ByRef a As T(), val As T)
             For i% = 0 To a.Length - 1
                 a(i%) = val
             Next
@@ -101,7 +107,7 @@ Namespace Language.Java
         ''' <returns>a view of the specified range within this list</returns>
         ''' 
         <Extension>
-        Public Function subList(Of T)(list As System.Collections.Generic.List(Of T), fromIndex%, toIndex%) As List(Of T)
+        Public Function subList(Of T)(list As IList(Of T), fromIndex%, toIndex%) As List(Of T)
             Return list.Skip(fromIndex).Take(toIndex - fromIndex).AsList
         End Function
 

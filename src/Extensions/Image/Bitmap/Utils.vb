@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6004c228798a107fdd01c9739bc50627, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::6004c228798a107fdd01c9739bc50627, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Utils.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 259
-    '    Code Lines: 166
-    ' Comment Lines: 44
-    '   Blank Lines: 49
+    '    Code Lines: 166 (64.09%)
+    ' Comment Lines: 44 (16.99%)
+    '    - Xml Docs: 61.36%
+    ' 
+    '   Blank Lines: 49 (18.92%)
     '     File Size: 9.51 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9523782a65de08136746419f1bb1d3b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::1f7988a9bdacb96478dfb068a3feabec, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1397
-    '    Code Lines: 758
-    ' Comment Lines: 484
-    '   Blank Lines: 155
-    '     File Size: 50.77 KB
+    '   Total Lines: 1441
+    '    Code Lines: 781 (54.20%)
+    ' Comment Lines: 501 (34.77%)
+    '    - Xml Docs: 89.82%
+    ' 
+    '   Blank Lines: 159 (11.03%)
+    '     File Size: 53.98 KB
 
 
     ' Module StringHelpers
@@ -48,7 +50,7 @@
     '     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
     '               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
     '               First, FormatString, FormatZero, GetBetween, GetEMails
-    '               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
+    '               GetStackValue, GetString, (+3 Overloads) GetTagValue, GetURLs, IgnoreCase
     '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
     '               Located, Lookup, Lookups, (+2 Overloads) Match, Matches
     '               MatchPattern, (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd
@@ -294,10 +296,16 @@ Public Module StringHelpers
     ''' 将一个任意的目标字符集合转换为字符串对象
     ''' </summary>
     ''' <param name="chs"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will returns empty string if the given <paramref name="chs"/> collection data is nothing.
+    ''' </returns>
     <Extension>
     Public Function CharString(chs As IEnumerable(Of Char)) As String
-        Return New String(chs.ToArray)
+        If chs Is Nothing Then
+            Return ""
+        Else
+            Return New String(chs.ToArray)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -383,10 +391,19 @@ Public Module StringHelpers
     ''' <param name="data"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' Converts the object collection to string collection at first, 
+    ''' and then do <see cref="System.String.Join"/>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter$, Optional toString As Func(Of T, String) = Nothing) As String
+        If GetType(T) Is GetType(String) Then
+            Return String.Join(delimiter, DirectCast(data, IEnumerable(Of String)).SafeQuery.ToArray)
+        ElseIf GetType(T) Is GetType(Char) Then
+            Return String.Join(delimiter, DirectCast(data, IEnumerable(Of Char)).SafeQuery.Select(Function(c) c.ToString).ToArray)
+        End If
+
         If toString Is Nothing Then
             toString = Function(o) Scripting.ToString(o)
         End If
@@ -397,6 +414,16 @@ Public Module StringHelpers
             .DoCall(Function(strs)
                         Return String.Join(delimiter, strs.ToArray)
                     End Function)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetTagValue(m As Match,
+                                Optional delimiter$ = " ",
+                                Optional trim As Boolean = False,
+                                Optional failureNoName As Boolean = True) As NamedValue(Of String)
+
+        Return GetTagValue(m.Value, delimiter, trim, failureNoName)
     End Function
 
     ''' <summary>
@@ -464,7 +491,10 @@ Public Module StringHelpers
         End If
     End Function
 
-    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-"}
+    ''' <summary>
+    ''' NA, n/a, NULL, null, N/A, -
+    ''' </summary>
+    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-", "/", "#n/a", "#N/A", "#NA"}
 
     ''' <summary>
     ''' Shortcuts for method <see cref="String.Equals"/>
@@ -530,7 +560,9 @@ Public Module StringHelpers
     ''' and also treat the whitespace as empty?
     ''' </param>
     ''' <param name="testEmptyFactor">
-    ''' and also treat some NULL factor in R language as empty?
+    ''' and also treat some NULL factor in R language as empty? 
+    ''' factor string will be tested, example like: 
+    ''' NA, n/a, NULL, null, N/A, -
     ''' </param>
     ''' <returns>
     ''' this function returns TRUE if the string is empty,
@@ -619,7 +651,8 @@ Public Module StringHelpers
     ''' <returns></returns>
     ''' <remarks>Using for the Fasta sequence writer.</remarks>
     <ExportAPI("s.Parts")>
-    <Extension> Public Function Parts(s$, len%) As String
+    <Extension>
+    Public Function Parts(s$, len%) As String
         Dim sbr As New StringBuilder
         Call Parts(s, len, sbr)
         Return sbr.ToString
@@ -672,13 +705,15 @@ Public Module StringHelpers
 
     ''' <summary>
     ''' Counts the specific char that appeared in the input string.
-    ''' (计数在字符串之中所出现的指定的字符的出现的次数)
     ''' </summary>
     ''' <param name="str"></param>
     ''' <param name="ch"></param>
-    ''' <returns></returns>
-    '''
-    <Extension> Public Function Count(str$, ch As Char) As Integer
+    ''' <returns>this functions returns zero if the given <paramref name="str"/> is null or empty.</returns>
+    ''' <remarks>
+    ''' (计数在字符串之中所出现的指定的字符的出现的次数)
+    ''' </remarks>
+    <Extension>
+    Public Function Count(str$, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
         Else
@@ -744,12 +779,14 @@ Public Module StringHelpers
 
     ''' <summary>
     ''' Get sub string value from the region that between the <paramref name="left"/> and <paramref name="right"/>.
-    ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
     ''' </summary>
     ''' <param name="str$"></param>
     ''' <param name="left$"></param>
     ''' <param name="right$"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
+    ''' </remarks>
     <ExportAPI("Get.Stackvalue")>
     <Extension>
     Public Function GetStackValue(str$, left$, right$) As String
@@ -885,7 +922,7 @@ Public Module StringHelpers
     ''' <param name="input">The string to search for a match.</param>
     ''' <param name="pattern">The regular expression pattern to match.</param>
     ''' <param name="options"></param>
-    ''' <returns></returns>
+    ''' <returns>empty string will be returns if the given input string is null or empty.</returns>
     <Extension>
     Public Function Match(input$, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
         If input.StringEmpty Then
@@ -1015,7 +1052,10 @@ Public Module StringHelpers
     ''' <param name="pattern"><see cref="Regex"/> patterns</param>
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' this string parser function is a safe function: will returns an empty string 
+    ''' collection if the given <paramref name="source"/> string is empty or nothing.
+    ''' </remarks>
     <Extension>
     Public Function StringSplit(source$, pattern$,
                                 Optional trimTrailingEmptyStrings As Boolean = False,

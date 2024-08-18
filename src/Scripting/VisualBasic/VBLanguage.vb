@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0064a6a31284baa503da7845ed505bf0, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::0064a6a31284baa503da7845ed505bf0, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\VBLanguage.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 77
-    '    Code Lines: 59
-    ' Comment Lines: 10
-    '   Blank Lines: 8
+    '    Code Lines: 59 (76.62%)
+    ' Comment Lines: 10 (12.99%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (10.39%)
     '     File Size: 3.38 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringBuilders.vb"
+﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringBuilders.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 44
-    '    Code Lines: 23
-    ' Comment Lines: 16
-    '   Blank Lines: 5
+    '    Code Lines: 23 (52.27%)
+    ' Comment Lines: 16 (36.36%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (11.36%)
     '     File Size: 1.46 KB
 
 

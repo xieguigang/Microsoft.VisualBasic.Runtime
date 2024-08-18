@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adf20358f38810671cce007f14ff5eb1, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\UnbufferedStringReader.vb"
+﻿#Region "Microsoft.VisualBasic::adf20358f38810671cce007f14ff5eb1, Microsoft.VisualBasic.Core\src\Text\IO\UnbufferedStringReader.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 167
-    '    Code Lines: 116
-    ' Comment Lines: 39
-    '   Blank Lines: 12
+    '    Code Lines: 116 (69.46%)
+    ' Comment Lines: 39 (23.35%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (7.19%)
     '     File Size: 5.96 KB
 
 

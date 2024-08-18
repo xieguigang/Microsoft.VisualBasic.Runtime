@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a9ce12c68f18cede187f581735ee789, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Comb.vb"
+﻿#Region "Microsoft.VisualBasic::4a33437c1f4fcc6111cf3e0299e2dcb0, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Comb.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 86
-    ' Comment Lines: 23
-    '   Blank Lines: 21
-    '     File Size: 4.23 KB
+    '   Total Lines: 129
+    '    Code Lines: 86 (66.67%)
+    ' Comment Lines: 23 (17.83%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (15.50%)
+    '     File Size: 4.22 KB
 
 
     '     Class Comb
@@ -112,7 +114,7 @@ Namespace ComponentModel.Algorithm.base
                    Order By array.Length Descending
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
 
         Public Function GetObjectPair() As (T, T)
             If source.Count = 1 Then
@@ -133,7 +135,6 @@ Namespace ComponentModel.Algorithm.base
                 Return pair
             End If
         End Function
-
 #End If
 
         Friend Sub New()

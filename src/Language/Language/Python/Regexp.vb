@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab30b487b449be23e5a9d0953d89542f, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Python\Regexp.vb"
+﻿#Region "Microsoft.VisualBasic::ab30b487b449be23e5a9d0953d89542f, Microsoft.VisualBasic.Core\src\Language\Language\Python\Regexp.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 87
-    '    Code Lines: 50
-    ' Comment Lines: 21
-    '   Blank Lines: 16
+    '    Code Lines: 50 (57.47%)
+    ' Comment Lines: 21 (24.14%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (18.39%)
     '     File Size: 3.33 KB
 
 

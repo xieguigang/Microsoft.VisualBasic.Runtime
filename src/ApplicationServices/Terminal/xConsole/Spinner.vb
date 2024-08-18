@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c36dcec78290e972fa2362d0ba847402, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Spinner.vb"
+﻿#Region "Microsoft.VisualBasic::c36dcec78290e972fa2362d0ba847402, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Spinner.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 114
-    '    Code Lines: 65
-    ' Comment Lines: 30
-    '   Blank Lines: 19
+    '    Code Lines: 65 (57.02%)
+    ' Comment Lines: 30 (26.32%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 19 (16.67%)
     '     File Size: 4.13 KB
 
 

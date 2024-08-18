@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a104ecb14fdd64714cfa9bd23861ab66, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NeverTicksExample.vb"
+﻿#Region "Microsoft.VisualBasic::a104ecb14fdd64714cfa9bd23861ab66, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NeverTicksExample.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 14
-    '    Code Lines: 13
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 13 (92.86%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (7.14%)
     '     File Size: 518 B
 
 

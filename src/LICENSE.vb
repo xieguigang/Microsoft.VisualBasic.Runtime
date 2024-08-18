@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b19316480e931dee2d07a353e91503b0, sciBASIC#\Microsoft.VisualBasic.Core\src\LICENSE.vb"
+﻿#Region "Microsoft.VisualBasic::b662ae0812e27ad353e607293ac2a2b2, Microsoft.VisualBasic.Core\src\LICENSE.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 16
-    ' Comment Lines: 23
-    '   Blank Lines: 5
-    '     File Size: 1.49 KB
+    '   Total Lines: 41
+    '    Code Lines: 14 (34.15%)
+    ' Comment Lines: 23 (56.10%)
+    '    - Xml Docs: 60.87%
+    ' 
+    '   Blank Lines: 4 (9.76%)
+    '     File Size: 1.46 KB
 
 
     ' Module LICENSE
@@ -57,8 +59,6 @@ Imports System.Runtime.CompilerServices
 ''' Information about this VisualBasic App framework code module.
 ''' </summary>
 Public Module LICENSE
-
-#If FRAMEWORD_CORE Then
 
     '''<summary>
     '''  Looks up a localized string similar to                     GNU GENERAL PUBLIC LICENSE
@@ -82,7 +82,6 @@ Public Module LICENSE
             Return My.Resources.gpl
         End Get
     End Property
-#End If
 
     Public Const githubURL$ = "https://github.com/xieguigang/sciBASIC"
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52c848d0fa99997a0de2d82c171ecb8f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::2935fa7ac8214956f4877463a979f842, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 419
-    '    Code Lines: 243
-    ' Comment Lines: 125
-    '   Blank Lines: 51
-    '     File Size: 14.85 KB
+    '   Total Lines: 506
+    '    Code Lines: 270 (53.36%)
+    ' Comment Lines: 179 (35.38%)
+    '    - Xml Docs: 95.53%
+    ' 
+    '   Blank Lines: 57 (11.26%)
+    '     File Size: 18.68 KB
 
 
     '     Class Index
@@ -47,13 +49,14 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
-    '                   indexing, Indexing, (+2 Overloads) Intersect, NotExists, ToString
+    '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, GetSynonymOrdinal
+    '                   IEnumerable_GetEnumerator, indexing, Indexing, (+2 Overloads) Intersect, NotExists
+    '                   ToString
     ' 
-    '         Sub: [Set], Add, Clear, Delete
+    '         Sub: [Set], Add, AddList, Clear, (+2 Overloads) Delete
     ' 
-    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
-    '                    (+2 Overloads) IsTrue, (+2 Overloads) Like
+    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <, <>, =
+    '                    >, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -80,6 +83,9 @@ Namespace ComponentModel.Collection
     Public Class Index(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
+        ''' <summary>
+        ''' list value will be set to nothing on <see cref="Delete(T)"/>
+        ''' </summary>
         Dim index As HashList(Of SeqValue(Of T))
         ''' <summary>
         ''' the index offset value ,zero by default
@@ -100,7 +106,7 @@ Namespace ComponentModel.Collection
         ''' <summary>
         ''' Gets the input object keys that using for the construction of this index.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>an array of value copy of the map keys</returns>
         Public ReadOnly Property Objects As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -215,8 +221,26 @@ Namespace ComponentModel.Collection
             Return maps.Keys.AsEnumerable
         End Function
 
+        ''' <summary>
+        ''' get element index
+        ''' </summary>
+        ''' <param name="items"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinal(items As IEnumerable(Of T)) As Integer()
             Return items.Select(Function(element) Me(element)).ToArray
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="synonym"></param>
+        ''' <returns>this function returns -1 if synonym value is not found inside the index</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSynonymOrdinal(ParamArray synonym As T()) As Integer
+            Return GetOrdinal(synonym) _
+                .Where(Function(i) i > -1) _
+                .DefaultFirst(-1)
         End Function
 
         Public Sub [Set](index As Integer, val As T)
@@ -227,6 +251,10 @@ Namespace ComponentModel.Collection
             }
         End Sub
 
+        ''' <summary>
+        ''' just removes the key, the index ordinal offset will not make any changes
+        ''' </summary>
+        ''' <param name="index"></param>
         Public Sub Delete(index As T)
             Dim i = Me.IndexOf(index)
 
@@ -234,6 +262,16 @@ Namespace ComponentModel.Collection
                 Me.maps.Remove(index)
                 Me.index(i) = Nothing
             End If
+        End Sub
+
+        ''' <summary>
+        ''' just removes the key, the index ordinal offset will not make any changes
+        ''' </summary>
+        ''' <param name="index"></param>
+        Public Sub Delete(ParamArray index As T())
+            For Each item As T In index
+                Call Delete(item)
+            Next
         End Sub
 
         Public Iterator Function Intersect(collection As IEnumerable(Of T)) As IEnumerable(Of T)
@@ -269,6 +307,9 @@ Namespace ComponentModel.Collection
         ''' <returns>
         ''' 这个函数所返回来的值是所添加的<paramref name="x"/>的index值
         ''' </returns>
+        ''' <remarks>
+        ''' this function will ignores of the existed duplicated item
+        ''' </remarks>
         Public Function Add(x As T) As Integer
             If Not maps.ContainsKey(x) Then
                 Call maps.Add(x, maps.Count + base)
@@ -343,16 +384,31 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        ''' <summary>
+        ''' cast index to a dictionary mapping of object element value to its index value
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(index As Index(Of T)) As Dictionary(Of T, Integer)
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator
 
+        ''' <summary>
+        ''' Create a index of target element array with index base zero
+        ''' </summary>
+        ''' <param name="objs"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(objs As T()) As Index(Of T)
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        ''' <summary>
+        ''' Create a index of target element array with index base zero
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(list As List(Of T)) As Index(Of T)
             Return New Index(Of T)(source:=list)
@@ -381,7 +437,8 @@ Namespace ComponentModel.Collection
         ''' <param name="list"></param>
         ''' <returns></returns>
         Public Shared Operator -(index As Index(Of T), list As List(Of T)) As Index(Of T)
-            Dim table = index.maps
+            ' make a data copy
+            Dim table As New Dictionary(Of T, Integer)(index.maps)
 
             For Each item As T In list
                 If table.ContainsKey(item) Then
@@ -410,10 +467,17 @@ Namespace ComponentModel.Collection
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator
             For Each o As SeqValue(Of T) In index
+                ' 20231227
+                ' handling of the delete operation result
+                If o.value Is Nothing AndAlso o.i = 0 Then
+                    Continue For
+                End If
+
                 Yield o
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
@@ -432,6 +496,26 @@ Namespace ComponentModel.Collection
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(index As Index(Of T), count%) As Boolean
             Return Not index = count
+        End Operator
+
+        ''' <summary>
+        ''' The element count inside current index object greater than the given <paramref name="count"/>?
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator >(index As Index(Of T), count%) As Boolean
+            Return index.Count > count
+        End Operator
+
+        ''' <summary>
+        ''' The element count inside current index object smaller than the given <paramref name="count"/>?
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator <(index As Index(Of T), count%) As Boolean
+            Return index.Count < count
         End Operator
 
         Public Shared Operator IsTrue(index As Index(Of T)) As Boolean

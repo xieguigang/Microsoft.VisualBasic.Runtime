@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e460ae58064f52b4031d38acbaac7c1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\ModelBase.vb"
+﻿#Region "Microsoft.VisualBasic::4e460ae58064f52b4031d38acbaac7c1, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\ModelBase.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 6
-    ' Comment Lines: 3
-    '   Blank Lines: 4
+    '    Code Lines: 6 (46.15%)
+    ' Comment Lines: 3 (23.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (30.77%)
     '     File Size: 377 B
 
 

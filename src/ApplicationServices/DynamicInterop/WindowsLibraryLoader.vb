@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d5c51bc0373ca613d4accf135673b25, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::23c59d3ec87c022b996364f84daccc49, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 54
-    ' Comment Lines: 7
-    '   Blank Lines: 15
-    '     File Size: 3.16 KB
+    '   Total Lines: 88
+    '    Code Lines: 58 (65.91%)
+    ' Comment Lines: 13 (14.77%)
+    '    - Xml Docs: 69.23%
+    ' 
+    '   Blank Lines: 17 (19.32%)
+    '     File Size: 3.55 KB
 
 
     '     Class WindowsLibraryLoader
     ' 
     '         Function: FreeLibrary, GetFunctionAddress, GetLastError, GetShortPath, LoadLibrary
+    '                   ToString
     ' 
     '     Module Win32
     ' 
@@ -63,8 +66,7 @@ Imports System.Text
 Namespace ApplicationServices.DynamicInterop
 
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
-    Friend Class WindowsLibraryLoader
-        Implements IDynamicLibraryLoader
+    Public Class WindowsLibraryLoader : Implements IDynamicLibraryLoader
 
         Public Function LoadLibrary(filename As String) As IntPtr Implements IDynamicLibraryLoader.LoadLibrary
             'new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
@@ -96,6 +98,12 @@ Namespace ApplicationServices.DynamicInterop
             Return Win32.FreeLibrary(handle)
         End Function
 
+        ''' <summary>
+        ''' GetProcAddress
+        ''' </summary>
+        ''' <param name="hModule"></param>
+        ''' <param name="lpProcName"></param>
+        ''' <returns></returns>
         Public Function GetFunctionAddress(hModule As IntPtr, lpProcName As String) As IntPtr Implements IDynamicLibraryLoader.GetFunctionAddress
             Return GetProcAddress(hModule, lpProcName)
         End Function

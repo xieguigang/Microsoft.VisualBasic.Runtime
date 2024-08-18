@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aade6a6f1ba70df233361ccd1cd07267, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::d4cfddccf794f10cabd9e0b88450e8a5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 118
-    ' Comment Lines: 55
-    '   Blank Lines: 25
-    '     File Size: 9.46 KB
+    '   Total Lines: 212
+    '    Code Lines: 128 (60.38%)
+    ' Comment Lines: 58 (27.36%)
+    '    - Xml Docs: 58.62%
+    ' 
+    '   Blank Lines: 26 (12.26%)
+    '     File Size: 9.99 KB
 
 
     '     Structure NamedCollection
     ' 
     '         Properties: description, IsEmpty, Length, name, value
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
     '         Operators: <>, =
     ' 
@@ -153,6 +155,9 @@ Namespace ComponentModel.DataSourceModel
         ''' <see cref="Value"/> array length
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this is a safe property getter, null value will returns ZERO always
+        ''' </remarks>
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -185,6 +190,12 @@ Namespace ComponentModel.DataSourceModel
                 name = .name
                 value = .vector
             End With
+        End Sub
+
+        Sub New(val As NamedValue(Of T()))
+            Me.name = val.Name
+            Me.value = val.Value
+            Me.description = val.Description
         End Sub
 
         Sub New(name$, data As IEnumerable(Of T), Optional description$ = Nothing)
@@ -232,13 +243,18 @@ Namespace ComponentModel.DataSourceModel
             Yield GetEnumerator()
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
 
         <DebuggerStepThrough>
         Public Shared Widening Operator CType(tuple As (name$, value As T())) As NamedCollection(Of T)
             Return New NamedCollection(Of T)(tuple.name, tuple.value)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Shared Narrowing Operator CType(coll As NamedCollection(Of T)) As T()
+            Return coll.value
+        End Operator
 #End If
 
         <DebuggerStepThrough>

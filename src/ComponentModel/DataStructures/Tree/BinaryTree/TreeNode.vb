@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01020303d7e39d197512f386a79174ea, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::01020303d7e39d197512f386a79174ea, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 164
-    '    Code Lines: 126
-    ' Comment Lines: 17
-    '   Blank Lines: 21
+    '    Code Lines: 126 (76.83%)
+    ' Comment Lines: 17 (10.37%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (12.80%)
     '     File Size: 5.32 KB
 
 

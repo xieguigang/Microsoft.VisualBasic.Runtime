@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08c37d07e12bcd1b14d7abbe21a4729f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\Href.vb"
+﻿#Region "Microsoft.VisualBasic::08c37d07e12bcd1b14d7abbe21a4729f, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Href.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 56
-    '    Code Lines: 25
-    ' Comment Lines: 24
-    '   Blank Lines: 7
+    '    Code Lines: 25 (44.64%)
+    ' Comment Lines: 24 (42.86%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (12.50%)
     '     File Size: 1.95 KB
 
 

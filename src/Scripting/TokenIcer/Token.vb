@@ -1,56 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::90c26bf6416877ccc43d8bfc5a9173dc, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
+﻿#Region "Microsoft.VisualBasic::6ffc121d7acb4d0f6af1a4c8d579f664, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 101
-'    Code Lines: 60
-' Comment Lines: 26
-'   Blank Lines: 15
-'     File Size: 3.62 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CodeToken
-' 
-'         Properties: isNumeric, length, name, span, text
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: ToString, Trim
-'         Operators: (+2 Overloads) <>, (+2 Overloads) =
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 78 (63.41%)
+    ' Comment Lines: 26 (21.14%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 19 (15.45%)
+    '     File Size: 4.24 KB
+
+
+    '     Class CodeToken
+    ' 
+    '         Properties: isNumeric, length, name, span, text
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: SetLine, ToString, Trim
+    '         Operators: (+2 Overloads) <>, (+2 Overloads) =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -117,6 +119,16 @@ Namespace Scripting.TokenIcer
 
         Sub New()
         End Sub
+
+        Public Function SetLine(line As Integer) As CodeToken(Of Tokens)
+            If span Is Nothing Then
+                span = New CodeSpan() With {.line = line}
+            Else
+                span.line = line
+            End If
+
+            Return Me
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Trim(ParamArray chars As Char()) As String

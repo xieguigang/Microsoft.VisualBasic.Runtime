@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3eb69c5ec28321fbdb068dfd45528a54, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::d6ad593593d5c7394d95d42a5bcb92d1, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 8
-    ' Comment Lines: 13
-    '   Blank Lines: 4
-    '     File Size: 982 B
+    '   Total Lines: 28
+    '    Code Lines: 8 (28.57%)
+    ' Comment Lines: 16 (57.14%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (14.29%)
+    '     File Size: 1017 B
 
 
     '     Interface INamedValue
@@ -59,11 +61,13 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Namespace ComponentModel.Collection.Generic
 
     ''' <summary>
-    ''' This type of object have a <see cref="INamedValue.Key"></see> property to unique identified itself in a collection.
+    ''' This type of object have a <see cref="INamedValue.Key"></see> property to 
+    ''' unique identified itself in a collection.
     ''' This interface was inherits from type <see cref="IKeyedEntity(Of String)"/>.
-    ''' (一个具有自己的名称的变量值的抽象)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (一个具有自己的名称的变量值的抽象)
+    ''' </remarks>
     Public Interface INamedValue : Inherits IKeyedEntity(Of String)
     End Interface
 
@@ -73,7 +77,8 @@ Namespace ComponentModel.Collection.Generic
     Public Interface IReadOnlyId
 
         ''' <summary>
-        ''' The unique identifer in the object collection. Unique-Id of the target implements object
+        ''' The unique identifer in the object collection. 
+        ''' Unique-Id of the target implements object.
         ''' </summary>
         ''' <returns></returns>
         ReadOnly Property Identity As String

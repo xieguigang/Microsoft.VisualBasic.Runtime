@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30dc3fde4d3fac3ee0834a039287ff25, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::29195d05e441ece2a9df95217d648b6a, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 43
-    ' Comment Lines: 21
-    '   Blank Lines: 7
-    '     File Size: 2.62 KB
+    '   Total Lines: 74
+    '    Code Lines: 43 (58.11%)
+    ' Comment Lines: 24 (32.43%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (9.46%)
+    '     File Size: 2.79 KB
 
 
     '     Module JoinExtensions
@@ -66,7 +68,10 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' this function is a safe function, the null collection value in the given
+        ''' <paramref name="source"/> will be ignored
+        ''' </remarks>
         <DebuggerStepThrough>
         <Extension>
         Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc7dc3168a2449078295907a679b11ba, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span.vb"
+﻿#Region "Microsoft.VisualBasic::fc7dc3168a2449078295907a679b11ba, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 16
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 12 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (25.00%)
     '     File Size: 380 B
 
 

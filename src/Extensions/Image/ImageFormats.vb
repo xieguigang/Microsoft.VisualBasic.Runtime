@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::585d141c53f82ebae6127b7c9bebf2c8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormats.vb"
+﻿#Region "Microsoft.VisualBasic::585d141c53f82ebae6127b7c9bebf2c8, Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormats.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 15
-    ' Comment Lines: 36
-    '   Blank Lines: 2
+    '    Code Lines: 15 (28.30%)
+    ' Comment Lines: 36 (67.92%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (3.77%)
     '     File Size: 1.49 KB
 
 

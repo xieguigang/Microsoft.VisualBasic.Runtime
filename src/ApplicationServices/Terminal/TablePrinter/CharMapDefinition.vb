@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6734a8870378a74e0658638690091cb8, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb"
+﻿#Region "Microsoft.VisualBasic::6734a8870378a74e0658638690091cb8, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 39
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 39 (97.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (2.50%)
     '     File Size: 1.97 KB
 
 

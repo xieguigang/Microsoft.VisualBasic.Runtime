@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c1fe978aae9d8bbb515c69dc726e3f0, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\JsonRPC\RpcResponse.vb"
+﻿#Region "Microsoft.VisualBasic::9c1fe978aae9d8bbb515c69dc726e3f0, Microsoft.VisualBasic.Core\src\Net\HTTP\JsonRPC\RpcResponse.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 20
-    ' Comment Lines: 13
-    '   Blank Lines: 7
+    '    Code Lines: 20 (50.00%)
+    ' Comment Lines: 13 (32.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (17.50%)
     '     File Size: 1.10 KB
 
 

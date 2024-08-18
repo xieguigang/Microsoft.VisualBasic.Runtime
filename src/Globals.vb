@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07c7f917e89139650882b38cc1d8053c, sciBASIC#\Microsoft.VisualBasic.Core\src\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::be1d6e81af19db7ad982792eeceb27bc, Microsoft.VisualBasic.Core\src\Globals.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
-    '    Code Lines: 16
-    ' Comment Lines: 22
-    '   Blank Lines: 7
-    '     File Size: 1.28 KB
+    '   Total Lines: 52
+    '    Code Lines: 22 (42.31%)
+    ' Comment Lines: 22 (42.31%)
+    '    - Xml Docs: 95.45%
+    ' 
+    '   Blank Lines: 8 (15.38%)
+    '     File Size: 1.55 KB
 
 
     ' Module Globals
@@ -49,9 +51,16 @@
 
 #End Region
 
+Imports System.Diagnostics.CodeAnalysis
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Language.C
+
+<Assembly: SuppressMessage("", "CA1416")>
+<Assembly: SuppressMessage("", "SYSLIB0021")>
+<Assembly: SuppressMessage("", "SYSLIB0022")>
+<Assembly: SuppressMessage("", "SYSLIB0003")>
+<Assembly: SuppressMessage("", "SYSLIB0004")>
 
 ''' <summary>
 ''' global constants

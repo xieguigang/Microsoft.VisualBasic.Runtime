@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d92b7f30bd50d9d9c8d2f8d59cc9734, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Exponent.vb"
+﻿#Region "Microsoft.VisualBasic::85d43bd3c10f5985e02fc8abfdc918aa, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Exponent.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,39 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 25
-    ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 1.07 KB
+    '   Total Lines: 73
+    '    Code Lines: 33 (45.21%)
+    ' Comment Lines: 26 (35.62%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (19.18%)
+    '     File Size: 2.29 KB
 
 
     '     Class Exponent
     ' 
-    '         Function: f64_op_exponent_f64, f64_op_exponent_f64_scalar, f64_scalar_op_exponent_f64
+    '         Function: f64_exp, f64_op_exponent_f64, f64_op_exponent_f64_scalar, f64_scalar_op_exponent_f64
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports std = System.Math
+
 Namespace Math.SIMD
 
+    ''' <summary>
+    ''' implements the power operator in VB
+    ''' </summary>
     Public Class Exponent
 
+        ''' <summary>
+        ''' <paramref name="v1"/> ^ <paramref name="v2"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_scalar_op_exponent_f64(v1 As Double, v2 As Double()) As Double()
             Dim result As Double() = New Double(v2.Length - 1) {}
 
@@ -64,6 +77,12 @@ Namespace Math.SIMD
             Return result
         End Function
 
+        ''' <summary>
+        ''' <paramref name="v1"/> ^ <paramref name="v2"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_op_exponent_f64_scalar(v1 As Double(), v2 As Double) As Double()
             Dim result As Double() = New Double(v1.Length - 1) {}
 
@@ -74,11 +93,32 @@ Namespace Math.SIMD
             Return result
         End Function
 
+        ''' <summary>
+        ''' <paramref name="v1"/> ^ <paramref name="v2"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_op_exponent_f64(v1 As Double(), v2 As Double()) As Double()
             Dim result As Double() = New Double(v1.Length - 1) {}
 
             For i As Integer = 0 To v1.Length - 1
                 result(i) = v1(i) ^ v2(i)
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' exp(<paramref name="v"/>)
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        Public Shared Function f64_exp(v As Double()) As Double()
+            Dim result As Double() = New Double(v.Length - 1) {}
+
+            For i As Integer = 0 To v.Length - 1
+                result(i) = std.Exp(v(i))
             Next
 
             Return result

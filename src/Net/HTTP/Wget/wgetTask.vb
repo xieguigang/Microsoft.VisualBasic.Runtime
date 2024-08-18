@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dbb0be01261a63737188eb7c573673d, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wgetTask.vb"
+﻿#Region "Microsoft.VisualBasic::8dbb0be01261a63737188eb7c573673d, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wgetTask.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 260
-    '    Code Lines: 167
-    ' Comment Lines: 51
-    '   Blank Lines: 42
+    '    Code Lines: 167 (64.23%)
+    ' Comment Lines: 51 (19.62%)
+    '    - Xml Docs: 45.10%
+    ' 
+    '   Blank Lines: 42 (16.15%)
     '     File Size: 9.88 KB
 
 

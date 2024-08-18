@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3aab7e4b8f80677522ec27c8b3e66d41, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::535a3631e5131ae6151ec8884e530856, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4496
-    '    Code Lines: 270
-    ' Comment Lines: 4176
-    '   Blank Lines: 50
-    '     File Size: 204.30 KB
+    '   Total Lines: 4443
+    '    Code Lines: 276 (6.21%)
+    ' Comment Lines: 4108 (92.46%)
+    '    - Xml Docs: 7.79%
+    ' 
+    '   Blank Lines: 59 (1.33%)
+    '     File Size: 204.06 KB
 
 
     '     Class IGraphics
     ' 
-    '         Properties: Background, Dpi
+    '         Properties: Background, Dpi, Font, Stroke
     ' 
     '         Sub: Clear, FillPie, FillRectangle, (+2 Overloads) FillRectangles, Finalize
     ' 
@@ -63,8 +65,7 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
-Imports Interpolation2D = System.Drawing.Drawing2D.InterpolationMode
+Imports std = System.Math
 
 Namespace Imaging
 
@@ -88,6 +89,19 @@ Namespace Imaging
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Background As Color
+
+#Region "Default canvas style values, apply for the css styling system"
+        ''' <summary>
+        ''' Default pen for drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Stroke As Pen
+        ''' <summary>
+        ''' Default font value for text drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Font As Font
+#End Region
 
         ''
         '' Summary:
@@ -141,7 +155,7 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
             Get
-                Return stdNum.Max(DpiX, DpiY)
+                Return std.Max(DpiX, DpiY)
             End Get
         End Property
 
@@ -1038,22 +1052,14 @@ Namespace Imaging
         ''' <param name="point"><see cref="Drawing.PointF"/> structure that represents the upper-left corner of the
         ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, point As PointF)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="image">Image to draw.</param>
+        ''' <param name="rect">RectangleF structure that specifies the location and size of the
+        ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, rect As RectangleF)
         '
         ' Summary:
@@ -2216,7 +2222,7 @@ Namespace Imaging
         ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
         ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
         ''' text.</param>
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
         '
         ' Summary:
         '     Draws the specified text string in the specified rectangle with the specified
@@ -2240,34 +2246,23 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
-        '
-        ' Summary:
-        '     Draws the specified text string in the specified rectangle with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
-        '     of the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   layoutRectangle:
-        '     System.Drawing.RectangleF structure that specifies the location of the drawn
-        '     text.
-        '
-        '   format:
-        '     System.Drawing.StringFormat that specifies formatting attributes, such as line
-        '     spacing and alignment, that are applied to the drawn text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
+
+        ''' <summary>
+        ''' Draws the specified text string in the specified rectangle with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
+        ''' of the specified System.Drawing.StringFormat.
+        ''' </summary>
+        ''' <param name="s">String to draw.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+        ''' <param name="layoutRectangle">System.Drawing.RectangleF structure that specifies the location of the drawn
+        ''' text.</param>
+        ''' <param name="format">System.Drawing.StringFormat that specifies formatting attributes, such as line
+        ''' spacing and alignment, that are applied to the drawn text.</param>
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
+
+        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
+
         '
         ' Summary:
         '     Draws the specified text string at the specified location with the specified
@@ -3617,22 +3612,14 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public MustOverride Sub FillPolygon(brush As Brush, points() As Point)
-        '
-        ' Summary:
-        '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.PointF
-        '     structures.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that represent the vertices of the
-        '     polygon to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
+
+        ''' <summary>
+        ''' Fills the interior of a polygon defined by an array of points specified by System.Drawing.PointF
+        ''' structures.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="points">Array of System.Drawing.PointF structures that represent the vertices of the
+        ''' polygon to fill.</param>
         Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF)
         '
         ' Summary:
@@ -4234,19 +4221,22 @@ Namespace Imaging
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
         Public MustOverride Function IsVisible(rect As Rectangle) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the specified System.Drawing.PointF structure is contained
-        '     within the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   point:
-        '     System.Drawing.PointF structure to test for visibility.
-        '
-        ' Returns:
-        '     true if the point specified by the point parameter is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(point As PointF) As Boolean
+
+        ''' <summary>
+        ''' Indicates whether the specified System.Drawing.PointF structure is contained
+        ''' within the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="point">System.Drawing.PointF structure to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point specified by the point parameter is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsVisible(point As PointF) As Boolean
+            Return IsVisible(point.X, point.Y)
+        End Function
+
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a System.Drawing.RectangleF structure
@@ -4260,51 +4250,62 @@ Namespace Imaging
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
         Public MustOverride Function IsVisible(rect As RectangleF) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the specified System.Drawing.Point structure is contained within
-        '     the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   point:
-        '     System.Drawing.Point structure to test for visibility.
-        '
-        ' Returns:
-        '     true if the point specified by the point parameter is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(point As Point) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the point specified by a pair of coordinates is contained within
-        '     the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   x:
-        '     The x-coordinate of the point to test for visibility.
-        '
-        '   y:
-        '     The y-coordinate of the point to test for visibility.
-        '
-        ' Returns:
-        '     true if the point defined by the x and y parameters is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Single, y As Single) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the point specified by a pair of coordinates is contained within
-        '     the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   x:
-        '     The x-coordinate of the point to test for visibility.
-        '
-        '   y:
-        '     The y-coordinate of the point to test for visibility.
-        '
-        ' Returns:
-        '     true if the point defined by the x and y parameters is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Integer, y As Integer) As Boolean
+
+        ''' <summary>
+        ''' Indicates whether the specified System.Drawing.Point structure is contained within
+        ''' the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="point">System.Drawing.Point structure to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point specified by the point parameter is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsVisible(point As Point) As Boolean
+            Return IsVisible(point.X, point.Y)
+        End Function
+
+        ''' <summary>
+        ''' Indicates whether the point specified by a pair of coordinates is contained within
+        ''' the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="x">The x-coordinate of the point to test for visibility.</param>
+        ''' <param name="y">The y-coordinate of the point to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point defined by the x and y parameters is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        Public Function IsVisible(x As Single, y As Single) As Boolean
+            If x > Size.Width OrElse x < 0 Then
+                Return False
+            ElseIf y > Size.Height OrElse y < 0 Then
+                Return False
+            End If
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' Indicates whether the point specified by a pair of coordinates is contained within
+        ''' the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="x">The x-coordinate of the point to test for visibility.</param>
+        ''' <param name="y">The y-coordinate of the point to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point defined by the x and y parameters is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        Public Function IsVisible(x As Integer, y As Integer) As Boolean
+            If x > Size.Width OrElse x < 0 Then
+                Return False
+            ElseIf y > Size.Height OrElse y < 0 Then
+                Return False
+            End If
+
+            Return True
+        End Function
+
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a pair of coordinates, a width,
@@ -4327,27 +4328,17 @@ Namespace Imaging
         '     true if the rectangle defined by the x, y, width, and height parameters is contained
         '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
         Public MustOverride Function IsVisible(x As Integer, y As Integer, width As Integer, height As Integer) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the rectangle specified by a pair of coordinates, a width,
-        '     and a height is contained within the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to test for visibility.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to test for visibility.
-        '
-        '   width:
-        '     Width of the rectangle to test for visibility.
-        '
-        '   height:
-        '     Height of the rectangle to test for visibility.
-        '
-        ' Returns:
-        '     true if the rectangle defined by the x, y, width, and height parameters is contained
-        '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
+
+        ''' <summary>
+        ''' Indicates whether the rectangle specified by a pair of coordinates, a width,
+        ''' and a height is contained within the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to test for visibility.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to test for visibility.</param>
+        ''' <param name="width">Width of the rectangle to test for visibility.</param>
+        ''' <param name="height">Height of the rectangle to test for visibility.</param>
+        ''' <returns>true if the rectangle defined by the x, y, width, and height parameters is contained
+        ''' within the visible clip region of this System.Drawing.Graphics; otherwise, false.</returns>
         Public MustOverride Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
         '
         ' Summary:
@@ -4395,30 +4386,18 @@ Namespace Imaging
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified in the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     within the specified layout area.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font defines the text format of the string.
-        '
-        '   layoutArea:
-        '     System.Drawing.SizeF structure that specifies the maximum layout area for the
-        '     text.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified by the text parameter as drawn with the font parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font
+        ''' within the specified layout area.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font defines the text format of the string.</param>
+        ''' <param name="layoutArea">System.Drawing.SizeF structure that specifies the maximum layout area for the
+        ''' text.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
         '
         ' Summary:
@@ -4509,42 +4488,26 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     and formatted with the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   layoutArea:
-        '     System.Drawing.SizeF structure that specifies the maximum layout area for the
-        '     text.
-        '
-        '   stringFormat:
-        '     System.Drawing.StringFormat that represents formatting information, such as line
-        '     spacing, for the string.
-        '
-        '   charactersFitted:
-        '     Number of characters in the string.
-        '
-        '   linesFilled:
-        '     Number of text lines in the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size
-        '     of the string, in the units specified by the System.Drawing.Graphics.PageUnit
-        '     property, of the text parameter as drawn with the font parameter and the stringFormat
-        '     parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font
+        ''' and formatted with the specified System.Drawing.StringFormat.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="layoutArea">System.Drawing.SizeF structure that specifies the maximum layout area for the
+        ''' text.</param>
+        ''' <param name="stringFormat">System.Drawing.StringFormat that represents formatting information, such as line
+        ''' spacing, for the string.</param>
+        ''' <param name="charactersFitted">Number of characters in the string.</param>
+        ''' <param name="linesFilled">Number of text lines in the string.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size
+        ''' of the string, in the units specified by the System.Drawing.Graphics.PageUnit
+        ''' property, of the text parameter as drawn with the font parameter and the stringFormat
+        ''' parameter.</returns>
+        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat,
+                                                   ByRef charactersFitted As Integer,
+                                                   ByRef linesFilled As Integer) As SizeF
 
     End Class
 End Namespace

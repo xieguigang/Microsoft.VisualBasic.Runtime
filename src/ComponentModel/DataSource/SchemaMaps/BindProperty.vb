@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::032f2b7875dea5b71babb73176f209b5, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\BindProperty.vb"
+﻿#Region "Microsoft.VisualBasic::032f2b7875dea5b71babb73176f209b5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\BindProperty.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 199
-    '    Code Lines: 90
-    ' Comment Lines: 83
-    '   Blank Lines: 26
+    '    Code Lines: 90 (45.23%)
+    ' Comment Lines: 83 (41.71%)
+    '    - Xml Docs: 40.96%
+    ' 
+    '   Blank Lines: 26 (13.07%)
     '     File Size: 8.40 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ecf9a25b3a13bff5a6779a441d97e3c, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\AnimatedBar.vb"
+﻿#Region "Microsoft.VisualBasic::7ecf9a25b3a13bff5a6779a441d97e3c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\AnimatedBar.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 20
-    ' Comment Lines: 3
-    '   Blank Lines: 7
+    '    Code Lines: 20 (66.67%)
+    ' Comment Lines: 3 (10.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (23.33%)
     '     File Size: 797 B
 
 

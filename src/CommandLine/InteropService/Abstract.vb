@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8a13f20dc5d47b3bafda389b5940ccd, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::a7c126e75a02b479b7be6f1d0006e357, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 98
-    ' Comment Lines: 52
-    '   Blank Lines: 26
-    '     File Size: 6.55 KB
+    '   Total Lines: 183
+    '    Code Lines: 101 (55.19%)
+    ' Comment Lines: 55 (30.05%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 27 (14.75%)
+    '     File Size: 6.86 KB
 
 
     '     Class InteropService
@@ -47,8 +49,8 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: CreateSlave, GetLastCLRException, GetLastError, RunDotNetApp, RunProgram
-    '                   ToString
+    '         Function: CreateSlave, GetDotnetCoreCommandLine, GetLastCLRException, GetLastError, RunDotNetApp
+    '                   RunProgram, ToString
     ' 
     '         Sub: SetDotNetCoreDll
     ' 
@@ -120,7 +122,10 @@ Namespace CommandLine.InteropService
         ''' <summary>
         ''' 通过应用程序的可执行文件路径来构建命令行的交互对象
         ''' </summary>
-        ''' <param name="app"></param>
+        ''' <param name="app">the target exe file path</param>
+        ''' <remarks>
+        ''' this module build dotnet call for clr on unix system automatically.
+        ''' </remarks>
         Sub New(app As String)
             _executableAssembly = app
             _executableDll = app.ChangeSuffix("dll")
@@ -185,10 +190,14 @@ Namespace CommandLine.InteropService
 
         Public Function CreateSlave(args As String, Optional workdir As String = Nothing) As RunSlavePipeline
             If dotnetcoreApp Then
-                Return New RunSlavePipeline("dotnet", $"""{_executableDll}"" {args}", workdir)
+                Return New RunSlavePipeline("dotnet", GetDotnetCoreCommandLine(args), workdir)
             Else
                 Return New RunSlavePipeline(_executableAssembly, args, workdir)
             End If
+        End Function
+
+        Public Function GetDotnetCoreCommandLine(args As String) As String
+            Return $"""{_executableDll}"" {args}"
         End Function
 
         ''' <summary>

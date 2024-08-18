@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1bb407a8f47baa7e7b319f4402731b7, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IndeterminateChildrenNoCollapse.vb"
+﻿#Region "Microsoft.VisualBasic::c1bb407a8f47baa7e7b319f4402731b7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IndeterminateChildrenNoCollapse.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 32
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 32 (96.97%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (3.03%)
     '     File Size: 1.32 KB
 
 

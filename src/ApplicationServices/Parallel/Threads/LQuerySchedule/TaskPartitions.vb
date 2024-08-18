@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2b58862d64fb542fc56e70f154d98a2, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
+﻿#Region "Microsoft.VisualBasic::b2b58862d64fb542fc56e70f154d98a2, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 164
-    '    Code Lines: 99
-    ' Comment Lines: 41
-    '   Blank Lines: 24
+    '    Code Lines: 99 (60.37%)
+    ' Comment Lines: 41 (25.00%)
+    '    - Xml Docs: 92.68%
+    ' 
+    '   Blank Lines: 24 (14.63%)
     '     File Size: 6.94 KB
 
 

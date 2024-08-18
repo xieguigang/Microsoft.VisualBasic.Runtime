@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a14075c62b3a7bcfa84df211f7d7da, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::9f06ba92988b961f448d830a316b3ee1, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 192
-    '    Code Lines: 124
-    ' Comment Lines: 37
-    '   Blank Lines: 31
-    '     File Size: 8.08 KB
+    '    Code Lines: 124 (64.58%)
+    ' Comment Lines: 37 (19.27%)
+    '    - Xml Docs: 91.89%
+    ' 
+    '   Blank Lines: 31 (16.15%)
+    '     File Size: 8.11 KB
 
 
     '     Delegate Function
@@ -61,7 +63,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
-Imports Microsoft.VisualBasic.GenericLambda(Of String)
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.GenericLambda(Of String)
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 

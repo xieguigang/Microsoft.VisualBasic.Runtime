@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cba8301f977fe2567dbfef38b86e58d0, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::cba8301f977fe2567dbfef38b86e58d0, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Helpers.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 54
-    ' Comment Lines: 6
-    '   Blank Lines: 16
+    '    Code Lines: 54 (71.05%)
+    ' Comment Lines: 6 (7.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (21.05%)
     '     File Size: 2.65 KB
 
 

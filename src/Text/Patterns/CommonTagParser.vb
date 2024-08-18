@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c26c2c42a2f40febc19129171b63c0d, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
+﻿#Region "Microsoft.VisualBasic::a429e057377336a53e590c16bb738180, Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 75
-    '    Code Lines: 52
-    ' Comment Lines: 12
-    '   Blank Lines: 11
-    '     File Size: 2.50 KB
+    '    Code Lines: 52 (69.33%)
+    ' Comment Lines: 12 (16.00%)
+    '    - Xml Docs: 58.33%
+    ' 
+    '   Blank Lines: 11 (14.67%)
+    '     File Size: 2.58 KB
 
 
     '     Class CommonTagParser

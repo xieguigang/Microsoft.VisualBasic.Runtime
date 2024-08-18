@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6438eb51b688ea913d00f1f902d80fb5, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\CBusyIndicator.vb"
+﻿#Region "Microsoft.VisualBasic::6438eb51b688ea913d00f1f902d80fb5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\CBusyIndicator.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 92
-    '    Code Lines: 54
-    ' Comment Lines: 20
-    '   Blank Lines: 18
+    '    Code Lines: 54 (58.70%)
+    ' Comment Lines: 20 (21.74%)
+    '    - Xml Docs: 40.00%
+    ' 
+    '   Blank Lines: 18 (19.57%)
     '     File Size: 3.06 KB
 
 

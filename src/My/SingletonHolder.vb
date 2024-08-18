@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de045038e7dbdd5390bce387149e0ccc, sciBASIC#\Microsoft.VisualBasic.Core\src\My\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::de045038e7dbdd5390bce387149e0ccc, Microsoft.VisualBasic.Core\src\My\SingletonHolder.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 121
-    '    Code Lines: 55
-    ' Comment Lines: 45
-    '   Blank Lines: 21
+    '    Code Lines: 55 (45.45%)
+    ' Comment Lines: 45 (37.19%)
+    '    - Xml Docs: 17.78%
+    ' 
+    '   Blank Lines: 21 (17.36%)
     '     File Size: 3.96 KB
 
 

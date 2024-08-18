@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ff8d0297bbae867e9058a9c291e3db6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::297b02e36b609a7b469bbaeea97d72b1, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\GZStream.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 59
-    ' Comment Lines: 44
-    '   Blank Lines: 15
-    '     File Size: 4.56 KB
+    '   Total Lines: 139
+    '    Code Lines: 76 (54.68%)
+    ' Comment Lines: 44 (31.65%)
+    '    - Xml Docs: 95.45%
+    ' 
+    '   Blank Lines: 19 (13.67%)
+    '     File Size: 5.33 KB
 
 
     '     Module GZipStreamHandler
     ' 
-    '         Function: AddGzipMagic, CheckGZipMagic, GZipAsBase64, GZipStream, UnGzipBase64
+    '         Function: AddGzipMagic, (+2 Overloads) CheckGZipMagic, (+2 Overloads) GZipAsBase64, GZipStream, UnGzipBase64
     '                   (+2 Overloads) UnGzipStream
     ' 
     ' 
@@ -79,13 +81,16 @@ Namespace Net.Http
         <Extension>
         Public Function CheckGZipMagic(data As Stream) As Boolean
             Dim magic As Byte() = New Byte(1) {}
-            Dim isGzipMagic As Boolean
 
-            data.Read(magic, Scan0, magic.Length)
-            data.Seek(-2, SeekOrigin.Current)
-            isGzipMagic = magic(0) = &H1F AndAlso magic(1) = &H8B
+            Call data.Read(magic, Scan0, magic.Length)
+            Call data.Seek(-2, SeekOrigin.Current)
 
-            Return isGzipMagic
+            Return CheckGZipMagic(magic)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckGZipMagic(magic As Byte()) As Boolean
+            Return magic(0) = &H1F AndAlso magic(1) = &H8B
         End Function
 
         ''' <summary>
@@ -129,9 +134,18 @@ Namespace Net.Http
         ''' <returns></returns>
         <Extension>
         Public Function UnGzipStream(stream As IEnumerable(Of Byte)) As MemoryStream
-            Using buffer As New MemoryStream(stream.ToArray)
+            Dim raw As Byte() = stream.ToArray
+            Dim deflate As MemoryStream
+
+            If Not CheckGZipMagic(raw) Then
+                raw = raw.AddGzipMagic.ToArray
+            End If
+
+            Using buffer As New MemoryStream(raw)
                 buffer.Seek(Scan0, SeekOrigin.Begin)
-                Return buffer.UnGzipStream
+                deflate = buffer.UnGzipStream
+                Erase raw
+                Return deflate
             End Using
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::744eaaf337f4a2e5faac8f24ec50490a, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::34faabfc636e3c266b1fe96a5397c8f5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 122
-    ' Comment Lines: 55
-    '   Blank Lines: 25
-    '     File Size: 8.17 KB
+    '   Total Lines: 234
+    '    Code Lines: 137 (58.55%)
+    ' Comment Lines: 71 (30.34%)
+    '    - Xml Docs: 97.18%
+    ' 
+    '   Blank Lines: 26 (11.11%)
+    '     File Size: 9.45 KB
 
 
     '     Class DynamicPropertyBase
@@ -46,7 +48,7 @@
     '         Properties: MyHashCode, Properties
     ' 
     '         Function: EnumerateKeys, GetEnumerator, GetItemValue, GetNames, HasProperty
-    '                   IDynamicsObject_GetItemValue, IEnumerable_GetEnumerator, ToString
+    '                   IDynamicsObject_GetItemValue, ToString
     ' 
     '         Sub: (+2 Overloads) Add, (+2 Overloads) SetValue
     ' 
@@ -57,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -78,7 +81,7 @@ Namespace ComponentModel.DataSourceModel
         ''' The dynamics property object with specific type of value.
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks>Can not serialize the dictionary object in to xml document.</remarks>
+        ''' <remarks>Can not serialize the dictionary object in to xml document. **and this property ensure that the value always not null!**</remarks>
         <DynamicMetadata>
         <XmlIgnore>
         Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties
@@ -100,10 +103,12 @@ Namespace ComponentModel.DataSourceModel
 
         ''' <summary>
         ''' Gets/sets item value by using property name.
-        ''' (这个函数为安全的函数，当目标属性不存在的时候，会返回空值)
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (这个函数为安全的函数，当目标属性不存在的时候，会返回空值)
+        ''' </remarks>
         Default Public Overridable Overloads Property ItemValue(name As String) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -134,6 +139,38 @@ Namespace ComponentModel.DataSourceModel
                 For Each key As SeqValue(Of String) In keys.SeqIterator
                     Me(key.value) = value(key)
                 Next
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Get a value package at once using a key collection, 
+        ''' if the key is not exists in the property, then its 
+        ''' correspoding value is nothing.
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property ItemValue(keys As IEnumerable(Of INamedValue)) As T()
+            Get
+                Return keys.Select(Function(s) Me(s.Key)).ToArray
+            End Get
+            Set
+                Me(keys.Select(Function(s) s.Key).ToArray) = Value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Get a value package at once using a key collection, 
+        ''' if the key is not exists in the property, then its 
+        ''' correspoding value is nothing.
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property ItemValue(keys As IEnumerable(Of IReadOnlyId)) As T()
+            Get
+                Return keys.Select(Function(s) Me(s.Identity)).ToArray
+            End Get
+            Set(value As T())
+                Me(keys.Select(Function(s) s.Identity).ToArray) = value
             End Set
         End Property
 
@@ -251,10 +288,6 @@ Namespace ComponentModel.DataSourceModel
             For Each [property] In propertyTable
                 Yield New NamedValue(Of T)([property].Key, [property].Value)
             Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements Enumeration(Of NamedValue(Of T)).GetEnumerator
-            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

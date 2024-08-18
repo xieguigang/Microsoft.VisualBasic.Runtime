@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29b4488ed66abc837c878a7754cca66d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\IsNullOrEmptyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::024f926fbf6c5aa63703de4c025b9109, Microsoft.VisualBasic.Core\src\Extensions\Collection\IsNullOrEmptyExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 251
-    '    Code Lines: 129
-    ' Comment Lines: 94
-    '   Blank Lines: 28
-    '     File Size: 8.44 KB
+    '   Total Lines: 259
+    '    Code Lines: 130 (50.19%)
+    ' Comment Lines: 101 (39.00%)
+    '    - Xml Docs: 61.39%
+    ' 
+    '   Blank Lines: 28 (10.81%)
+    '     File Size: 8.71 KB
 
 
     ' Module IsNullOrEmptyExtensions
@@ -61,6 +63,12 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 <HideModuleName>
 Public Module IsNullOrEmptyExtensions
 
+    ''' <summary>
+    ''' check of the given collection is null or empty?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Empty(Of T)(list As IEnumerable(Of T)) As Boolean
         Return list Is Nothing OrElse Not list.Any

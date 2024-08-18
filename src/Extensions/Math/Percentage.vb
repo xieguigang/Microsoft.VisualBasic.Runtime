@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ade59e8aaf858a06d9158fc9af56f6d3, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Percentage.vb"
+﻿#Region "Microsoft.VisualBasic::ade59e8aaf858a06d9158fc9af56f6d3, Microsoft.VisualBasic.Core\src\Extensions\Math\Percentage.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 204
-    '    Code Lines: 140
-    ' Comment Lines: 29
-    '   Blank Lines: 35
+    '    Code Lines: 140 (68.63%)
+    ' Comment Lines: 29 (14.22%)
+    '    - Xml Docs: 96.55%
+    ' 
+    '   Blank Lines: 35 (17.16%)
     '     File Size: 8.00 KB
 
 

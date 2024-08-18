@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf23dd5abcd4c079b5dc29f66a019927, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\NoteAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::bf23dd5abcd4c079b5dc29f66a019927, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\NoteAttribute.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 22
-    '    Code Lines: 10
-    ' Comment Lines: 8
-    '   Blank Lines: 4
+    '    Code Lines: 10 (45.45%)
+    ' Comment Lines: 8 (36.36%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 4 (18.18%)
     '     File Size: 770 B
 
 

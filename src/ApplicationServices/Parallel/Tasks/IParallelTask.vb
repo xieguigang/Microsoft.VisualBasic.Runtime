@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::241779621929953950df7cd48e2a92eb, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
+﻿#Region "Microsoft.VisualBasic::241779621929953950df7cd48e2a92eb, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 43
-    '    Code Lines: 31
-    ' Comment Lines: 3
-    '   Blank Lines: 9
+    '    Code Lines: 31 (72.09%)
+    ' Comment Lines: 3 (6.98%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (20.93%)
     '     File Size: 1.18 KB
 
 

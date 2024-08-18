@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::606cb4661e24c98e7886253b80d9a3c1, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
+﻿#Region "Microsoft.VisualBasic::999c3138253699792d94c91a621f9a8d, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
 
     ' Author:
     ' 
@@ -34,49 +34,65 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 77
-    ' Comment Lines: 11
-    '   Blank Lines: 23
-    '     File Size: 3.82 KB
+    '   Total Lines: 173
+    '    Code Lines: 106 (61.27%)
+    ' Comment Lines: 38 (21.97%)
+    '    - Xml Docs: 81.58%
+    ' 
+    '   Blank Lines: 29 (16.76%)
+    '     File Size: 6.49 KB
 
 
     '     Class RunSlavePipeline
     ' 
-    '         Properties: Arguments, CommandLine, Process, Shell
+    '         Properties: Arguments, CommandLine, Process, Shell, std_input
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Run, Start, ToString
+    '         Function: Bind, Run, Start, ToString
     ' 
-    '         Sub: HookProgress, ProcessMessage, SendMessage, SendProgress
+    '         Sub: HookProgress, (+2 Overloads) ProcessMessage, SendMessage, SendProgress
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace CommandLine.InteropService.Pipeline
 
+    ''' <summary>
+    ''' wrapper for run a background task process
+    ''' </summary>
     Public Class RunSlavePipeline
 
         Public Event SetProgress(percentage As Integer, details As String)
         Public Event SetMessage(message As String)
         Public Event Finish(exitCode As Integer)
 
+        ''' <summary>
+        ''' the file full path to the target executable application file
+        ''' </summary>
         ReadOnly app As String
         ReadOnly workdir As String
 
         Public ReadOnly Property Process As Process
 
         Public ReadOnly Property CommandLine As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return $"{app} {Arguments}"
             End Get
         End Property
 
+        ''' <summary>
+        ''' the commandline argument of the target background task
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Arguments As String
         Public Property Shell As Boolean = False
+        Public Property std_input As String = Nothing
 
         ''' <summary>
         ''' create a new commandline pipeline task
@@ -103,7 +119,8 @@ Namespace CommandLine.InteropService.Pipeline
                 onReadLine:=AddressOf ProcessMessage,
                 workdir:=workdir,
                 shell:=Shell,
-                setProcess:=Sub(p) _Process = p
+                setProcess:=Sub(p) _Process = p,
+                [in]:=std_input
             )
 
             RaiseEvent Finish(code)
@@ -126,6 +143,22 @@ Namespace CommandLine.InteropService.Pipeline
             Return Process
         End Function
 
+        Public Shared Function Bind(proc As Process) As RunSlavePipeline
+            Dim info = proc.StartInfo
+            Dim pip As New RunSlavePipeline(info.FileName, info.Arguments, info.WorkingDirectory)
+            pip._Process = proc
+            If info.RedirectStandardOutput Then
+                Call handleRunStream(proc, "", onReadLine:=AddressOf pip.ProcessMessage, async:=True)
+            End If
+            Return pip
+        End Function
+
+        ''' <summary>
+        ''' get commandline of current background task, in string format like 
+        ''' example as: /path/to/exe cli_arguments
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return CommandLine
         End Function
@@ -135,10 +168,10 @@ Namespace CommandLine.InteropService.Pipeline
                 Return
             End If
 
-            If line.StartsWith("[SET_MESSAGE]") Then
+            If line.StartsWith(message_header) Then
                 ' [SET_MESSAGE] message text
                 RaiseEvent SetMessage(line.GetTagValue(" ", trim:=True).Value)
-            ElseIf line.StartsWith("[SET_PROGRESS]") Then
+            ElseIf line.StartsWith(progress_header) Then
                 ' [SET_PROGRESS] percentage message text
                 Dim data = line.GetTagValue(" ", trim:=True).Value.GetTagValue(" ", trim:=True)
                 Dim percentage As Double = Val(data.Name)
@@ -148,20 +181,48 @@ Namespace CommandLine.InteropService.Pipeline
             End If
         End Sub
 
+        Const message_header = "[SET_MESSAGE]"
+        Const progress_header = "[SET_PROGRESS]"
+
+        Public Shared Sub ProcessMessage(line As String, println As Action(Of String), progress As Action(Of Double, String))
+            If line.StringEmpty Then
+                Return
+            End If
+
+            If line.StartsWith(message_header) Then
+                ' [SET_MESSAGE] message text
+                println(line.GetTagValue(" ", trim:=True).Value)
+            ElseIf line.StartsWith(progress_header) Then
+                ' [SET_PROGRESS] percentage message text
+                Dim data = line.GetTagValue(" ", trim:=True).Value.GetTagValue(" ", trim:=True)
+                Dim percentage As Double = Val(data.Name)
+                Dim message As String = data.Value
+
+                progress(percentage, message)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' pop out a taged message that tells the parent process to capture this message and echo to the text logger
+        ''' </summary>
+        ''' <param name="message"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub SendMessage(message As String)
             ' Call VBDebugger.WaitOutput()
-            Call VBDebugger.EchoLine($"[SET_MESSAGE] {message}")
+            Call VBDebugger.EchoLine($"{message_header} {message}")
         End Sub
 
         Shared m_hookProgress As SetProgressEventHandler
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub HookProgress(progress As SetProgressEventHandler)
             m_hookProgress = progress
         End Sub
 
         Public Shared Sub SendProgress(percentage As Double, message As String)
             ' Call VBDebugger.WaitOutput()
-            Call VBDebugger.EchoLine($"[SET_PROGRESS] {percentage} {message}")
+            Call VBDebugger.EchoLine($"{progress_header} {percentage} {message}")
 
             If Not m_hookProgress Is Nothing Then
                 Call m_hookProgress(percentage, message)

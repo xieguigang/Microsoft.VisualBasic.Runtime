@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a8cb938ec7622b9f5f4d2696ae9c1ae, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\EllipseShape.vb"
+﻿#Region "Microsoft.VisualBasic::79b4804aa82cd9789b2957440c35bb0b, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\EllipseShape.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 38
-    '    Code Lines: 27
-    ' Comment Lines: 3
-    '   Blank Lines: 8
-    '     File Size: 1.23 KB
+    '    Code Lines: 27 (71.05%)
+    ' Comment Lines: 3 (7.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (21.05%)
+    '     File Size: 1.21 KB
 
 
     '     Class EllipseShape
@@ -52,7 +54,7 @@
 #End Region
 
 Imports System.Drawing
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -83,8 +85,8 @@ Namespace Imaging.Math2D
 
         Private Shared Function EllipseDrawing(dHalfwidthEllipse As Double, dHalfheightEllipse As Double, origin As PointF, t As Integer) As PointF
             Return New PointF(
-                origin.X + dHalfwidthEllipse * stdNum.Cos(t * stdNum.PI / 180),
-                origin.Y + dHalfheightEllipse * stdNum.Sin(t * stdNum.PI / 180)
+                origin.X + dHalfwidthEllipse * std.Cos(t * std.PI / 180),
+                origin.Y + dHalfheightEllipse * std.Sin(t * std.PI / 180)
             )
         End Function
     End Class

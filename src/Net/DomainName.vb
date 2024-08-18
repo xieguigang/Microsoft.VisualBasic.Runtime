@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20eb6a49be8a01b85cb9eda823ee0cd1, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\DomainName.vb"
+﻿#Region "Microsoft.VisualBasic::20eb6a49be8a01b85cb9eda823ee0cd1, Microsoft.VisualBasic.Core\src\Net\DomainName.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 32
-    '    Code Lines: 22
-    ' Comment Lines: 4
-    '   Blank Lines: 6
+    '    Code Lines: 22 (68.75%)
+    ' Comment Lines: 4 (12.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (18.75%)
     '     File Size: 1.12 KB
 
 
