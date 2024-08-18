@@ -3,6 +3,78 @@
   "WorkspaceRootPath": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\io\\extensions\\io.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\io\\extensions\\io.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\io\\extensions\\serializationio.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\io\\extensions\\serializationio.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\webservices\\httpget.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\webservices\\httpget.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\commandline\\interpreters\\view\\sdkmanual.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\commandline\\interpreters\\view\\sdkmanual.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\doc\\xmlextensions.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\doc\\xmlextensions.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\data\\tsv.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\data\\tsv.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\doc\\largetextfile.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\doc\\largetextfile.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\debugger\\logging\\errorlog.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\debugger\\logging\\errorlog.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\serialization\\json\\jsonserialization.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\serialization\\json\\jsonserialization.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\commandline\\clitools.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\commandline\\clitools.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\parallel\\requeststream.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\parallel\\requeststream.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\webservices\\webserviceutils.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\webservices\\webserviceutils.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\commandline\\interopservice\\sharedorm\\languages\\visualbasic.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\commandline\\interopservice\\sharedorm\\languages\\visualbasic.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\io\\extensions\\pathextensions.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\io\\extensions\\pathextensions.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\my\\unix\\linuxrunhelper.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\my\\unix\\linuxrunhelper.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\commandline\\cli\\ioredirect.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\commandline\\cli\\ioredirect.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\terminal\\interactiveiodevice\\lineedit\\getline.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\terminal\\interactiveiodevice\\lineedit\\getline.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\scripting\\runtime\\ctype\\casting.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\scripting\\runtime\\ctype\\casting.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\doc\\text.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\doc\\text.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
@@ -31,19 +103,257 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "IO.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\IO\\Extensions\\IO.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\IO\\Extensions\\IO.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\IO\\Extensions\\IO.vb",
+              "RelativeToolTip": "src\\Extensions\\IO\\Extensions\\IO.vb",
+              "ViewState": "AgIAADcAAAAAAAAAAAAtwD0AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:53:13.022Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SerializationIO.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\IO\\Extensions\\SerializationIO.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\IO\\Extensions\\SerializationIO.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\IO\\Extensions\\SerializationIO.vb",
+              "RelativeToolTip": "src\\Extensions\\IO\\Extensions\\SerializationIO.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:53:05.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HttpGet.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\WebServices\\HttpGet.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\WebServices\\HttpGet.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\WebServices\\HttpGet.vb",
+              "RelativeToolTip": "src\\Extensions\\WebServices\\HttpGet.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:52:51.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SDKManual.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\Interpreters\\View\\SDKManual.vb",
+              "RelativeDocumentMoniker": "src\\CommandLine\\Interpreters\\View\\SDKManual.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\Interpreters\\View\\SDKManual.vb",
+              "RelativeToolTip": "src\\CommandLine\\Interpreters\\View\\SDKManual.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEEAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:52:41.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "XmlExtensions.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Doc\\XmlExtensions.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Doc\\XmlExtensions.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Doc\\XmlExtensions.vb",
+              "RelativeToolTip": "src\\Extensions\\Doc\\XmlExtensions.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:52:32.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Tsv.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Data\\Tsv.vb",
+              "RelativeDocumentMoniker": "src\\Data\\Tsv.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Data\\Tsv.vb",
+              "RelativeToolTip": "src\\Data\\Tsv.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:52:23.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "LargeTextFile.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Doc\\LargeTextFile.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Doc\\LargeTextFile.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Doc\\LargeTextFile.vb",
+              "RelativeToolTip": "src\\Extensions\\Doc\\LargeTextFile.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:52:14.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "JsonSerialization.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Serialization\\JSON\\JsonSerialization.vb",
+              "RelativeDocumentMoniker": "src\\Serialization\\JSON\\JsonSerialization.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Serialization\\JSON\\JsonSerialization.vb",
+              "RelativeToolTip": "src\\Serialization\\JSON\\JsonSerialization.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:51:53.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CLITools.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLITools.vb",
+              "RelativeDocumentMoniker": "src\\CommandLine\\CLITools.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLITools.vb",
+              "RelativeToolTip": "src\\CommandLine\\CLITools.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:51:45.692Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ErrorLog.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Debugger\\Logging\\ErrorLog.vb",
+              "RelativeDocumentMoniker": "src\\ApplicationServices\\Debugger\\Logging\\ErrorLog.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Debugger\\Logging\\ErrorLog.vb",
+              "RelativeToolTip": "src\\ApplicationServices\\Debugger\\Logging\\ErrorLog.vb",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAtwIQAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:51:37.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RequestStream.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Parallel\\RequestStream.vb",
+              "RelativeDocumentMoniker": "src\\ApplicationServices\\Parallel\\RequestStream.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Parallel\\RequestStream.vb",
+              "RelativeToolTip": "src\\ApplicationServices\\Parallel\\RequestStream.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:51:29.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "WebServiceUtils.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\WebServices\\WebServiceUtils.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\WebServices\\WebServiceUtils.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\WebServices\\WebServiceUtils.vb",
+              "RelativeToolTip": "src\\Extensions\\WebServices\\WebServiceUtils.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:51:13.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "VisualBasic.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\InteropService\\SharedORM\\Languages\\VisualBasic.vb",
+              "RelativeDocumentMoniker": "src\\CommandLine\\InteropService\\SharedORM\\Languages\\VisualBasic.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\InteropService\\SharedORM\\Languages\\VisualBasic.vb",
+              "RelativeToolTip": "src\\CommandLine\\InteropService\\SharedORM\\Languages\\VisualBasic.vb",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAADwAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-21T10:50:59.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PathExtensions.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\IO\\Extensions\\PathExtensions.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\IO\\Extensions\\PathExtensions.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\IO\\Extensions\\PathExtensions.vb",
+              "RelativeToolTip": "src\\Extensions\\IO\\Extensions\\PathExtensions.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:50:42.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LinuxRunHelper.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\My\\UNIX\\LinuxRunHelper.vb",
+              "RelativeDocumentMoniker": "src\\My\\UNIX\\LinuxRunHelper.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\My\\UNIX\\LinuxRunHelper.vb",
+              "RelativeToolTip": "src\\My\\UNIX\\LinuxRunHelper.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:50:28.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IORedirect.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLI\\IORedirect.vb",
+              "RelativeDocumentMoniker": "src\\CommandLine\\CLI\\IORedirect.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLI\\IORedirect.vb",
+              "RelativeToolTip": "src\\CommandLine\\CLI\\IORedirect.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:50:19.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "getline.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\InteractiveIODevice\\LineEdit\\getline.vb",
+              "RelativeDocumentMoniker": "src\\ApplicationServices\\Terminal\\InteractiveIODevice\\LineEdit\\getline.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\InteractiveIODevice\\LineEdit\\getline.vb",
+              "RelativeToolTip": "src\\ApplicationServices\\Terminal\\InteractiveIODevice\\LineEdit\\getline.vb",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAAAHMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:50:06.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Casting.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Scripting\\Runtime\\CType\\Casting.vb",
+              "RelativeDocumentMoniker": "src\\Scripting\\Runtime\\CType\\Casting.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Scripting\\Runtime\\CType\\Casting.vb",
+              "RelativeToolTip": "src\\Scripting\\Runtime\\CType\\Casting.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:49:54.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "Text.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Doc\\Text.vb",
               "RelativeDocumentMoniker": "src\\Extensions\\Doc\\Text.vb",
               "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Doc\\Text.vb",
               "RelativeToolTip": "src\\Extensions\\Doc\\Text.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2024-08-18T01:48:20.926Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 19,
               "Title": "StringHelpers.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\StringHelpers\\StringHelpers.vb",
               "RelativeDocumentMoniker": "src\\Extensions\\StringHelpers\\StringHelpers.vb",
@@ -51,12 +361,7 @@
               "RelativeToolTip": "src\\Extensions\\StringHelpers\\StringHelpers.vb",
               "ViewState": "AgIAAEIAAAAAAAAAAAAAAE0AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2024-08-18T01:47:52.573Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "WhenOpened": "2024-08-18T01:47:52.573Z"
             }
           ]
         }
