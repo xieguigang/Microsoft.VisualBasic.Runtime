@@ -56,11 +56,11 @@ Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
 
-<Assembly: SuppressMessage("", "CA1416")>
-<Assembly: SuppressMessage("", "SYSLIB0021")>
-<Assembly: SuppressMessage("", "SYSLIB0022")>
-<Assembly: SuppressMessage("", "SYSLIB0003")>
-<Assembly: SuppressMessage("", "SYSLIB0004")>
+'<Assembly: SuppressMessage("", "CA1416")>
+'<Assembly: SuppressMessage("", "SYSLIB0021")>
+'<Assembly: SuppressMessage("", "SYSLIB0022")>
+'<Assembly: SuppressMessage("", "SYSLIB0003")>
+'<Assembly: SuppressMessage("", "SYSLIB0004")>
 
 ''' <summary>
 ''' global constants
