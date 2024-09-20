@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a46c9d81b6a0aedcaf5e4655df1c051a, Microsoft.VisualBasic.Core\src\Language\Language\C\RandomNumbers.vb"
+﻿#Region "Microsoft.VisualBasic::b10cf8ca02587b60caf492fbd40ac0b5, Microsoft.VisualBasic.Core\src\Language\Language\C\RandomNumbers.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 27 (41.54%)
-    ' Comment Lines: 29 (44.62%)
-    '    - Xml Docs: 41.38%
+    '    Code Lines: 24 (36.92%)
+    ' Comment Lines: 32 (49.23%)
+    '    - Xml Docs: 46.88%
     ' 
     '   Blank Lines: 9 (13.85%)
-    '     File Size: 2.51 KB
+    '     File Size: 2.70 KB
 
 
     '     Module RandomNumbers
@@ -69,6 +69,7 @@
 '----------------------------------------------------------------------------------------
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 
 Namespace Language.C
 
@@ -83,7 +84,10 @@ Namespace Language.C
     ''' </summary>
     Public Module RandomNumbers
 
-        Dim r As Random
+        ''' <summary>
+        ''' use thread local for may thread safe
+        ''' </summary>
+        Dim r As New ThreadLocal(Of Random)(Function() New Random(Guid.NewGuid().GetHashCode()))
 
         Sub New()
             Call randomize()
@@ -94,9 +98,7 @@ Namespace Language.C
         ''' </summary>
         ''' <returns></returns>
         Public Function rand() As Integer
-            SyncLock r
-                Return r.[Next]()
-            End SyncLock
+            Return r.Value.[Next]()
         End Function
 
         ''' <summary>
@@ -105,19 +107,17 @@ Namespace Language.C
         ''' <param name="ceiling"></param>
         ''' <returns></returns>
         Public Function random(ceiling As Integer) As Integer
-            SyncLock r
-                Return r.[Next](ceiling)
-            End SyncLock
+            Return r.Value.[Next](ceiling)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub randomize()
-            r = New Random(Now.Millisecond)
+            r = New ThreadLocal(Of Random)(Function() New Random(Guid.NewGuid().GetHashCode()))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub srand(seed As Integer)
-            r = New Random(seed)
+            r = New ThreadLocal(Of Random)(Function() New Random(seed))
         End Sub
     End Module
 End Namespace

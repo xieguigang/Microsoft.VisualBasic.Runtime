@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::692659da3520170afecd29a1b37413d4, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\Tqdm.vb"
+﻿#Region "Microsoft.VisualBasic::a6dc2e1d35ff4c0c6d396e71211e5a64, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\Tqdm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 84 (53.16%)
-    ' Comment Lines: 54 (34.18%)
-    '    - Xml Docs: 98.15%
+    '   Total Lines: 165
+    '    Code Lines: 84 (50.91%)
+    ' Comment Lines: 61 (36.97%)
+    '    - Xml Docs: 86.89%
     ' 
-    '   Blank Lines: 20 (12.66%)
-    '     File Size: 8.61 KB
+    '   Blank Lines: 20 (12.12%)
+    '     File Size: 8.96 KB
 
 
     '     Module TqdmWrapper
@@ -164,12 +164,14 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
             Dim offset As Long = Scan0
             Dim page_unit As ByteSize = ByteSize.B
 
-            If bytesOfStream > 2 * ByteSize.GB Then
-                bytesOfStream /= ByteSize.KB
-                page_unit = ByteSize.KB
-            ElseIf bytesOfStream > 2 * 1024 * ByteSize.GB Then
+            If bytesOfStream > 2 * 1024 * ByteSize.GB Then
+                ' file size is more than 2TB
                 bytesOfStream /= ByteSize.MB
                 page_unit = ByteSize.MB
+            ElseIf bytesOfStream > 2 * ByteSize.GB Then
+                ' file size is more than 2GB
+                bytesOfStream /= ByteSize.KB
+                page_unit = ByteSize.KB
             End If
 
             Dim bar As New ProgressBar(total:=bytesOfStream, printsPerSecond:=1) With {
@@ -179,9 +181,14 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
                                      End Function
             }
 
-            Do While offset < bytesOfStream
-                bar.Progress(offset / page_unit, bytesOfStream)
-                bar.SetLabel(StringFormats.Lanudry(offset / (bar.ElapsedSeconds + 1)) & "/s")
+            ' 20240901
+            '
+            ' offset in unit bytes
+            ' bytes of stream in different unit which is converted via page_unit
+            ' so needs convert the offset in same page_unit factor scale
+            Do While (offset / page_unit) < bytesOfStream
+                Call bar.Progress(offset / page_unit, bytesOfStream)
+                Call bar.SetLabel(StringFormats.Lanudry(offset / (bar.ElapsedSeconds + 1)) & "/s")
 
                 Yield request(offset, bar)
             Loop

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6c3a7eda95f07cba33856ee73bfd34e, Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::967bcf162d921ae001ed26c3abfa14e5, Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 446
-    '    Code Lines: 275 (61.66%)
-    ' Comment Lines: 117 (26.23%)
+    '   Total Lines: 452
+    '    Code Lines: 280 (61.95%)
+    ' Comment Lines: 117 (25.88%)
     '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 54 (12.11%)
-    '     File Size: 17.68 KB
+    '   Blank Lines: 55 (12.17%)
+    '     File Size: 18.03 KB
 
 
     ' Module XmlExtensions
@@ -62,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -424,12 +425,16 @@ Public Module XmlExtensions
         Catch ex As Exception
             Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
             Dim max_debug_len As String = 4096
+            Dim dumpfile As String = TempFileSystem.GetAppSysTempFile(".xml", prefix:="error_xml_dump_")
+
+            Call xml.SaveTo(dumpfile)
 
             If Len(xml) > max_debug_len Then
                 xml = Mid(xml, 1, max_debug_len) & "..."
             End If
 
-            ex = New Exception($"class_name: {schema.Name}, and the xml fragment: {xml}", ex)
+            xml = $"class_name: {schema.Name}, xml was dump at temp file: '{dumpfile}', and previews of the invalid xml fragment: {xml}"
+            ex = New Exception(xml, ex)
 
             App.LogException(ex, curMethod)
 

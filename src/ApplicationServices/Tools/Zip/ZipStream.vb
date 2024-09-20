@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c60d297af7e40acf0d639f64ceab16aa, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::d8ca4ab94d8244b2d402c78b35c088b7, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 221
-    '    Code Lines: 135 (61.09%)
-    ' Comment Lines: 48 (21.72%)
-    '    - Xml Docs: 58.33%
+    '   Total Lines: 234
+    '    Code Lines: 138 (58.97%)
+    ' Comment Lines: 57 (24.36%)
+    '    - Xml Docs: 63.16%
     ' 
-    '   Blank Lines: 38 (17.19%)
-    '     File Size: 8.35 KB
+    '   Blank Lines: 39 (16.67%)
+    '     File Size: 8.87 KB
 
 
     '     Class ZipStream
@@ -49,8 +49,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: DeleteFile, FileExists, FileSize, GetFileEntry, GetFiles
-    '                   GetFullPath, OpenFile, ReadAllText, ToString, WriteText
+    '         Function: DeleteFile, FileExists, FileModifyTime, FileSize, GetFileEntry
+    '                   GetFiles, GetFullPath, OpenFile, ReadAllText, ToString
+    '                   WriteText
     ' 
     '         Sub: Close, (+2 Overloads) Dispose, Flush
     ' 
@@ -91,6 +92,15 @@ Namespace ApplicationServices.Zip
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="is_readonly">
+        ''' readonly mode just allows for read data from the zip archive file, and 
+        ''' set this parameter value to FALSE will enable for create entry inside 
+        ''' the file.
+        ''' </param>
         Sub New(file As Stream, Optional is_readonly As Boolean = False)
             s = file
             [readonly] = is_readonly
@@ -278,5 +288,9 @@ Namespace ApplicationServices.Zip
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
         End Sub
+
+        Public Function FileModifyTime(path As String) As Date Implements IFileSystemEnvironment.FileModifyTime
+            Return Nothing
+        End Function
     End Class
 End Namespace

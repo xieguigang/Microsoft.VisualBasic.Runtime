@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92e7ae451f5137bec3edd27f09c82709, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::942ab3d561b2d49b6e260b11b5f48283, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 81.74%
     ' 
     '   Blank Lines: 36 (11.01%)
-    '     File Size: 12.16 KB
+    '     File Size: 12.20 KB
 
 
     ' Module ListExtensions
@@ -226,8 +226,8 @@ Public Module ListExtensions
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Indexing(Of T)(source As IEnumerable(Of T)) As Index(Of T)
-        Return New Index(Of T)(source)
+    Public Function Indexing(Of T)(source As IEnumerable(Of T), Optional base As Integer = 0) As Index(Of T)
+        Return New Index(Of T)(source, base)
     End Function
 
     <Extension>
