@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32808061d6b51f10776fcb0704568a2c, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::26683428474d996eab679c79699d72bc, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 72.30%
     ' 
     '   Blank Lines: 45 (11.63%)
-    '     File Size: 14.16 KB
+    '     File Size: 14.13 KB
 
 
     '     Module MathUtils
@@ -60,7 +60,7 @@
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * MathUtils.java
@@ -274,7 +274,7 @@ Namespace Language.Java
 
         ''' <returns> log of random variable in [0,1] </returns>
         Public Function randomLogDouble() As Double
-            Return stdNum.Log(nextDouble())
+            Return std.Log(nextDouble())
         End Function
 
         ''' <summary>
@@ -282,7 +282,7 @@ Namespace Language.Java
         ''' </summary>
         Public Function nextExponential(lambda As Double) As Double
             SyncLock random
-                Return -1.0 * stdNum.Log(1 - random.nextDouble()) / lambda
+                Return -1.0 * std.Log(1 - random.nextDouble()) / lambda
             End SyncLock
         End Function
 
@@ -299,7 +299,7 @@ Namespace Language.Java
                 ' distribution with a mean of 0
                 ' and 1 standard deviation
                 Dim y As Double = v * v
-                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * stdNum.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
+                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * std.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
                 Dim test As Double = MathUtils.nextDouble() ' sample from a uniform
                 ' distribution between 0
                 ' and 1
@@ -433,12 +433,12 @@ Namespace Language.Java
         Public Function hypot(a As Double, b As Double) As Double
             Dim r As Double
 
-            If stdNum.Abs(a) > stdNum.Abs(b) Then
+            If std.Abs(a) > std.Abs(b) Then
                 r = b / a
-                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(a) * std.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(b) * std.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If

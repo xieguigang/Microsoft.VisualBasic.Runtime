@@ -1,6 +1,9 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\",
+
+  "Documents": [],
+
   "Documents": [
     {
       "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\hslcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
@@ -35,6 +38,7 @@
       "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\cmykcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     }
   ],
+
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -42,7 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
+
+          "SelectedChildIndex": -1,
+
           "SelectedChildIndex": 2,
+
           "Children": [
             {
               "$type": "Bookmark",
@@ -53,6 +61,10 @@
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "HSLColor.vb",
@@ -155,6 +167,7 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2024-08-18T10:56:05.353Z",
               "EditorCaption": ""
+
             }
           ]
         }

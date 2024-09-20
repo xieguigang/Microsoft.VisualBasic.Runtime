@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::948f3ba155bdd0fcb8b81ca73b8afa56, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::970007e29e74b7425195c7a13de07787, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.88%
     ' 
     '   Blank Lines: 50 (11.74%)
-    '     File Size: 13.84 KB
+    '     File Size: 13.85 KB
 
 
     ' Module PrimitiveParser
@@ -284,7 +284,7 @@ Public Module PrimitiveParser
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDouble(s As String) As Double
-        If s Is Nothing Then
+        If s Is Nothing OrElse s = "" Then
             Return 0
         Else
             Return ParseNumeric(s)
