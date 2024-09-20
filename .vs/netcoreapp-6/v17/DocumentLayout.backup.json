@@ -1,7 +1,44 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\",
+
   "Documents": [],
+
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\hslcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\hslcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\hsbcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\hsbcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\hexcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\hexcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\gdicolors.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\gdicolors.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\cytoscapecolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\cytoscapecolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\colormap.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\colormap.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\colorcube.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\colorcube.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\image\\colors\\cmykcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\image\\colors\\cmykcolor.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    }
+  ],
+
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
+
           "SelectedChildIndex": -1,
+
+          "SelectedChildIndex": 2,
+
           "Children": [
             {
               "$type": "Bookmark",
@@ -20,8 +61,113 @@
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HSLColor.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\HSLColor.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\HSLColor.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\HSLColor.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\HSLColor.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:57:21.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HSBColor.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\HSBColor.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\HSBColor.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\HSBColor.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\HSBColor.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:57:19.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HexColor.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\HexColor.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\HexColor.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\HexColor.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\HexColor.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:57:16.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GDIColors.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\GDIColors.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\GDIColors.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\GDIColors.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\GDIColors.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:57:09.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CytoscapeColor.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\CytoscapeColor.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\CytoscapeColor.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\CytoscapeColor.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\CytoscapeColor.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:57:02.545Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ColorMap.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\ColorMap.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\ColorMap.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\ColorMap.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\ColorMap.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:56:42.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ColorCube.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\ColorCube.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\ColorCube.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\ColorCube.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\ColorCube.vb",
+              "ViewState": "AgIAABwBAAAAAAAAAAAgwD0AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:56:12.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CMYKColor.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\CMYKColor.vb",
+              "RelativeDocumentMoniker": "src\\Extensions\\Image\\Colors\\CMYKColor.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Image\\Colors\\CMYKColor.vb",
+              "RelativeToolTip": "src\\Extensions\\Image\\Colors\\CMYKColor.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-08-18T10:56:05.353Z",
+              "EditorCaption": ""
+
             }
           ]
         }
