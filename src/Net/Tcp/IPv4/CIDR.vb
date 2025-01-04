@@ -306,16 +306,15 @@ Namespace Net.Tcp
             Dim numberOfIPs__2 As Integer? = 0
 
             For n As Integer = 0 To (32 - numberOfBits) - 1
-
                 numberOfIPs__2 = numberOfIPs__2 << 1
                 numberOfIPs__2 = numberOfIPs__2 Or &H1
             Next
 
-            Dim baseIP As Integer? = _baseIPnumeric And _netmaskNumeric
+            Dim baseIP As Integer = _baseIPnumeric And _netmaskNumeric
             Dim i As Integer = 1
 
             While i < (numberOfIPs__2) AndAlso i < numberofIPs
-                Dim ourIP As Integer? = baseIP + i
+                Dim ourIP As Integer = baseIP + i
                 Dim ip As String = NumericIpToSymbolic(ourIP)
 
                 result.Add(ip)
