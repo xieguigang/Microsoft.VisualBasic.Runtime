@@ -185,7 +185,7 @@ Namespace My
             End If
 
 #If DEBUG Then
-            Call Debug.Write(msg)
+            Call System.Diagnostics.Debug.Write(msg)
 #End If
         End Sub
 
@@ -224,7 +224,7 @@ Namespace My
             End If
 
 #If DEBUG Then
-            Call Debug.WriteLine(msg)
+            Call System.Diagnostics.Debug.WriteLine(msg)
 #End If
         End Sub
     End Module

@@ -248,7 +248,7 @@ Public Module VBDebugger
             Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
 
 #If DEBUG Then
-            Call Debug.WriteLine($"[{head}]{str}")
+            Call System.Diagnostics.Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
         If waitOutput Then
@@ -270,7 +270,7 @@ Public Module VBDebugger
             End If
 
 #If DEBUG Then
-            Call Debug.WriteLine($"[{head}]{str}")
+            Call System.Diagnostics.Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
     End Sub
@@ -391,7 +391,7 @@ Public Module VBDebugger
 
             Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
 #If DEBUG Then
-            Call Debug.WriteLine($"[{head}]{msg}")
+            Call System.Diagnostics.Debug.WriteLine($"[{head}]{msg}")
 #End If
         End If
 
