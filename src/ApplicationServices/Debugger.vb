@@ -185,21 +185,39 @@ Public Module VBDebugger
     ''' <param name="trace$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function BENCHMARK(test As Action, <CallerMemberName> Optional trace$ = Nothing) As Long
-        Dim start = Now.ToLongTimeString
+    Public Function benchmark(test As Action, <CallerMemberName> Optional trace$ = Nothing) As Long
+        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
+        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
         Dim ms& = Utils.Time(test)
-        Dim end$ = Now.ToLongTimeString
-        Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
-        Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
+        Dim header$ = $"benchmark, {elapsedFormatted} + {StringFormats.ReadableElapsedTime(TimeSpan.FromMilliseconds(ms))} - "
+        Dim str$ = $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
         If Not My.Log4VB.redirectInfo Is Nothing Then
-            Call My.Log4VB.redirectInfo(head, str, MSG_TYPES.INF)
+            Call My.Log4VB.redirectInfo(header, str, MSG_TYPES.INF)
         ElseIf Not Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Call My.Log4VB.Print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
+            Call Console.WriteLine(New TextSpan(header & str, AnsiColor.Magenta) & AnsiEscapeCodes.Reset)
         End If
 
         Return ms
     End Function
+
+    ''' <summary>
+    ''' Display the wraning level(YELLOW color) message on the console.
+    ''' </summary>
+    ''' <param name="msg"></param>
+    ''' <param name="mute"></param>
+    <Extension>
+    Public Sub warning(msg As String, Optional mute As Boolean = False)
+        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
+        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
+        Dim header As String = $"warn, {elapsedFormatted} - "
+
+        If My.Log4VB.redirectWarning IsNot Nothing Then
+            Call My.Log4VB.redirectWarning(header, msg, MSG_TYPES.WRN)
+        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
+            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Yellow) & AnsiEscapeCodes.Reset)
+        End If
+    End Sub
 
     <Extension>
     Public Sub debug(msg As String, Optional mute As Boolean = False)
@@ -210,7 +228,33 @@ Public Module VBDebugger
         If My.Log4VB.redirectDebug IsNot Nothing Then
             Call My.Log4VB.redirectDebug(header, msg, MSG_TYPES.DEBUG)
         ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Green))
+            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Green) & AnsiEscapeCodes.Reset)
+        End If
+    End Sub
+
+    <Extension>
+    Public Sub info(msg As String, Optional mute As Boolean = False)
+        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
+        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
+        Dim header As String = $"info, {elapsedFormatted} - "
+
+        If My.Log4VB.redirectInfo IsNot Nothing Then
+            Call My.Log4VB.redirectInfo(header, msg, MSG_TYPES.INF)
+        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
+            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Blue) & AnsiEscapeCodes.Reset)
+        End If
+    End Sub
+
+    <Extension>
+    Public Sub [error](msg As String, Optional mute As Boolean = False)
+        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
+        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
+        Dim header As String = $"error, {elapsedFormatted} - "
+
+        If My.Log4VB.redirectInfo IsNot Nothing Then
+            Call My.Log4VB.redirectError(header, msg, MSG_TYPES.ERR)
+        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
+            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Red) & AnsiEscapeCodes.Reset)
         End If
     End Sub
 
@@ -377,28 +421,6 @@ Public Module VBDebugger
     End Sub
 
     ''' <summary>
-    ''' Display the wraning level(YELLOW color) message on the console.
-    ''' </summary>
-    ''' <param name="msg"></param>
-    ''' <param name="calls"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
-        If Not My.Log4VB.redirectWarning Is Nothing Then
-            Call My.Log4VB.redirectWarning(calls, msg, MSG_TYPES.WRN)
-        ElseIf Not Mute Then
-            Dim head As String = $"WARNG <{calls}> {Now.ToString}"
-
-            Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
-#If DEBUG Then
-            Call System.Diagnostics.Debug.WriteLine($"[{head}]{msg}")
-#End If
-        End If
-
-        Return Nothing
-    End Function
-
-    ''' <summary>
     ''' If <paramref name="test"/> boolean value is False, then the assertion test failure. If the test is failure the specific message will be output on the console.
     ''' </summary>
     ''' <param name="test"></param>
@@ -418,7 +440,7 @@ Public Module VBDebugger
                 End If
             ElseIf level = MSG_TYPES.WRN Then
                 If m_level <> DebuggerLevels.Error Then
-                    Call Warning(fails, calls)
+                    Call warning(fails, calls)
                 End If
             Else
                 If m_level < DebuggerLevels.Warning Then
@@ -467,7 +489,7 @@ Public Module VBDebugger
                 Case MSG_TYPES.ERR
                     Call failed.PrintException(calls)
                 Case MSG_TYPES.WRN
-                    Call failed.Warning(calls)
+                    Call failed.warning(calls)
                 Case Else
                     Call failed.Echo(calls)
             End Select
