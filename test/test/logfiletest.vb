@@ -51,6 +51,7 @@
 
 #End Region
 
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 
 Module logfiletest
@@ -60,8 +61,13 @@ Module logfiletest
         Call "invalid data!".warning
         Call "hi, welcome".info
         Call "missing file for run startup!".error
+        Call New Action(AddressOf download).benchmark
 
         Pause()
+    End Sub
+
+    Sub download()
+        Call Thread.Sleep(3.25 * 1000)
     End Sub
 
     Sub readerTest()

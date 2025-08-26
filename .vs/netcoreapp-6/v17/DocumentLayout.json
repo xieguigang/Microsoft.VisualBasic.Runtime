@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\test\\logfiletest.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\test\\logfiletest.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\debugger.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\debugger.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\terminal\\markdownrender\\textspan.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\terminal\\markdownrender\\textspan.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\test\\logfiletest.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\test\\logfiletest.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,11 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Utils.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Utils.vb",
               "RelativeDocumentMoniker": "src\\ApplicationServices\\Utils.vb",
@@ -51,7 +51,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "TextSpan.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\MarkdownRender\\TextSpan.vb",
               "RelativeDocumentMoniker": "src\\ApplicationServices\\Terminal\\MarkdownRender\\TextSpan.vb",
@@ -64,26 +64,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Debugger.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Debugger.vb",
               "RelativeDocumentMoniker": "src\\ApplicationServices\\Debugger.vb",
               "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Debugger.vb",
               "RelativeToolTip": "src\\ApplicationServices\\Debugger.vb",
-              "ViewState": "AgIAAKQAAAAAAAAAAAAgwMcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAgwM0AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2025-08-26T09:26:21.602Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "logfiletest.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test\\logfiletest.vb",
               "RelativeDocumentMoniker": "test\\test\\logfiletest.vb",
               "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test\\logfiletest.vb",
               "RelativeToolTip": "test\\test\\logfiletest.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2025-08-26T09:23:44.88Z",
               "EditorCaption": ""
