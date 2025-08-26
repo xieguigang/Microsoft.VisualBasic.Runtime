@@ -58,10 +58,11 @@ Module logfiletest
 
     Sub logprint()
         Call "debug message is here".debug
+        Call New Action(AddressOf download).benchmark
         Call "invalid data!".warning
         Call "hi, welcome".info
         Call "missing file for run startup!".error
-        Call New Action(AddressOf download).benchmark
+        Call "new message recived".logging
 
         Pause()
     End Sub

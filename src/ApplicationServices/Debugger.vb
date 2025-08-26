@@ -63,7 +63,6 @@
 
 #End Region
 
-Imports System.Drawing
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -77,7 +76,6 @@ Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Text
 
 <Assembly: InternalsVisibleTo("REnv")>
 <Assembly: InternalsVisibleTo("R#")>
@@ -138,10 +136,23 @@ Public Module VBDebugger
     ''' 当前的调试器的信息输出登记，默认是输出所有的信息
     ''' </summary>
     Friend m_level As DebuggerLevels = DebuggerLevels.On
+
     ''' <summary>
     ''' 是否静默掉所有的调试器输出信息？默认不是
     ''' </summary>
     Friend m_mute As Boolean = False
+
+    Private Function MapLevels(level As MSG_TYPES) As DebuggerLevels
+        Select Case level
+            Case MSG_TYPES.DEBUG : Return DebuggerLevels.Debug
+            Case MSG_TYPES.ERR : Return DebuggerLevels.Error
+            Case MSG_TYPES.INF : Return DebuggerLevels.Info
+            Case MSG_TYPES.WRN : Return DebuggerLevels.Warning
+            Case MSG_TYPES.FINEST : Return DebuggerLevels.All
+            Case Else
+                Return DebuggerLevels.On
+        End Select
+    End Function
 
     ''' <summary>
     ''' 对外部开放的调试日志的获取接口类型的申明
@@ -186,18 +197,9 @@ Public Module VBDebugger
     ''' <returns></returns>
     <Extension>
     Public Function benchmark(test As Action, <CallerMemberName> Optional trace$ = Nothing) As Long
-        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
-        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
         Dim ms& = Utils.Time(test)
-        Dim header$ = $"benchmark, {elapsedFormatted} + {StringFormats.ReadableElapsedTime(TimeSpan.FromMilliseconds(ms))} - "
         Dim str$ = $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
-
-        If Not My.Log4VB.redirectInfo Is Nothing Then
-            Call My.Log4VB.redirectInfo(header, str, MSG_TYPES.INF)
-        ElseIf Not Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Call Console.WriteLine(New TextSpan(header & str, AnsiColor.Magenta) & AnsiEscapeCodes.Reset)
-        End If
-
+        Call log(str, "benchmark", AnsiColor.BrightMagenta, MSG_TYPES.INF, Mute, $" + {StringFormats.ReadableElapsedTime(TimeSpan.FromMilliseconds(ms))}")
         Return ms
     End Function
 
@@ -208,114 +210,39 @@ Public Module VBDebugger
     ''' <param name="mute"></param>
     <Extension>
     Public Sub warning(msg As String, Optional mute As Boolean = False)
-        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
-        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
-        Dim header As String = $"warn, {elapsedFormatted} - "
-
-        If My.Log4VB.redirectWarning IsNot Nothing Then
-            Call My.Log4VB.redirectWarning(header, msg, MSG_TYPES.WRN)
-        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Yellow) & AnsiEscapeCodes.Reset)
-        End If
+        Call log(msg, "warning", AnsiColor.BrightYellow, MSG_TYPES.WRN, mute, "")
     End Sub
 
     <Extension>
     Public Sub debug(msg As String, Optional mute As Boolean = False)
-        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
-        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
-        Dim header As String = $"debug, {elapsedFormatted} - "
-
-        If My.Log4VB.redirectDebug IsNot Nothing Then
-            Call My.Log4VB.redirectDebug(header, msg, MSG_TYPES.DEBUG)
-        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Green) & AnsiEscapeCodes.Reset)
-        End If
+        Call log(msg, "debug", AnsiColor.Green, MSG_TYPES.DEBUG, mute, "")
     End Sub
 
     <Extension>
     Public Sub info(msg As String, Optional mute As Boolean = False)
-        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
-        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
-        Dim header As String = $"info, {elapsedFormatted} - "
-
-        If My.Log4VB.redirectInfo IsNot Nothing Then
-            Call My.Log4VB.redirectInfo(header, msg, MSG_TYPES.INF)
-        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Blue) & AnsiEscapeCodes.Reset)
-        End If
+        Call log(msg, "info", AnsiColor.BrightBlue, MSG_TYPES.INF, mute, "")
     End Sub
 
     <Extension>
     Public Sub [error](msg As String, Optional mute As Boolean = False)
-        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
-        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
-        Dim header As String = $"error, {elapsedFormatted} - "
-
-        If My.Log4VB.redirectInfo IsNot Nothing Then
-            Call My.Log4VB.redirectError(header, msg, MSG_TYPES.ERR)
-        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Red) & AnsiEscapeCodes.Reset)
-        End If
+        Call log(msg, "error", AnsiColor.Red, MSG_TYPES.ERR, mute, "")
     End Sub
 
-    ''' <summary>
-    ''' Output the full debug information while the project is debugging in debug mode.
-    ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
-    ''' </summary>
-    ''' <param name="msg">
-    ''' The message fro output to the debugger console, this function will add a time 
-    ''' stamp automaticly To the leading position Of the message.
-    ''' </param>
-    ''' <param name="indent"></param>
-    ''' <param name="waitOutput">
-    ''' 等待调试器输出工作线程将内部的消息队列输出完毕
-    ''' </param>
-    ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
     <Extension>
-    Public Function __DEBUG_ECHO(msg$,
-                                 Optional indent% = 0,
-                                 Optional mute As Boolean = False,
-                                 Optional waitOutput As Boolean = False) As String
-        Static indents$() = {
-            "",
-            New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
-            New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
-            New String(" ", 9), New String(" ", 10)
-        }
+    Public Sub logging(msg As String, Optional mute As Boolean = False)
+        Call log(msg, "log", AnsiColor.BrightWhite, MSG_TYPES.INF, mute, "")
+    End Sub
 
-        If Not My.Log4VB.redirectDebug Is Nothing Then
-            Call My.Log4VB.redirectDebug($"{Now.ToString}", msg, MSG_TYPES.DEBUG)
-        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Dim head As String = $"DEBUG {Now.ToString}"
-            Dim str As String = $"{indents(indent)} {msg}"
+    Public Sub log(msg As String, lv As String, color As AnsiColor, level As MSG_TYPES, mute As Boolean, tag As String)
+        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
+        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
+        Dim header As String = $"{lv}, {elapsedFormatted}{tag} - "
+        Dim log4vb As LoggingDriver = My.Log4VB.getLogger(level)
 
-            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
-
-#If DEBUG Then
-            Call System.Diagnostics.Debug.WriteLine($"[{head}]{str}")
-#End If
-        End If
-        If waitOutput Then
-            Call VBDebugger.WaitOutput()
-        End If
-
-        Return Nothing
-    End Function
-
-    <Extension> Public Sub __INFO_ECHO(msg$, Optional silent As Boolean = False)
-        If Not My.Log4VB.redirectInfo Is Nothing Then
-            Call My.Log4VB.redirectInfo(Now.ToString, msg, MSG_TYPES.INF)
-        ElseIf Not Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Dim head As String = $"INFOM {Now.ToString}"
-            Dim str As String = " " & msg
-
-            If Not silent Then
-                Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
-            End If
-
-#If DEBUG Then
-            Call System.Diagnostics.Debug.WriteLine($"[{head}]{str}")
-#End If
+        If log4vb IsNot Nothing Then
+            Call log4vb(header, msg, level)
+        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level <= MapLevels(level) Then
+            Call Console.WriteLine(New TextSpan(header & msg, color) & AnsiEscapeCodes.Reset)
         End If
     End Sub
 

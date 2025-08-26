@@ -97,6 +97,17 @@ Namespace My
         ''' </summary>
         Public redirectInfo As LoggingDriver
 
+        Public Function getLogger(level As MSG_TYPES) As LoggingDriver
+            Select Case level
+                Case MSG_TYPES.DEBUG : Return redirectDebug
+                Case MSG_TYPES.ERR : Return redirectError
+                Case MSG_TYPES.INF : Return redirectInfo
+                Case MSG_TYPES.WRN : Return redirectWarning
+                Case Else
+                    Return Nothing
+            End Select
+        End Function
+
         ''' <summary>
         ''' Translate <see cref="MSG_TYPES"/> to <see cref="ConsoleColor"/>
         ''' </summary>
