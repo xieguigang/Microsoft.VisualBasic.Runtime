@@ -67,10 +67,22 @@ Namespace Imaging.Math2D
         ReadOnly radiusY As Double
         ReadOnly center As PointF
 
+        Public Property value As Double
+
         Sub New(radiusX As Double, radiusY As Double, center As PointF)
             Me.center = center
             Me.radiusX = radiusX
             Me.radiusY = radiusY
+        End Sub
+
+        ''' <summary>
+        ''' create a new circle model
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="r"></param>
+        Sub New(x As Single, y As Single, r As Double)
+            Call Me.New(r, r, New PointF(x, y))
         End Sub
 
         Public Function GetPolygonPath() As Polygon2D
