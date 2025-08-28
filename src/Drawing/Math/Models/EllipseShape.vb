@@ -67,6 +67,10 @@ Namespace Imaging.Math2D
         ReadOnly radiusY As Double
         ReadOnly center As PointF
 
+        ''' <summary>
+        ''' any other tagged value with current circle model
+        ''' </summary>
+        ''' <returns></returns>
         Public Property value As Double
 
         Sub New(radiusX As Double, radiusY As Double, center As PointF)
