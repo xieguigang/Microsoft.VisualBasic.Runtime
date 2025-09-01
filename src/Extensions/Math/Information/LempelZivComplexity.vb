@@ -1,4 +1,7 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports std = System.Math
 
 Namespace Math.Information
 
@@ -65,16 +68,29 @@ Namespace Math.Information
     ''' </summary>
     Public Class LempelZivComplexity
 
+        Public Property Complexity As Integer
+        Public Property NormalizedComplexity As Double
+
+        Public Shared ReadOnly Property Zero As LempelZivComplexity
+            Get
+                Return New LempelZivComplexity
+            End Get
+        End Property
+
         ''' <summary>
         ''' 计算二进制序列的Lempel-Ziv复杂度
         ''' </summary>
         ''' <param name="sequence">二进制序列（由'0'和'1'组成的字符串）</param>
         ''' <returns>返回复杂度值c(n)和归一化复杂度C(n)</returns>
-        Public Shared Function ComputeLZC(sequence As String) As (Complexity As Integer, NormalizedComplexity As Double)
-            If String.IsNullOrEmpty(sequence) Then
-                Return (0, 0)
+        Public Shared Function ComputeLZC(sequence As String) As LempelZivComplexity
+            If sequence.StringEmpty Then
+                Return LempelZivComplexity.Zero
+            Else
+                Return ComputeLZCString(sequence)
             End If
+        End Function
 
+        Private Shared Function ComputeLZCString(sequence As String) As LempelZivComplexity
             Dim n As Integer = sequence.Length
             Dim i As Integer = 0
             Dim j As Integer = 1
@@ -83,6 +99,7 @@ Namespace Math.Information
 
             While i < n
                 Dim currentSubstring As String = sequence.Substring(i, j - i)
+
                 If dictionary.Contains(currentSubstring) Then
                     j += 1
                     If j > n Then
@@ -100,42 +117,79 @@ Namespace Math.Information
                 End If
             End While
 
-            ' 计算归一化复杂度 [5](@ref)
-            Dim b_n As Double = n / Math.Log(n, 2)
+            ' 计算归一化复杂度 
+            Dim b_n As Double = n / std.Log(n, 2)
             Dim normalizedC As Double = c / b_n
 
-            Return (c, normalizedC)
+            Return New LempelZivComplexity With {
+                .Complexity = c,
+                .NormalizedComplexity = normalizedC
+            }
         End Function
 
         ''' <summary>
-        ''' 将数值序列转换为二进制序列（基于中值）用于LZC计算 [5](@ref)
+        ''' 将数值序列转换为二进制序列（基于中值）用于LZC计算
         ''' </summary>
         ''' <param name="data">输入数值序列</param>
         ''' <returns>二进制序列字符串</returns>
         Public Shared Function ConvertToBinarySequence(data As Double()) As String
-            If data Is Nothing OrElse data.Length = 0 Then
+            If data.IsNullOrEmpty Then
                 Return String.Empty
-            End If
-
-            ' 计算中值作为阈值
-            Dim sortedData = data.OrderBy(Function(x) x).ToArray()
-            Dim median As Double
-            If sortedData.Length Mod 2 = 0 Then
-                median = (sortedData(sortedData.Length \ 2 - 1) + sortedData(sortedData.Length \  ￣2)) / 2.0
             Else
-                median = sortedData(sortedData.Length \ 2)
+                ' 计算中值作为阈值
+                Dim median As Double = data.Median
+                Dim binarySeq As New StringBuilder()
+
+                For Each value As Double In data
+                    If value >= median Then
+                        binarySeq.Append("1")
+                    Else
+                        binarySeq.Append("0")
+                    End If
+                Next
+
+                Return binarySeq.ToString()
             End If
+        End Function
 
-            Dim binarySeq As New StringBuilder()
-            For Each value In data
-                If value >= median Then
-                    binarySeq.Append("1")
-                Else
-                    binarySeq.Append("0")
-                End If
-            Next
+        Public Shared Function ConvertToDecimalSequence(data As Double()) As String
+            If data.IsNullOrEmpty Then
+                Return String.Empty
+            Else
+                Dim range As New DoubleRange(data)
+                Dim offset As New DoubleRange(0, 10)
+                Dim i As Integer
+                Dim decimals As New StringBuilder
 
-            Return binarySeq.ToString()
+                Static chars As Char() = "0123456789"
+
+                For Each value As Double In data
+                    i = CInt(range.ScaleMapping(value, offset))
+                    decimals.Append(chars(i))
+                Next
+
+                Return decimals.ToString
+            End If
+        End Function
+
+        Public Shared Function ConvertToHexadecimalSequence(data As Double()) As String
+            If data.IsNullOrEmpty Then
+                Return String.Empty
+            Else
+                Dim range As New DoubleRange(data)
+                Dim offset As New DoubleRange(0, 16)
+                Dim i As Integer
+                Dim hexadecimal As New StringBuilder
+
+                Static chars As Char() = "0123456789ABCDEF"
+
+                For Each value As Double In data
+                    i = CInt(range.ScaleMapping(value, offset))
+                    hexadecimal.Append(chars(i))
+                Next
+
+                Return hexadecimal.ToString
+            End If
         End Function
 
     End Class
