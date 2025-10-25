@@ -7,7 +7,7 @@ Namespace ComponentModel.Algorithm.base
 
         ReadOnly distanceMap As Double()()
 
-        Public ReadOnly Property Distance(i As Integer, j As Integer) As Double
+        Default Public ReadOnly Property Distance(i As Integer, j As Integer) As Double
             Get
                 Return distanceMap(i)(j)
             End Get
