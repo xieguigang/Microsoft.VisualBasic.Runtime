@@ -17,4 +17,12 @@ Namespace Text.Xml.Models
     Public Class ulongs
         <XmlAttribute> Public Property ulongs As ULong()
     End Class
+
+    Public Class doubles
+        <XmlAttribute> Public Property doubles As Double()
+    End Class
+
+    Public Class floats
+        <XmlAttribute> Public Property floats As Single()
+    End Class
 End Namespace
