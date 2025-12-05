@@ -147,6 +147,8 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' 基于q-gram重叠度查找相似字符串
         ''' </summary>
+        ''' <remarks>大小写不敏感</remarks>
+        ''' <returns>the returns similarity text search result has already been sorted via <see cref="FindResult.similarity"/> in descending order.</returns>
         Public Function FindSimilar(query As String, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
             If String.IsNullOrEmpty(query) Then
                 Return New FindResult() {}
