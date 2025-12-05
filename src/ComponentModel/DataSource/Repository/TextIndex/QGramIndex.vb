@@ -87,6 +87,13 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         ReadOnly _counts As New Dictionary(Of String, Integer)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="q"></param>
+        ''' <remarks>
+        ''' for make search index of the metabolite/chemical/gene/protein name, q = 3 is recommended as the name size is vary from short to long
+        ''' </remarks>
         Public Sub New(q As Integer)
             _q = q
             _index = New Dictionary(Of String, HashSet(Of Integer))(StringComparer.OrdinalIgnoreCase)
