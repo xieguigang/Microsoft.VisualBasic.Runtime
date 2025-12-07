@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\test\\qgramtestsearch.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\test\\qgramtestsearch.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\componentmodel\\datasource\\repository\\textindex\\qgramindex.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\componentmodel\\datasource\\repository\\textindex\\qgramindex.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\test\\wgettest.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,7 +58,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "QGramIndex.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ComponentModel\\DataSource\\Repository\\TextIndex\\QGramIndex.vb",
               "RelativeDocumentMoniker": "src\\ComponentModel\\DataSource\\Repository\\TextIndex\\QGramIndex.vb",
@@ -66,12 +66,11 @@
               "RelativeToolTip": "src\\ComponentModel\\DataSource\\Repository\\TextIndex\\QGramIndex.vb",
               "ViewState": "AgIAAIQAAAAAAAAAAAAAwJYAAACTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-12-05T10:41:51.579Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-05T10:41:51.579Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "qgramTestSearch.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test\\qgramTestSearch.vb",
               "RelativeDocumentMoniker": "test\\test\\qgramTestSearch.vb",
@@ -92,8 +91,7 @@
               "RelativeToolTip": "test\\test\\wgetTest.vb",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-12-05T10:39:42.657Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-05T10:39:42.657Z"
             },
             {
               "$type": "Document",
@@ -105,12 +103,11 @@
               "RelativeToolTip": "test\\test\\wmfTest.vb",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-12-05T10:39:41.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-05T10:39:41.695Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Program.vb",
               "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\Program.vb",
               "RelativeDocumentMoniker": "test\\Program.vb",
