@@ -14,9 +14,11 @@
                     Dim result As New List(Of T())()
                     For Each item In sequences(depth)
                         Dim newCombination As New List(Of T)(currentCombination)
-                        newCombination.Add(item)
-                        result.AddRange(helper(depth + 1, newCombination))
+
+                        Call newCombination.Add(item)
+                        Call result.AddRange(helper(depth + 1, newCombination))
                     Next
+
                     Return result
                 End If
             End Function
