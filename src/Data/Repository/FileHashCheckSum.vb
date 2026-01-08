@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 
 Namespace Data.Repository
 
@@ -22,10 +23,18 @@ Namespace Data.Repository
         ''' </summary>
         ''' <param name="filePath">文件路径</param>
         ''' <param name="algo">哈希算法类型</param>
+        ''' <param name="bufferSize">
+        ''' 应该小于2GB
+        ''' </param>
         ''' <returns>哈希值的十六进制字符串</returns>
-        Public Shared Function ComputeHash(filePath As String, Optional algo As HashType = HashType.SHA256) As String
-            If String.IsNullOrEmpty(filePath) Then Throw New ArgumentNullException(NameOf(filePath))
-            If Not File.Exists(filePath) Then Throw New FileNotFoundException("找不到文件", filePath)
+        Public Shared Function ComputeHash(filePath As String, Optional algo As HashType = HashType.SHA256, Optional bufferSize As Integer = 32 * ByteSize.MB) As String
+            If String.IsNullOrEmpty(filePath) Then
+                Throw New ArgumentNullException(NameOf(filePath))
+            End If
+
+            If Not File.Exists(filePath) Then
+                Throw New FileNotFoundException("找不到文件", filePath)
+            End If
 
             ' 1. 创建哈希算法实例
             Using hashAlgorithm As HashAlgorithm = CreateHashAlgorithm(algo)
@@ -33,11 +42,9 @@ Namespace Data.Repository
                 ' 2. 配置文件流参数
                 ' bufferSize: 设置为 4MB，这是大文件处理的性能关键
                 ' FileOptions.SequentialScan: 提示系统我们将顺序读取，系统会进行预读优化
-                Dim bufferSize As Integer = 4 * 1024 * 1024 ' 4MB
                 Dim fileOptions As FileOptions = FileOptions.SequentialScan
 
                 Using fileStream As New FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, fileOptions)
-
                     ' 3. 分块读取并计算哈希
                     ' 我们不使用 ComputeHash(fileStream) 的重载，因为它的默认缓冲区较小
                     ' 使用 TransformBlock 可以手动控制缓冲区大小
@@ -73,16 +80,11 @@ Namespace Data.Repository
         ''' </summary>
         Private Shared Function CreateHashAlgorithm(algo As HashType) As HashAlgorithm
             Select Case algo
-                Case HashType.MD5
-                    Return System.Security.Cryptography.MD5.Create()
-                Case HashType.SHA1
-                    Return SHA1.Create()
-                Case HashType.SHA256
-                    Return SHA256.Create()
-                Case HashType.SHA384
-                    Return SHA384.Create()
-                Case HashType.SHA512
-                    Return SHA512.Create()
+                Case HashType.MD5 : Return System.Security.Cryptography.MD5.Create()
+                Case HashType.SHA1 : Return SHA1.Create()
+                Case HashType.SHA256 : Return SHA256.Create()
+                Case HashType.SHA384 : Return SHA384.Create()
+                Case HashType.SHA512 : Return SHA512.Create()
                 Case Else
                     Return SHA256.Create() ' 默认返回 SHA256
             End Select
