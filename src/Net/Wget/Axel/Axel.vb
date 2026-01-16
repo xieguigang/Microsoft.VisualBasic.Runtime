@@ -56,9 +56,7 @@ Imports System.IO
 Imports System.Net.Http
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.ValueTypes
-Imports std = System.Math
 
 Namespace Net.WebClient
 
@@ -72,9 +70,10 @@ Namespace Net.WebClient
         ' --- 配置结束 ---
 
         ' 用于跟踪已下载的总字节数，用于进度显示
-        Private Shared totalBytesDownloaded As Long = 0
-        Private Shared totalFileSize As Long = 0
-        Private Shared lockObject As New Object()
+        Friend totalBytesDownloaded As Long = 0
+        Friend totalFileSize As Long = 0
+
+        Friend ReadOnly lockObject As New Object()
 
         <STAThread>
         Public Async Function Download(url As String, fileName As String, Optional nThreads As Integer? = Nothing) As Task
@@ -179,106 +178,6 @@ Namespace Net.WebClient
                 Console.WriteLine($"下载完成: {Path.GetFullPath(fileName)}")
             End Using
         End Function
-
-        Private Async Function DownloadChunkAsync(url As String, startByte As Long, endByte As Long, destinationPath As String) As Task
-            ' 配置参数
-            Dim maxRetries As Integer = 9
-            Dim connectionTimeoutSeconds As Integer = 30
-            Dim bufferSize As Integer = 4 * ByteSize.KB
-            Dim bytesToDownload As Long = endByte - startByte + 1
-
-            ' --- 重试循环开始 ---
-            For retryCount As Integer = 1 To maxRetries
-                Try
-                    Dim downloadSuccess As Boolean = False
-
-                    Using httpClient As New HttpClient()
-                        ' 1. 设置连接超时为30秒
-                        httpClient.Timeout = TimeSpan.FromSeconds(connectionTimeoutSeconds)
-
-                        Using request As New HttpRequestMessage(HttpMethod.Get, url)
-                            ' 设置 Range 请求头
-                            request.Headers.Range = New Headers.RangeHeaderValue(startByte, endByte)
-
-                            ' 2. 使用 ResponseHeadersRead 选项
-                            ' 这意味着 SendAsync 在收到响应头后就会完成，而不需要等待整个内容下载完。
-                            ' 因此，30秒的超时主要作用于"建立连接"阶段，而不是下载阶段。
-                            Using response = Await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                                response.EnsureSuccessStatusCode()
-
-                                Using contentStream = Await response.Content.ReadAsStreamAsync()
-                                    ' FileMode.Create 确保每次重试都会覆盖之前未完成的文件
-                                    Using fileStream As New FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, True)
-                                        Dim buffer As Byte() = New Byte(bufferSize - 1) {}
-                                        ' 计算目标大小（用于循环判断，或者用于校验）
-                                        Dim bytesRemaining As Long = bytesToDownload
-                                        Dim bytesRead As Integer
-
-                                        ' 循环直到读取完毕
-                                        Do While bytesRemaining > 0
-                                            ' 计算本次最多能读多少字节
-                                            ' 不能超过 buffer 大小，也不能超过剩余需要的字节数
-                                            ' 这样可以防止 ReadAsync 读取超出 Range 范围的数据（如果有）
-                                            Dim bytesToRead As Integer = CInt(std.Min(bufferSize, bytesRemaining))
-
-                                            ' 使用 bytesToRead 进行读取，而不是 bufferSize
-                                            bytesRead = Await contentStream.ReadAsync(buffer, Scan0, bytesToRead)
-                                            ' 如果读取到0字节，说明流已结束，必须退出循环
-                                            If bytesRead = 0 Then
-                                                Exit Do
-                                            End If
-
-                                            ' 只写入实际读取到的字节数，而不是 bufferSize
-                                            Await fileStream.WriteAsync(buffer, Scan0, bytesRead)
-
-                                            ' 更新剩余字节数
-                                            bytesRemaining -= bytesRead
-                                            ' 更新已下载字节数（用于进度条）
-                                            ' 进度增加量也必须是实际读取量
-                                            SyncLock lockObject
-                                                totalBytesDownloaded += bytesRead
-                                            End SyncLock
-                                        Loop
-
-                                        If bytesRemaining > 0 Then
-                                            ' bytesRead = 0 的时候提前退出了
-                                            downloadSuccess = False
-                                        Else
-                                            downloadSuccess = True
-                                        End If
-                                    End Using
-                                End Using
-                            End Using
-                        End Using
-                    End Using
-
-                    ' 如果代码执行到这里，说明下载成功，退出重试循环
-                    Exit For
-
-                Catch ex As TaskCanceledException
-                    ' 当超过30秒无响应（超时）时会触发此异常
-                    ' 如果是最后一次重试，则抛出错误；否则稍等后继续下一次循环
-                    If retryCount = maxRetries Then
-                        Throw New Exception($"下载失败：连接超时（超过 {connectionTimeoutSeconds} 秒无响应）。已重试 {maxRetries} 次仍未成功。", ex)
-                    End If
-                Catch ex As HttpRequestException
-                    ' 当网络错误（如DNS解析失败、连接被拒绝等）时触发
-                    If retryCount = maxRetries Then
-                        Throw New Exception($"下载失败：网络请求错误。已重试 {maxRetries} 次仍未成功。", ex)
-                    End If
-                Catch ex As Exception
-                    ' 捕获其他所有未知错误
-                    If retryCount = maxRetries Then
-                        Throw New Exception($"下载失败：发生未知错误。已重试 {maxRetries} 次仍未成功。", ex)
-                    End If
-                End Try
-
-                ' --- 如果发生错误且未达到最大重试次数 ---
-                ' 等待1秒后进行下一次重试，避免立即重试导致系统资源浪费或被服务器封禁
-                Await Task.Delay(1000)
-            Next
-        End Function
-
 
         Private Async Function MergeFilesAsync(sourceFiles As List(Of String), destinationPath As String) As Task
             Using destinationStream As New FileStream(destinationPath, FileMode.Create)
