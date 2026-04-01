@@ -3,64 +3,12 @@
   "WorkspaceRootPath": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\debugger\\logging\\logfile\\logfile.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\debugger\\logging\\logfile\\logfile.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\componentmodel\\algorithm\\dynamicprogramming\\levenshtein\\levenshteindistance.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\componentmodel\\algorithm\\dynamicprogramming\\levenshtein\\levenshteindistance.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\componentmodel\\datastructures\\trigger.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\componentmodel\\datastructures\\trigger.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\parallel\\threads\\threadpool.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\parallel\\threads\\threadpool.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\extensions\\math\\random\\randomextensions.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\extensions\\math\\random\\randomextensions.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\net\\wget\\axel\\axel.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\net\\wget\\axel\\axel.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\net\\http\\sitemap.xml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\net\\http\\sitemap.xml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\my\\framework\\config.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\my\\framework\\config.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\my\\framework\\iohandler.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\my\\framework\\iohandler.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\commandline\\cli\\processex.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\commandline\\cli\\processex.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\commandline\\cli\\ioredirectfile.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\commandline\\cli\\ioredirectfile.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\utils.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\utils.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\tools\\performancecounter.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\tools\\performancecounter.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\parallel\\mmfprotocol\\workflow.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\parallel\\mmfprotocol\\workflow.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\terminal\\interactiveiodevice\\historystacks.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\terminal\\interactiveiodevice\\historystacks.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\terminal\\utility\\unixman\\manfile\\manindex.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\terminal\\utility\\unixman\\manfile\\manindex.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+      "AbsoluteMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\src\\applicationservices\\terminal\\stdio__\\stdio.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{DA9F10C2-A97B-49DA-9A76-D630BD977FDA}|src\\Core.vbproj|solutionrelative:src\\applicationservices\\terminal\\stdio__\\stdio.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,197 +38,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Trigger.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ComponentModel\\DataStructures\\Trigger.vb",
-              "RelativeDocumentMoniker": "src\\ComponentModel\\DataStructures\\Trigger.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ComponentModel\\DataStructures\\Trigger.vb",
-              "RelativeToolTip": "src\\ComponentModel\\DataStructures\\Trigger.vb",
-              "ViewState": "AgIAAHoAAAAAAAAAAADgv5wAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:18:26.507Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ThreadPool.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Parallel\\Threads\\ThreadPool.vb",
-              "RelativeDocumentMoniker": "src\\ApplicationServices\\Parallel\\Threads\\ThreadPool.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Parallel\\Threads\\ThreadPool.vb",
-              "RelativeToolTip": "src\\ApplicationServices\\Parallel\\Threads\\ThreadPool.vb",
-              "ViewState": "AgIAAFcBAAAAAAAAAADgv3kBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:18:22.288Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RandomExtensions.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Math\\Random\\RandomExtensions.vb",
-              "RelativeDocumentMoniker": "src\\Extensions\\Math\\Random\\RandomExtensions.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Extensions\\Math\\Random\\RandomExtensions.vb",
-              "RelativeToolTip": "src\\Extensions\\Math\\Random\\RandomExtensions.vb",
-              "ViewState": "AgIAAIQAAAAAAAAAAADgv50AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:17:46.68Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Axel.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Net\\Wget\\Axel\\Axel.vb",
-              "RelativeDocumentMoniker": "src\\Net\\Wget\\Axel\\Axel.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Net\\Wget\\Axel\\Axel.vb",
-              "RelativeToolTip": "src\\Net\\Wget\\Axel\\Axel.vb",
-              "ViewState": "AgIAAIsAAAAAAAAAAAArwLYAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:17:15.539Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "sitemap.xml.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Net\\HTTP\\sitemap.xml.vb",
-              "RelativeDocumentMoniker": "src\\Net\\HTTP\\sitemap.xml.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\Net\\HTTP\\sitemap.xml.vb",
-              "RelativeToolTip": "src\\Net\\HTTP\\sitemap.xml.vb",
-              "ViewState": "AgIAAIgAAAAAAAAAAADgv6YAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:53.987Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Config.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\My\\Framework\\Config.vb",
-              "RelativeDocumentMoniker": "src\\My\\Framework\\Config.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\My\\Framework\\Config.vb",
-              "RelativeToolTip": "src\\My\\Framework\\Config.vb",
-              "ViewState": "AgIAAD0AAAAAAAAAAADgv1MAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:51.85Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IOHandler.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\My\\Framework\\IOHandler.vb",
-              "RelativeDocumentMoniker": "src\\My\\Framework\\IOHandler.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\My\\Framework\\IOHandler.vb",
-              "RelativeToolTip": "src\\My\\Framework\\IOHandler.vb",
-              "ViewState": "AgIAAD0AAAAAAAAAAADgv1kAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:46.43Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ProcessEx.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLI\\ProcessEx.vb",
-              "RelativeDocumentMoniker": "src\\CommandLine\\CLI\\ProcessEx.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLI\\ProcessEx.vb",
-              "RelativeToolTip": "src\\CommandLine\\CLI\\ProcessEx.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:41.664Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IORedirectFile.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLI\\IORedirectFile.vb",
-              "RelativeDocumentMoniker": "src\\CommandLine\\CLI\\IORedirectFile.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\CommandLine\\CLI\\IORedirectFile.vb",
-              "RelativeToolTip": "src\\CommandLine\\CLI\\IORedirectFile.vb",
-              "ViewState": "AgIAABkBAAAAAAAAAADgvzgBAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:36.959Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "LogFile.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Debugger\\Logging\\LogFile\\LogFile.vb",
-              "RelativeDocumentMoniker": "src\\ApplicationServices\\Debugger\\Logging\\LogFile\\LogFile.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Debugger\\Logging\\LogFile\\LogFile.vb",
-              "RelativeToolTip": "src\\ApplicationServices\\Debugger\\Logging\\LogFile\\LogFile.vb",
-              "ViewState": "AgIAAHcAAAAAAAAAAAArwJUAAABXAAAAAAAAAA==",
+              "Title": "LevenshteinDistance.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ComponentModel\\Algorithm\\DynamicProgramming\\Levenshtein\\LevenshteinDistance.vb",
+              "RelativeDocumentMoniker": "src\\ComponentModel\\Algorithm\\DynamicProgramming\\Levenshtein\\LevenshteinDistance.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ComponentModel\\Algorithm\\DynamicProgramming\\Levenshtein\\LevenshteinDistance.vb",
+              "RelativeToolTip": "src\\ComponentModel\\Algorithm\\DynamicProgramming\\Levenshtein\\LevenshteinDistance.vb",
+              "ViewState": "AgIAALgAAAAAAAAAAADgv9kAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:34.421Z",
+              "WhenOpened": "2026-04-01T19:26:52.977Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Utils.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Utils.vb",
-              "RelativeDocumentMoniker": "src\\ApplicationServices\\Utils.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Utils.vb",
-              "RelativeToolTip": "src\\ApplicationServices\\Utils.vb",
-              "ViewState": "AgIAAIcAAAAAAAAAAAArwKQAAAAUAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "STDIO.vb",
+              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\STDIO__\\STDIO.vb",
+              "RelativeDocumentMoniker": "src\\ApplicationServices\\Terminal\\STDIO__\\STDIO.vb",
+              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\STDIO__\\STDIO.vb",
+              "RelativeToolTip": "src\\ApplicationServices\\Terminal\\STDIO__\\STDIO.vb",
+              "ViewState": "AgIAABABAAAAAAAAAAAhwBgBAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:30.069Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "PerformanceCounter.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Tools\\PerformanceCounter.vb",
-              "RelativeDocumentMoniker": "src\\ApplicationServices\\Tools\\PerformanceCounter.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Tools\\PerformanceCounter.vb",
-              "RelativeToolTip": "src\\ApplicationServices\\Tools\\PerformanceCounter.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:12.484Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "WorkFlow.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Parallel\\MMFProtocol\\WorkFlow.vb",
-              "RelativeDocumentMoniker": "src\\ApplicationServices\\Parallel\\MMFProtocol\\WorkFlow.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Parallel\\MMFProtocol\\WorkFlow.vb",
-              "RelativeToolTip": "src\\ApplicationServices\\Parallel\\MMFProtocol\\WorkFlow.vb",
-              "ViewState": "AgIAAD4AAAAAAAAAAADgv2AAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:09.152Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "HistoryStacks.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\InteractiveIODevice\\HistoryStacks.vb",
-              "RelativeDocumentMoniker": "src\\ApplicationServices\\Terminal\\InteractiveIODevice\\HistoryStacks.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\InteractiveIODevice\\HistoryStacks.vb",
-              "RelativeToolTip": "src\\ApplicationServices\\Terminal\\InteractiveIODevice\\HistoryStacks.vb",
-              "ViewState": "AgIAAFcAAAAAAAAAAADgv3MAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:15:05.379Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ManIndex.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\Utility\\UnixMan\\ManFile\\ManIndex.vb",
-              "RelativeDocumentMoniker": "src\\ApplicationServices\\Terminal\\Utility\\UnixMan\\ManFile\\ManIndex.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\src\\ApplicationServices\\Terminal\\Utility\\UnixMan\\ManFile\\ManIndex.vb",
-              "RelativeToolTip": "src\\ApplicationServices\\Terminal\\Utility\\UnixMan\\ManFile\\ManIndex.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-04-01T19:14:41.913Z",
+              "WhenOpened": "2026-04-01T19:26:44.867Z",
               "EditorCaption": ""
             }
           ]

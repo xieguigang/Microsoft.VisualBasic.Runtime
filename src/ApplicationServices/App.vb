@@ -401,13 +401,13 @@ Public Module App
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             ' 由于会因为切换目录而发生变化，所以这里不适用简写形式了
-            Return FS.CurrentDirectory
+            Return Directory.GetCurrentDirectory
         End Get
         Set(value As String)
             If String.Equals(value, "-") Then  ' 切换到前一个工作目录
                 value = PreviousDirectory
             Else
-                _PreviousDirectory = FS.CurrentDirectory
+                _PreviousDirectory = Directory.GetCurrentDirectory
             End If
 
             FS.CreateDirectory(value)
