@@ -226,7 +226,7 @@ Namespace ApplicationServices.Debugging.Logging
             Dim log As New LogEntry With {
                 .message = msg,
                 .[object] = obj,
-                .time = Now,
+                .time = DateTime.UtcNow,
                 .level = type
             }
 

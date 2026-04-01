@@ -156,7 +156,7 @@ Public Module App
     Public ReadOnly Property NanoTime As Long
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Now.Ticks
+            Return DateTime.UtcNow.Ticks
         End Get
     End Property
 
@@ -847,13 +847,13 @@ Public Module App
     Public ReadOnly Property UnixTimeStamp As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return DateTimeHelper.UnixTimeStamp(Now)
+            Return DateTimeHelper.UnixTimeStamp(DateTime.UtcNow)
         End Get
     End Property
 
     Public ReadOnly Property CurrentUnixTimeMillis() As Long
         Get
-            Return DateTimeHelper.UnixTimeStampMillis(Now)
+            Return DateTimeHelper.UnixTimeStampMillis(DateTime.UtcNow)
         End Get
     End Property
 
@@ -993,14 +993,9 @@ Public Module App
     ''' <returns></returns>
     <Extension>
     Public Function FormatTime(time As DateTime, Optional sep$ = ":") As String
-        Dim yy = Strings.Format(time.Year, "0000")
-        Dim mm = Strings.Format(time.Month, "00")
-        Dim dd = Strings.Format(time.Day, "00")
-        Dim hh = Strings.Format(time.Hour, "00")
-        Dim mi = Strings.Format(time.Minute, "00")
-        Dim ss = Strings.Format(time.Second, "00")
-
-        Return $"{yy}-{mm}-{dd}, {hh}{sep}{mi}{sep}{ss}"
+        ' 将动态分隔符 sep 用单引号包裹，使其作为字面量字符输出
+        ' 例如当 sep 为 ":" 时，实际传入的格式为 "yyyy-MM-dd, HH':'mm':'ss"
+        Return time.ToString($"yyyy-MM-dd, HH'{sep}'mm'{sep}'ss")
     End Function
 
     ''' <summary>
