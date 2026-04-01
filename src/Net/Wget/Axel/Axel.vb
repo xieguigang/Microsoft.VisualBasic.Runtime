@@ -173,7 +173,7 @@ Namespace Net.WebClient
                     End Try
                 Next
 
-                Console.WriteLine($"[{Now.ToString}] 下载完成: {Path.GetFullPath(fileName)}")
+                Console.WriteLine($"[{DateTime.UtcNow.ToString}] 下载完成: {Path.GetFullPath(fileName)}")
 
                 Return True
             Else
@@ -196,7 +196,7 @@ Namespace Net.WebClient
         Friend cts As New CancellationTokenSource()
 
         Private Sub ShowProgress()
-            Dim t0 As Double = Now.UnixTimeStamp
+            Dim t0 As Double = DateTime.UtcNow.UnixTimeStamp
             Dim dt As Double
             Dim speed As Double
 
