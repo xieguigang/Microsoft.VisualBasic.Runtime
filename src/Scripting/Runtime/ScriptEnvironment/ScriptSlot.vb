@@ -9,7 +9,19 @@
 
         ' — 元数据 —
         Public ReadOnly Property VarType As TypeCode = TypeCode.Empty
-        Public Property IsReadOnly As Boolean = False
+
+        ''' <summary>
+        ''' current symbol value is constant lock binding in the environment?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsReadOnly As Boolean
+            Get
+                Return _readonly
+            End Get
+        End Property
+
+        Protected _readonly As Boolean = False
+
         Public Property IsConst As Boolean = False
 
         ' --- 强类型值存储 (模拟 Union，避免装箱) ---
@@ -96,6 +108,12 @@
                     SetBoolean(DirectCast(value, Boolean))
                 ElseIf t Is GetType(String) Then
                     SetString(DirectCast(value, String))
+                ElseIf t Is GetType(Single) Then
+                    SetSingle(DirectCast(value, Single))
+                ElseIf t Is GetType(Long) Then
+                    SetLong(DirectCast(value, Long))
+                ElseIf t Is GetType(Date) Then
+                    SetDate(DirectCast(value, Date))
                 Else
                     ' 其他类型统一当 Object 处理
                     SetObject(value)
