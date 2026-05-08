@@ -39,6 +39,13 @@
         Public ReadOnly Property LngValue As Long
         Public ReadOnly Property DateValue As Date
 
+        Sub New()
+        End Sub
+
+        Sub New(is_readonly As Boolean)
+            _readonly = is_readonly
+        End Sub
+
         ' --- 强类型 Set 方法 (无装箱) ---
 
         ''' <summary>
