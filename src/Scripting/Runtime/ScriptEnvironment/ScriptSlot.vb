@@ -18,6 +18,10 @@
         Public ReadOnly Property IntValue As Integer
         Public ReadOnly Property DblValue As Double
         Public ReadOnly Property StrValue As String
+        ''' <summary>
+        ''' .NET clr class object value
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ObjValue As Object
         Public ReadOnly Property SngValue As Single
         Public ReadOnly Property LngValue As Long
@@ -118,7 +122,7 @@
         End Function
 
         ' 辅助方法：切换类型时，清空旧值（特别是引用类型，防止内存泄漏）
-        Private Sub ClearValues()
+        Protected Sub ClearValues()
             _BoolValue = False
             _IntValue = 0
             _DblValue = 0.0
