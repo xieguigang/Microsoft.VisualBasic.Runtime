@@ -1,0 +1,4 @@
+[server] test files ready in: G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\scripts\_ftp_root
+[server]   - test_1MB.bin
+[server]   - test_small.txt
+[server] listening on 127.0.0.1:2121 (root=G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\scripts\_ftp_root)

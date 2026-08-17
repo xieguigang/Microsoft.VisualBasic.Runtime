@@ -552,9 +552,13 @@ Namespace Net.FTP
 
             Try
                 ' 取消时关闭数据连接以中止传输
-                Using ctReg = ct.Register(Sub()
-                                              Try : _dataTcpClient?.Close() : Catch : End Try
-                                          End Sub)
+                Using ctReg As CancellationTokenRegistration = ct.Register(
+                    Sub()
+                        Try
+                            _dataTcpClient?.Close()
+                        Catch
+                        End Try
+                    End Sub)
 
                     Do
                         Dim read As Integer = Await dataStream.ReadAsync(buffer, ct)
@@ -580,16 +584,8 @@ Namespace Net.FTP
                 End If
 
             Catch ex As OperationCanceledException
-                ' 用户取消: 尝试发送 ABOR
-                Try
-                    Await SendCommandAsync("ABOR", CancellationToken.None)
-                    Await ReadResponseAsync(CancellationToken.None)
-                Catch
-                    ' 控制连接可能已不可用
-                    _isConnected = False
-                End Try
+                Call Cancel.GetAwaiter.GetResult()
                 Throw
-
             Finally
                 dataStream?.Dispose()
                 CloseDataConnection()
@@ -600,6 +596,17 @@ Namespace Net.FTP
             If completeResp.StatusCode <> 226 AndAlso completeResp.StatusCode <> 250 Then
                 Throw New FtpException("传输未完成: " & completeResp.ToString(), completeResp.StatusCode)
             End If
+        End Function
+
+        Private Async Function Cancel() As Task
+            ' 用户取消: 尝试发送 ABOR
+            Try
+                Await SendCommandAsync("ABOR", CancellationToken.None)
+                Await ReadResponseAsync(CancellationToken.None)
+            Catch
+                ' 控制连接可能已不可用
+                _isConnected = False
+            End Try
         End Function
 
         ' ========================================================================

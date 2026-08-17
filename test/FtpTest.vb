@@ -15,13 +15,10 @@
 '   FtpClient ftp.example.com /file.txt file.txt user pass --ssl
 ' ============================================================================
 
-Imports System
-Imports System.Diagnostics
 Imports System.IO
-Imports System.Threading
-Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.Net.FTP
 
-Module Program
+Module FtpTest
 
     Async Function Main(args As String()) As Task
         Console.OutputEncoding = Text.Encoding.UTF8
