@@ -117,16 +117,12 @@ Namespace SecurityString
             ' the specified hash algorithm. Password creation can be done in
             ' several iterations.
 
-            Dim password As New PasswordDeriveBytes(strPassphrase, saltValueBytes, hashAlgorithm, passwordIterations)
-
             ' Use the password to generate pseudo-random bytes for the encryption
             ' key. Specify the size of the key in bytes (instead of bits).
-#Disable Warning
-            Dim keyBytes As Byte() = password.GetBytes(keySize \ 8)
-#Enable Warning
+            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(strPassphrase), saltValueBytes, passwordIterations, HashAlgorithmName.SHA1, keySize \ 8)
             ' Create uninitialized Rijndael encryption object.
 
-            Dim symmetricKey As New RijndaelManaged()
+            Dim symmetricKey As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
 
             ' It is reasonable to set encryption mode to Cipher Block Chaining
             ' (CBC). Use default options for other symmetric key parameters.
@@ -186,16 +182,12 @@ Namespace SecurityString
             ' the specified hash algorithm. Password creation can be done in
             ' several iterations.
 
-            Dim password As New PasswordDeriveBytes(strPassphrase, saltValueBytes, hashAlgorithm, passwordIterations)
-
             ' Use the password to generate pseudo-random bytes for the encryption
             ' key. Specify the size of the key in bytes (instead of bits).
-#Disable Warning
-            Dim keyBytes As Byte() = password.GetBytes(keySize \ 8)
-#Enable Warning
+            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(strPassphrase), saltValueBytes, passwordIterations, HashAlgorithmName.SHA1, keySize \ 8)
             ' Create uninitialized Rijndael encryption object.
 
-            Dim symmetricKey As New RijndaelManaged()
+            Dim symmetricKey As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
 
             ' It is reasonable to set encryption mode to Cipher Block Chaining
             ' (CBC). Use default options for other symmetric key parameters.
@@ -238,11 +230,8 @@ Namespace SecurityString
         End Function
 
         Public Overloads Overrides Function Encrypt(plainTextBytes() As Byte) As Byte()
-            Dim password As New PasswordDeriveBytes(strPassphrase, saltValueBytes, hashAlgorithm, passwordIterations)
-#Disable Warning
-            Dim keyBytes As Byte() = password.GetBytes(keySize \ 8)
-#Enable Warning
-            Dim symmetricKey As New RijndaelManaged()
+            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(strPassphrase), saltValueBytes, passwordIterations, HashAlgorithmName.SHA1, keySize \ 8)
+            Dim symmetricKey As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
 
             symmetricKey.Mode = CipherMode.CBC
 
@@ -279,9 +268,8 @@ Namespace SecurityString
         Public Overrides Function EncryptData(plainText As String) As String
 
             Dim plainTextBytes As Byte() = Encoding.UTF8.GetBytes(plainText)
-            Dim password As New PasswordDeriveBytes(strPassphrase, saltValueBytes, hashAlgorithm, passwordIterations)
-            Dim keyBytes As Byte() = password.GetBytes(keySize \ 8)
-            Dim symmetricKey As Rijndael = Rijndael.Create()
+            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(strPassphrase), saltValueBytes, passwordIterations, HashAlgorithmName.SHA1, keySize \ 8)
+            Dim symmetricKey As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
 
             symmetricKey.Mode = CipherMode.CBC
 
