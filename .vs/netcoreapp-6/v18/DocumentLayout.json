@@ -1,24 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\test.vbproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\test.vbproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\test\\markdownrenderverify.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\test\\markdownrenderverify.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|g:\\gcmodeller\\src\\runtime\\scibasic#\\microsoft.visualbasic.core\\test\\test\\markdowndisplaytest.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}|test\\test.vbproj|solutionrelative:test\\test\\markdowndisplaytest.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -26,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,57 +22,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "test",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test.vbproj",
-              "RelativeDocumentMoniker": "test\\test.vbproj",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test.vbproj",
-              "RelativeToolTip": "test\\test.vbproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003380|",
-              "WhenOpened": "2026-08-28T17:58:36.264Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "markdownDisplayTest.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test\\markdownDisplayTest.vb",
-              "RelativeDocumentMoniker": "test\\test\\markdownDisplayTest.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test\\markdownDisplayTest.vb",
-              "RelativeToolTip": "test\\test\\markdownDisplayTest.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFQAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-08-28T17:58:27.21Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "markdownRenderVerify.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test\\markdownRenderVerify.vb",
-              "RelativeDocumentMoniker": "test\\test\\markdownRenderVerify.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\test\\markdownRenderVerify.vb",
-              "RelativeToolTip": "test\\test\\markdownRenderVerify.vb",
-              "ViewState": "AgIAAOIAAAAAAAAAAAAUwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-08-28T17:58:24.638Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.vb",
-              "DocumentMoniker": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\Program.vb",
-              "RelativeDocumentMoniker": "test\\Program.vb",
-              "ToolTip": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\Microsoft.VisualBasic.Core\\test\\Program.vb",
-              "RelativeToolTip": "test\\Program.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-08-28T17:58:10.63Z",
-              "EditorCaption": ""
             }
           ]
         },
