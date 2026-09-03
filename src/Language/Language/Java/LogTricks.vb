@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
 Namespace Language.Java
@@ -99,7 +100,7 @@ Namespace Language.Java
             If std.Abs(temp) > NATS Then
                 Return If(x > y, x, y)
             Else
-                Return x + JavaMath.log1p(std.Exp(temp))
+                Return x + log1p(std.Exp(temp))
             End If
         End Function
 
