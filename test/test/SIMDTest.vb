@@ -250,7 +250,27 @@ Module SIMDTest
 
         Call SimdEngine.AddInPlace(Of Double)(target, b)
 
-        Return SequenceEqual(expect, target)
+        If Not SequenceEqual(expect, target) Then Return False
+
+        ' 就地运算不能使用“末块重叠”技巧，否则尾部元素会被重复累加
+        Dim expectScalarAdd As Double() = Ref1(a, Function(x) x + 2.5)
+        Dim expectScalarMul As Double() = Ref1(a, Function(x) x * 2.5)
+        Dim expectSubtract As Double() = Ref(a, b, Function(x, y) x - y)
+        Dim expectMultiply As Double() = Ref(a, b, Function(x, y) x * y)
+        Dim t2 As Double() = CType(a.Clone(), Double())
+        Dim t3 As Double() = CType(a.Clone(), Double())
+        Dim t4 As Double() = CType(a.Clone(), Double())
+        Dim t5 As Double() = CType(a.Clone(), Double())
+
+        Call SimdEngine.AddScalarInPlace(Of Double)(t2, 2.5)
+        Call SimdEngine.MultiplyScalarInPlace(Of Double)(t3, 2.5)
+        Call SimdEngine.SubtractInPlace(Of Double)(t4, b)
+        Call SimdEngine.MultiplyInPlace(Of Double)(t5, b)
+
+        Return SequenceEqual(expectScalarAdd, t2) AndAlso
+            SequenceEqual(expectScalarMul, t3) AndAlso
+            SequenceEqual(expectSubtract, t4) AndAlso
+            SequenceEqual(expectMultiply, t5)
     End Function
 
     Private Sub VerifyScalarForms()
@@ -395,6 +415,11 @@ Module SIMDTest
 
         Dim a As Double() = {1.0, 5.0, -3.0, 8.0, 0.0, 2.0, 9.0}
         Dim b As Double() = {2.0, 5.0, 3.0, 1.0, 0.0, -2.0, 9.0}
+
+        Console.WriteLine("  [dbg] gt actual   = " & String.Join(",", SimdCompare.GreaterThan(Of Double)(a, b)))
+        Console.WriteLine("  [dbg] gt expected = " & String.Join(",", RefCmp(a, b, Function(x, y) x > y)))
+        Console.WriteLine("  [dbg] gt narrow   = " & String.Join(",", SimdCompare.GreaterThan(Of Double)({1.0, 2.0, 3.0}, {3.0, 2.0, 1.0})))
+        Console.WriteLine("  [dbg] gt empty    = " & String.Join(",", SimdCompare.GreaterThan(Of Double)(Array.Empty(Of Double)(), Array.Empty(Of Double)())))
 
         Check("greater than", SequenceEqual(RefCmp(a, b, Function(x, y) x > y), SimdCompare.GreaterThan(Of Double)(a, b)))
         Check("less than", SequenceEqual(RefCmp(a, b, Function(x, y) x < y), SimdCompare.LessThan(Of Double)(a, b)))
