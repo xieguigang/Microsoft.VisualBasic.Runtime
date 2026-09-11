@@ -393,17 +393,13 @@ Namespace Math.SIMD
             Dim i As Integer = 0
 
             If CanVectorize(Of T)(len) Then
-                Dim last As Integer = len - count
-
-                Do While i <= last
+                ' 就地运算**不能**使用“末块与末尾重叠”的技巧：输入与输出共用同一块内存，
+                ' 重叠部分会把已经累加过的元素再读一次，导致尾部元素被重复计算。
+                ' 因此这里只处理完整块，剩余元素退化为单通道向量逐元素计算。
+                Do While i <= len - count
                     op(New Vector(Of T)(v, i), New Vector(Of T)(operand, i)).CopyTo(v, i)
                     i += count
                 Loop
-                If i < len Then
-                    op(New Vector(Of T)(v, last), New Vector(Of T)(operand, last)).CopyTo(v, last)
-                End If
-
-                Return v
             End If
 
             Do While i < len
@@ -427,17 +423,11 @@ Namespace Math.SIMD
             Dim i As Integer = 0
 
             If CanVectorize(Of T)(len) Then
-                Dim last As Integer = len - count
-
-                Do While i <= last
+                ' 理由同 InPlace：就地运算不能使用重叠末块
+                Do While i <= len - count
                     op(New Vector(Of T)(v, i), splat).CopyTo(v, i)
                     i += count
                 Loop
-                If i < len Then
-                    op(New Vector(Of T)(v, last), splat).CopyTo(v, last)
-                End If
-
-                Return v
             End If
 
             Do While i < len

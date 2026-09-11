@@ -84,6 +84,13 @@ Namespace Math.SIMD
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Sub CheckRange(len As Integer, start As Integer, ends As Integer)
+            If start < 0 OrElse ends > len OrElse start >= ends Then
+                Throw New ArgumentOutOfRangeException($"invalid range [{start}, {ends}) for a vector of length {len}!")
+            End If
+        End Sub
+
 #Region "sum"
 
         ''' <summary>
@@ -371,15 +378,24 @@ Namespace Math.SIMD
             CheckNull(v, NameOf(v))
             CheckEmpty(v.Length, NameOf(v))
 
+            Return Min(v, 0, v.Length)
+        End Function
+
+        ''' <summary>
+        ''' 求 <c>[start, ends)</c> 区间（前闭后开）的最小值。
+        ''' </summary>
+        Public Shared Function Min(v As Double(), start As Integer, ends As Integer) As Double
+            CheckNull(v, NameOf(v))
+            CheckRange(v.Length, start, ends)
+
             Dim count As Integer = Vector(Of Double).Count
-            Dim len As Integer = v.Length
-            Dim i As Integer = 0
+            Dim i As Integer = start
 
-            If SIMDEnvironment.IsEnabled AndAlso len >= count Then
-                Dim acc0 As Vector(Of Double) = New Vector(Of Double)(v, 0)
-                Dim last As Integer = len - count
+            If SIMDEnvironment.IsEnabled AndAlso ends - start >= count Then
+                Dim acc0 As Vector(Of Double) = New Vector(Of Double)(v, start)
+                Dim last As Integer = ends - count
 
-                i = count
+                i = start + count
 
                 Do While i <= last
                     acc0 = Vector.Min(Of Double)(acc0, New Vector(Of Double)(v, i))
@@ -392,16 +408,16 @@ Namespace Math.SIMD
                     m = std.Min(m, acc0.GetElement(k))
                 Next
 
-                For k As Integer = i To len - 1
+                For k As Integer = i To ends - 1
                     m = std.Min(m, v(k))
                 Next
 
                 Return m
             End If
 
-            Dim fallback As Double = v(0)
+            Dim fallback As Double = v(start)
 
-            For k As Integer = 1 To len - 1
+            For k As Integer = start + 1 To ends - 1
                 fallback = std.Min(fallback, v(k))
             Next
 
@@ -415,30 +431,24 @@ Namespace Math.SIMD
             CheckNull(v, NameOf(v))
             CheckEmpty(v.Length, NameOf(v))
 
+            Return Max(v, 0, v.Length)
+        End Function
+
+        ''' <summary>
+        ''' 求 <c>[start, ends)</c> 区间（前闭后开）的最大值。
+        ''' </summary>
+        Public Shared Function Max(v As Double(), start As Integer, ends As Integer) As Double
+            CheckNull(v, NameOf(v))
+            CheckRange(v.Length, start, ends)
+
             Dim count As Integer = Vector(Of Double).Count
-            Dim len As Integer = v.Length
-            Dim i As Integer = 0
+            Dim i As Integer = start
 
-            If SIMDEnvironment.IsEnabled AndAlso len >= count Then
-                Dim acc0 As Vector(Of Double) = New Vector(Of Double)(v, 0)
-                Dim acc1 As Vector(Of Double) = acc0
-                Dim last As Integer = len - count
-                Dim useDual As Boolean = len >= count * 2
+            If SIMDEnvironment.IsEnabled AndAlso ends - start >= count Then
+                Dim acc0 As Vector(Of Double) = New Vector(Of Double)(v, start)
+                Dim last As Integer = ends - count
 
-                i = count
-                If useDual Then
-                    acc1 = New Vector(Of Double)(v, count)
-                    i = count * 2
-                End If
-
-                If useDual Then
-                    Do While i <= last - count + 1
-                        acc0 = Vector.Max(Of Double)(acc0, New Vector(Of Double)(v, i))
-                        acc1 = Vector.Max(Of Double)(acc1, New Vector(Of Double)(v, i + count))
-                        i += count * 2
-                    Loop
-                    acc0 = Vector.Max(Of Double)(acc0, acc1)
-                End If
+                i = start + count
 
                 Do While i <= last
                     acc0 = Vector.Max(Of Double)(acc0, New Vector(Of Double)(v, i))
@@ -451,16 +461,16 @@ Namespace Math.SIMD
                     m = std.Max(m, acc0.GetElement(k))
                 Next
 
-                For k As Integer = i To len - 1
+                For k As Integer = i To ends - 1
                     m = std.Max(m, v(k))
                 Next
 
                 Return m
             End If
 
-            Dim fallback As Double = v(0)
+            Dim fallback As Double = v(start)
 
-            For k As Integer = 1 To len - 1
+            For k As Integer = start + 1 To ends - 1
                 fallback = std.Max(fallback, v(k))
             Next
 
