@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Report
 
